@@ -32,7 +32,12 @@ class SessionsController < ApplicationController
     manager = Manager.find_by(email: params[:email])
 
     if manager && manager.authenticate(params[:password])
-      session[:manager_id] = manager.id
+      if params[:remember_me]
+        # 勾選記住我的話將使用者長久留在使用者瀏覽器
+        cookies.permanent[:remember_token] = manager.remember_token
+      else
+        cookies[:remember_token] = manager.remember_token
+      end
       flash[:notice] = "Welcome, #{manager.username}!"
       redirect_to admin_root_path
     else
@@ -42,7 +47,7 @@ class SessionsController < ApplicationController
   end
 
   def manager_destroy
-    session[:manager_id] = nil
+    cookies.delete(:remember_token)
     flash[:warning] = "你已經登出了!"
     redirect_to root_path
   end

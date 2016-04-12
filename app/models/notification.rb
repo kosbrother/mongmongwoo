@@ -8,6 +8,6 @@ class Notification < ActiveRecord::Base
   validates_presence_of :content_text, on: :create
 
   def send_content_pic
-    self.item.specs.first.style_pic.url
+    self.item.cover.url
   end
 end

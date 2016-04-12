@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_manager, :manager_logged_in?
 
   def current_manager
-    @current_manager ||= Manager.find(session[:manager_id]) if session[:manager_id]
+    @current_manager ||= Manager.find_by(remember_token: cookies[:remember_token]) if cookies[:remember_token]
   end
 
   def manager_logged_in?
