@@ -31,7 +31,6 @@ class Api::V1::OrdersController < ApiController
           item.item_style = product[:style]
           item.item_quantity = product[:quantity]
           item.item_price = product[:price]
-          item.source_item_id = Item.find_by(product[:name]).id
           item.save!
         end
       end
