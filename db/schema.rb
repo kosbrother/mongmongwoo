@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412071329) do
+ActiveRecord::Schema.define(version: 20160413025524) do
 
   create_table "assistants", force: :cascade do |t|
     t.string   "username",        limit: 255
@@ -152,16 +152,18 @@ ActiveRecord::Schema.define(version: 20160412071329) do
   add_index "order_infos", ["order_id"], name: "index_order_infos_on_order_id", using: :btree
 
   create_table "order_items", force: :cascade do |t|
-    t.integer  "order_id",      limit: 4
-    t.integer  "item_quantity", limit: 4
-    t.string   "item_name",     limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "item_price",    limit: 4
-    t.string   "item_style",    limit: 255
+    t.integer  "order_id",       limit: 4
+    t.integer  "item_quantity",  limit: 4
+    t.string   "item_name",      limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "item_price",     limit: 4
+    t.string   "item_style",     limit: 255
+    t.integer  "source_item_id", limit: 4
   end
 
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
+  add_index "order_items", ["source_item_id"], name: "index_order_items_on_source_item_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id",        limit: 4
