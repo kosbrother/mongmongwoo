@@ -13,8 +13,7 @@
             <div>
               <p>
                 下載：
-                <%= link_to "CSV檔", exporting_files_admin_orders_path(format: "csv") %> |
-                <%= link_to "Excel檔", exporting_files_admin_orders_path(format: "xls") %>
+                <%= link_to "CSV檔", exporting_files_admin_orders_path(format: "csv",page: params[:page]) %>
               </p>
             </div>
             <thead>

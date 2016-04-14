@@ -95,7 +95,6 @@ class Admin::OrdersController < AdminController
     respond_to do |format|
       format.html
       format.csv { send_data @orders_for_file.to_csv }
-      format.xls
     end
   end
 
