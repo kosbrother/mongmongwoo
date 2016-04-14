@@ -48,6 +48,10 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     ast (2.2.0)
+    autoparse (0.3.3)
+      addressable (>= 2.3.1)
+      extlib (>= 0.9.15)
+      multi_json (>= 1.0.0)
     autoprefixer-rails (6.3.1)
       execjs
       json
@@ -129,10 +133,16 @@ GEM
     diff-lcs (1.2.5)
     equalizer (0.0.11)
     erubis (2.7.0)
+    excon (0.49.0)
     execjs (2.6.0)
+    extlib (0.9.16)
     faker (1.6.1)
       i18n (~> 0.5)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.10)
+    figaro (1.1.1)
+      thor (~> 0.14)
     flay (2.7.0)
       erubis (~> 2.7.0)
       ruby_parser (~> 3.0)
@@ -140,14 +150,48 @@ GEM
     flog (4.3.2)
       ruby_parser (~> 3.1, > 3.1.0)
       sexp_processor (~> 4.4)
+    fog-core (1.37.0)
+      builder
+      excon (~> 0.45)
+      formatador (~> 0.2)
+    fog-google (0.2.0)
+      fog-core
+      fog-json
+      fog-xml
+    fog-json (1.0.2)
+      fog-core (~> 1.0)
+      multi_json (~> 1.10)
+    fog-xml (0.1.2)
+      fog-core
+      nokogiri (~> 1.5, >= 1.5.11)
     font-awesome-rails (4.5.0.0)
       railties (>= 3.2, < 5.0)
+    formatador (0.2.5)
     gcm (0.1.1)
       httparty
       json
     git-version-bump (0.15.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    google-api-client (0.8.6)
+      activesupport (>= 3.2)
+      addressable (~> 2.3)
+      autoparse (~> 0.3)
+      extlib (~> 0.9)
+      faraday (~> 0.9)
+      googleauth (~> 0.3)
+      launchy (~> 2.4)
+      multi_json (~> 1.10)
+      retriable (~> 1.4)
+      signet (~> 0.6)
+    googleauth (0.5.1)
+      faraday (~> 0.9)
+      jwt (~> 1.4)
+      logging (~> 2.0)
+      memoist (~> 0.12)
+      multi_json (~> 1.11)
+      os (~> 0.9)
+      signet (~> 0.7)
     haml (4.0.7)
       tilt
     highline (1.7.8)
@@ -167,12 +211,18 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.3)
+    jwt (1.5.4)
     launchy (2.4.3)
       addressable (~> 2.3)
+    little-plugger (1.1.4)
+    logging (2.1.0)
+      little-plugger (~> 1.1)
+      multi_json (~> 1.10)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    memoist (0.14.0)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -184,6 +234,7 @@ GEM
     minitest (5.8.4)
     multi_json (1.11.2)
     multi_xml (0.5.5)
+    multipart-post (2.0.0)
     mysql2 (0.4.3)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -192,6 +243,7 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
+    os (0.9.6)
     paranoia (2.1.5)
       activerecord (~> 4.0)
     parser (2.3.0.7)
@@ -238,6 +290,7 @@ GEM
       codeclimate-engine-rb (~> 0.3.1)
       parser (~> 2.3, >= 2.3.0.6)
       rainbow (~> 2.0)
+    retriable (1.4.1)
     rspec-core (3.4.4)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -284,6 +337,11 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     sexp_processor (4.7.0)
+    signet (0.7.2)
+      addressable (~> 2.3)
+      faraday (~> 0.9)
+      jwt (~> 1.5)
+      multi_json (~> 1.10)
     slim (3.0.6)
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
@@ -339,12 +397,16 @@ DEPENDENCIES
   ckeditor
   coffee-rails (~> 4.1.0)
   faker
+  figaro
+  fog-google
   font-awesome-rails
   gcm
+  google-api-client (>= 0.6.2, < 0.9)
   jquery-fileupload-rails
   jquery-rails
   jquery-ui-rails
   meta_request
+  mime-types
   mini_magick
   mysql2 (>= 0.3.13, < 0.5)
   newrelic_rpm
@@ -361,4 +423,4 @@ DEPENDENCIES
   will_paginate (~> 3.0.5)
 
 BUNDLED WITH
-   1.10.5
+   1.11.2
