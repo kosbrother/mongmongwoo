@@ -1,7 +1,6 @@
 set :application, 'monmonhouse'
 set :deploy_user, 'deploy'
 
-
 # setup repo details
 set :scm, :git
 set :repo_url, 'git@github.com:kosbrother/mongmongwoo.git'
