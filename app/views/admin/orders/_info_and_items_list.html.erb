@@ -35,7 +35,7 @@
             <% if order.items %>
               <% order.items.each do |item| %>
                 <tr class="success">
-                  <td><%= link_to item.item_name, admin_item_path(item.get_item_by_name) %></td>
+                  <td><%= item.item_name %></td>
                   <td><%= item.item_style %></td>
                   <td><%= item.item_quantity %></td>
                   <td><%= item.item_price %></td>

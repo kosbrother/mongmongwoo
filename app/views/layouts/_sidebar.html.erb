@@ -68,6 +68,7 @@
       <!-- Sub menu -->
       <ul>
         <li><a href="<%= admin_orders_path %>">訂單列表</a></li>
+        <li><a href="<%= exporting_files_admin_orders_path %>">寄件列表</a></li>
         <li><a href="#">訂單選項</a></li>
       </ul>
     </li>
@@ -79,11 +80,29 @@
       <!-- Sub menu -->
       <ul>
         <li><a href="<%= admin_notifications_path %>">推播訊息</a></li>
-        <li><a href="#">註冊裝置</a></li>        
+        <li><a href="#">註冊裝置</a></li>
       </ul>
-    </li>    
-    <li><a href="#"><i class="glyphicon glyphicon-calendar"></i> Calendar</a></li>
-    <li><a href="#"><i class="glyphicon glyphicon-stats"></i> Statistics (Charts)</a></li>    
+    </li>
+    <li class="submenu">
+      <a href="#">
+        <i class="glyphicon glyphicon-stats"></i>統計圖表
+        <span class="caret pul-right"></span>
+      </a>
+      <!-- Sub menu -->
+      <ul>
+        <li>
+          <a href="#">
+            銷售圖表
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            圖表選項
+          </a>
+        </li>        
+      </ul>
+    </li>
+    <li><a href="#"><i class="glyphicon glyphicon-calendar"></i> Calendar</a></li>    
     <li class="submenu">
       <a href="#">
         <i class="glyphicon glyphicon-list"></i> Pages

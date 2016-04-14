@@ -81,6 +81,10 @@ Rails.application.routes.draw do
     end
 
     resources :orders, only: [:index, :show] do
+      collection do
+        get "exporting_files"
+      end
+
       member do
         patch "order_processing"
         patch "item_shipping"
