@@ -89,6 +89,16 @@ class Admin::OrdersController < AdminController
     end
   end
 
+  def exporting_files
+    @order_for_file_page = @orders_for_file = Order.includes(:user, :info).recent.paginate(:page => params[:page])
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @orders_for_file.to_csv }
+      format.xls
+    end
+  end
+
   private
 
   def find_order

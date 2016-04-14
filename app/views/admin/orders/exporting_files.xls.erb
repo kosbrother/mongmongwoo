@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">配送類別</Data></Cell>
+        <Cell><Data ss:Type="String">訂單類別</Data></Cell>
+        <Cell><Data ss:Type="String">取件人姓名</Data></Cell>
+        <Cell><Data ss:Type="String">取件人手機</Data></Cell>
+        <Cell><Data ss:Type="String">取件人電子郵件</Data></Cell>
+        <Cell><Data ss:Type="String">取件門市</Data></Cell>
+        <Cell><Data ss:Type="String">訂單金額</Data></Cell>
+      </Row>
+    <% @orders_for_file.each do |order| %>
+      <Row>
+        <Cell><Data ss:Type="String">K</Data></Cell>
+        <Cell><Data ss:Type="String">1</Data></Cell>
+        <Cell><Data ss:Type="String"><%= order.info_user_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= phone_number_looking(order) %></Data></Cell>
+        <Cell><Data ss:Type="String">user@example.com</Data></Cell>
+        <Cell><Data ss:Type="String"><%= order.info_store_code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= order.total %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

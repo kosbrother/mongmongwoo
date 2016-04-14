@@ -47,6 +47,10 @@ class Order < ActiveRecord::Base
     user.user_name
   end
 
+  def info_user_phone
+    info.ship_phone
+  end
+
   def generate_result_order(order, info, items)
     # 訂單資料
     result_order = {}
@@ -87,5 +91,14 @@ class Order < ActiveRecord::Base
 
   def created_at_for_api
     self.created_at.strftime("%Y-%m-%d")
+  end
+
+  def self.to_csv(options={})
+    CSV.generate(options) do |csv|
+      csv << ["配送類別", "訂單類別", "取件人姓名", "取件人手機", "取件人電子郵件", "取件門市", "訂單金額"]
+      all.each do |order|
+        csv << ["K", "1", order.info_user_name, order.info_user_phone, "user@example.com", order.info_store_code, order.total]
+      end
+    end
   end
 end
