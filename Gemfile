@@ -28,13 +28,18 @@ gem "jquery-fileupload-rails"
 gem 'bcrypt', '~> 3.1.7'
 gem 'gcm'
 
+
+gem 'fog-google'
+gem 'google-api-client', '< 0.9', '>= 0.6.2'
+gem "mime-types"
 # For carawl cvs data setup
 gem 'nokogiri'
 # gem 'therubyracer'
 gem 'rspec-rails'
 gem 'capybara'
 gem 'selenium-webdriver'
-
+# For credential data
+gem "figaro"
 group :development do
   gem "better_errors"
   gem "binding_of_caller"

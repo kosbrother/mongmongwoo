@@ -4,20 +4,20 @@ class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
-  # storage :fog
+  if Rails.env.production?
+    # For google cloud storage
+    storage :fog
+  elsif Rails.env.development?
+    storage :file
+  end
 
   def store_dir
-    if Rails.env.production?
-      "storage/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-    elsif Rails.env.development?
-      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-    end
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
-  
+
   # 預設圖片尺寸
   process resize_to_fit: [600, 400]
-  
+
   # 封面圖片尺寸
   version :thumb do
     process resize_to_fill: [150,100]
