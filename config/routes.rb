@@ -30,31 +30,24 @@ Rails.application.routes.draw do
     root "categories#index"
 
     resources :items do
+      collection do
+        get "search"
+      end
+
       member do
         patch "on_shelf"
         patch "off_shelf"
       end
 
-      # TODO photos uploading
       resources :photos, except: [:show]
 
       resources :item_specs, except: [:show] do
         member do
           patch "on_shelf"
           patch "off_shelf"
-        end
-        # collection do
-        #   post "item_specs", to: "item_specs#create"
-        # end
-      end
-
-      # 商品重新排序
-      # collection do
-      #   post "sort_items_priority"
-      # end
+        end        
+      end         
     end
-
-    # post "sort_items_priority", to: "items#sort_items_priority"
     
     resources :categories, only: [:new, :create, :show, :index] do
       # 商品重新排序
@@ -103,7 +96,6 @@ Rails.application.routes.draw do
   # API for App
   namespace :api do
     namespace :v1 do
-      # TODO 重構整理
       # 分類API
       resources :categories, only: [:index, :show]
 
@@ -120,7 +112,6 @@ Rails.application.routes.draw do
 
       # 訂單API
       resources :orders, only: [:create, :show, :index] do
-        # 給 uid 回傳 orders[order1 , order2, ...]
         collection do
           get "/user_owned_orders/:uid" => "orders#user_owned_orders"
         end
@@ -142,7 +133,6 @@ Rails.application.routes.draw do
     namespace :v2 do
       # 訂單API
       resources :orders, only: [:show, :index] do
-        # 給 uid 回傳 orders[order1 , order2, ...]
         collection do
           get "/user_owned_orders/:uid" => "orders#user_owned_orders"
         end

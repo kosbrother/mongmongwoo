@@ -38,19 +38,13 @@ class Item < ActiveRecord::Base
 
   mount_uploader :cover, ItemCoverUploader
 
-  # 商品頁預設圖片
-  # def default_photo
-  #   photos.first
-  # end
-
   # 封面圖
   def intro_cover
     cover
   end
 
-  # def remove_nil_of_image
-  #   self.photos.each do |photo|
-  #     photo.destroy if photo.image.blank?
-  #   end
-  # end
+  def self.search_by_name(search_term)
+    return [] if search_term.blank?
+    where("name LIKE ?", "%#{search_term}%").recent
+  end
 end

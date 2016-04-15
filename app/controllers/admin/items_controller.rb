@@ -74,14 +74,9 @@ class Admin::ItemsController < AdminController
     end
   end
 
-  # def sort_items_priority
-  #   binding.pry
-  #   params.each_with_index do |id, index|
-  #     Item.update_all({position: index + 1})
-  #   end
-
-  #   render nothing: true
-  # end
+  def search
+    @search_results_page = @search_results = Item.search_by_name(params[:search_term]).paginate(:page => params[:page])
+  end
 
   private
 
