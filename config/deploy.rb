@@ -11,7 +11,7 @@ set :default_stage, "staging"
 # set :deploy_to, '/home/deploy/monmonhouse'
 # set :deploy_to, '/home/rails/folder'
 
-set :linked_files, %w{config/database.yml config/secrets.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml config/application.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/storage}
 
 # role :web, %w{deploy@106.185.34.142}
