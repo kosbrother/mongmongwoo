@@ -1,5 +1,6 @@
 set :deploy_to, '/home/staging/monmonhouse'
 set :stage, :staging
+set :branch, 'staging'
 server '106.185.25.83', user: 'staging', roles: %w{web app}
 # Simple Role Syntax
 # ==================

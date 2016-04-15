@@ -5,8 +5,8 @@ lock '3.4.0'
 set :application, 'monmonhouse'
 set :repo_url, 'git@github.com:KosbrotherSchool/mongmongwoo.git'
 
-# set :stages, ["staging", "production"]
-# set :default_stage, "staging"
+set :stages, ["staging", "production"]
+set :default_stage, "staging"
 
 # set :deploy_to, '/home/deploy/monmonhouse'
 # set :deploy_to, '/home/rails/folder'
