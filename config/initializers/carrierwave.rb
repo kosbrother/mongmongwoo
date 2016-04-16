@@ -7,4 +7,12 @@ CarrierWave.configure do |config|
   }
   config.asset_host = ENV['asset_host']
   config.fog_directory = ENV['fog_directory']
+
+  # Choose what kind of storage to use for this uploader:
+  if Rails.env.production?
+    # For google cloud storage
+    config.storage :fog
+  elsif Rails.env.development?
+    config.storage :file
+  end
 end
