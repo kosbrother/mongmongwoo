@@ -6,6 +6,9 @@ ruby '2.2.4'
 #   ruby '2.2.4'
 # end
 
+# Use Unicorn as the app server
+gem 'unicorn'
+
 gem 'rails', '4.2.5'
 gem 'mysql2', '>= 0.3.13', '< 0.5'
 gem 'sass-rails', '~> 5.0'
@@ -25,13 +28,16 @@ gem "jquery-fileupload-rails"
 gem 'bcrypt', '~> 3.1.7'
 gem 'gcm'
 
+
+gem 'fog'
 # For carawl cvs data setup
 gem 'nokogiri'
 # gem 'therubyracer'
 gem 'rspec-rails'
 gem 'capybara'
 gem 'selenium-webdriver'
-
+# For credential data
+gem "figaro"
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
@@ -50,11 +56,15 @@ group :development do
 
   # 監測網站效能
   gem 'newrelic_rpm'
+end
 
-  #Capistrano setup
-  gem 'capistrano', '~> 3.4'
-  gem 'capistrano-rails', '~> 1.1', '>= 1.1.6'
-  gem 'capistrano-rbenv', '~> 2.0', '>= 2.0.4'
-  # gem 'capistrano-rails'
-  # gem 'capistrano-passenger'
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-sidekiq'
+  gem 'guard-livereload', '~> 2.5', require: false
 end
