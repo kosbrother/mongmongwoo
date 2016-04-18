@@ -24,9 +24,8 @@
           <tr>
             <th>訂單編號</th>
             <th>訂單金額</th>
-            <th>訂單狀態</th>
-            <th>收件明細</th>
-            <th>商品明細</th>
+            <th>訂單狀態</th>            
+            <th>訂購明細</th>
           </tr>
         </thead>
         <tbody>
@@ -34,13 +33,8 @@
             <tr>
               <td><%= order.id %></td>
               <td><%= order.total %></td>
-              <td><%= order_status(order.status) %></td>
-              <td>
-                <%= render partial: "admin/orders/info_list", locals: { order: order } %>
-              </td>
-              <td>
-                <%= render partial: "admin/orders/items_list", locals: { order: order } %>
-              </td>
+              <td><%= order.status %></td>
+              <td><%= render(partial: "admin/orders/info_and_items_list", locals: { order: order }) %></td>
             </tr>
           <% end %>
         </tbody>

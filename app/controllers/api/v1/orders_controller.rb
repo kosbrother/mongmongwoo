@@ -1,5 +1,4 @@
 class Api::V1::OrdersController < ApiController
-  # TODO 重構整理
   def create
     begin
       # 訂單、收件資訊、商品明細必須一起同時建立，確認是同一筆訂單所產生
@@ -28,10 +27,10 @@ class Api::V1::OrdersController < ApiController
           item = OrderItem.new
           item.order_id = order.id
           item.item_name = product[:name]
+          item.source_item_id = Item.find_by(name: product[:name]).id
           item.item_style = product[:style]
           item.item_quantity = product[:quantity]
-          item.item_price = product[:price]
-          item.source_item_id = Item.find_by(product[:name]).id
+          item.item_price = product[:price]        
           item.save!
         end
       end
@@ -57,8 +56,6 @@ class Api::V1::OrdersController < ApiController
 
   def user_owned_orders
     user_orders = Order.includes(:user).where("uid = ?", params[:uid]).page(params[:page]).per_page(20)
-    # result_user_orders = []
-
     render json: user_orders, only: [:id, :uid, :total, :created_on, :status, :user_id]
   end
 end

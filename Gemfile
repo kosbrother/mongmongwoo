@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-
-if ENV["RAILS_ENV"] == "development"
-  ruby '2.2.2'
-elsif ENV["RAILS_ENV"] == "production" || ENV["RAILS_ENV"] == "staging"
-  ruby '2.2.4'
-end
+ruby '2.2.4'
+# if ENV["RAILS_ENV"] == "development"
+#   ruby '2.2.2'
+# elsif ENV["RAILS_ENV"] == "production" || ENV["RAILS_ENV"] == "staging"
+#   ruby '2.2.4'
+# end
 
 gem 'rails', '4.2.5'
 gem 'mysql2', '>= 0.3.13', '< 0.5'
