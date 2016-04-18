@@ -1,7 +1,7 @@
-set :deploy_to, '/home/staging/monmonhouse'
+set :deploy_to, '/home/deploy/monmonhouse'
 set :stage, :staging
 set :branch, 'staging'
-server '106.185.25.83', user: 'staging', roles: %w{web app}
+server '106.185.34.142', user: 'deploy', roles: %w{web app}
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
