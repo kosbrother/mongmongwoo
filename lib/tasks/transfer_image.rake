@@ -3,7 +3,7 @@ namespace :images do
   desc "transer images from Server"
   task :photos  => :environment do
     Photo.all.each do |p|
-      unless file_exist?(p.image.url)
+      unless file_exist?(p.image.url)        
         url = "http://106.185.34.142/storage/#{p.image.path}"
         p.remove_image
         p.remote_image_url = url
