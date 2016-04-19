@@ -1,0 +1,5 @@
+dependencies:
+  override:
+    - mv config/secrets.ci.yml config/secrets.yml
+    - bundle install: # note ':' here
+        timeout: 180 # fail if command has no output for 3 minutes

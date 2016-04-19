@@ -33,7 +33,6 @@ gem 'fog'
 # For carawl cvs data setup
 gem 'nokogiri'
 # gem 'therubyracer'
-gem 'rspec-rails'
 gem 'capybara'
 gem 'selenium-webdriver'
 # For credential data
@@ -42,7 +41,6 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'meta_request'
-  gem 'faker'
   gem 'pry-rails'
 
   # 檢查安全性
@@ -67,4 +65,13 @@ group :development, :test do
   gem 'capistrano-rbenv'
   gem 'capistrano-sidekiq'
   gem 'guard-livereload', '~> 2.5', require: false
+  gem 'faker'
+  gem "rspec-rails"
+  gem 'guard-rspec'
+  gem 'factory_girl_rails'
+
+end
+
+group :test do
+  gem 'database_cleaner'
 end
