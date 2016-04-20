@@ -27,6 +27,7 @@ gem 'will_paginate', '~> 3.0.5'
 gem "jquery-fileupload-rails"
 gem 'bcrypt', '~> 3.1.7'
 gem 'gcm'
+gem "haml-rails", "~> 0.9"
 
 
 gem 'fog'
@@ -69,7 +70,6 @@ group :development, :test do
   gem "rspec-rails"
   gem 'guard-rspec'
   gem 'factory_girl_rails'
-
 end
 
 group :test do
