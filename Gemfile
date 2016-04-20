@@ -27,6 +27,7 @@ gem 'will_paginate', '~> 3.0.5'
 gem "jquery-fileupload-rails"
 gem 'bcrypt', '~> 3.1.7'
 gem 'gcm'
+gem "haml-rails", "~> 0.9"
 
 
 gem 'fog'
@@ -42,7 +43,6 @@ group :development do
   gem "binding_of_caller"
   gem 'meta_request'
   gem 'pry-rails'
-  gem "haml-rails", "~> 0.9"
 
   # 檢查安全性
   gem 'brakeman', :require => false
