@@ -42,6 +42,7 @@ group :development do
   gem "binding_of_caller"
   gem 'meta_request'
   gem 'pry-rails'
+  gem "haml-rails", "~> 0.9"
 
   # 檢查安全性
   gem 'brakeman', :require => false
@@ -69,7 +70,6 @@ group :development, :test do
   gem "rspec-rails"
   gem 'guard-rspec'
   gem 'factory_girl_rails'
-
 end
 
 group :test do
