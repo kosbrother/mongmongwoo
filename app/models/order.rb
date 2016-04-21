@@ -29,7 +29,7 @@ class Order < ActiveRecord::Base
   has_many :items, class_name: "OrderItem", dependent: :destroy
   has_one :info, class_name: "OrderInfo", dependent: :destroy
 
-  self.per_page = 10
+  self.per_page = 100
 
   def info_store_code
     info.ship_store_code
