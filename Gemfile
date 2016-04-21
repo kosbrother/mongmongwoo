@@ -55,9 +55,6 @@ group :development do
 
   # 監測網站效能
   gem 'newrelic_rpm'
-
-  gem "haml-rails", "~> 0.9"
-
 end
 
 group :development, :test do

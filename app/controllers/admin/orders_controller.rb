@@ -1,6 +1,6 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
-  before_action :find_order, only: [:show, :order_processing, :item_shipping, :item_shipped, :order_cancelled]
+  before_action :find_order, only: [:show, :update, :order_processing, :item_shipping, :item_shipped, :order_cancelled]
 
   def index
     @order_page = @orders = Order.includes(:user, :info, :items).recent.paginate(:page => params[:page])
@@ -22,7 +22,6 @@ class Admin::OrdersController < AdminController
   end
 
   def update
-    @order = Order.find(params[:id])
     if @order.update(note: params['order']['note'])
       @result = true
     else
