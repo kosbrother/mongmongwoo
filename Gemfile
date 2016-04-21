@@ -1,10 +1,5 @@
 source 'https://rubygems.org'
 ruby '2.2.4'
-# if ENV["RAILS_ENV"] == "development"
-#   ruby '2.2.2'
-# elsif ENV["RAILS_ENV"] == "production" || ENV["RAILS_ENV"] == "staging"
-#   ruby '2.2.4'
-# end
 
 # Use Unicorn as the app server
 gem 'unicorn'
@@ -38,21 +33,19 @@ gem 'capybara'
 gem 'selenium-webdriver'
 # For credential data
 gem "figaro"
+
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'meta_request'
+  gem "letter_opener"
   gem 'pry-rails'
-
   # 檢查安全性
   gem 'brakeman', :require => false
-
   # 檢查 N+1 Query
   gem 'bullet'
-
   # 靜態分析程式碼(已整合多套工具)
   gem 'rubycritic', :require => false
-
   # 監測網站效能
   gem 'newrelic_rpm'
 end
