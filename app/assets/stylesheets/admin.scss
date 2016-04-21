@@ -40,3 +40,15 @@ div.item-cover-words-intro, div.notification-intro {
   color: #777;
   cursor: move;
 }
+
+/*訂單列表*/
+ .edit-order-btn{
+   border: none;
+   width: 100%;
+   background-color: #fff;
+   text-align: left;
+   padding-left: 20px;
+ }
+ .edit-order-btn:hover{
+   background-color: #8FCEDD;
+ }

@@ -14,6 +14,8 @@
         %tr
           %td
             = render(partial: "info_and_items_list", locals: { order: order })
+            = render(partial: "edit_order", locals: { order: order })
+
           %td= order.created_on
           %td= link_to order.info_user_name, admin_user_path(order.user)
           %td= phone_number_looking(order)
@@ -30,6 +32,13 @@
                 按此選擇
                 %span.caret
               %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
-                %li= link_to "查看"
-                %li= link_to "編輯"
-                %li= link_to "刪除"
+                %li
+                  %button.edit-order-btn{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", remote: true, :type => "button"}
+                    查看
+                %li
+                  %button.edit-order-btn{"data-target" => "#edit-order-#{order.id}", "data-toggle" => "modal", remote: true, :type => "button"}
+                    編輯
+                %li
+                  %button.edit-order-btn
+                    刪除
+      #updateResult

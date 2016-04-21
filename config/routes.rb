@@ -73,7 +73,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show] do
+    resources :orders, only: [:index, :show, :update] do
       collection do
         get "exporting_files"
       end

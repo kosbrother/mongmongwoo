@@ -15,3 +15,14 @@
 //= require ckeditor/init
 //= require pnotify.custom.min
 //= require_tree ./admin
+
+//Ajax
+var ready;
+ready = function() {
+   $('.edit_order').submit(function(){
+       var id = $(this).data('target');
+       $(id).modal('hide');
+    })
+};
+$(document).ready(ready);
+$(document).on('page:load', ready);
