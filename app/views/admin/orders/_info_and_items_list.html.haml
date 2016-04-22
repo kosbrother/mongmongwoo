@@ -40,6 +40,11 @@
                   %td= item.item_style
                   %td= item.item_quantity
                   %td= item.item_price
+        %table.table.table-bordered
+          %tbody
+            %tr
+              %td.info 訂單總金額
+              %td= order.total
         %h4#myModalLabel.modal-title 訂單備註
         .note
           = order.note
