@@ -10,9 +10,8 @@
     %h2= @category.name
     .category-all-items
       .panel-body
-        .apple_pagination
-          = will_paginate @category_page, :container => false
-        %br/
+        .btn-group{"aria-label" => "排序方式", :role => "group"}
+          = link_to '依照排名', url_for(order: 'position'), class: 'btn btn-default'
+          = link_to '依照更新時間', url_for(order: 'update'), class: 'btn btn-default'
+
         = render "table"
-        .apple_pagination
-          = will_paginate @category_page, :container => false

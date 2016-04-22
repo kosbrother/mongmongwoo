@@ -18,7 +18,7 @@
 
 class Item < ActiveRecord::Base
   scope :recent, lambda { order(id: :DESC) }
-
+  scope :update_time, lambda { order(updated_at: :DESC) }
   scope :priority, lambda { order(position: :ASC) }
 
   enum status: { on_shelf: 0, off_shelf: 1 }
