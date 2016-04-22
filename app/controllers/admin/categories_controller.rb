@@ -24,7 +24,11 @@ class Admin::CategoriesController < AdminController
   end
 
   def show
-    @category_page = @category_items = @category.items.priority.paginate(:page => params[:page])
+    if params['order'] == 'update'
+      @category_items = @category.items.update_time
+    else
+      @category_items = @category.items.priority
+    end
   end
 
   def sort_items_priority
