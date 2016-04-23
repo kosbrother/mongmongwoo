@@ -19,9 +19,9 @@
             %li.list-group-item
               門市店號： #{order.info_store_code}
             %li.list-group-item
-              門市名稱： #{order.info_store_name(order.info_store_code)}
+              門市名稱： #{order.info.store.name}
             %li.list-group-item
-              門市地址： #{order.info_store_address(order.info_store_code)}
+              門市地址： #{order.info.store.address}
         %br/
         %h4#myModalLabel.modal-title 商品明細
         %table.table.table-bordered
@@ -36,7 +36,7 @@
               - order.items.each do |item|
                 %tr.success
                   %td
-                    = link_to item.item_name, admin_item_path(item.source_item_id)
+                    = link_to item.item_name, admin_item_path(item.item)
                   %td= item.item_style
                   %td= item.item_quantity
                   %td= item.item_price

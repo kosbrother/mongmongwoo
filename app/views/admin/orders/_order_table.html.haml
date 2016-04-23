@@ -20,9 +20,6 @@
                 %span.caret
               %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
                 %li
-                  %button.edit-order-btn{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", remote: true, :type => "button"}
-                    查看
-                %li
                   %button.edit-order-btn{"data-target" => "#edit-order-#{order.id}", "data-toggle" => "modal", remote: true, :type => "button"}
                     編輯
                 %li
@@ -43,7 +40,7 @@
                   - order.items.each do |item|
                     %tr.success
                       %td
-                        = link_to item.item_name, admin_item_path(item.source_item_id)
+                        = link_to item.item_name, admin_item_path(item.item)
                       %td= item.item_style
                       %td= item.item_quantity
             %table.table.table-bordered
