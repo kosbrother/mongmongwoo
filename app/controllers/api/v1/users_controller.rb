@@ -1,15 +1,19 @@
 class Api::V1::UsersController < ApiController
   def create
-    user = User.find_or_initialize_by(email: params[:email])
+    user = User.find_or_initialize_by(uid: params[:uid])
+    params[:email] = SecureRandom.base64(20) if params[:email].blank?
     user.email = params[:email]
     user.user_name = params[:user_name]
     user.real_name = params[:real_name]
     user.gender = params[:gender]
     user.phone = params[:phone]
     user.address = params[:address]
-    user.uid = params[:uid]
-    user.save!
-    render json: "Successfully Create"    
+    if user.save
+      render json: "Successfully Create"
+    else
+      Rails.logger.error("error: #{user.errors.messages}")
+      render json: "Error"
+    end
   end
 
   def show
