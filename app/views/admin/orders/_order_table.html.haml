@@ -51,9 +51,10 @@
                   %td= order.note
           %td= order.total
           %td
-            = link_to "新訂單", "#",{ id: "order-#{order.id}-placed", class: "btn btn-default order-status-btn #{order.status == "新訂單" ? "btn-lg" : "btn-xs"}" }
-            = link_to "處理中", order_processing_admin_order_path(order),{ method: :patch, remote: true, id: "order-#{order.id}-processing", class: "btn order-status-btn #{order.status == "處理中" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-            = link_to "已出貨", item_shipping_admin_order_path(order), { method: :patch, remote: true, id: "order-#{order.id}-shipping", class: "btn order-status-btn #{order.status == "已出貨" ? "btn-success btn-lg" : "btn-default btn-xs"}" }
-            = link_to "完成取貨", item_shipped_admin_order_path(order), { method: :patch, remote: true, id: "order-#{order.id}-shipped", class: "btn order-status-btn #{order.status == "完成取貨" ? "btn-info btn-lg" : "btn-default btn-xs"}" }
-            = link_to "訂單取消", order_cancelled_admin_order_path(order), { method: :patch, remote: true, id: "order-#{order.id}-cancel", class: "btn order-status-btn #{order.status == "訂單取消" ? "btn-warning btn-lg" : "btn-default btn-xs"}" }
+            .btn-group-vertical{role: "group"}
+              = link_to "新訂單", "#",{ id: "order-#{order.id}-placed", class: "btn btn-default #{order.status == "新訂單" ? "btn-lg" : "btn-xs"}" }
+              = link_to "處理中", order_processing_admin_order_path(order),{ method: :patch, remote: true, id: "order-#{order.id}-processing", class: "btn #{order.status == "處理中" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
+              = link_to "已出貨", item_shipping_admin_order_path(order), { method: :patch, remote: true, id: "order-#{order.id}-shipping", class: "btn #{order.status == "已出貨" ? "btn-success btn-lg" : "btn-default btn-xs"}" }
+              = link_to "完成取貨", item_shipped_admin_order_path(order), { method: :patch, remote: true, id: "order-#{order.id}-shipped", class: "btn #{order.status == "完成取貨" ? "btn-info btn-lg" : "btn-default btn-xs"}" }
+              = link_to "訂單取消", order_cancelled_admin_order_path(order), { method: :patch, remote: true, id: "order-#{order.id}-cancel", class: "btn #{order.status == "訂單取消" ? "btn-warning btn-lg" : "btn-default btn-xs"}" }
       #updateResult
