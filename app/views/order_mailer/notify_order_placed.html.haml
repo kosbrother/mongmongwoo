@@ -10,24 +10,25 @@
             %p 詳細資訊與購物內容可於萌萌屋App「我的訂單」裡查詢。         
         %tr
           %td
-            %h3 以下是您這次訂購的商品
-            %table
+            %h3.red 您的訂單編號是：#{@order.id}
+            %h3.blue 以下是您這次訂購的商品：
+            %table{:border=>"1"}
               %thead
                 %tr
-                  %th 商品明細
+                  %th.left 商品明細
                   %th 單價
                   %th 數量
                   %th 小記
               %tbody
                 - @order_items.each do |order_item|
                   %tr
-                    %td
+                    %td.left
                       = order_item.item_name
-                    %td
+                    %td.right
                       = order_item.item_price
-                    %td
+                    %td.right
                       = order_item.item_quantity
-                    %td
+                    %td.right
                       = order_item.item_quantity * order_item.item_price
             %br
             %table
@@ -42,8 +43,7 @@
         %tr
           %td
             %p 若有任何問題，請聯繫我們客服。
-            %p 萌萌期待您的再次光臨！
-            %p 萌萌屋
+            %p 萌萌屋期待您的再次光臨！
             %p 聯絡客服
             %p 
               %span
