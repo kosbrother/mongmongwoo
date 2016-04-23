@@ -18,6 +18,7 @@ class Api::V1::OrdersController < ApiController
       info.ship_store_code = params[:ship_store_code]
       info.ship_store_id = params[:ship_store_id]
       info.ship_store_name = params[:ship_store_name]
+      info.ship_email = get_info_email(params[:ship_email],order.user)
       info.save!
 
       # 商品明細 OrderItem
@@ -31,6 +32,8 @@ class Api::V1::OrdersController < ApiController
         item.item_price = product[:price]        
         item.save!
       end
+      
+      OrderMailer.delay.notify_order_placed(order)
     end
 
     render json: "Succes：新增一筆訂單"
@@ -52,5 +55,11 @@ class Api::V1::OrdersController < ApiController
   def user_owned_orders
     user_orders = Order.includes(:user).where("uid = ?", params[:uid]).page(params[:page]).per_page(20)
     render json: user_orders, only: [:id, :uid, :total, :created_on, :status, :user_id]
+  end
+
+  private
+
+  def get_info_email(email_param,user)
+    (email_param.present?) ? email_param : user.email
   end
 end

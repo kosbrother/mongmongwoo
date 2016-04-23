@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  validates_presence_of :user_name, :uid
+  validates_presence_of :user_name, :uid, :email
   validates_presence_of :real_name, allow_blank: true
   validates_presence_of :gender, allow_blank: true
   validates_presence_of :address, allow_blank: true
