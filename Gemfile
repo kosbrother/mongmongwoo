@@ -33,6 +33,7 @@ gem 'capybara'
 gem 'selenium-webdriver'
 # For credential data
 gem "figaro"
+gem 'sidekiq'
 
 group :development do
   gem "better_errors"
