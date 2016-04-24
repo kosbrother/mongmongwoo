@@ -79,10 +79,7 @@ Rails.application.routes.draw do
       end
 
       member do
-        patch "order_processing"
-        patch "item_shipping"
-        patch "item_shipped"
-        patch "order_cancelled"
+        patch "update_status"
       end
     end
 

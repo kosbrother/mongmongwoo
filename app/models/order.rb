@@ -51,6 +51,12 @@ class Order < ActiveRecord::Base
     info.ship_phone
   end
 
+  def status_btn_element_id
+    names = ['placed', 'processing', 'shipping', 'shipped', 'cancel']
+    "#order-#{id}-#{names[self[:status]]}"
+  end
+
+
   def generate_result_order(order, info, items)
     # 訂單資料
     result_order = {}
