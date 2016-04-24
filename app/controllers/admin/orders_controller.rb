@@ -28,18 +28,14 @@ class Admin::OrdersController < AdminController
   end
 
   def order_processing
-    begin
-      @order.update_attributes!(status: 1)
-    rescue ActiveRecord::ActiveRecordError
+    if  @order.update_attributes!(status: 1)
+      flash[:notice] = "已將編號：#{@order.id} 訂單狀態設為處理中"
+    else
+      Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"
     end
 
     respond_to do |format|
-      format.html do
-        flash[:notice] = "已將編號：#{@order.id} 訂單狀態設為處理中"
-        redirect_to :back
-      end
-
       format.js
     end
   end
