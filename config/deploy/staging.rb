@@ -1,5 +1,5 @@
 set :stage, :staging
-set :branch, "staging"
+set :branch, "master"
 
 set :server_name, 'localhost'
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
