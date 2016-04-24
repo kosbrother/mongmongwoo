@@ -22,14 +22,8 @@ class Admin::OrdersController < AdminController
   end
 
   def update
-    if @order.update(note: params['order']['note'])
-      @result = true
-    else
-      @result = false
-    end
-
     respond_to do |format|
-      format.js
+      format.js { @order.update(note: params['order']['note']) ? @result = "訂單變更完成" : @result = "訂單變更失敗" }
     end
   end
 
