@@ -88,6 +88,14 @@ Rails.application.routes.draw do
 
     # 推播訊息
     resources :notifications, only: [:index, :show, :new, :create]
+
+    # 銷售統計
+    resources :sales_reports, only: [:index] do
+      collection do
+        get "item_sales_result"
+        get "item_revenue_result"
+      end
+    end
   end
 
   # API for App

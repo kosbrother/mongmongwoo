@@ -1,0 +1,32 @@
+.row
+  .row
+    .col-md-12.panel-warning
+      .content-box-header.panel-heading
+        .panel-title 商品銷售數量列表
+      .content-box-large.box-with-header
+        .panel-body
+          .report-type
+            %ul.nav.nav-tabs
+              %li.active{:role => "presentation"}
+                %a{:href => "#{item_sales_result_admin_sales_reports_path}"} 商品銷售數量
+              %li{:role => "presentation"}
+                %a{:href => "#{item_revenue_result_admin_sales_reports_path}"} 商品銷售金額
+          %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+            %thead
+              %tr
+                %th 商品編號
+                %th 商品分類
+                %th 商品名稱
+                %th 銷售數量
+            %tbody
+              - @item_sales.each do |item|
+                %tr
+                  %td= link_to item.source_item_id, admin_item_path(item.item)
+                  %td
+                    - item.categories.each do |category|
+                      %ul.list-unstyled
+                        %li= link_to category.name, admin_category_path(category)
+                  %td= link_to item.item_name, admin_item_path(item.item)
+                  %td
+                    %p.lead.spec-style-stock
+                      %span= item.sum_item_quantity
