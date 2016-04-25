@@ -10,4 +10,8 @@ class ApiController < ActionController::Base
   def find_road
     @road = @town.roads.find(params[:road_id])
   end
+
+  def android_version
+    render json: AndroidVersion.last
+  end
 end
