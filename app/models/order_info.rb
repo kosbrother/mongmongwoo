@@ -16,4 +16,7 @@
 
 class OrderInfo < ActiveRecord::Base
   belongs_to :order
+  belongs_to :store, :foreign_key => "ship_store_id"
+
+  delegate :address, to: :store
 end

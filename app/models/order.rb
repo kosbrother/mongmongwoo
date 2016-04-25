@@ -31,17 +31,7 @@ class Order < ActiveRecord::Base
 
   self.per_page = 100
 
-  def info_store_code
-    info.ship_store_code
-  end
-
-  def info_store_name(store_code)
-    Store.find_by(store_code: store_code).name
-  end
-
-  def info_store_address(store_code)
-    Store.find_by(store_code: store_code).address
-  end
+  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, to: :info
 
   def info_user_name
     user.user_name
@@ -50,6 +40,12 @@ class Order < ActiveRecord::Base
   def info_user_phone
     info.ship_phone
   end
+
+  def status_btn_element_id
+    names = ['placed', 'processing', 'shipping', 'shipped', 'cancel']
+    "#order-#{id}-#{names[self[:status]]}"
+  end
+
 
   def generate_result_order(order, info, items)
     # 訂單資料

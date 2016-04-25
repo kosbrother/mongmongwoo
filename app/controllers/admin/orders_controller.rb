@@ -1,9 +1,9 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
-  before_action :find_order, only: [:show, :update, :order_processing, :item_shipping, :item_shipped, :order_cancelled]
+  before_action :find_order, only: [:show, :update, :update_status]
 
   def index
-    @order_page = @orders = Order.includes(:user, :info, :items).recent.paginate(:page => params[:page])
+    @order_page = @orders = Order.includes(:user, info: :store, items: :item).recent.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html
@@ -23,9 +23,9 @@ class Admin::OrdersController < AdminController
 
   def update
     if @order.update(note: params['order']['note'])
-      @result = true
+      @result = "訂單變更完成"
     else
-      @result = false
+      @result = "訂單變更失敗"
     end
 
     respond_to do |format|
@@ -33,70 +33,18 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def order_processing
-    begin
-      @order.update_attributes!(status: 1)
-    rescue ActiveRecord::ActiveRecordError
+  def update_status
+    @status = params['status'].to_i
+    if @order.update_attributes!(status: @status)
+      @element_id = @order.status_btn_element_id
+      @order_id = "#order-#{@order.id}"
+      @message = "已將編號：#{@order.id} 訂單狀態設為#{@order.status}"
+    else
+      Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"
     end
 
     respond_to do |format|
-      format.html do
-        flash[:notice] = "已將編號：#{@order.id} 訂單狀態設為處理中"
-        redirect_to :back
-      end
-
-      format.js
-    end
-  end
-
-  def item_shipping
-    begin
-      @order.update_attributes!(status: 2)
-    rescue ActiveRecord::ActiveRecordError
-      flash[:alert] = "請仔細確認訂單的實際處理進度"
-    end
-
-    respond_to do |format|
-      format.html do
-        flash[:notice] = "已將編號：#{@order.id} 訂單狀態設為已出貨"
-        redirect_to :back
-      end
-
-      format.js
-    end
-  end
-
-  def item_shipped
-    begin
-      @order.update_attributes!(status: 3)
-    rescue ActiveRecord::ActiveRecordError
-      flash[:alert] = "請仔細確認訂單的實際處理進度"
-    end
-
-    respond_to do |format|
-      format.html do
-        flash[:notice] = "已將編號：#{@order.id} 訂單狀態設為完成取貨"
-        redirect_to :back
-      end
-
-      format.js
-    end
-  end
-
-  def order_cancelled
-    begin
-      @order.update_attributes!(status: 4)
-    rescue ActiveRecord::ActiveRecordError
-      flash[:alert] = "請仔細確認訂單的實際處理進度"
-    end
-
-    respond_to do |format|
-      format.html do
-        flash[:alert] = "已將編號：#{@order.id} 訂單狀態設為訂單取消"
-        redirect_to :back
-      end
-
       format.js
     end
   end
