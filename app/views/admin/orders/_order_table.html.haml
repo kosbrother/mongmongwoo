@@ -31,6 +31,7 @@
             %table.table.table-bordered
               %thead
                 %tr.active
+                  %th 編號
                   %th 名稱
                   %th 樣式
                   %th 數量
@@ -38,6 +39,7 @@
                 - if order.items
                   - order.items.each do |item|
                     %tr.success
+                      %td= item.id
                       %td
                         = link_to item.item_name, admin_item_path(item.item)
                       %td= item.item_style
