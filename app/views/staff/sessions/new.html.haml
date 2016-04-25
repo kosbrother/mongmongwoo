@@ -1,7 +1,7 @@
 %div
   %h1 請登入
   %div
-    = form_tag signin_path do
+    = form_tag  staff_signin_path do
       = label_tag :email, "Email", placeholder: "請輸入Email"
       = email_field_tag :email, nil
       %hr/
