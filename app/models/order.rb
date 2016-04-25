@@ -35,14 +35,6 @@ class Order < ActiveRecord::Base
     info.ship_store_code
   end
 
-  def info_store_name(store_code)
-    Store.find_by(store_code: store_code).name
-  end
-
-  def info_store_address(store_code)
-    Store.find_by(store_code: store_code).address
-  end
-
   def info_user_name
     user.user_name
   end

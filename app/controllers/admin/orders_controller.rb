@@ -22,8 +22,14 @@ class Admin::OrdersController < AdminController
   end
 
   def update
+    if @order.update(note: params['order']['note'])
+      @result = "訂單變更完成"
+    else
+      @result = "訂單變更失敗"
+    end
+
     respond_to do |format|
-      format.js { @order.update(note: params['order']['note']) ? @result = "訂單變更完成" : @result = "訂單變更失敗" }
+      format.js
     end
   end
 
@@ -37,6 +43,7 @@ class Admin::OrdersController < AdminController
       Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"
     end
+
     respond_to do |format|
       format.js
     end
