@@ -31,9 +31,7 @@ class Order < ActiveRecord::Base
 
   self.per_page = 100
 
-  def info_store_code
-    info.ship_store_code
-  end
+  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, to: :info
 
   def info_user_name
     user.user_name

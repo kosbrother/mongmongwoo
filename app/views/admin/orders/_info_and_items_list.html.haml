@@ -13,15 +13,15 @@
         %ul.list-group
           - if order.info
             %li.list-group-item
-              收件人姓名： #{order.info.ship_name}
+              收件人姓名： #{order.ship_name}
             %li.list-group-item
-              聯絡電話： #{order.info.ship_phone}
+              聯絡電話： #{order.ship_phone}
             %li.list-group-item
-              門市店號： #{order.info_store_code}
+              門市店號： #{order.ship_store_code}
             %li.list-group-item
-              門市名稱： #{order.info.store.name}
+              門市名稱： #{order.ship_store_name}
             %li.list-group-item
-              門市地址： #{order.info.store.address}
+              門市地址： #{order.address}
         %br/
         %h4#myModalLabel.modal-title 商品明細
         %table.table.table-bordered
