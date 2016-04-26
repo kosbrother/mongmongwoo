@@ -2,13 +2,13 @@
   %ul.nav
     / Main menu
     %li.current
-      %a{:href => admin_root_path}
+      = link_to admin_root_path do
         %i.glyphicon.glyphicon-home
         管理首頁
     %li
-      %a{:href => new_admin_item_path}
+      = link_to new_admin_item_path do
         %i.glyphicon.glyphicon-plus
-        新增商品
+        新增商品        
     %li.submenu
       %a{:href => "#"}
         %i.glyphicon.glyphicon-list-alt
@@ -17,15 +17,13 @@
       / Sub menu
       %ul
         %li
-          %a{:href => admin_categories_path}
-            分類列表
+          = link_to "分類列表", admin_categories_path
         - Category.all.each do |category|
           %li
-            %a{:href => "#{admin_category_path(category)}"}
+            = link_to admin_category_path(category) do
               = category.name
         %li
-          %a{:href => new_admin_category_path}
-            新增分類
+          = link_to "新增分類", new_admin_category_path
     %li.submenu
       %a{:href => "#"}
         %i.glyphicon.glyphicon-user
@@ -34,8 +32,7 @@
       / Sub menu
       %ul
         %li
-          %a{:href => admin_users_path}
-            用戶資料列表
+          = link_to "用戶資料列表", admin_users_path
         %li
           %a{:href => "#"}
             用戶選項
@@ -47,9 +44,9 @@
       / Sub menu
       %ul
         %li
-          %a{:href => admin_orders_path} 訂單列表
+          = link_to "訂單列表", admin_orders_path
         %li
-          %a{:href => exporting_files_admin_orders_path} 寄件列表
+          = link_to "寄件列表", exporting_files_admin_orders_path
         %li
           %a{:href => "#"} 訂單選項
     %li.submenu
@@ -60,7 +57,7 @@
       / Sub menu
       %ul
         %li
-          %a{:href => admin_notifications_path} 推播訊息
+          = link_to "推播訊息", admin_notifications_path
         %li
           %a{:href => "#"} 註冊裝置
     %li.submenu
@@ -71,8 +68,7 @@
       / Sub menu
       %ul
         %li
-          %a{:href => "#{item_sales_result_admin_sales_reports_path}"}
-            商品銷量與金額
+          = link_to "商品銷量與金額", item_sales_result_admin_sales_reports_path          
         %li
           %a{:href => "#"}
             圖表選項
