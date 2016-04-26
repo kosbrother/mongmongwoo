@@ -29,7 +29,7 @@
                   %td= order.info_user_name
                   %td= phone_number_looking(order)
                   %td kosbrotherschool@gmail.com
-                  %td= order.info_store_code
+                  %td= order.ship_store_code
                   %td= order.total
         .apple_pagination
           = will_paginate @order_for_file_page, :container => false
