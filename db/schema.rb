@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160422151048) do
+ActiveRecord::Schema.define(version: 20160425094603) do
+
+  create_table "android_versions", force: :cascade do |t|
+    t.string  "version_name",   limit: 255
+    t.integer "version_code",   limit: 4
+    t.text    "update_message", limit: 65535
+  end
 
   create_table "assistants", force: :cascade do |t|
     t.string   "username",        limit: 255

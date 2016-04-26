@@ -91,6 +91,7 @@ Rails.application.routes.draw do
   end
 
   # API for App
+  get 'api/android_version' => 'api#android_version'
   namespace :api do
     namespace :v1 do
       # 分類API
