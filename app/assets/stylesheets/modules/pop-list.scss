@@ -1,0 +1,22 @@
+.pop-list{
+  vertical-align: middle;
+  >.image{
+    display: inline-block;
+    width: 85px;
+    height: 85px;
+  }
+  .group{
+    display: inline-block;
+    vertical-align: middle;
+    width: 55%;
+    > .list{
+      font-size: 0.888889em;
+      min-height: 50px;
+    }
+    > .price{
+      font-size: 0.777778em;
+      color: #ff2843;
+      margin-top: 10px;
+    }
+  }
+}

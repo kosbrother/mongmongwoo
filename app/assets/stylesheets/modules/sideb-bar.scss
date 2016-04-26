@@ -1,0 +1,27 @@
+.side-bar{
+  border: solid 1px black;
+  border-radius: 6px;
+  padding: 18px 20px;
+  > .header{
+    border-bottom: dashed 2px #ff7d7d;;
+    font-size: 1.333333em;
+    margin-bottom: 16px;
+    padding-bottom: 5px;
+  }
+  > .header:after{
+    content:url('icons/pencile.png');
+    float: right;
+  }
+  > .list{
+    font-size: 1.0555556em;
+    margin: 19px 0;
+  }
+  > .list:before{
+    content:url('icons/dimand.png')
+  }
+  >.image{
+    display: inline-block;
+    width: 85px;
+    height: 85px;
+  }
+}

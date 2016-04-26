@@ -1,0 +1,21 @@
+.app-banner{
+  background-image: url('side-app.png');
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  border: solid 1px black;
+  border-radius: 5px;
+  padding-top: 40px;
+  padding-left: 18px;
+  padding-right: 18px;
+  > .logo{
+    margin: 0 auto;
+    width: 100px;
+  }
+  > .text{
+    margin: 10px 0;
+    text-align: center;
+  }
+  > .image{
+    margin-top: 10px;
+  }
+}

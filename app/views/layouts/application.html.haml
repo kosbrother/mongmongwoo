@@ -8,4 +8,9 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
-    .row
+    = render 'partials/navbar'
+    .container-fluid
+      .col-lg-3
+        = render 'partials/sidebar'
+      .col-lg-9
+        = yield

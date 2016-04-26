@@ -1,0 +1,22 @@
+%nav.navbar.navbar-default.nav-bar
+  / Brand and toggle get grouped for better mobile display
+  .navbar-header
+    %a.navbar-brand.logo-block{:href => "#"}
+      = image_tag('icons/logo.png', class: 'logo')
+      .name
+        萌萌屋
+  / Collect the nav links, forms, and other content for toggling
+  #nav-bar-collapse.collapse.navbar-collapse
+    %ul.nav.navbar-nav.navbar-right
+      %li.nav-list
+        = link_to "#" do
+          .icon
+            = image_tag('icons/shoppingcart.png')
+          .list
+            購物車
+      %li.nav-list
+        = link_to "#" do
+          .icon
+            = image_tag('icons/user.png')
+          .list
+            登入/註冊

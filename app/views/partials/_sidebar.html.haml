@@ -1,0 +1,40 @@
+.aside
+  .side-bar
+    .header
+      商品清單
+    - @categories.each do |category|
+      .list
+        = link_to category.name, "#"
+  .side-bar
+    .header
+      熱門商品
+    .pop-list
+      .image
+        = link_to "#" do
+          = image_tag('example/item-cover.png')
+      .group
+        .list
+          = link_to "#" do
+            可愛萌卡通系列洗可愛萌卡通系列洗
+        .price
+          NT.345
+  .app-banner
+    .logo
+      = image_tag('brand.png')
+    .text
+      萌萌屋
+    .text
+      走在青年流行前線
+    .text
+      您所需要的東西都在這裡！
+      %br/
+      快下載萌萌屋，搶購最新商品吧！
+    .image
+      = link_to "#" do
+        = image_tag('apple.png')
+    .image
+      = link_to "#" do
+        = image_tag('android.png')
+  %iframe{:allowTransparency => "true", :frameborder => "0", :height => "214", :scrolling => "no", :src => "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkingofgametw%2F&tabs&width=260px&height=214&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=395184303873523", :style => "border:none;overflow:hidden", :width => "260px"}
+  .line-banner
+    = image_tag('line.jpg')
