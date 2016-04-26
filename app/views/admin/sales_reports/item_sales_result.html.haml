@@ -21,12 +21,12 @@
             %tbody
               - @item_sales.each do |item|
                 %tr
-                  %td= link_to item.source_item_id, admin_item_path(item.item)
+                  %td= link_to item.source_item_id, admin_item_path(item.item), target: "_blank"
                   %td
                     - item.categories.each do |category|
                       %ul.list-unstyled
-                        %li= link_to category.name, admin_category_path(category)
-                  %td= link_to item.item_name, admin_item_path(item.item)
+                        %li= link_to category.name, admin_category_path(category), target: "_blank"
+                  %td= link_to item.item_name, admin_item_path(item.item), target: "_blank"
                   %td
                     %p.lead.spec-style-stock
                       %span= item.sum_item_quantity
