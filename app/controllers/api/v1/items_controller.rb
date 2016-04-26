@@ -1,8 +1,4 @@
 class Api::V1::ItemsController < ApiController
-  def index
-    items = Item.includes(:photos, :specs, :item_categories, :categories).priority
-    render json: items, only: [:id, :name, :price, :position]
-  end
 
   def show
     item = Item.includes(:photos, :specs).find(params[:id])

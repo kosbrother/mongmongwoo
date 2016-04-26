@@ -33,7 +33,7 @@ class Admin::CategoriesController < AdminController
 
   def sort_items_priority
     params[:item].each_with_index do |id, index|
-      Item.where(id: id).update_all({position: index + 1})
+      ItemCategory.where(category_id: params[:category],item_id: id).update_all({position: index + 1})
     end
 
     render nothing: true
