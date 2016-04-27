@@ -10,6 +10,8 @@
 #
 
 class Road < ActiveRecord::Base
+  scope :seven_cvs, lambda { where("store_type = ?", "4") }
+
   belongs_to :town
   has_many :stores
 end

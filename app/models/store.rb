@@ -18,6 +18,8 @@
 #
 
 class Store < ActiveRecord::Base
+  scope :seven_cvs, lambda { where("store_type = ?", "4") }
+
   belongs_to :county
   belongs_to :town
   belongs_to :road
