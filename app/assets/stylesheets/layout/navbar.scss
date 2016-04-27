@@ -37,3 +37,25 @@
     }
   }
 }
+
+#nav-bar-collapse{
+  .dropdown{
+    text-align: center;
+    > .dropdown-toggle, .dropdown-toggle:hover, .dropdown-toggle:visited, .dropdown-toggle:focus,  .dropdown-toggle:active{
+      color: #fff;
+      background-color: $nav-background-color;
+      .caret{
+        color: #fff;
+      }
+    }
+    >.dropdown-menu{
+      > .list{
+        text-align: center;
+        > .link{
+          color: black;
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}

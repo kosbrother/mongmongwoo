@@ -13,6 +13,14 @@
   / Collect the nav links, forms, and other content for toggling
   #nav-bar-collapse.collapse.navbar-collapse
     %ul.nav.navbar-nav.navbar-right
+      %li.dropdown.visible-xs-block
+        %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+          %span.caret
+          商品分類
+        %ul.dropdown-menu
+          - @categories.each do |category|
+            %li.list
+              = link_to category.name, "#", class: "link"
       %li.nav-list
         = link_to "#" do
           .icon
