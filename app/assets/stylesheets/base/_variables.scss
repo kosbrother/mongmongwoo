@@ -17,10 +17,10 @@ $more-btn-border: solid 1px #fca3a3;
 $btn-border-radius: 2px;
 
 //url
-$url-pencil: url('icons/pencil.png');
-$url-diamond: url('icons/dimand.png');
-$url-dash-line: url('background/dash-line.png');
-$url-side-app:url('side-app.png');
+$url-pencil: image-url('icons/pencil.png');
+$url-diamond: image-url('icons/dimand.png');
+$url-dash-line: image-url('background/dash-line.png');
+$url-side-app: image-url('side-app.png');
 
 //font
 $html-font-size: 16px;
