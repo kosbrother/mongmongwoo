@@ -1,22 +1,14 @@
 %footer.footer
   .container
-    .nav.navbar-nav.navbar-left
-      %li.nav-list
-        = link_to "#" do
-          .list
-            關於萌萌屋
+    .footer
+      %li.list
+        = link_to "關於萌萌屋", "#"
       %li.divider
-      %li.nav-list
-        = link_to "#" do
-          .list
-            客服中心
-      %li.divider
-      %li.nav-list
-        = link_to "#" do
-          .list
-            常見問答
-      %li.divider
-      %li.nav-list
-        = link_to "#" do
-          .list
-            意見回饋
+      %li.list
+        聯繫客服：
+        %li.list
+          = link_to "http://line.me/ti/p/%40kya5456n" do
+            = image_tag('icons/line.png')
+        %li.list
+          = link_to  "https://www.facebook.com/kingofgametw/" do
+            = image_tag('icons/fb.png')

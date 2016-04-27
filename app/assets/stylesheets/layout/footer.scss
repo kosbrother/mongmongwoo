@@ -1,9 +1,15 @@
 .footer{
   height: 50px;
   background-color: $footer-background-color;
-  .nav-list {
+  .list {
     position: relative;
-    top: -8px;
+    top: 3px;
+    margin: 0 5px;
+    color: #fff;
+    display: inline-block;
+    > a{
+      color: #fff;
+    }
   }
   .divider{
     height: 30px;
@@ -14,22 +20,3 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-  .footer{
-    .nav-list {
-      margin: 0 5px;
-      position: relative;
-      top: -8px;
-      width: 20%;
-      display: inline-block;
-      > a {
-        margin: 0 0;
-        padding: 10px 0;
-        font-size: $mobile-font-size;
-      }
-    }
-    .divider{
-      top: 3px;
-    }
-  }
-}

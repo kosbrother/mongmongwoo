@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
   end
 
   def load_popular_items
-    @pop_items = Item.order(position: :asc).limit(5)
+    @pop_items = Item.joins(:item_categories).order( "item_categories.position asc").limit(6)
   end
 end
