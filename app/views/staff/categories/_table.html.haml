@@ -13,9 +13,7 @@
         %td
           %button.btn.btn-primary.btn-xs{:type => "button"}
             排序：
-            %span.badge= item.position
-          / <span id="item-<haml_loud> item.id </haml_loud>-position"><haml_loud> item.position </haml_loud></span>
-          / <span class="handle btn btn-default btn-xs"><i class="fa fa-arrows"></i>按住我</span>
+            %span.badge= item.categoy_position(@category)
         %td{:id => "status-#{item.id}"}
           = item_status(item.status)
         %td

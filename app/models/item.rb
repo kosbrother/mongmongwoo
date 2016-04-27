@@ -19,7 +19,7 @@
 class Item < ActiveRecord::Base
   scope :recent, lambda { order(id: :DESC) }
   scope :update_time, lambda { order(updated_at: :DESC) }
-  scope :priority, lambda { order(position: :ASC) }
+  scope :priority, lambda { order("item_categories.position ASC") }
 
   enum status: { on_shelf: 0, off_shelf: 1 }
 
@@ -46,5 +46,13 @@ class Item < ActiveRecord::Base
   def self.search_by_name(search_term)
     return [] if search_term.blank?
     where("name LIKE ?", "%#{search_term}%").recent
+  end
+
+  def categoy_position(category)
+    item_category(category).position
+  end
+
+  def item_category(category)
+    item_categories.where(category_id: category.id)[0]
   end
 end
