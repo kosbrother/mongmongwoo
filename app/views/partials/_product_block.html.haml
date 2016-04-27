@@ -1,0 +1,23 @@
+.category-header
+  .group
+    .icon
+      = image_tag("icons/category_header/#{items[0].category_id}.png")
+    .text
+      = title
+.row
+  - items.each do |item|
+    .col-lg-4
+      = link_to "#" do
+        .product-block
+          .image
+            = image_tag(item.cover.url, class: 'img-responsive center-block')
+          .text
+            = item.name
+          .price
+            = "NT #{item.price}"
+.row
+  .col-lg-offset-4.col-lg-4
+    = link_to "#" do
+      .more-btn
+        觀看更多
+        %span.glyphicon.glyphicon-arrow-right

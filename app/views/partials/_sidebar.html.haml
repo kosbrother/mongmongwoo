@@ -8,16 +8,16 @@
   .side-bar
     .header
       熱門商品
-    .pop-list
-      .image
-        = link_to "#" do
-          = image_tag('example/item-cover.png')
-      .group
-        .list
+    - @pop_items.each do |item|
+      .pop-list
+        .image
           = link_to "#" do
-            可愛萌卡通系列洗可愛萌卡通系列洗
-        .price
-          NT.345
+            = image_tag(item.cover.icon.url)
+        .group
+          .list
+            = link_to item.name,  "#"
+          .price
+            = "NT #{item.price}"
   .app-banner
     .logo
       = image_tag('brand.png')

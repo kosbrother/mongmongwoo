@@ -23,24 +23,5 @@
     %a.right.carousel-control{"data-slide" => "next", :href => "#index-carousel", :role => "button"}
       %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
       %span.sr-only Next
-  .category-header
-    .group
-      .icon.mirror
-      .text
-        新品上架
-  .row
-    .col-lg-4
-      = link_to "#" do
-        .product-block
-          .image
-            = image_tag('example/cover.png', class: 'img-responsive center-block')
-          .text
-            可愛萌卡通系列
-          .price
-            NT.345
-  .row
-    .col-lg-offset-4.col-lg-4
-      = link_to "#" do
-        .more-btn
-          觀看更多
-          %span.glyphicon.glyphicon-arrow-right
+  - @items.each_slice(6) do |items|
+    = render "partials/product_block", title: items[0].category_name, items: items

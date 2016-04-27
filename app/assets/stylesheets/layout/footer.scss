@@ -1,0 +1,14 @@
+.footer{
+  height: 50px;
+  background-color: #fca3a3;
+  .nav-list {
+    position: relative;
+    top: -8px;
+  }
+  .divider{
+    height: 30px;
+    border: solid 1px #fff;
+    position: relative;
+    top: 10px;
+  }
+}

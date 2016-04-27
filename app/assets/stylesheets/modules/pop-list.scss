@@ -2,8 +2,11 @@
   vertical-align: middle;
   >.image{
     display: inline-block;
-    width: 85px;
-    height: 85px;
+    width: 90px;
+    height: 90px;
+    img{
+      width: 100%;
+    }
   }
   .group{
     display: inline-block;
@@ -16,7 +19,6 @@
     > .price{
       font-size: 0.777778em;
       color: #ff2843;
-      margin-top: 10px;
     }
   }
 }

@@ -9,9 +9,8 @@
     padding: 0 30px;
     > .icon{
       display: inline-block;
-    }
-    > .mirror:before{
-      content: url('icons/mirror.png');
+      vertical-align: bottom;
+      margin: 0 10px;
     }
     > .text{
       font-size: 1.111111em;
