@@ -13,12 +13,12 @@
     vertical-align: middle;
     width: 55%;
     > .list{
-      font-size: 0.888889em;
+      font-size: $pop-list-font-size;
       min-height: 50px;
     }
     > .price{
-      font-size: 0.777778em;
-      color: #ff2843;
+      font-size: $pop-list-price-size;
+      color: $price-font-color;
     }
   }
 }

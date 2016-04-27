@@ -1,13 +1,13 @@
 .footer{
   height: 50px;
-  background-color: #fca3a3;
+  background-color: $footer-background-color;
   .nav-list {
     position: relative;
     top: -8px;
   }
   .divider{
     height: 30px;
-    border: solid 1px #fff;
+    border: $footer-divider;
     position: relative;
     top: 10px;
   }

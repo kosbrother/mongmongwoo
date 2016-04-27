@@ -1,0 +1,39 @@
+//web所有的 color, border, url, font, 以及可更動的項目都可以將其值設定成variables
+//除了: position, margin, padding, width, height 不建議設成variables
+
+
+//color
+$web-background-color: #fffef0;
+$nav-background-color: #fca3a3;
+$footer-background-color: #fca3a3;
+$more-btn-color: #fca3a3;
+
+//border
+$regular-border:  solid 1px black;
+$regular-border-radius: 5px;
+$regular-dash-border: dashed 2px black;
+$pink-dash-border: dashed 2px #ff7d7d;
+$more-btn-border: solid 1px #fca3a3;
+$btn-border-radius: 2px;
+
+//url
+$url-pencil: url('icons/pencil.png');
+$url-diamond: url('icons/dimand.png');
+$url-dash-line: url('background/dash-line.png');
+$url-side-app:url('side-app.png');
+
+//font
+$html-font-size: 16px;
+$regular-font-size: 1.125em;
+$nav-font-size: 1.777777em;
+$nav-font-color: #ffffff;
+$nav-font-weight: bolder;
+$price-font-color: #ff2843;
+$category-header-font-size: 1.111111em;
+$pop-list-font-size: 0.888889em;
+$pop-list-price-size: 0.777778em;
+$sidebar-header-font-size: 1.333333em;
+$sidebar-list-font-size: 1.0555556em;
+
+//footer
+$footer-divider: solid 1px #ffffff;

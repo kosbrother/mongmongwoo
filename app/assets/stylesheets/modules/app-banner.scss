@@ -1,9 +1,9 @@
 .app-banner{
-  background-image: url('side-app.png');
+  background-image: $url-side-app;
   background-size: 100% 100%;
   background-repeat:no-repeat;
-  border: solid 1px black;
-  border-radius: 5px;
+  border: $regular-border;
+  border-radius: $regular-border-radius;
   padding-top: 40px;
   padding-left: 18px;
   padding-right: 18px;

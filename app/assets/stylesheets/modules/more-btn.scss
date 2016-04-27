@@ -1,7 +1,7 @@
 .more-btn{
-  border: solid 1px #fca3a3;
-  border-radius: 2px;
-  color: #fca3a3;
+  border: $more-btn-border;
+  border-radius: $btn-border-radius;
+  color: $more-btn-color;
   padding: 10px 40px;
   text-align: center;
   > .glyphicon{
