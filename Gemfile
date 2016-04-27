@@ -35,6 +35,9 @@ gem 'selenium-webdriver'
 gem "figaro"
 gem 'sidekiq'
 
+# cronjob
+gem 'whenever', :require => false
+
 group :development do
   gem "better_errors"
   gem "binding_of_caller"

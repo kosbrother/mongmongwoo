@@ -106,6 +106,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
+    chronic (0.10.2)
     ckeditor (4.1.6)
       cocaine
       orm_adapter (~> 0.5.0)
@@ -531,6 +532,8 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
     websocket (1.2.3)
+    whenever (0.9.4)
+      chronic (>= 0.6.3)
     will_paginate (3.0.7)
     xml-simple (1.1.5)
     xpath (2.0.0)
@@ -586,6 +589,7 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   unicorn
+  whenever
   will_paginate (~> 3.0.5)
 
 BUNDLED WITH
