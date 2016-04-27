@@ -23,7 +23,7 @@ class Staff::CategoriesController < StaffController
   # end
 
   def show
-    @category_page = @category_items = @category.items.priority.paginate(:page => params[:page])
+    @category_page = @category_items = @category.items.update_time.paginate(:page => params[:page])
   end
 
   # def sort_items_priority
