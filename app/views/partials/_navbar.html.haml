@@ -1,6 +1,11 @@
 %nav.navbar.navbar-default.nav-bar
   / Brand and toggle get grouped for better mobile display
   .navbar-header
+    %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#nav-bar-collapse", "data-toggle" => "collapse", :type => "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
     %a.navbar-brand.logo-block{:href => "#"}
       = image_tag('icons/logo.png', class: 'logo')
       .name

@@ -3,6 +3,9 @@
   margin-bottom: 40px;
     .navbar-header{
       margin: 10px 15px;
+    > .navbar-toggle:hover, .navbar-toggle:focus {
+      background-color: $web-background-color;
+    }
     > .logo-block{
       padding: 0 15px;
       margin-left: 0;
@@ -22,6 +25,7 @@
 }
 
 .nav-list{
+  text-align: center;
   > a {
     margin: 10px;
     > .icon{

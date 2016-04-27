@@ -16,3 +16,15 @@
     padding: 10px 0;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .product-block {
+    > .image {
+      overflow: hidden;
+      max-height: 100px;
+    }
+    >.text{
+      min-height: 100px;
+    }
+  }
+}
