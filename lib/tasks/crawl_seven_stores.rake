@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'openssl'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
-namespace :seven_cvs do
+namespace :seven_store do
   task :get_store_all => :environment do
     County.where("store_type = ?", "4").each do |county|
       county.towns.each do |town|

@@ -9,7 +9,7 @@
 #
 
 class County < ActiveRecord::Base
-  scope :seven_cvs, lambda { where("store_type = ?", "4") }
+  scope :seven_stores, lambda { where("store_type = ?", "4") }
 
   has_many :towns
   has_many :stores

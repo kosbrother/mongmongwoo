@@ -1,14 +1,14 @@
 class ApiController < ActionController::Base
   def find_county
-    @county = County.seven_cvs.find(params[:county_id])
+    @county = County.find(params[:county_id])
   end
 
   def find_town
-    @town = @county.towns.seven_cvs.find(params[:town_id]) 
+    @town = @county.towns.find(params[:town_id]) 
   end
 
   def find_road
-    @road = @town.roads.seven_cvs.find(params[:road_id])
+    @road = @town.roads.find(params[:road_id])
   end
 
   def android_version

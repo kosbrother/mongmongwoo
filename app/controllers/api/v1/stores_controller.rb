@@ -4,7 +4,7 @@ class Api::V1::StoresController < ApiController
   before_action :find_road, only: [:index]
 
   def index
-    @stores = @road.stores.seven_cvs
+    @stores = @road.stores
 
     render json: @stores, only: [:id, :store_code, :name, :address, :phone, :lat, :lng]
   end
