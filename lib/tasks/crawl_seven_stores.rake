@@ -62,12 +62,13 @@ namespace :seven_store do
         resp, data = Net::HTTP.post_form(url, option)
         resp_page = Nokogiri::XML(resp.body)
         resp_page.css("RoadName").each do |element|
-          if town.roads.find_by(name: element.css("rd_name_1").children.to_s)
+          result_road_name = element.css("rd_name_1").children.to_s + element.css("section_1").children.to_s
+          if town.roads.find_by(name: result_road_name)
             next
           else
             road = Road.new
             road.town_id = town.id
-            road.name = element.css("rd_name_1").children.to_s
+            road.name = result_road_name
             road.store_type = 4
             road.save!
             puts road.name
