@@ -1,6 +1,6 @@
 class ApiController < ActionController::Base
   def find_county
-    @county = County.all.find(params[:county_id])
+    @county = County.find(params[:county_id])
   end
 
   def find_town

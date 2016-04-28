@@ -1,37 +1,22 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-# item = Item.create(
-#   name: "我是商品 No.#{item.id}",
-#   price: ,
-#   description: ""
-# )
-
-# Category.all.each do |category|
-#   100.times do
-#     item_amount = Item.count
-#     category.items.create(
-#       name: "我是商品 No.#{item_amount+1}",
-#       price: (10..100).to_a.sample*10,
-#       description: "#{
-#         [
-#           "什麼是文青？可以吃嗎？", 
-#           "說穿了，其實文青和假文青就是兩群不願跟隨流行的人而已。", 
-#           "這是和一位作家聊天時發現的。居然，作家沒有聽過「文青」。", 
-#           "其實那樣的一群人（或兩群）出現在生活周遭，是件奇妙有趣的事。"
-#         ].sample
-#       }"
-#     )
-#   end
-# end
-
-# Item.all.each do |item|
-#   unless item.photos.any?
-#     item.photos.create(image: "/tmp/J-bear.jpg")
-#   end
-# end
+County.create!(name: "台北市", cityid: "01", store_type: 4)
+County.create!(name: "基隆市", cityid: "02", store_type: 4)
+County.create!(name: "新北市", cityid: "03", store_type: 4)
+County.create!(name: "桃園市", cityid: "04", store_type: 4)
+County.create!(name: "新竹市", cityid: "05", store_type: 4)
+County.create!(name: "新竹縣", cityid: "06", store_type: 4)
+County.create!(name: "苗栗縣", cityid: "07", store_type: 4)
+County.create!(name: "台中市", cityid: "08", store_type: 4)
+County.create!(name: "彰化縣", cityid: "10", store_type: 4)
+County.create!(name: "南投縣", cityid: "11", store_type: 4)
+County.create!(name: "雲林縣", cityid: "12", store_type: 4)
+County.create!(name: "嘉義市", cityid: "13", store_type: 4)
+County.create!(name: "嘉義縣", cityid: "14", store_type: 4)
+County.create!(name: "台南市", cityid: "15", store_type: 4)
+County.create!(name: "高雄市", cityid: "17", store_type: 4)
+County.create!(name: "屏東縣", cityid: "19", store_type: 4)
+County.create!(name: "宜蘭縣", cityid: "20", store_type: 4)
+County.create!(name: "花蓮縣", cityid: "21", store_type: 4)
+County.create!(name: "台東縣", cityid: "22", store_type: 4)
+County.create!(name: "澎湖縣", cityid: "23", store_type: 4)
+County.create!(name: "連江縣", cityid: "24", store_type: 4)
+County.create!(name: "金門縣", cityid: "25", store_type: 4)

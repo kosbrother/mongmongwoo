@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427072541) do
+ActiveRecord::Schema.define(version: 20160427103312) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -64,7 +64,12 @@ ActiveRecord::Schema.define(version: 20160427072541) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "cityid",     limit: 255
+    t.integer  "store_type", limit: 4
   end
+
+  add_index "counties", ["cityid"], name: "index_counties_on_cityid", using: :btree
+  add_index "counties", ["store_type"], name: "index_counties_on_store_type", using: :btree
 
   create_table "device_registrations", force: :cascade do |t|
     t.integer  "user_id",         limit: 4
@@ -209,7 +214,10 @@ ActiveRecord::Schema.define(version: 20160427072541) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "store_type", limit: 4
   end
+
+  add_index "roads", ["store_type"], name: "index_roads_on_store_type", using: :btree
 
   create_table "stores", force: :cascade do |t|
     t.integer  "county_id",  limit: 4
@@ -231,7 +239,10 @@ ActiveRecord::Schema.define(version: 20160427072541) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "store_type", limit: 4
   end
+
+  add_index "towns", ["store_type"], name: "index_towns_on_store_type", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
