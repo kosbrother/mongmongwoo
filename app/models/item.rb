@@ -56,16 +56,8 @@ class Item < ActiveRecord::Base
     item_categories.where(category_id: category.id)[0]
   end
 
-  def self.search_categories_new(array, num)
-    sql = ""
-    array.each_with_index do |id, i|
-      if i == 0
-        sql << "(SELECT  `items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id FROM `items` INNER JOIN `item_categories` ON `item_categories`.`item_id` = `items`.`id` INNER JOIN `categories` ON `categories`.`id` = `item_categories`.`category_id` WHERE `items`.`deleted_at` IS NULL AND `categories`.`id` = #{id} ORDER BY created_at DESC LIMIT #{num})"
-      else
-        sql << " UNION ( SELECT  `items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id FROM `items` INNER JOIN `item_categories` ON `item_categories`.`item_id` = `items`.`id` INNER JOIN `categories` ON `categories`.`id` = `item_categories`.`category_id` WHERE `items`.`deleted_at` IS NULL AND `categories`.`id` = #{id} ORDER BY created_at DESC LIMIT #{num})"
-      end
-    end
-    self.find_by_sql(sql)
+  def self.search_categories_new(category_id, num)
+    self.joins(:categories).select("`items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id").where(categories: {id: category_id}).order(created_at: :asc).limit(num)
   end
 
 end

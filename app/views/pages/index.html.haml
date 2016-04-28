@@ -23,5 +23,5 @@
     %a.right.carousel-control{"data-slide" => "next", :href => "#index-carousel", :role => "button"}
       %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
       %span.sr-only Next
-  - @items.each_slice(6) do |items|
+  - @items.each do |items|
     = render "partials/product_block", title: items[0].category_name, items: items
