@@ -7,40 +7,40 @@ namespace :seven_store do
   task :get_store_all => :environment do
     County.where("store_type = ?", "4").each do |county|
       county.towns.each do |town|
-        url = URI.parse("https://emap.pcsc.com.tw/EMapSDK.aspx")
-        option = {
-                  'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.86 Safari/537.36',
-                  'Cookie' => 'ASP.NET_SessionId=4jsarnxw45hhf0rguy4y50i1; gsScrollPos=0',
-                  'X-Requested-With'=>'XMLHttpRequest',
-                  'commandid'=>'SearchStore',
-                  'city' => county.name,
-                  'town' => town.name,
-                }
-        resp, data = Net::HTTP.post_form(url, option)
-        resp_page = Nokogiri::HTML(resp.body)
-        resp_page.css("geoposition").each do |element|
-          if town.stores.find_by(store_code: element.css("poiid").children.to_s.strip)
-            next
-          else            
-            store = Store.new
-            store.county_id = county.id
-            store.town_id = town.id
-            store.store_type = 4
-            store.store_code = element.css("poiid").children.to_s.strip
-            store.name = element.css("poiname").children.to_s
-            store.phone = element.css("telno").children.to_s.strip
-            store.address = element.css("address").children.to_s
-            town.roads.each do |road|
-              if store.address.include?(road.name)
-                store.road = road
-              end
+        town.roads.each do |road|
+          url = URI.parse("https://emap.pcsc.com.tw/EMapSDK.aspx")
+          option = {
+                    'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.86 Safari/537.36',
+                    'Cookie' => 'ASP.NET_SessionId=4jsarnxw45hhf0rguy4y50i1; gsScrollPos=0',
+                    'X-Requested-With'=>'XMLHttpRequest',
+                    'commandid'=>'SearchStore',
+                    'city' => county.name,
+                    'town' => town.name,
+                    'roadname' => road.name
+                  }
+          resp, data = Net::HTTP.post_form(url, option)
+          resp_page = Nokogiri::HTML(resp.body)
+          resp_page.css("geoposition").each do |element|
+            if town.stores.find_by(store_code: element.css("poiid").children.to_s.strip)
+              next
+            else            
+              store = Store.new
+              store.county_id = county.id
+              store.town_id = town.id
+              store.store_type = 4
+              store.store_code = element.css("poiid").children.to_s.strip
+              store.name = "7-11" + element.css("poiname").children.to_s + "門市"
+              store.phone = element.css("telno").children.to_s.strip
+              store.address = element.css("address").children.to_s
+              store.road = road
+              store.save!
+              
+              puts store.road.name if store.road
+              puts store.store_code
+              puts store.name
+              puts store.phone
+              puts store.address
             end
-            store.save!
-            puts store.road.name if store.road
-            puts store.store_code
-            puts store.name
-            puts store.phone
-            puts store.address
           end
         end
       end
