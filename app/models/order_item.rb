@@ -1,4 +1,8 @@
 class OrderItem < ActiveRecord::Base
+  scope :default_sales, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity) as sum_item_quantity").order("sum_item_quantity DESC") }
+
+  scope :default_revenue, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").order("sum_item_revenue DESC") }
+  
   scope :sort_by_sales, ->(time_field_params) { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity) as sum_item_quantity").where(created_at: time_from_now(time_field_params)).order("sum_item_quantity DESC") }
 
   scope :sort_by_revenue, ->(time_field_params) { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").where(created_at: time_from_now(time_field_params)).order("sum_item_revenue DESC") }
