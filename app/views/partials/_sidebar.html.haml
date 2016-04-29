@@ -33,6 +33,6 @@
     .image
       = link_to "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW" do
         = image_tag('android.png')
-  %iframe{:allowTransparency => "true", :frameborder => "0", :height => "214", :scrolling => "no", :src => "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkingofgametw%2F&tabs&width=268px&height=214&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=395184303873523", :style => "border:none;overflow:hidden", :width => "268px"}
+  = render 'partials/facebook'
   .line-banner
     = image_tag('line.png')
