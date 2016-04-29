@@ -7,9 +7,11 @@
         .panel-body
           .report-type
             .time_field_button.pull-right
-              = link_to "按月排序", item_revenue_result_admin_sales_reports_path(:time_field => "month"), class: "btn btn-default btn-lg"
-              = link_to "按週排序", item_revenue_result_admin_sales_reports_path(:time_field => "week"), class: "btn btn-default btn-lg"
-              = link_to "按日排序", item_revenue_result_admin_sales_reports_path(:time_field => "day"), class: "btn btn-default btn-lg"
+              %ul.nav.nav-pills
+                %li{class: params[:time_field].nil? ? "active" : ""}= link_to "全部", item_revenue_result_admin_sales_reports_path
+                %li{class: params[:time_field] == "month" ? "active" : ""}= link_to "按月排序", item_revenue_result_admin_sales_reports_path(:time_field => "month")
+                %li{class: params[:time_field] == "week" ? "active" : ""}= link_to "按週排序", item_revenue_result_admin_sales_reports_path(:time_field => "week")
+                %li{class: params[:time_field] == "day" ? "active" : ""}= link_to "按日排序", item_revenue_result_admin_sales_reports_path(:time_field => "day")
             %ul.nav.nav-tabs
               %li.active{:role => "presentation"}
                 = link_to "商品銷售金額", item_revenue_result_admin_sales_reports_path
