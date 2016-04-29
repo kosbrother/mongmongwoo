@@ -1,11 +1,7 @@
 class OrderItem < ActiveRecord::Base
-  scope :default_sales, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity) as sum_item_quantity").order("sum_item_quantity DESC") }
-
-  scope :default_revenue, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").order("sum_item_revenue DESC") }
-  
-  scope :sort_by_sales, ->(time_field_params) { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity) as sum_item_quantity").where(created_at: time_from_now(time_field_params)).order("sum_item_quantity DESC") }
-
-  scope :sort_by_revenue, ->(time_field_params) { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").where(created_at: time_from_now(time_field_params)).order("sum_item_revenue DESC") }
+  scope :sort_by_sales, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity) as sum_item_quantity").order("sum_item_quantity DESC") }
+  scope :sort_by_revenue, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").order("sum_item_revenue DESC") }
+  scope :created_at_within, -> (time_param) { where(created_at: time_within(time_param)) }
 
   belongs_to :order
   belongs_to :item, :foreign_key => "source_item_id"
@@ -16,8 +12,8 @@ class OrderItem < ActiveRecord::Base
 
   private
 
-  def self.time_from_now(time_field_params)
-    case time_field_params
+  def self.time_within(time_param)
+    case time_param
     when "month"
       return (Time.now - 30.day)..Time.now
     when "week"
