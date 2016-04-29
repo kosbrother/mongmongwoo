@@ -1,0 +1,43 @@
+.app-install-banner{
+  height: 60px;
+  background-color: #fff;
+  padding-left: 10px;
+  .cancel{
+    margin: 20px auto;
+    width: 20px;
+    > img{
+      width: 100%;
+    }
+  }
+  .cancel:hover{
+    cursor: pointer;
+  }
+  .logo{
+    position: relative;
+    margin: 5px auto;
+    width: 50px;
+  }
+  .group{
+    margin-top: 10px;
+    .header{
+      font-size: 12px;
+      font-weight: bolder;
+    }
+    .text{
+      font-size: 10px;
+    }
+  }
+  .install{
+    width: 50px;
+    height: 25px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: pink;
+    margin: 17px auto;
+    text-align: center;
+    line-height: 23px;
+    > a {
+      color: #fff;
+    }
+  }
+}
