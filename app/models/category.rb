@@ -18,4 +18,8 @@ class Category < ActiveRecord::Base
 
   has_many :item_categories
   has_many :items, through: :item_categories
+
+  def self.get_all
+    @categories = Category.where.not(id: 10)
+  end
 end

@@ -1,9 +1,9 @@
 .category-header
   .group
     .icon.visible-lg-inline-block
-      = image_tag("icons/category_header/#{items[0].category_id}.png")
+      = image_tag("icons/category_header/#{category.id}.png")
     .text
-      = title
+      = category.name
 .row
   - items.each do |item|
     .col-lg-4.col-xs-6.xs-padding

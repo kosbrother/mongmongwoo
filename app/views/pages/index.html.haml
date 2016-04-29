@@ -24,4 +24,4 @@
       %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
       %span.sr-only Next
   - @items.each do |items|
-    = render "partials/product_block", title: items[0].category_name, items: items
+    = render "partials/product_block", category: items[0], items: items[1]
