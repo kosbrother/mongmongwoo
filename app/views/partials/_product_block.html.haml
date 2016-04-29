@@ -1,7 +1,7 @@
 .category-header
   .group
     .icon.visible-lg-inline-block
-      = image_tag("icons/category_header/#{category.id}.png")
+      = category_header_icon(category.id)
     .text
       = category.name
 .row

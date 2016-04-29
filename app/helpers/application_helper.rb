@@ -14,4 +14,8 @@ module ApplicationHelper
 
     alerts.join("\n").html_safe
   end
+
+  def category_header_icon(id)
+    image_tag("icons/category_header/#{id}.png")
+  end
 end
