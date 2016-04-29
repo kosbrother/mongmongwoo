@@ -6,6 +6,10 @@
       .content-box-large.box-with-header
         .panel-body
           .report-type
+            .time_field_button.pull-right
+              = link_to "按月排序", item_sales_result_admin_sales_reports_path(:time_field => "month"), class: "btn btn-default btn-lg"
+              = link_to "按週排序", item_sales_result_admin_sales_reports_path(:time_field => "week"), class: "btn btn-default btn-lg"
+              = link_to "按日排序", item_sales_result_admin_sales_reports_path(:time_field => "day"), class: "btn btn-default btn-lg"
             %ul.nav.nav-tabs
               %li.active{:role => "presentation"}
                 %a{:href => "#{item_sales_result_admin_sales_reports_path}"} 商品銷售數量
