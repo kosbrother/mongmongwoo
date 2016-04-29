@@ -3,10 +3,13 @@
   background-image: $url-dash-line;
   background-position: center;
   background-repeat: no-repeat;
+  margin-top: 20px;
   .group{
     background-color: $web-background-color;
     display: inline-block;
     padding: 0 30px;
+    position: relative;
+    top: 13px;
     > .icon{
       display: inline-block;
       vertical-align: bottom;
@@ -15,7 +18,21 @@
     > .text{
       font-size: $category-header-font-size;
       display: inline-block;
-      vertical-align: 14px;
+      vertical-align: 8px;
     }
   }
+}
+
+
+@media screen and (max-width: 768px) {
+  .category-header{
+    .group{
+      > .text{
+        position: relative;
+        top: 10px;
+      }
+    }
+  }
+
+
 }

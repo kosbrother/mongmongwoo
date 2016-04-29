@@ -9,9 +9,9 @@
     = csrf_meta_tags
   %body
     = render 'partials/navbar'
-    .container-fluid
+    .container
       .col-lg-3.visible-lg-block
         = render 'partials/sidebar'
-      .col-lg-9.col-xs-12
+      .col-lg-9.col-xs-12.xs-padding
         = yield
     = render 'partials/footer'

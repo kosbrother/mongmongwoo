@@ -3,21 +3,22 @@
     .header
       商品清單
     - @categories.each do |category|
-      .list
-        = link_to category.name, "#"
+      = link_to "#" do
+        .list
+          = category.name
   .side-bar
     .header
       熱門商品
     - @pop_items.each do |item|
-      .pop-list
-        .image
-          = link_to "#" do
+      = link_to "#" do
+        .pop-list
+          .image
             = image_tag(item.cover.icon.url)
-        .group
-          .list
-            = link_to item.name,  "#"
-          .price
-            = "NT #{item.price}"
+          .group
+            .list
+              = item.name
+            .price
+              = "NT #{item.price}"
   .app-banner
     .logo
       = image_tag('brand.png')
@@ -30,11 +31,8 @@
       %br/
       快下載萌萌屋，搶購最新商品吧！
     .image
-      = link_to "#" do
-        = image_tag('apple.png')
-    .image
-      = link_to "#" do
+      = link_to "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW" do
         = image_tag('android.png')
-  %iframe{:allowTransparency => "true", :frameborder => "0", :height => "214", :scrolling => "no", :src => "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkingofgametw%2F&tabs&width=260px&height=214&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=395184303873523", :style => "border:none;overflow:hidden", :width => "260px"}
+  %iframe{:allowTransparency => "true", :frameborder => "0", :height => "214", :scrolling => "no", :src => "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkingofgametw%2F&tabs&width=268px&height=214&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=395184303873523", :style => "border:none;overflow:hidden", :width => "268px"}
   .line-banner
-    = image_tag('line.jpg')
+    = image_tag('line.png')
