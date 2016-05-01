@@ -13,13 +13,11 @@
 
 class Category < ActiveRecord::Base
   scope :recent, -> { order(id: :DESC) }
+  scope :except_the_all_category, -> { where.not(id: 10) }
 
   enum status: { disable: 0, enable: 1 }
 
   has_many :item_categories
   has_many :items, through: :item_categories
 
-  def self.get_all
-    @categories = Category.where.not(id: 10)
-  end
 end

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_categories, :load_popular_items
 
   def load_categories
-    @categories = Category.get_all
+    @categories = Category.except_the_all_category
   end
 
   def load_popular_items
