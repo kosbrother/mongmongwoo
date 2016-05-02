@@ -29,6 +29,8 @@ module Monmonhouse
 
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
+    config.autoload_paths << "#{config.root}/app/services"
+
     Capybara.register_driver :selenium_chrome do |app|
       http_client = Selenium::WebDriver::Remote::Http::Default.new
       http_client.timeout = 300
