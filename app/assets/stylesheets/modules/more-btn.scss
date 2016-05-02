@@ -1,0 +1,16 @@
+.more-btn{
+  border: $more-btn-border;
+  border-radius: $btn-border-radius;
+  padding: 10px 40px;
+  text-align: center;
+  color: $more-btn-color;
+  > .icon{
+    float: right;
+  }
+}
+
+.more-btn:hover{
+  background-color: $hover-background-color;
+  text-decoration: none;
+  color: #fff;
+}

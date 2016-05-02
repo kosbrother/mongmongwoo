@@ -20,6 +20,7 @@ class Item < ActiveRecord::Base
   scope :recent, lambda { order(id: :DESC) }
   scope :update_time, lambda { order(updated_at: :DESC) }
   scope :priority, lambda { order("item_categories.position ASC") }
+  scope :category_new, ->(num){ order(created_at: :asc).limit(num) }
 
   enum status: { on_shelf: 0, off_shelf: 1 }
 
@@ -55,4 +56,9 @@ class Item < ActiveRecord::Base
   def item_category(category)
     item_categories.where(category_id: category.id)[0]
   end
+
+  def self.search_categories_new(category_id, num)
+    self.joins(:categories).select("`items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id").where(categories: {id: category_id}).order(created_at: :asc).limit(num)
+  end
+
 end

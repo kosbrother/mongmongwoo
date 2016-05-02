@@ -14,11 +14,11 @@
     = csrf_meta_tags
   %body
     .header
-      = render "layouts/navbar"
+      = render "partials/admin/navbar"
     .page-content
       .row
         .col-md-2
-          = render "layouts/sidebar"
+          = render "partials/admin/sidebar"
         .col-md-10
           = notice_message
           / Main Content

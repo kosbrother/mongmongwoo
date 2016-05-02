@@ -14,4 +14,12 @@ module ApplicationHelper
 
     alerts.join("\n").html_safe
   end
+
+  def category_header_icon(id)
+    image_tag("icons/category_header/#{id}.png")
+  end
+
+  def mobile?
+    request.user_agent =~ /Android/i
+  end
 end

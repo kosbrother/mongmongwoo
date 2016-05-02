@@ -1,0 +1,35 @@
+%nav.navbar.navbar-default.nav-bar
+  .container
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#nav-bar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand.logo-block{:href => "#"}
+        = image_tag('icons/logo.png', class: 'logo')
+        .name
+          萌萌屋
+    - if mobile?
+      = render 'partials/app_install_banner'
+    / Collect the nav links, forms, and other content for toggling
+    #nav-bar-collapse.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        %li.nav-list.dropdown.visible-xs-block
+          %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            .list.diamond
+              商品分類
+            %span.caret
+          %ul.dropdown-menu
+            - @categories.each do |category|
+              %li.list
+                = link_to category.name, "#", class: "link"
+        %li.nav-list
+          = link_to "#" do
+            .list.cart
+              購物車
+        %li.nav-list
+          = link_to "#" do
+            .list.user
+              登入/註冊

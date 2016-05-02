@@ -1,0 +1,53 @@
+//web所有的 color, border, url, font, 以及可更動的項目都可以將其值設定成variables
+//除了: position, margin, padding, width, height 不建議設成variables
+
+
+//color
+$web-background-color: #fffef0;
+$nav-background-color: #fca3a3;
+$footer-background-color: #fca3a3;
+$hover-background-color: #F2DEDE;
+$more-btn-color: #fca3a3;
+$navbar-toggle-color: #fff;
+$nav-hover-background-color: #d5d6d6;
+$nav-dropdown-background-color: #fff;
+//border
+$regular-border:  solid 1px #9B9B9B;
+$regular-border-radius: 5px;
+$regular-dash-border: dashed 2px black;
+$pink-dash-border: dashed 2px #ff7d7d;
+$more-btn-border: solid 1px #fca3a3;
+$btn-border-radius: 2px;
+
+//url
+$url-pencil: image-url('icons/pencil.png');
+$url-diamond: image-url('icons/diamond.png');
+$url-dash-line: image-url('background/dash-line.png');
+$url-side-app: image-url('side-app.png');
+$url-user: image-url('icons/user.png');
+$url-cart: image-url('icons/shoppingcart.png');
+$url-diamond: image-url('icons/diamond.png');
+$url-white-diamond: image-url('icons/ic_diamond.png');
+
+//font
+$html-font-size: 14px;
+$regular-font-size: 14px;
+$logo-font-size:  2.142857em;
+$nav-font-size: 1.428571em;
+$category-header-font-size: 1.428571em;
+$sidebar-header-font-size: 1.428571em;
+$price-font-size: 1.285714em;
+$mobile-regular-font-size: 12px;
+$mobile-price-font-size: 14px;
+$nav-font-color: #ffffff;
+$price-font-color: #ff2843;
+$nav-font-weight: regular;
+$pop-list-font-size: 1em;
+$pop-list-price-size: 1em;
+$sidebar-list-font-size: 1em;
+$mobile-font-size: 1em;
+$regular-font-color: #262626;
+$more-btn-font-size: 1.428571em;
+
+//footer
+$footer-divider: solid 1px #ffffff;

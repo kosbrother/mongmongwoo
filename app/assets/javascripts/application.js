@@ -14,3 +14,14 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+var ready;
+ready = function() {
+    $('#cancelBanner').on('click', function(){
+        $('.app-install-banner').hide();
+    });
+};
+$(document).ready(ready);
+$(document).on('page:load', ready);
+

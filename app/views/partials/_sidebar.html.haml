@@ -1,0 +1,38 @@
+.aside
+  .side-bar
+    .header
+      商品清單
+    - @categories.each do |category|
+      = link_to "#" do
+        .list
+          = category.name
+  .side-bar
+    .header
+      熱門商品
+    - @pop_items.each do |item|
+      = link_to "#" do
+        .pop-list
+          .image
+            = image_tag(item.cover.icon.url)
+          .group
+            .list
+              = item.name
+            .price
+              = "NT #{item.price}"
+  .app-banner
+    .logo
+      = image_tag('brand.png')
+    .text
+      萌萌屋
+    .text
+      走在青年流行前線
+    .text
+      您所需要的東西都在這裡！
+      %br/
+      快下載萌萌屋，搶購最新商品吧！
+    .image
+      = link_to "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW" do
+        = image_tag('android.png')
+  = render 'partials/facebook'
+  .line-banner
+    = image_tag('line.png')

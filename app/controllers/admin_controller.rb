@@ -1,5 +1,6 @@
 class AdminController < ActionController::Base
   layout "admin"
+  protect_from_forgery with: :exception
 
   helper_method :current_manager, :manager_logged_in?
 
@@ -14,7 +15,7 @@ class AdminController < ActionController::Base
   def require_manager
     unless manager_logged_in?
       flash[:alert] = "裡面太危險了，趕快回家吧！"
-      redirect_to root_path
+      redirect_to admin_signin_path
     end
   end
 end

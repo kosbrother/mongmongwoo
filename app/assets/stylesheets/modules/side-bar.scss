@@ -1,0 +1,35 @@
+.side-bar{
+  border: $regular-border;
+  border-radius: $regular-border-radius;
+  padding: 15px;
+  > .header{
+    border-bottom: $pink-dash-border;
+    font-size: $sidebar-header-font-size;
+    margin-bottom: 16px;
+    padding-bottom: 5px;
+  }
+  > .header:after{
+    content: $url-pencil;
+    float: right;
+  }
+  > a{color: $regular-font-color;
+    vertical-align: 4px;
+    > .list{
+      font-size: $sidebar-list-font-size;
+      margin: 19px 0;
+    }
+    > .list:before{
+      content: $url-diamond;
+      vertical-align: text-top;
+    }
+    > .list:hover{
+      background-color: $hover-background-color;
+    }
+  }
+
+  >.image{
+    display: inline-block;
+    width: 85px;
+    height: 85px;
+  }
+}

@@ -1,0 +1,28 @@
+.pop-list{
+  vertical-align: middle;
+  height: 60px;
+  margin-bottom: 15px;
+  >.image{
+    display: inline-block;
+    width: 90px;
+    height: 60px;
+    > img{
+      width: 100%;
+    }
+  }
+  .group{
+    display: inline-block;
+    vertical-align: middle;
+    width: 55%;
+    > .list{
+      font-size: $pop-list-font-size;
+    }
+    > .price{
+      font-size: $pop-list-price-size;
+      color: $price-font-color;
+    }
+  }
+}
+.pop-list:hover{
+  background-color: $hover-background-color;
+}

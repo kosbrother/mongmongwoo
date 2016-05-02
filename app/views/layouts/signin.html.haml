@@ -8,10 +8,7 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
-    = render 'partials/navbar'
-    .container
-      .col-lg-3.visible-lg-block
-        = render 'partials/sidebar'
-      .col-lg-9.col-xs-12.xs-padding
+    .row
+      = notice_message
+      .col-md-6.col-md-offset-4
         = yield
-    = render 'partials/footer'

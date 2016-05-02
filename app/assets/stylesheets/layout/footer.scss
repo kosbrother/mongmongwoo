@@ -1,0 +1,22 @@
+.footer{
+  height: 50px;
+  background-color: $footer-background-color;
+  .list {
+    position: relative;
+    top: 1px;
+    margin: 0 5px;
+    color: #fff;
+    display: inline-block;
+    > a{
+      color: #fff;
+    }
+  }
+  .divider{
+    height: 30px;
+    border: $footer-divider;
+    position: relative;
+    top: 10px;
+    display: inline-block;
+  }
+}
+

@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
-  def front
-    redirect_to staff_root_path if current_assistant
+
+  def index
+    @items = @categories.map { |category| [category, category.items.category_new(6)] }
   end
+
 end
