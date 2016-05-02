@@ -1,4 +1,4 @@
-class Admin::TimeUntil
+class TimeSupport
   attr_reader :time_param
 
   TIME_RANGE = {
@@ -7,11 +7,7 @@ class Admin::TimeUntil
                   "day" => Range.new((Time.now - 1.day), Time.now)
                 }
 
-  def initialize(time_param)
-    @time_param = time_param
-  end
-
-  def time_within
-    TIME_RANGE[self.time_param]
+  def self.time_until(time_param)
+    TIME_RANGE[time_param]
   end
 end

@@ -20,6 +20,6 @@ class Admin::SalesReportsController < AdminController
   private
 
   def time_until_range
-    Admin::TimeUntil.new(params[:time_field]).time_within
+    TimeSupport.time_until(params[:time_field])
   end
 end
