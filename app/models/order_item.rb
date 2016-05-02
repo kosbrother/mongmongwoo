@@ -9,17 +9,4 @@ class OrderItem < ActiveRecord::Base
   delegate :categories, to: :item
 
   validates_presence_of :source_item_id, allow_blank: true
-
-  # private
-
-  # def self.time_within(time_param)
-  #   case time_param
-  #   when "month"
-  #     return (Time.now - 30.day)..Time.now
-  #   when "week"
-  #     return (Time.now - 7.day)..Time.now
-  #   when "day"
-  #     return (Time.now - 1.day)..Time.now
-  #   end
-  # end
 end
