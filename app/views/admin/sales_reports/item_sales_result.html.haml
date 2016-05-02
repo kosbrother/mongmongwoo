@@ -8,10 +8,10 @@
           .report-type
             .time_field_button.pull-right
               %ul.nav.nav-pills
-                %li{class: params[:time_field].nil? ? "active" : ""}= link_to "全部", item_sales_result_admin_sales_reports_path
-                %li{class: params[:time_field] == "month" ? "active" : ""}= link_to "按月排序", item_sales_result_admin_sales_reports_path(:time_field => "month")
-                %li{class: params[:time_field] == "week" ? "active" : ""}= link_to "按週排序", item_sales_result_admin_sales_reports_path(:time_field => "week")
-                %li{class: params[:time_field] == "day" ? "active" : ""}= link_to "按日排序", item_sales_result_admin_sales_reports_path(:time_field => "day")
+                %li{class: all_time_tab_active(params[:time_field])}= link_to "全部", item_sales_result_admin_sales_reports_path
+                %li{class: month_tab_active(params[:time_field])}= link_to "按月排序", item_sales_result_admin_sales_reports_path(:time_field => "month")
+                %li{class: week_tab_active(params[:time_field])}= link_to "按週排序", item_sales_result_admin_sales_reports_path(:time_field => "week")
+                %li{class: day_tab_active(params[:time_field])}= link_to "按日排序", item_sales_result_admin_sales_reports_path(:time_field => "day")
             %ul.nav.nav-tabs
               %li.active{:role => "presentation"}
                 = link_to "商品銷售數量", item_sales_result_admin_sales_reports_path
@@ -20,9 +20,9 @@
           %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
             %thead
               %tr
-                %th 商品編號
-                %th 商品分類
-                %th 商品名稱
+                %th{width: "10%"} 商品編號
+                %th{width: "15%"} 商品分類
+                %th{width: "55%"} 商品名稱
                 %th 銷售數量
             %tbody
               - @item_sales.each do |item|
