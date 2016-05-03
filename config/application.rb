@@ -34,6 +34,5 @@ module Monmonhouse
       http_client.timeout = 300
       Capybara::Selenium::Driver.new(app, :browser => :chrome, :http_client => http_client)
     end
-
   end
 end

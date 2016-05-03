@@ -1,4 +1,8 @@
 class OrderItem < ActiveRecord::Base
+  scope :sort_by_sales, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity) as sum_item_quantity").order("sum_item_quantity DESC") }
+  scope :sort_by_revenue, -> { includes(:item, item: :categories).group(:source_item_id).select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").order("sum_item_revenue DESC") }
+  scope :created_at_within, -> (time_param) { where(created_at: time_param) }
+
   belongs_to :order
   belongs_to :item, :foreign_key => "source_item_id"
 
