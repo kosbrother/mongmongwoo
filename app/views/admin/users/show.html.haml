@@ -22,6 +22,7 @@
           %tr
             %th 訂單編號
             %th 訂單金額
+            %th 訂單聯絡電話
             %th 訂單狀態
             %th 訂購明細
         %tbody
@@ -29,5 +30,6 @@
             %tr
               %td= order.id
               %td= order.total
+              %td= order.ship_phone
               %td= order.status
               %td= render(partial: "admin/orders/info_and_items_list", locals: { order: order })
