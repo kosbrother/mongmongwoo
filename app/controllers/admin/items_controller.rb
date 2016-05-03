@@ -29,6 +29,7 @@ class Admin::ItemsController < AdminController
   end
 
   def show
+    item_sales_result
   end
 
   def edit
@@ -88,5 +89,10 @@ class Admin::ItemsController < AdminController
     @item = Item.includes(:photos, :specs).find(params[:id])
     @photos = @item.photos
     @specs = @item.specs
+  end
+
+  def item_sales_result
+    @sales_volume_monthly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("month")).first.sum_item_quantity
+    @sales_volume_weekly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("week")).first.sum_item_quantity
   end
 end
