@@ -8,10 +8,10 @@
           .report-type
             .time_field_button.pull-right
               %ul.nav.nav-pills
-                %li{class: all_time_tab_active(params[:time_field])}= link_to "全部", item_revenue_result_admin_sales_reports_path
-                %li{class: month_tab_active(params[:time_field])}= link_to "按月排序", item_revenue_result_admin_sales_reports_path(:time_field => "month")
-                %li{class: week_tab_active(params[:time_field])}= link_to "按週排序", item_revenue_result_admin_sales_reports_path(:time_field => "week")
-                %li{class: day_tab_active(params[:time_field])}= link_to "按日排序", item_revenue_result_admin_sales_reports_path(:time_field => "day")
+                %li{ class: all_time_tab_active(params[:time_field]) }= link_to "全部", item_revenue_result_admin_sales_reports_path
+                %li{ class: option_time_tab_active(params[:time_field], "month") }= link_to "按月排序", item_revenue_result_admin_sales_reports_path(:time_field => "month")
+                %li{ class: option_time_tab_active(params[:time_field], "week") }= link_to "按週排序", item_revenue_result_admin_sales_reports_path(:time_field => "week")
+                %li{ class: option_time_tab_active(params[:time_field], "day") }= link_to "按日排序", item_revenue_result_admin_sales_reports_path(:time_field => "day")
             %ul.nav.nav-tabs
               %li.active{:role => "presentation"}
                 = link_to "商品銷售金額", item_revenue_result_admin_sales_reports_path

@@ -3,15 +3,13 @@ module Admin::SalesReportsHelper
     time_param.nil? ? "active" : ""
   end
 
-  def month_tab_active(time_param)
-    time_param == "month" ? "active" : ""
-  end
+  def option_time_tab_active(time_param, time_option)
+    css_class = ""
 
-  def week_tab_active(time_param)
-    time_param == "week" ? "active" : ""
-  end
+    if time_param.present? && request.original_url.include?("time_field=" + time_option)
+      css_class = "active"
+    end
 
-  def day_tab_active(time_param)
-    time_param == "day" ? "active" : ""
+    return css_class
   end
 end
