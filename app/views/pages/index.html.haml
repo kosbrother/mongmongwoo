@@ -34,7 +34,7 @@
     = render "partials/product_block", items: items[1]
     .row
       .col-lg-offset-4.col-lg-4
-        = link_to "#" do
+        = link_to category_path(items[0]) do
           .more-btn
             觀看更多
             = image_tag('icons/arrow.png', class: 'icon')
