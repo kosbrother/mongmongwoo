@@ -23,5 +23,18 @@
     %a.right.carousel-control{"data-slide" => "next", :href => "#index-carousel", :role => "button"}
       %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
       %span.sr-only Next
+
   - @items.each do |items|
-    = render "partials/product_block", category: items[0], items: items[1]
+    .category-header
+      .group
+        .icon.visible-lg-inline-block
+          = category_header_icon(items[0].id)
+        .text
+          = items[0].name
+    = render "partials/product_block", items: items[1]
+    .row
+      .col-lg-offset-4.col-lg-4
+        = link_to "#" do
+          .more-btn
+            觀看更多
+            = image_tag('icons/arrow.png', class: 'icon')

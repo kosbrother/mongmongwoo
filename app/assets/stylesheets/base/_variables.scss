@@ -11,6 +11,7 @@ $more-btn-color: #fca3a3;
 $navbar-toggle-color: #fff;
 $nav-hover-background-color: #d5d6d6;
 $nav-dropdown-background-color: #fff;
+
 //border
 $regular-border:  solid 1px #9B9B9B;
 $regular-border-radius: 5px;
@@ -30,24 +31,25 @@ $url-diamond: image-url('icons/diamond.png');
 $url-white-diamond: image-url('icons/ic_diamond.png');
 
 //font
-$html-font-size: 14px;
 $regular-font-size: 14px;
+$mobile-regular-font-size: 12px;
 $logo-font-size:  2.142857em;
 $nav-font-size: 1.428571em;
 $category-header-font-size: 1.428571em;
 $sidebar-header-font-size: 1.428571em;
 $price-font-size: 1.285714em;
-$mobile-regular-font-size: 12px;
-$mobile-price-font-size: 14px;
-$nav-font-color: #ffffff;
-$price-font-color: #ff2843;
-$nav-font-weight: regular;
+$more-btn-font-size: 1.428571em;
 $pop-list-font-size: 1em;
 $pop-list-price-size: 1em;
 $sidebar-list-font-size: 1em;
-$mobile-font-size: 1em;
+$breadcrumb-font-size: 1.428571em;
+$pagination-font-size: 1.428571em;
+$mobile-pagination-font-size:  1.166667em;
+$nav-font-color: #ffffff;
+$price-font-color: #ff2843;
+$nav-font-weight: regular;
 $regular-font-color: #262626;
-$more-btn-font-size: 1.428571em;
+
 
 //footer
 $footer-divider: solid 1px #ffffff;

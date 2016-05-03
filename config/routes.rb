@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
   root 'pages#index'
+  resources :categories, only: [:show]
 
   # 助理後台
   namespace :staff do

@@ -34,6 +34,7 @@ gem 'selenium-webdriver'
 # For credential data
 gem "figaro"
 gem 'sidekiq'
+gem "gretel"
 
 # cronjob
 gem 'whenever', :require => false

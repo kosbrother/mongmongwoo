@@ -1,0 +1,23 @@
+.pagination{
+  margin: 40px 0;
+  font-size: $pagination-font-size;
+  > .previous_page, .next_page, .page{
+    background-color: transparent;
+    > .previous_page, .next_page, .page{
+      background-color: transparent;
+      color: #ff8080;
+      border: solid 1px #ff8080;
+    }
+    > .current{
+      background-color: #ff8080;
+      color: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pagination{
+    margin: 30px 0;
+    font-size: $mobile-pagination-font-size;
+  }
+}

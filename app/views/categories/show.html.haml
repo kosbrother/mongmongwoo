@@ -1,0 +1,5 @@
+- breadcrumb :category, @category
+.show
+  = render "partials/product_block", items: @items
+  .text-align
+    = pagination_links(@items)

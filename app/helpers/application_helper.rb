@@ -22,4 +22,15 @@ module ApplicationHelper
   def mobile?
     request.user_agent =~ /Android/i
   end
+
+  def pagination_links(collection, options = {})
+    options[:renderer] ||= BootstrapPaginationHelper::LinkRenderer
+    options[:class] ||= 'pagination pagination-centered'
+    options[:inner_window] ||= 2
+    options[:outer_window] ||= 1
+    options[:previous_label] = '上一頁'
+    options[:next_label] = '下一頁'
+    will_paginate(collection, options)
+  end
+
 end
