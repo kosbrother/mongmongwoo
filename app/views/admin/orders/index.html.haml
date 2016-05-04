@@ -9,9 +9,37 @@
           %a{"data-rel" => "reload", :href => "#"}
             %i.glyphicon.glyphicon-cog
       .content-box-large.box-with-header
-        .apple_pagination
-          = will_paginate @order_page, :container => false
         %br/
-        = render "order_table"
-        .apple_pagination
-          = will_paginate @order_page, :container => false
+        %div
+          / Nav tabs
+          %ul.nav.nav-tabs{:role => "tablist"}
+            %li.active{:role => "presentation"}
+              %a{"aria-controls" => "placed", "data-toggle" => "tab", :href => "#placed", :role => "tab"} 新訂單
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "processing", "data-toggle" => "tab", :href => "#processing", :role => "tab"} 處理中
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "shipping", "data-toggle" => "tab", :href => "#shipping", :role => "tab"} 已出貨
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "pickup", "data-toggle" => "tab", :href => "#pickup", :role => "tab"} 完成取貨
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "shipped", "data-toggle" => "tab", :href => "#shipped", :role => "tab"} 已到店
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "change", "data-toggle" => "tab", :href => "#change", :role => "tab"} 訂單變更
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "cancel", "data-toggle" => "tab", :href => "#cancel", :role => "tab"} 訂單取消
+          / Tab panes
+          .tab-content
+            #placed.tab-pane.active{:role => "tabpanel"}
+              = render "order_table", orders: @placed_orders
+            #processing.tab-pane{:role => "tabpanel"}
+              = render "order_table", orders: @processing_orders
+            #shipping.tab-pane{:role => "tabpanel"}
+              = render "order_table", orders: @shipping_orders
+            #pickup.tab-pane{:role => "tabpanel"}
+              = render "order_table", orders: @pickup_orders
+            #cancel.tab-pane{:role => "tabpanel"}
+              = render "order_table", orders: @cancel_orders
+            #shipped.tab-pane{:role => "tabpanel"}
+              = render "order_table", orders: @shipped_orders
+            #change.tab-pane{:role => "tabpanel"}
+              = render "order_table", orders: @change_orders

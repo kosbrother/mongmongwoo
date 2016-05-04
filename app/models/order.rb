@@ -1,5 +1,12 @@
 class Order < ActiveRecord::Base
   scope :recent, -> { order(id: :DESC) }
+  scope :placed, -> { where(status: 0).recent }
+  scope :processing, -> { where(status: 1).recent }
+  scope :shipping, -> { where(status: 2).recent }
+  scope :pickup, -> { where(status: 3).recent }
+  scope :cancel, -> { where(status: 4).recent }
+  scope :shipped, -> { where(status: 5).recent }
+  scope :change, -> { where(status: 6).recent }
 
   acts_as_paranoid
 
