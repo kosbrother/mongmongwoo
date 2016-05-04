@@ -24,7 +24,7 @@
           %ul.dropdown-menu
             - @categories.each do |category|
               %li.list
-                = link_to category.name, "#", class: "link"
+                = link_to category.name, category_path(category), class: "link"
         %li.nav-list
           = link_to "#" do
             .list.cart
