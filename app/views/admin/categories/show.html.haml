@@ -11,8 +11,8 @@
     .category-all-items
       .panel-body
         .btn-group{"aria-label" => "排序方式", :role => "group"}
-          = link_to '依照排名', url_for(order: 'position'), class: params['order'] == 'update' ?  'btn btn-default' : 'btn btn-primary'
-          = link_to '依照更新時間', url_for(order: 'update'), class: params['order'] == 'update' ? 'btn btn-primary' : 'btn btn-default'
+          = link_to '依照排名', url_for(order: 'position'), class:  get_btn_class('position')
+          = link_to '依照更新時間', url_for(order: 'update'), class:  get_btn_class('update')
         %div
           / Nav tabs
           %ul.nav.nav-tabs{:role => "tablist"}
