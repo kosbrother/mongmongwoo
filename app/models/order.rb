@@ -23,7 +23,7 @@ class Order < ActiveRecord::Base
 
   acts_as_paranoid
 
-  enum status: { "新訂單" => 0, "處理中" => 1, "已出貨" => 2, "完成取貨" => 3, "訂單取消" => 4 }
+  enum status: { "新訂單" => 0, "處理中" => 1, "已出貨" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 }
 
   belongs_to :user
   has_many :items, class_name: "OrderItem", dependent: :destroy
@@ -42,7 +42,7 @@ class Order < ActiveRecord::Base
   end
 
   def status_btn_element_id
-    names = ['placed', 'processing', 'shipping', 'shipped', 'cancel']
+    names = ['placed', 'processing', 'shipping', 'pickup', 'cancel', 'shipped', 'change']
     "#order-#{id}-#{names[self[:status]]}"
   end
 
