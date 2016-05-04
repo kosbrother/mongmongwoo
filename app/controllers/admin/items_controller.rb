@@ -29,7 +29,7 @@ class Admin::ItemsController < AdminController
   end
 
   def show
-    item_sales_result
+    get_item_sales
   end
 
   def edit
@@ -91,8 +91,8 @@ class Admin::ItemsController < AdminController
     @specs = @item.specs
   end
 
-  def item_sales_result
-    @sales_volume_monthly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("month")).first.sum_item_quantity
-    @sales_volume_weekly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("week")).first.sum_item_quantity
+  def get_item_sales
+    @sales_volume_monthly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("month")).first.sum_item_quantity || 0
+    @sales_volume_weekly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("week")).first.sum_item_quantity || 0
   end
 end

@@ -77,8 +77,4 @@ module Admin::ItemsHelper
       return "已下架" 
     end
   end
-
-  def item_sales_volume(volume)
-    volume.present? ? volume : 0
-  end
 end
