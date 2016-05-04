@@ -1,7 +1,6 @@
 class Admin::CategoriesController < AdminController
   layout "admin"
   before_action :require_manager
-  before_action :find_category, only: [:show]
 
   def index
     @categories = Category.recent
@@ -24,10 +23,14 @@ class Admin::CategoriesController < AdminController
   end
 
   def show
+    @category = Category.find(params[:id])
+    params['order'] = 'position' if params['order'].nil?
     if params['order'] == 'update'
-      @category_items = @category.items.update_time
-    else
-      @category_items = @category.items.priority
+      @on_shelf_items = @category.items.on_shelf.update_time
+      @off_shelf_items = @category.items.off_shelf.update_time
+    elsif params['order'] == 'position'
+      @on_shelf_items = @category.items.on_shelf.priority
+      @off_shelf_items = @category.items.off_shelf.priority
     end
   end
 
@@ -45,7 +48,4 @@ class Admin::CategoriesController < AdminController
     params.require(:category).permit(:name)
   end
 
-  def find_category
-    @category = Category.includes(:items).find(params[:id])
-  end
 end
