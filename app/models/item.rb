@@ -49,7 +49,7 @@ class Item < ActiveRecord::Base
     where("name LIKE ?", "%#{search_term}%").recent
   end
 
-  def categoy_position(category)
+  def category_position(category)
     item_category(category).position
   end
 

@@ -11,7 +11,20 @@
     .category-all-items
       .panel-body
         .btn-group{"aria-label" => "排序方式", :role => "group"}
-          = link_to '依照排名', url_for(order: 'position'), class: 'btn btn-default'
-          = link_to '依照更新時間', url_for(order: 'update'), class: 'btn btn-default'
-
-        = render "table"
+          = link_to '依照排名', url_for(order: 'position'), class: params['order'] == 'update' ?  'btn btn-default' : 'btn btn-primary'
+          = link_to '依照更新時間', url_for(order: 'update'), class: params['order'] == 'update' ? 'btn btn-primary' : 'btn btn-default'
+        %div
+          / Nav tabs
+          %ul.nav.nav-tabs{:role => "tablist"}
+            %li.active{:role => "presentation"}
+              %a{"aria-controls" => "on-shelf", "data-toggle" => "tab", :href => "#on-shelf", :role => "tab"}
+                = "上架中:  #{@on_shelf_items.count}"
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "off-shelf", "data-toggle" => "tab", :href => "#off-shelf", :role => "tab"}
+                = "下架中:  #{@off_shelf_items.count}"
+          / Tab panes
+          .tab-content
+            #on-shelf.tab-pane.active{:role => "tabpanel"}
+              = render "table", category_items: @on_shelf_items
+            #off-shelf.tab-pane{:role => "tabpanel"}
+              = render "table", category_items: @off_shelf_items

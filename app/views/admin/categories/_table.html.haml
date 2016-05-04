@@ -9,13 +9,13 @@
       %th 商品價格
       %th 操作選項
   %tbody#items-sort-list{"data-sort-url" => sort_items_priority_admin_categories_path(category: @category)}
-    - @category_items.each do |item|
+    - category_items.each do |item|
       %tr{:id => "item-#{item.id}"}
         %td= item.id
         %td
           %button.btn.btn-primary.btn-xs{:type => "button"}
             排名：
-            %span.badge= item.categoy_position(@category)
+            %span.badge= item.category_position(@category)
           %span.handle.btn.btn-default.btn-xs
             %i.fa.fa-arrows>
             按住我
