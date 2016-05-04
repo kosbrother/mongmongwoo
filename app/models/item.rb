@@ -21,7 +21,7 @@ class Item < ActiveRecord::Base
   scope :update_time, lambda { order(updated_at: :DESC) }
   scope :priority, lambda { order("item_categories.position ASC") }
   scope :category_new, ->(num){ order(created_at: :asc).limit(num) }
-  scope :category_items, ->(category_id) {joins(:categories).where(categories: {id: category_id} )}
+
   enum status: { on_shelf: 0, off_shelf: 1 }
 
   acts_as_paranoid
