@@ -7,7 +7,7 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand.logo-block{:href => "#"}
+      %a.navbar-brand.logo-block{:href => root_path}
         = image_tag('icons/logo.png', class: 'logo')
         .name
           萌萌屋
@@ -24,7 +24,7 @@
           %ul.dropdown-menu
             - @categories.each do |category|
               %li.list
-                = link_to category.name, "#", class: "link"
+                = link_to category.name, category_path(category), class: "link"
         %li.nav-list
           = link_to "#" do
             .list.cart

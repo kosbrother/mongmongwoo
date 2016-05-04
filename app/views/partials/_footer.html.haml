@@ -1,14 +1,13 @@
 %footer.footer
   .container
-    .footer
+    %li.list
+      = link_to "關於萌萌屋", "#"
+    %li.divider
+    %li.list
+      聯繫客服：
       %li.list
-        = link_to "關於萌萌屋", "#"
-      %li.divider
+        = link_to "http://line.me/ti/p/%40kya5456n" do
+          = image_tag('icons/line.png')
       %li.list
-        聯繫客服：
-        %li.list
-          = link_to "http://line.me/ti/p/%40kya5456n" do
-            = image_tag('icons/line.png')
-        %li.list
-          = link_to  "https://www.facebook.com/kingofgametw/" do
-            = image_tag('icons/fb.png')
+        = link_to  "https://www.facebook.com/kingofgametw/" do
+          = image_tag('icons/fb.png')

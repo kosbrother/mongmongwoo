@@ -3,7 +3,7 @@
     .header
       商品清單
     - @categories.each do |category|
-      = link_to "#" do
+      = link_to category_path(category) do
         .list
           = category.name
   .side-bar

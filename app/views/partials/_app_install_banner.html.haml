@@ -1,7 +1,8 @@
 .app-install-banner.row
   .col-xs-2.xs-padding
     #cancelBanner.cancel
-      = image_tag('icons/cancel.png')
+      %button.close{"aria-label" => "Close", :type => "button"}
+        %span{"aria-hidden" => "true"} &times;
   .col-xs-2.xs-padding
     .logo
       = image_tag('icons/app-logo.png')
