@@ -1,23 +1,3 @@
-# == Schema Information
-#
-# Table name: orders
-#
-#  id             :integer          not null, primary key
-#  user_id        :integer
-#  total          :integer          default(0)
-#  is_paid        :boolean          default(FALSE)
-#  deleted_at     :datetime
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  status         :integer          default(0)
-#  payment_method :string(255)
-#  token          :string(255)
-#  uid            :string(255)
-#  ship_fee       :integer
-#  items_price    :integer
-#  created_on     :date
-#
-
 class Order < ActiveRecord::Base
   scope :recent, -> { order(id: :DESC) }
 
