@@ -3,11 +3,10 @@
     %thead
       %tr
         %th 編號
-        %th 訂購日期
+        %th 訂購日期與狀態
         %th 訂購用戶
         %th 訂購商品
         %th 總金額
-        %th 訂單狀態
     %tbody
       - @orders.each do |order|
         %tr
@@ -25,7 +24,17 @@
                 %li
                   %button.edit-order-btn
                     刪除
-          %td= order.created_on
+          %td
+            = order.created_on
+            %br
+            .btn-group-vertical{role: "group", id: "order-#{order.id}"}
+              = link_to "新訂單", "#",{ id: "order-#{order.id}-placed", class: "btn btn-default #{order.status == "新訂單" ? "btn-lg" : "btn-xs"}" }
+              = link_to "處理中", update_status_admin_order_path(order, status: 1),{ method: :patch, remote: true, id: "order-#{order.id}-processing", class: "btn #{order.status == "處理中" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
+              = link_to "已出貨", update_status_admin_order_path(order, status: 2), { method: :patch, remote: true, id: "order-#{order.id}-shipping", class: "btn #{order.status == "已出貨" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
+              = link_to "已到店", update_status_admin_order_path(order, status: 5), { method: :patch, remote: true, id: "order-#{order.id}-shipped", class: "btn #{order.status == "已到店" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
+              = link_to "完成取貨", update_status_admin_order_path(order, status: 3), { method: :patch, remote: true, id: "order-#{order.id}-pickup", class: "btn #{order.status == "完成取貨" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
+              = link_to "訂單變更", update_status_admin_order_path(order, status: 6), { method: :patch, remote: true, id: "order-#{order.id}-change", class: "btn #{order.status == "訂單變更" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
+              = link_to "訂單取消", update_status_admin_order_path(order, status: 4), { method: :patch, remote: true, id: "order-#{order.id}-cancel", class: "btn #{order.status == "訂單取消" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
           %td= link_to order.info_user_name, admin_user_path(order.user)
           %td
             %table.table.table-bordered
@@ -51,13 +60,3 @@
                 %tr
                   %td= order.note
           %td= order.total
-          %td
-            .btn-group-vertical{role: "group", id: "order-#{order.id}"}
-              = link_to "新訂單", "#",{ id: "order-#{order.id}-placed", class: "btn btn-default #{order.status == "新訂單" ? "btn-lg" : "btn-xs"}" }
-              = link_to "處理中", update_status_admin_order_path(order, status: 1),{ method: :patch, remote: true, id: "order-#{order.id}-processing", class: "btn #{order.status == "處理中" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "已出貨", update_status_admin_order_path(order, status: 2), { method: :patch, remote: true, id: "order-#{order.id}-shipping", class: "btn #{order.status == "已出貨" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "已到店", update_status_admin_order_path(order, status: 5), { method: :patch, remote: true, id: "order-#{order.id}-shipped", class: "btn #{order.status == "已到店" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "完成取貨", update_status_admin_order_path(order, status: 3), { method: :patch, remote: true, id: "order-#{order.id}-pickup", class: "btn #{order.status == "完成取貨" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "訂單變更", update_status_admin_order_path(order, status: 6), { method: :patch, remote: true, id: "order-#{order.id}-change", class: "btn #{order.status == "訂單變更" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "訂單取消", update_status_admin_order_path(order, status: 4), { method: :patch, remote: true, id: "order-#{order.id}-cancel", class: "btn #{order.status == "訂單取消" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-      #updateResult
