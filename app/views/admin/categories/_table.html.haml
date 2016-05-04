@@ -20,7 +20,7 @@
             %i.fa.fa-arrows>
             按住我
         %td{:id => "status-#{item.id}"}
-          = link_to ( item.on_shelf? ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item) ), method: :patch, remote: true do
+          = link_to ( update_shelf_path(item) ), method: :patch, remote: true do
             = item_status(item.status)
         %td
           = link_to admin_item_path(item) do

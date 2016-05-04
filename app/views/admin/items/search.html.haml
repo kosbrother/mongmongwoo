@@ -18,6 +18,7 @@
               %tr
                 %th 商品圖片
                 %th 商品名稱
+                %th 商品狀態
                 %th 商品價格
                 %th 淘寶連結
             %tbody
@@ -28,6 +29,9 @@
                       = item_icon(item.cover)
                   %td
                     = link_to item.name, admin_item_path(item)
+                  %td{:id => "status-#{item.id}"}
+                    = link_to ( update_shelf_path(item) ), method: :patch, remote: true do
+                      = item_status(item.status)
                   %td
                     = item.price
                   %td

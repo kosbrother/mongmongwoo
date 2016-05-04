@@ -77,4 +77,8 @@ module Admin::ItemsHelper
       return "已下架" 
     end
   end
+
+  def update_shelf_path(item)
+    item.on_shelf? ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item)
+  end
 end
