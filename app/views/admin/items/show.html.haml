@@ -20,6 +20,10 @@
           %dd
             = link_to @item.url, target: "_blank" do
               按此前往淘寶商品頁
+          %dt 月銷售量
+          %dd= @sales_volume_monthly
+          %dt 周銷售量
+          %dd= @sales_volume_weekly
           %dt 商品名稱
           %dd= @item.name
           %dt 商品價格
