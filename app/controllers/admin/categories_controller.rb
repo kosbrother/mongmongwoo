@@ -24,12 +24,13 @@ class Admin::CategoriesController < AdminController
 
   def show
     @category = Category.find(params[:id])
+    params['order'] = 'position' if params['order'].nil?
     if params['order'] == 'update'
-      @on_shelf_items = @category.items.where(status: 0).update_time
-      @off_shelf_items = @category.items.where(status: 1).update_time
-    else
-      @on_shelf_items = @category.items.where(status: 0).priority
-      @off_shelf_items = @category.items.where(status: 1).priority
+      @on_shelf_items = @category.items.on_shelf.update_time
+      @off_shelf_items = @category.items.off_shelf.update_time
+    elsif params['order'] == 'position'
+      @on_shelf_items = @category.items.on_shelf.priority
+      @off_shelf_items = @category.items.off_shelf.priority
     end
   end
 
