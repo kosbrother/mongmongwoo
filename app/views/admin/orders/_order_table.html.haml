@@ -32,18 +32,18 @@
                 %span{id: "current-#{order.id}-status"}= order.status
                 %span.caret
               %ul.dropdown-menu.list-group
+                %li                  
+                  = link_to_update_order_status("處理中", order)
                 %li
-                  = link_to "處理中", update_order_status_url(order, 1), update_order_status_options
+                  = link_to_update_order_status("已出貨", order)
                 %li
-                  = link_to "已出貨", update_order_status_url(order, 2), update_order_status_options
+                  = link_to_update_order_status("已到店", order)
                 %li
-                  = link_to "已到店", update_order_status_url(order, 5), update_order_status_options
+                  = link_to_update_order_status("完成取貨", order)
                 %li
-                  = link_to "完成取貨", update_order_status_url(order, 3), update_order_status_options
+                  = link_to_update_order_status("訂單變更", order)
                 %li
-                  = link_to "訂單變更", update_order_status_url(order, 6), update_order_status_options
-                %li
-                  = link_to "訂單取消", update_order_status_url(order, 4), update_order_status_options
+                  = link_to_update_order_status("訂單取消", order)
           %td= link_to order.info_user_name, admin_user_path(order.user)
           %td
             %table.table.table-bordered
