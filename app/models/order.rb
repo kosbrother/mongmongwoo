@@ -67,6 +67,26 @@ class Order < ActiveRecord::Base
     return result_order
   end
 
+  def post_to_allpay(create_reply_url, status_update_url)
+    @params = { 
+      "MerchantTradeNo"=> id,
+      "ServerReplyURL"=> create_reply_url,
+      "LogisticsC2CReplyURL" => status_update_url,
+      "GoodsAmount"=> total,
+      "CollectionAmount"=> total,
+      "GoodsName"=> "kosbrother#{id}",
+      "SenderName"=> "柯力中",
+      "SenderPhone"=>'0912585506',
+      "SenderCellPhone" => "0912585506",
+      "ReceiverName"=> info.ship_name,
+      "ReceiverPhone" => info.ship_phone,
+      "ReceiverCellPhone"=> info.ship_phone,
+      "ReceiverStoreID"=> info.store.store_code
+    }
+    allpay = AllpayGoodsService.new(@params)
+    allpay.create_order
+  end
+
   def created_at_for_api
     self.created_at.strftime("%Y-%m-%d")
   end

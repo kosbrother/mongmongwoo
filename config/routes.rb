@@ -79,6 +79,8 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show, :update] do
       collection do
         get "exporting_files"
+        post "allpay_create"
+        post "allpay_status"
       end
 
       member do
