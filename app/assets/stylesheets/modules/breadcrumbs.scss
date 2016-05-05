@@ -1,6 +1,18 @@
 .breadcrumbs{
-  border-left: solid 7px #fca3a3;
   padding-left: 10px;
   font-size: $breadcrumb-font-size;
-  color: #4a4a4a;
+  color: $normal-text-color;
+  background-image: $url-star-l;
+  background-repeat: no-repeat;
+  background-position: left;
+  padding-left: 36px;
+  > a {
+    color: $breadcrumb-link-color;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .breadcrumbs {
+    background-image: $url-star-s;
+  }
 }

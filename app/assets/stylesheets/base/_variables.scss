@@ -11,6 +11,8 @@ $more-btn-color: #fca3a3;
 $navbar-toggle-color: #fff;
 $nav-hover-background-color: #d5d6d6;
 $nav-dropdown-background-color: #fff;
+$breadcrumb-link-color: #ff8080;
+$normal-text-color: #4a4a4a;
 
 //border
 $regular-border:  solid 1px #9B9B9B;
@@ -29,7 +31,8 @@ $url-user: image-url('icons/user.png');
 $url-cart: image-url('icons/shoppingcart.png');
 $url-diamond: image-url('icons/diamond.png');
 $url-white-diamond: image-url('icons/ic_diamond.png');
-
+$url-star-l: image-url('icons/star_l.png');
+$url-star-s: image-url('icons/star_s.png');
 //font
 $regular-font-size: 14px;
 $mobile-regular-font-size: 12px;
@@ -42,7 +45,7 @@ $more-btn-font-size: 1.428571em;
 $pop-list-font-size: 1em;
 $pop-list-price-size: 1em;
 $sidebar-list-font-size: 1em;
-$breadcrumb-font-size: 1.428571em;
+$breadcrumb-font-size: 1.285714em;
 $pagination-font-size: 1.428571em;
 $mobile-pagination-font-size:  1.166667em;
 $nav-font-color: #ffffff;
