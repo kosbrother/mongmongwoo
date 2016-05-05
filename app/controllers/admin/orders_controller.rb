@@ -1,6 +1,7 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
   before_action :find_order, only: [:show, :update, :update_status]
+  skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
     params[:status] ||= 0
