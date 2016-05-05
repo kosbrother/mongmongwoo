@@ -129,6 +129,8 @@ GEM
     colorize (0.7.7)
     concurrent-ruby (1.0.1)
     connection_pool (2.2.0)
+    css_parser (1.4.1)
+      addressable
     database_cleaner (1.5.2)
     debug_inspector (0.0.2)
     descendants_tracker (0.0.4)
@@ -332,6 +334,7 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    htmlentities (4.3.4)
     http_parser.rb (0.6.0)
     httparty (0.13.7)
       json (~> 1.8)
@@ -393,6 +396,12 @@ GEM
       activerecord (~> 4.0)
     parser (2.3.0.7)
       ast (~> 2.2)
+    premailer (1.8.6)
+      css_parser (>= 1.3.6)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.9.2)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -580,6 +589,7 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   paranoia (~> 2.0)
+  premailer-rails
   pry
   rails (= 4.2.5)
   rspec-rails

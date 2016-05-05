@@ -1,0 +1,36 @@
+.row
+  .col-md-12
+    %table{:align => "center"}
+      %tbody
+        %tr
+          %td
+            %h3 親愛的 #{@order_info.ship_name} 您好，
+            %br
+            %p 您的訂單編號 #{@order.id} 已於今日送達指定門市：
+        %tr
+          %td
+            %table.table.table-bordered
+              %thead
+                %tr
+                  %th.text-center 門市名稱
+                  %th.text-center 門市地址
+                  %th.text-center 門市電話
+              %tbody
+                %tr
+                  %td.text-center= @order_info.ship_store_name
+                  %td.text-center= @ship_store.address
+                  %td.text-center= @ship_store.phone
+        %tr
+          %td
+            %p 請您於七日內攜帶身分証件到店取貨付款。
+            %p 七日內若未取貨，商品將自動退回。
+            %p 若您因故未能取貨，請與客服聯繫。
+            %p 萌萌屋感謝您！
+            %br
+            %p 萌萌屋客服
+            %p 
+              %span
+                = link_to "Line@ 客服", "http://line.me/ti/p/%40kya5456n"
+              %br
+              %span
+                = link_to "FB 粉絲頁", "https://www.facebook.com/kingofgametw/"
