@@ -44,7 +44,7 @@ group :development do
   gem "binding_of_caller"
   gem 'meta_request'
   gem "letter_opener"
-  gem 'pry-rails'
+  gem 'pry'
   # 檢查安全性
   gem 'brakeman', :require => false
   # 檢查 N+1 Query

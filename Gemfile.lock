@@ -397,8 +397,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-rails (0.3.4)
-      pry (>= 0.9.10)
     rack (1.6.4)
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
@@ -582,7 +580,7 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   paranoia (~> 2.0)
-  pry-rails
+  pry
   rails (= 4.2.5)
   rspec-rails
   rubycritic
