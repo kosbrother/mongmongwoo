@@ -34,10 +34,9 @@ class Admin::OrdersController < AdminController
   end
 
   def update_status
-    @status = params['status'].to_i
-    if @order.update_attributes!(status: @status)
-      @element_id = @order.status_btn_element_id
-      @order_id = "#order-#{@order.id}"
+    status_param = params['status'].to_i
+
+    if @order.update_attributes!(status: status_param)
       @message = "已將編號：#{@order.id} 訂單狀態設為#{@order.status}"
     else
       Rails.logger.error("error: #{@order.errors.messages}")

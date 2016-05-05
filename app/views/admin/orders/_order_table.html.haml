@@ -1,5 +1,5 @@
 .panel-body
-  %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
     %thead
       %tr
         %th 編號
@@ -14,10 +14,10 @@
             = render(partial: "info_and_items_list", locals: { order: order })
             = render(partial: "edit_order", locals: { order: order })
             .dropdown
-              %button#dropdownMenu1.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+              %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
                 按此選擇
                 %span.caret
-              %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
+              %ul.dropdown-menu.list-group
                 %li
                   %button.edit-order-btn{"data-target" => "#edit-order-#{order.id}", "data-toggle" => "modal", remote: true, :type => "button"}
                     編輯
@@ -27,14 +27,23 @@
           %td
             = order.created_on
             %br
-            .btn-group-vertical{role: "group", id: "order-#{order.id}"}
-              = link_to "新訂單", "#",{ id: "order-#{order.id}-placed", class: "btn btn-default #{order.status == "新訂單" ? "btn-lg" : "btn-xs"}" }
-              = link_to "處理中", update_status_admin_order_path(order, status: 1),{ method: :patch, remote: true, id: "order-#{order.id}-processing", class: "btn #{order.status == "處理中" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "已出貨", update_status_admin_order_path(order, status: 2), { method: :patch, remote: true, id: "order-#{order.id}-shipping", class: "btn #{order.status == "已出貨" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "已到店", update_status_admin_order_path(order, status: 5), { method: :patch, remote: true, id: "order-#{order.id}-shipped", class: "btn #{order.status == "已到店" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "完成取貨", update_status_admin_order_path(order, status: 3), { method: :patch, remote: true, id: "order-#{order.id}-pickup", class: "btn #{order.status == "完成取貨" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "訂單變更", update_status_admin_order_path(order, status: 6), { method: :patch, remote: true, id: "order-#{order.id}-change", class: "btn #{order.status == "訂單變更" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
-              = link_to "訂單取消", update_status_admin_order_path(order, status: 4), { method: :patch, remote: true, id: "order-#{order.id}-cancel", class: "btn #{order.status == "訂單取消" ? "btn-primary btn-lg" : "btn-default btn-xs"}" }
+            .dropdown{id: "dropdown-#{order.id}"}
+              %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                %span{id: "current-#{order.id}-status"}= order.status
+                %span.caret
+              %ul.dropdown-menu.list-group
+                %li                  
+                  = link_to_update_order_status("處理中", order)
+                %li
+                  = link_to_update_order_status("已出貨", order)
+                %li
+                  = link_to_update_order_status("已到店", order)
+                %li
+                  = link_to_update_order_status("完成取貨", order)
+                %li
+                  = link_to_update_order_status("訂單變更", order)
+                %li
+                  = link_to_update_order_status("訂單取消", order)
           %td= link_to order.info_user_name, admin_user_path(order.user)
           %td
             %table.table.table-bordered

@@ -19,4 +19,8 @@ module Admin::OrdersHelper
   def phone_number_looking(order)
     order.info.ship_phone
   end
+
+  def link_to_update_order_status(status_text, order)
+    link_to status_text, update_status_admin_order_path(order, status: Order.statuses[status_text]), { method: :patch, remote: true, disable_with: '狀態更新中' }
+  end
 end
