@@ -3,7 +3,7 @@ class Admin::OrdersController < AdminController
   before_action :find_order, only: [:show, :update, :update_status]
 
   def index
-    params[:status] = 0 if params[:status].nil?
+    params[:status] ||= 0
     @orders = Order.includes(:user, info: :store, items: :item).where(status: params[:status]).recent.paginate(page: params[:page])
   end
 

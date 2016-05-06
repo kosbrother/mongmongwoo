@@ -25,13 +25,13 @@ module Admin::OrdersHelper
   end
 
   def li_status_link(status)
-    content_tag(:li, '' , class: eq_to_status?(status) ? 'active' : '') do
-      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", eq_to_status?(status) ? '#' : admin_orders_path(status: status)
+    content_tag(:li, '' , class: eq_to_status?(status)) do
+      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", admin_orders_path(status: status)
     end
   end
 
   def eq_to_status?(status)
-    params[:status].to_i == status
+    params[:status].to_i == status ? 'active' : ''
   end
 
 end
