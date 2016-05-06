@@ -3,28 +3,13 @@ class Admin::OrdersController < AdminController
   before_action :find_order, only: [:show, :update, :update_status]
 
   def index
-    @placed_orders = Order.includes(:user, info: :store, items: :item).placed.paginate(:page => params[:page])
-    @processing_orders = Order.includes(:user, info: :store, items: :item).processing.paginate(:page => params[:page])
-    @shipping_orders = Order.includes(:user, info: :store, items: :item).shipping.paginate(:page => params[:page])
-    @pickup_orders = Order.includes(:user, info: :store, items: :item).pickup.paginate(:page => params[:page])
-    @cancel_orders = Order.includes(:user, info: :store, items: :item).cancel.paginate(:page => params[:page])
-    @shipped_orders = Order.includes(:user, info: :store, items: :item).shipped.paginate(:page => params[:page])
-    @change_orders = Order.includes(:user, info: :store, items: :item).change.paginate(:page => params[:page])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @orders, only: [:id, :user_id, :uid, :total, :is_paid, :status, :payment_method, :ship_fee, :items_price] }
-    end
+    params[:status] = 0 if params[:status].nil?
+    @orders = Order.includes(:user, info: :store, items: :item).where(status: params[:status]).recent.paginate(page: params[:page])
   end
 
   def show
     @info = @order.info
     @items = @order.items
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @order }
-    end
   end
 
   def update
