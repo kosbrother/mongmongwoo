@@ -9,9 +9,6 @@
           %a{"data-rel" => "reload", :href => "#"}
             %i.glyphicon.glyphicon-cog
       .content-box-large.box-with-header
-        .apple_pagination
-          = will_paginate @order_page, :container => false
-        %br/
         %ul.nav.nav-tabs
           = li_status_link(Order.statuses["新訂單"])
           = li_status_link(Order.statuses["處理中"])
