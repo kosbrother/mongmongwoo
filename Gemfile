@@ -23,8 +23,6 @@ gem "jquery-fileupload-rails"
 gem 'bcrypt', '~> 3.1.7'
 gem 'gcm'
 gem "haml-rails", "~> 0.9"
-gem 'premailer-rails'
-
 gem 'fog'
 # For carawl cvs data setup
 gem 'nokogiri'
