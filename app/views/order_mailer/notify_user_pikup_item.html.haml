@@ -1,0 +1,51 @@
+.row
+  .col-md-12
+    %table{:align => "center"}
+      %tbody
+        %tr
+          %td
+            %h3 
+              親愛的
+              %span.user-name-highlit=@order_info.ship_name
+              您好，
+            %br
+            %p
+              您的
+              %span.order-id
+                訂單編號
+                =@order.id
+              已於今日送達指定門市：
+        %tr
+          %td{align: "center"}
+            %table{:border => "1", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+              %thead
+                %tr.title{:align => "center"}
+                  %th.text-center 門市名稱
+                  %th.text-center 門市地址
+                  %th.text-center 門市電話
+              %tbody
+                %tr.content{:align => "center"}
+                  %td.text-center= @order_info.ship_store_name
+                  %td.text-center= @ship_store.address
+                  %td.text-center= @ship_store.phone
+        %tr
+          %td
+            %p
+              請您於
+              %span.seven-days
+                %em 七日內
+              攜帶身分証件到店取貨付款。
+            %p
+              %span.seven-days
+                %em 七日內
+              若未取貨，商品將自動退回。
+            %p 若您因故未能取貨，請與客服聯繫。
+            %p 萌萌屋感謝您
+            %br
+            %p 萌萌屋客服
+            %p 
+              %span.block
+                = link_to "Line@ 客服", "http://line.me/ti/p/%40kya5456n", class: "line-button"
+              %br
+              %span.block
+                = link_to "FB 粉絲頁", "https://www.facebook.com/kingofgametw/", class: "fbfan-button"
