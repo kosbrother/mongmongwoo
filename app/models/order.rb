@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
   scope :recent, -> { order(id: :DESC) }
+  scope :count_status, ->(status) { where(status: status).count }
 
   acts_as_paranoid
 
@@ -19,11 +20,6 @@ class Order < ActiveRecord::Base
 
   def info_user_phone
     info.ship_phone
-  end
-
-  def status_btn_element_id
-    names = ['placed', 'processing', 'shipping', 'pickup', 'cancel', 'shipped', 'change']
-    "#order-#{id}-#{names[self[:status]]}"
   end
 
 

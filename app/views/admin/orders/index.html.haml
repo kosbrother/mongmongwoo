@@ -9,9 +9,12 @@
           %a{"data-rel" => "reload", :href => "#"}
             %i.glyphicon.glyphicon-cog
       .content-box-large.box-with-header
-        .apple_pagination
-          = will_paginate @order_page, :container => false
-        %br/
-        = render "order_table"
-        .apple_pagination
-          = will_paginate @order_page, :container => false
+        %ul.nav.nav-tabs
+          = li_status_link(Order.statuses["新訂單"])
+          = li_status_link(Order.statuses["處理中"])
+          = li_status_link(Order.statuses["已出貨"])
+          = li_status_link(Order.statuses["已到店"])
+          = li_status_link(Order.statuses["完成取貨"])
+          = li_status_link(Order.statuses["訂單變更"])
+          = li_status_link(Order.statuses["訂單取消"])
+        = render "order_table", orders: @orders

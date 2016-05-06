@@ -3,22 +3,13 @@ class Admin::OrdersController < AdminController
   before_action :find_order, only: [:show, :update, :update_status]
 
   def index
-    @order_page = @orders = Order.includes(:user, info: :store, items: :item).recent.paginate(:page => params[:page])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @orders, only: [:id, :user_id, :uid, :total, :is_paid, :status, :payment_method, :ship_fee, :items_price] }
-    end
+    params[:status] ||= 0
+    @orders = Order.includes(:user, info: :store, items: :item).where(status: params[:status]).recent.paginate(page: params[:page])
   end
 
   def show
     @info = @order.info
     @items = @order.items
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @order }
-    end
   end
 
   def update
