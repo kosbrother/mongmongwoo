@@ -16,6 +16,9 @@
     cursor: pointer;
     margin: 5px;
   }
+  > .active{
+    border: $active-border;
+  }
 }
 
 @media screen and (max-width: 768px) {

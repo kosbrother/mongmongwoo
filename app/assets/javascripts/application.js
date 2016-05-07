@@ -41,6 +41,8 @@ ready = function() {
     //production details page: Show selected spec images
     $('.spec-photos > .icon').on('click', function(){
         var url = $(this).attr('src');
+        $('.spec-photos > .icon').removeClass('active');
+        $(this).addClass('active');
         $('.show').html('<img src=' + url + '>')
     });
 };
