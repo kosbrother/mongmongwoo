@@ -3,6 +3,11 @@ crumb :root do
 end
 
 crumb :category do |category|
-  link category.name, category_path
+  link category.name, category_path(category)
   parent :root
+end
+
+crumb :item do |category, item|
+  link item.name, category_item_path(category, item)
+  parent :category, category
 end

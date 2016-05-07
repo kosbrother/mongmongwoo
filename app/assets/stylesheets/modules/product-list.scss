@@ -1,4 +1,4 @@
-.product-block{
+.product-list{
   border: $regular-border;
   border-radius: $regular-border-radius;
   > a:hover{
@@ -25,7 +25,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .product-block > a{
+  .product-list > a{
     > .image {
       overflow: hidden;
       height: 100px;

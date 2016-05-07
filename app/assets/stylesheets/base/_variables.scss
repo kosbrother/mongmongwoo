@@ -13,6 +13,14 @@ $nav-hover-background-color: #d5d6d6;
 $nav-dropdown-background-color: #fff;
 $breadcrumb-link-color: #ff8080;
 $normal-text-color: #4a4a4a;
+$nav-font-color: #ffffff;
+$price-font-color: #ff2843;
+$nav-font-weight: regular;
+$regular-font-color: #262626;
+$order-box-quantity-font-color: #ff8080;
+$order-box-add-btn: #ff8080;
+$order-box-add-font-color: #fff;
+$order-box-customer-font-color: #ff0725;
 
 //border
 $regular-border:  solid 1px #9B9B9B;
@@ -21,6 +29,8 @@ $regular-dash-border: dashed 2px black;
 $pink-dash-border: dashed 2px #ff7d7d;
 $more-btn-border: solid 1px #fca3a3;
 $btn-border-radius: 2px;
+$order-box-quantity-border: solid 1px #ff8080;
+$pagination-border: solid 1px #ff8080;
 
 //url
 $url-pencil: image-url('icons/pencil.png');
@@ -31,12 +41,15 @@ $url-user: image-url('icons/user.png');
 $url-cart: image-url('icons/shoppingcart.png');
 $url-diamond: image-url('icons/diamond.png');
 $url-white-diamond: image-url('icons/ic_diamond.png');
-$url-star-l: image-url('icons/star_l.png');
+$url-star-l: image-url('icons/star_L.png');
 $url-star-s: image-url('icons/star_s.png');
+
 //font
 $regular-font-size: 14px;
 $mobile-regular-font-size: 12px;
 $logo-font-size:  2.142857em;
+$product-block-name-font-size: 1.428571em;
+$mobile-product-block-name-font-size: 1.166667em;
 $nav-font-size: 1.428571em;
 $category-header-font-size: 1.428571em;
 $sidebar-header-font-size: 1.428571em;
@@ -46,13 +59,12 @@ $pop-list-font-size: 1em;
 $pop-list-price-size: 1em;
 $sidebar-list-font-size: 1em;
 $breadcrumb-font-size: 1.285714em;
+$mobile-breadcrumb-font-size: 1.166667em;
 $pagination-font-size: 1.428571em;
 $mobile-pagination-font-size:  1.166667em;
-$nav-font-color: #ffffff;
-$price-font-color: #ff2843;
-$nav-font-weight: regular;
-$regular-font-color: #262626;
-
+$order-box-price-font-size: 1.785714em;
+$order-box-add-font-size: 1.285714em;
+$order-box-customer-font-size: 0.857143em;
 
 //footer
 $footer-divider: solid 1px #ffffff;
