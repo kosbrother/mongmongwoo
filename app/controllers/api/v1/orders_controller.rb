@@ -10,6 +10,10 @@ class Api::V1::OrdersController < ApiController
       order.total = params[:total]
       order.save!
 
+      # Save user_id to device_registrations table
+      device_of_order = DeviceRegistration.find_by(registration_id: params[:registration_id])
+      device_of_order.update_attributes!(user_id: order.user_id) unless order.user.anonymous_user? and device_of_order.user.present?
+
       # 收件資訊 OrderInfo
       info = OrderInfo.new
       info.order_id = order.id

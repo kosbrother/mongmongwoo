@@ -32,4 +32,12 @@ class User < ActiveRecord::Base
   has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
 
   self.per_page = 20
+
+  def anonymous_user?
+    id == 31
+  end
+
+  def not_anonymous_user?
+    id != 31
+  end
 end
