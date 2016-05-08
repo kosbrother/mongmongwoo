@@ -29,7 +29,10 @@ class Admin::OrdersController < AdminController
 
     if @order.update_attributes!(status: status_param)
       @message = "已將編號：#{@order.id} 訂單狀態設為#{@order.status}"
-      OrderMailer.delay.notify_user_pikup_item(@order) if @order.reload.status == "已到店"
+      if @order.reload.status == "已到店"
+        OrderMailer.delay.notify_user_pikup_item(@order)
+        GcmNotifyService.new.send_pickup_notification(@order) if @order.user.not_anonymous_user?
+      end
     else
       Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"

@@ -16,7 +16,8 @@ class GcmNotifyService
     end
   end
 
-  def send_pickup_notification(device_id, order)
+  def send_pickup_notification(order)
+    device_id = DeviceRegistration.find_by(user_id: order.user_id).registration_id
     registration_id = device_id.split
     options = generate_options_for_pickup(order)
     self.gcm.send(registration_id, options)
