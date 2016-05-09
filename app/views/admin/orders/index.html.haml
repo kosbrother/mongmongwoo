@@ -15,6 +15,7 @@
           = li_status_link(Order.statuses["已出貨"])
           = li_status_link(Order.statuses["已到店"])
           = li_status_link(Order.statuses["完成取貨"])
+          = li_status_link(Order.statuses["未取訂貨"])
           = li_status_link(Order.statuses["訂單變更"])
           = li_status_link(Order.statuses["訂單取消"])
         = render "order_table", orders: @orders
