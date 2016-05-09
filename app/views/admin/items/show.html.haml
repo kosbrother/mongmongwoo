@@ -16,6 +16,8 @@
         = item_cover(@item.cover)
       .words-intro.col-md-5
         %dl.dl-horizontal
+          %dt 商品編號
+          %dd= @item.id
           %dt 淘寶連結
           %dd
             = link_to @item.url, target: "_blank" do
