@@ -17,7 +17,7 @@ class GcmNotifyService
   end
 
   def send_pickup_notification(order)
-    device_id = DeviceRegistration.find_by(user_id: order.user_id).registration_id
+    device_id = DeviceRegistration.find_by(registration_id: order.registration_id).registration_id
     registration_id = [device_id]
     options = generate_options_for_pickup(order)
     self.gcm.send(registration_id, options)
@@ -44,7 +44,8 @@ class GcmNotifyService
     result_options = {
       data: {
         content_title: "萌萌屋取貨通知",
-        content_text: "#{order.ship_name} 您好，您訂購的商品已送達#{order.ship_store_name}門市，請於七日內完成取貨。若有任何問題，請聯繫萌萌屋客服。"
+        content_text: "#{order.ship_name} 您好，您訂購的商品已送達#{order.ship_store_name}門市，請於七日內完成取貨。若有任何問題，請聯繫萌萌屋客服。",
+        order_id: order.id
         },
       collapse_key: "updated_score"
     }
