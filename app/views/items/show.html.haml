@@ -4,8 +4,9 @@
     .spec-photos
       .show
         = image_tag(@item.specs.first.style_pic.url, class: 'img-responsive')
-      - @item.specs.each do |spec|
-        = image_tag(spec.style_pic.url, class: 'icon')
+      .icons
+        - @item.specs.each do |spec|
+          = image_tag(spec.style_pic.url, class: 'icon')
   .col-lg-6
     .order-box.row
       .name

@@ -39,11 +39,11 @@ ready = function() {
             $('#order_item_item_quantity').val(quantity + 1)
     });
     //production details page: Show selected spec images
-    $('.spec-photos > .icon').on('click', function(){
+    $('.spec-photos > .icons > .icon').on('click', function(){
         var url = $(this).attr('src');
-        $('.spec-photos > .icon').removeClass('active');
+        $('.spec-photos > .icons > .icon').removeClass('active');
         $(this).addClass('active');
-        $('.show').html('<img src=' + url + '>')
+        $('.show').html("<img class='img-responsive' src=" + url + ">")
     });
 };
 $(document).ready(ready);
