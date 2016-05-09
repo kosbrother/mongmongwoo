@@ -27,6 +27,7 @@ class Api::V1::OrdersController < ApiController
         item.order_id = order.id
         item.item_name = product[:name]
         item.source_item_id = Item.find_by(name: product[:name]).id
+        item.item_spec = ItemSpec.where(item_id: item.source_item_id).find_by(style: product[:style])
         item.item_style = product[:style]
         item.item_quantity = product[:quantity]
         item.item_price = product[:price]        

@@ -14,6 +14,20 @@
       .cover-intro.col-md-4
         / <haml_loud> image_tag(@item.intro_cover) </haml_loud>
         = item_cover(@item.cover)
+        .col-md-6
+          %dl.dl-horizontal
+            %dt 總銷售量 :
+            %dd= OrderItem.product_sales(@item.id).first.sum_item_quantity
+            %dt 月銷售量 :
+            %dd= @sales_volume_monthly
+            %dt 周銷售量 :
+            %dd= @sales_volume_weekly
+        .col-md-6
+          %dl.dl-horizontal
+            - @item.specs.each do |spec|
+              %dt= "#{spec.style} :"
+              %dd= OrderItem.product_style_sales(@item.id,spec.id).first.sum_item_quantity
+
       .words-intro.col-md-5
         %dl.dl-horizontal
           %dt 商品編號
@@ -21,11 +35,7 @@
           %dt 淘寶連結
           %dd
             = link_to @item.url, target: "_blank" do
-              按此前往淘寶商品頁
-          %dt 月銷售量
-          %dd= @sales_volume_monthly
-          %dt 周銷售量
-          %dd= @sales_volume_weekly
+              按此前往淘寶商品
           %dt 商品名稱
           %dd= @item.name
           %dt 商品價格

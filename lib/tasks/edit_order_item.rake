@@ -11,4 +11,11 @@ namespace :edit_order_item do
       end
     end
   end
+
+  task :add_item_spec_id => :environment do
+    OrderItem.all.each do |o_item|
+      spec = o_item.item.specs.where(style: o_item.item_style)
+      o_item.update_columns(item_spec_id: spec.first.id) if spec.present?
+    end
+  end
 end
