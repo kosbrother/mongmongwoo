@@ -16,8 +16,10 @@ class Api::V1::OrdersController < ApiController
       if device_of_order.new_record?
         device_of_order.user = order.user
         device_of_order.save!
+        logger.info "The new device has been saved!"
       elsif device_of_order.user.nil?
         device_of_order.update_attributes!(user_id: order.user_id)
+        logger.info "The user id: #{device_of_order.user_id} has been updated to the device!"
       end
 
       # 收件資訊 OrderInfo
