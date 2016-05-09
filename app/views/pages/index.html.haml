@@ -24,17 +24,17 @@
       %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
       %span.sr-only Next
 
-  - @items.each do |items|
+  - @category_with_items.each do |category_with_items|
     .category-header
       .group
         .icon.visible-lg-inline-block
-          = category_header_icon(items[0].id)
+          = category_header_icon(category_with_items[:category].id)
         .text
-          = items[0].name
-    = render "partials/product_list", category: items[0], items: items[1]
+          = category_with_items[:category].name
+    = render "partials/product_list", category: category_with_items[:category], items: category_with_items[:items]
     .row
       .col-lg-offset-4.col-lg-4
-        = link_to category_path(items[0]) do
+        = link_to category_path(category_with_items[:category]) do
           .more-btn
             觀看更多
             = image_tag('icons/arrow.png', class: 'icon')
