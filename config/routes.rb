@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :items, only: [:show]
   end
 
-  resources :order_items, only: [:create]
+  resources :cart_items, only: [:create]
 
   # 助理後台
   namespace :staff do

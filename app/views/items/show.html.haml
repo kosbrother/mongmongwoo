@@ -10,7 +10,7 @@
     .order-box.row
       .name
         = @item.name
-      = form_for :order_item, url: order_items_path, remote: true do |f|
+      = form_for :cart_item, url: :cart_items, remote: true do |f|
         .col-lg-3.col-xs-3.no-padding
           .header 定價
         .col-lg-9.col-xs-9

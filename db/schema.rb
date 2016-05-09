@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427103312) do
+ActiveRecord::Schema.define(version: 20160509031143) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -31,6 +31,28 @@ ActiveRecord::Schema.define(version: 20160427103312) do
   end
 
   add_index "assistants", ["deleted_at"], name: "index_assistants_on_deleted_at", using: :btree
+
+  create_table "cart_items", force: :cascade do |t|
+    t.integer  "cart_id",       limit: 4
+    t.integer  "item_id",       limit: 4
+    t.string   "item_spec_id",  limit: 255
+    t.integer  "item_quantity", limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "cart_items", ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree
+  add_index "cart_items", ["item_id"], name: "index_cart_items_on_item_id", using: :btree
+  add_index "cart_items", ["item_spec_id"], name: "index_cart_items_on_item_spec_id", using: :btree
+
+  create_table "carts", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "status",     limit: 4, default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "carts", ["user_id"], name: "index_carts_on_user_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
