@@ -1,0 +1,142 @@
+.order-box{
+  >.name{
+    font-size: $product-block-name-font-size;
+    border-bottom: $pink-dash-border;
+    padding: 15px 0;
+    margin-bottom: 15px;
+    font-weight: bolder;
+  }
+  > form{
+    .header{
+      padding: 0 ;
+      border-top: transparent;
+      height: 35px;
+      line-height: 35px;
+      margin-bottom: 25px;
+    }
+    .dollar{
+      color: #ff2843;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+    .price{
+      border-top: transparent;
+      color: $price-font-color;
+      font-size: $order-box-price-font-size;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+    .select{
+      height: 35px;
+      margin-bottom: 25px;
+    }
+    //modified spin arrow
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .quantity{
+      border-top: $order-box-quantity-border;
+      border-bottom: $order-box-quantity-border;
+      border-left: transparent;
+      border-right: transparent;
+      color: $order-box-quantity-font-color;
+      background-color: transparent;
+      text-align: center;
+      height: 35px;
+      margin-bottom: 25px;
+      position: relative;
+      left: -4px;
+      width: 30px;
+    }
+    .quantity-minus{
+      border: $order-box-quantity-border;
+      color: $order-box-quantity-font-color;
+      background-color: transparent;
+      display: inline-block;
+      width: 30px;
+      height: 35px;
+      vertical-align: top;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 18px;
+      line-height: 30px;
+      cursor: pointer;
+      -webkit-user-select: none; /* Chrome/Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+ */
+      /* Rules below not implemented in browsers yet */
+      -o-user-select: none;
+      user-select: none;
+    }
+    .quantity-plus{
+      border: $order-box-quantity-border;
+      color:  $order-box-quantity-font-color;
+      background-color: transparent;
+      display: inline-block;
+      width: 30px;
+      height: 35px;
+      vertical-align: top;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 18px;
+      line-height: 30px;
+      position: relative;
+      left: -8px;
+      cursor: pointer;
+      -webkit-user-select: none; /* Chrome/Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+ */
+      /* Rules below not implemented in browsers yet */
+      -o-user-select: none;
+      user-select: none;
+    }
+    .info{
+      position: relative;
+      top: 8px;
+      margin-bottom: 30px;
+    }
+    .add-cart{
+      > .add{
+        width: 370px;
+        height: 50px;
+        border-radius: 4px;
+        background-color: $order-box-add-btn;
+        border: transparent;
+        font-size: $order-box-add-font-size;
+        color: $order-box-add-font-color;
+        margin-bottom: 5px;
+        float: right;
+      }
+      > .customer{
+        font-size: $order-box-customer-font-size;
+        float: right;
+        > a{
+          color: $order-box-customer-font-color;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .order-box {
+    padding-left: 10px;
+    padding-right: 10px;
+    > .name {
+      margin-bottom: 10px;
+      font-size: $mobile-product-block-name-font-size;
+    }
+    form{
+      .header{
+        height: 30px;
+      }
+      .add-cart{
+        .add{
+          width: 100%;
+        }
+      }
+    }
+  }
+}

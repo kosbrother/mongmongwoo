@@ -1,0 +1,49 @@
+- breadcrumb :item, @category, @item
+.product-block.row
+  .col-lg-6.xs-padding
+    .spec-photos
+      .show
+        = image_tag(@item.specs.first.style_pic.url, class: 'img-responsive')
+      .icons
+        - @item.specs.each do |spec|
+          = image_tag(spec.style_pic.url, class: 'icon')
+  .col-lg-6
+    .order-box.row
+      .name
+        = @item.name
+      = form_for :cart_item, url: :cart_items, remote: true do |f|
+        .col-lg-3.col-xs-3.no-padding
+          .header 定價
+        .col-lg-9.col-xs-9
+          .dollar NT.
+          .price= @item.price
+        .col-lg-3.col-xs-3.no-padding
+          .header 樣式名稱
+        .col-lg-9.col-xs-9
+          = f.select :item_style, @item.specs.collect { |spec| spec.style }, {},  class: 'select'
+        .col-lg-3.col-xs-3.no-padding
+          .header 選擇商品數量
+        .col-lg-9.col-xs-9
+          .quantity-minus -
+          = f.number_field :item_quantity, class: 'quantity', value: '1', min: '1', max: '99'
+          .quantity-plus +
+        .col-lg-3.col-xs-3.no-padding
+          .header 購物須知
+        .col-lg-9.col-xs-9
+          .info
+            寄送方式：711超商取貨(滿千免運費)
+            %br/
+            付款方式：超商付款取貨
+        .col-lg-12.col-xs-12.no-padding
+          .add-cart
+            = f.submit '加入購物車', class: 'add'
+            .customer
+              購物遇到問題？
+              = link_to '聯繫客服', 'http://line.me/ti/p/%40kya5456n'
+.star-header 商品說明
+.text-align
+  = raw @item.description
+.star-header 更多照片
+.photo-list
+  - @item.photos.each do |photo|
+    = image_tag(photo.image.url, class: 'img-responsive')

@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
+
   mount Ckeditor::Engine => '/ckeditor'
 
   root 'pages#index'
-  resources :categories, only: [:show]
+  resources :categories, only: [:show] do
+    resources :items, only: [:show]
+  end
+
+  resources :cart_items, only: [:create]
 
   # 助理後台
   namespace :staff do
@@ -43,17 +48,17 @@ Rails.application.routes.draw do
         member do
           patch "on_shelf"
           patch "off_shelf"
-        end        
-      end         
+        end
+      end
     end
-    
+
     resources :categories, only: [:new, :create, :show, :index] do
       # 商品重新排序
       collection do
         post "sort_items_priority"
       end
     end
-    
+
     resources :users, only: [:index, :show, :create, :update] do
       collection do
         # 外界POST request

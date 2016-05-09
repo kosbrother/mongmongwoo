@@ -1,0 +1,44 @@
+.spec-photos{
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  >.show{
+    > img{
+      margin: 15px auto;
+      width: 250px;
+    }
+
+  }
+  .icons{
+    display: inline-block;
+    text-align: left;
+    > .icon{
+      border: $regular-border;
+      border-radius: $regular-border-radius;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    > .active{
+      border: $active-border;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .spec-photos{
+    //text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+    >.show {
+
+    }
+    > .icon{
+      width: 46px;
+      height: 46px;
+      margin: 10px 3px;
+    }
+}
+}

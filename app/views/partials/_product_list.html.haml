@@ -1,8 +1,8 @@
 .row
   - items.each do |item|
     .col-lg-4.col-xs-6.xs-padding
-      .product-block
-        = link_to "#" do
+      .product-list
+        = link_to category_item_path(category, item)  do
           .image
             = image_tag(item.cover.url, class: 'img-responsive center-block')
           .text

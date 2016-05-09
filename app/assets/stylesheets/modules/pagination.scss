@@ -6,7 +6,7 @@
     > .previous_page, .next_page, .page{
       background-color: transparent;
       color: #ff8080;
-      border: solid 1px #ff8080;
+      border: $pagination-border;
     }
     > .current{
       background-color: #ff8080;
