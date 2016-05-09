@@ -203,23 +203,25 @@ ActiveRecord::Schema.define(version: 20160509034631) do
   add_index "order_items", ["source_item_id"], name: "index_order_items_on_source_item_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4
-    t.integer  "total",          limit: 4,   default: 0
-    t.boolean  "is_paid",                    default: false
+    t.integer  "user_id",         limit: 4
+    t.integer  "total",           limit: 4,   default: 0
+    t.boolean  "is_paid",                     default: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.integer  "status",         limit: 4,   default: 0
-    t.string   "payment_method", limit: 255
-    t.string   "token",          limit: 255
-    t.string   "uid",            limit: 255
-    t.integer  "ship_fee",       limit: 4
-    t.integer  "items_price",    limit: 4
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "status",          limit: 4,   default: 0
+    t.string   "payment_method",  limit: 255
+    t.string   "token",           limit: 255
+    t.string   "uid",             limit: 255
+    t.integer  "ship_fee",        limit: 4
+    t.integer  "items_price",     limit: 4
     t.date     "created_on"
-    t.string   "note",           limit: 255, default: ""
+    t.string   "note",            limit: 255, default: ""
+    t.string   "registration_id", limit: 255
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
+  add_index "orders", ["registration_id"], name: "index_orders_on_registration_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
