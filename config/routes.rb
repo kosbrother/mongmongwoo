@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   end
 
   resources :cart_items, only: [:create]
+  resources :carts, only: [:show] do
+    resources :cart_items, only: [:update, :destroy]
+  end
 
   # 助理後台
   namespace :staff do

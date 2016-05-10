@@ -1,0 +1,49 @@
+.step-bar{
+  > .step{
+    width: 40px;
+    height: 40px;
+    border: solid 2px #50e3c2;
+    display: inline-block;
+    border-radius: 50%;
+    > .text{
+      width: 130px;
+      font-size: 20px;
+      font-weight: bolder;
+      color: #000000;
+      padding-top: 10px;
+      position: relative;
+      left: -45px;
+      text-align: center;
+    }
+    > .done{
+      text-align: center;
+      background-color: #50e3c2;
+      line-height: 32px;
+      border-radius: 50%;
+      border: solid #fffef0 2px;
+      color: #fffef0;
+      font-size: 27px;
+    }
+    > .undone{
+      text-align: center;
+      background-color: #fffef0;
+      line-height: 32px;
+      border-radius: 50%;
+      border: solid #fffef0 2px;
+      color: #50e3c2;
+      font-size: 27px;
+    }
+  }
+  > .bar{
+    margin-right: -7px;
+    margin-left: -7px;
+    display: inline-block;
+    height: 8px;
+    border-radius: 6px;
+    border: solid 2px #50e3c2;
+    width: 190px;
+    position: relative;
+    z-index: -1;
+    top: -44px;
+  }
+}

@@ -1,0 +1,66 @@
+.cart-result{
+  background-color: #ffffff;
+  border: solid 1px #dcdcdc;
+  text-align: center;
+  > thead{
+    border-bottom: solid 1px #dcdcdc;
+    margin-bottom: 15px;
+    >tr{
+      height: 75px;
+      >td{
+        vertical-align: middle;
+      }
+    }
+  }
+  > tbody{
+    >tr{
+      td {
+        border: none;
+        vertical-align: middle;
+      }
+      .icon{
+        img{width: 66px;}
+      }
+      .quantity-box{
+        .quantity, .quantity-minus, .quantity-plus{
+          height: 35px;
+          width: 30px;
+          position: relative;
+        }
+        .quantity{
+          left: -4px;
+        }
+        .quantity-plus{
+          left: -8px;
+        }
+      }
+      .cancel{
+        border: none;
+        background-color: transparent;
+        background-image: image_url('icons/ic_cancel.png');
+        background-position: center;
+        background-size: contain;
+        width: 25px;
+        height: 25px;
+
+      }
+      .cancel:focus{
+        outline: none;
+      }
+      .cancel:hover{
+        background-image: image_url('icons/ic_cancel_hover.png');
+      }
+    }
+    > .totalrow{
+        border-top:  solid 1px #dcdcdc;
+        border-bottom:  solid 1px #dcdcdc;
+        > td > div{
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+      #totalprice{
+        color: #ff0000;
+      }
+    }
+  }
+}

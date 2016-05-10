@@ -33,4 +33,8 @@ module ApplicationHelper
     will_paginate(collection, options)
   end
 
+  def price_with_unit(price)
+    "NT." + price.to_s
+  end
+
 end

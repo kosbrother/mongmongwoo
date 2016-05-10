@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(version: 20160511133856) do
   create_table "cart_items", force: :cascade do |t|
     t.integer  "cart_id",       limit: 4
     t.integer  "item_id",       limit: 4
-    t.string   "item_spec_id",  limit: 255
+    t.integer  "item_spec_id",  limit: 4
     t.integer  "item_quantity", limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "cart_items", ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree
@@ -81,17 +81,6 @@ ActiveRecord::Schema.define(version: 20160511133856) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
-
-  create_table "cost_statistics", force: :cascade do |t|
-    t.integer  "cost_of_goods",       limit: 4
-    t.integer  "cost_of_advertising", limit: 4
-    t.integer  "cost_of_freight_in",  limit: 4
-    t.date     "cost_date"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "cost_statistics", ["cost_date"], name: "index_cost_statistics_on_cost_date", using: :btree
 
   create_table "counties", force: :cascade do |t|
     t.string   "name",       limit: 255

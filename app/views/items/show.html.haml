@@ -12,6 +12,7 @@
       .name
         = @item.name
       = form_for :cart_item, url: :cart_items, remote: true do |f|
+        = f.hidden_field(:item_id, value: @item.id)
         .col-lg-3.col-xs-3.no-padding
           .header 定價
         .col-lg-9.col-xs-9
@@ -20,13 +21,14 @@
         .col-lg-3.col-xs-3.no-padding
           .header 樣式名稱
         .col-lg-9.col-xs-9
-          = f.select :item_style, @item.specs.collect { |spec| spec.style }, {},  class: 'select'
+          = f.select :item_spec_id, @item.specs.collect { |spec| [spec.style, spec.id] }, {},  class: 'select'
         .col-lg-3.col-xs-3.no-padding
           .header 選擇商品數量
         .col-lg-9.col-xs-9
-          .quantity-minus -
-          = f.number_field :item_quantity, class: 'quantity', value: '1', min: '1', max: '99'
-          .quantity-plus +
+          .quantity-box
+            .quantity-minus -
+            = f.number_field :item_quantity, class: 'quantity', value: '1', min: '1', max: '99'
+            .quantity-plus +
         .col-lg-3.col-xs-3.no-padding
           .header 購物須知
         .col-lg-9.col-xs-9

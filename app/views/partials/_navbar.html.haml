@@ -26,7 +26,7 @@
               %li.list
                 = link_to category.name, category_path(category), class: "link"
         %li.nav-list
-          = link_to "#" do
+          = link_to cart_path(@cart) do
             .list.cart
               購物車
         %li.nav-list

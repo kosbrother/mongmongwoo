@@ -1,0 +1,51 @@
+.quantity-box{
+  //modified spin arrow
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .quantity{
+    border-top: $order-box-quantity-border;
+    border-bottom: $order-box-quantity-border;
+    border-left: transparent;
+    border-right: transparent;
+    color: $order-box-quantity-font-color;
+    background-color: transparent;
+    text-align: center;
+  }
+  .quantity-minus{
+    border: $order-box-quantity-border;
+    color: $order-box-quantity-font-color;
+    background-color: transparent;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    font-size: 18px;
+    line-height: 30px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+  }
+  .quantity-plus{
+    border: $order-box-quantity-border;
+    color:  $order-box-quantity-font-color;
+    background-color: transparent;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    font-size: 18px;
+    line-height: 30px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+  }
+}

@@ -1,0 +1,50 @@
+.icon-header.-pencil 訂單明細
+%table.cart-result.table
+  %thead
+    %tr
+      %td 產品照片
+      %td 產品名稱
+      %td 產品樣式
+      %td 產品單價
+      %td 產品數量
+      %td 小計
+      %td 刪除訂單
+  %tbody
+    - @items.each do |item|
+      %tr{id: "cart-item-#{item.id}"}
+        %td.icon= image_tag(item.item.cover.icon.url)
+        %td= item.item.name
+        %td= item.item_spec.style
+        %td= price_with_unit(item.item.price)
+        %td.quantity-box
+          .quantity-minus{ 'data-id': item.id, 'data-cart-id': @cart.id } -
+          = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
+          .quantity-plus{ 'data-id': item.id,'data-cart-id': @cart.id } +
+        %td{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+        %td
+          %button.cancel{"aria-label": "Close", type: "button", class: "cart-item-delete", 'data-id': item.id,'data-cart-id': @cart.id }
+    %tr.totalrow
+      %td
+      %td
+      %td
+      %td
+      %td
+        %div 產品總額
+        %div 運費（711超商取貨付款）
+      %td
+        #cart-sum= price_with_unit(@cart.total)
+        %div NT.60
+      %td
+    %tr.totalrow
+      %td
+      %td
+      %td
+      %td
+      %td
+        %div 總計
+      %td
+        #totalprice= price_with_unit(@cart.total+60)
+      %td
+.submit-session
+  %button.btn
+    下一步
