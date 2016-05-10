@@ -3,4 +3,5 @@ class DeviceRegistration < ActiveRecord::Base
   validates_uniqueness_of :registration_id, on: :create, message: "裝置ID重複了"
 
   belongs_to :user
+  has_many :orders
 end

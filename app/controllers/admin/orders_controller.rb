@@ -32,7 +32,7 @@ class Admin::OrdersController < AdminController
       if @order.reload.status == "已到店"
         OrderMailer.delay.notify_user_pikup_item(@order)
         GcmNotifyService.new.send_pickup_notification(@order)
-        logger.info("Sending notification to device: #{@order.registration_id}")
+        logger.info("Sending notification to device: #{@order.device_registration.registration_id}")
       end
     else
       Rails.logger.error("error: #{@order.errors.messages}")
