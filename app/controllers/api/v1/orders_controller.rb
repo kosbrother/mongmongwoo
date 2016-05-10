@@ -8,19 +8,12 @@ class Api::V1::OrdersController < ApiController
       order.items_price = params[:items_price]
       order.ship_fee = params[:ship_fee]
       order.total = params[:total]
-      order.registration_id = params[:registration_id]
-      order.save!
-
       # Save user_id to device_registrations table
-      device_of_order = DeviceRegistration.find_or_initialize_by(registration_id: order.registration_id)
-      if device_of_order.new_record?
-        device_of_order.user = order.user
-        device_of_order.save!
-        logger.info "The new device has been saved!"
-      elsif device_of_order.user.nil?
-        device_of_order.update_attributes!(user_id: order.user_id)
-        logger.info "The user id: #{device_of_order.user_id} has been updated to the device!"
-      end
+      device_of_order = DeviceRegistration.find_or_initialize_by(registration_id: params[:registration_id])
+      device_of_order.user = order.user
+      device_of_order.save!
+      order.device_registration = device_of_order
+      order.save!
 
       # 收件資訊 OrderInfo
       info = OrderInfo.new
