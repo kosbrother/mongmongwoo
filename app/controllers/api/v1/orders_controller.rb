@@ -8,6 +8,13 @@ class Api::V1::OrdersController < ApiController
       order.items_price = params[:items_price]
       order.ship_fee = params[:ship_fee]
       order.total = params[:total]
+      # Save user_id to device_registrations table if params[:registration_id] present
+      unless params[:registration_id].nil?
+        device_of_order = DeviceRegistration.find_or_initialize_by(registration_id: params[:registration_id])
+        device_of_order.user = order.user
+        device_of_order.save!
+        order.device_registration = device_of_order
+      end
       order.save!
 
       # 收件資訊 OrderInfo

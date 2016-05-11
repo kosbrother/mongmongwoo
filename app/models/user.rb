@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   validates_presence_of :phone, allow_blank: true
 
   has_many :orders, dependent: :destroy
+  has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
 
   self.per_page = 20
 end
