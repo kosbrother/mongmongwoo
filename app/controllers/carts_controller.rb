@@ -76,7 +76,7 @@ class CartsController < ApplicationController
     order.ship_fee = 60
     order.total = cart.total + 60
     order.save!
-
+    binding.pry
     info = OrderInfo.new
     info.order_id = order.id
     info.ship_name = cart_info[:ship_name]

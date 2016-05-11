@@ -1,9 +1,7 @@
 class CartItemsController < ApplicationController
 
   def create
-
     CartItem.create(cart_item_params)
-
   end
 
   def update
