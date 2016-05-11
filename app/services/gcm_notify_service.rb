@@ -36,7 +36,6 @@ class GcmNotifyService
         },
       collapse_key: "updated_score"
     }
-    return result_options
   end
 
   def generate_options_for_pickup(order)
@@ -48,6 +47,5 @@ class GcmNotifyService
         },
       collapse_key: "updated_score"
     }
-    return result_options
   end
 end
