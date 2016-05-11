@@ -49,12 +49,6 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def allpay_create
-  end
-
-  def allpay_status
-  end
-
   private
 
   def find_order

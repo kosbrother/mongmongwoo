@@ -41,7 +41,6 @@ class Api::V1::OrdersController < ApiController
         item.save!
       end
       
-      PostToAllpayWorker.perform_async(order.id, app.allpay_create_admin_orders_url, app.allpay_status_admin_orders_url)
       OrderMailer.delay.notify_order_placed(order)
     end
 

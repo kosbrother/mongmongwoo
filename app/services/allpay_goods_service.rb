@@ -17,6 +17,12 @@ class AllpayGoodsService
     url = URI.parse("https://logistics.allpay.com.tw/Express/Create")
     resp, data = Net::HTTP.post_form(url, @fields.sort.to_h)
     puts resp.body
+    
+    if resp.body.start_with? '0'
+      return false
+    else
+      return true
+    end
   end
 
   def add_default_fields(params={})

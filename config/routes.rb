@@ -25,6 +25,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :allpay, only:[] do
+    collection do
+      post "/create/:order_id", to: "allpay#create", as: "create"
+      post "status_update"
+      post "create_reply"
+    end
+  end
+
   # 管理員後台
   namespace :admin do
     root "categories#index"
@@ -79,8 +87,6 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show, :update] do
       collection do
         get "exporting_files"
-        post "allpay_create"
-        post "allpay_status"
       end
 
       member do
