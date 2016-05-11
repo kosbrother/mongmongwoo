@@ -12,4 +12,8 @@ module Admin::SalesReportsHelper
 
     return css_class
   end
+
+  def display_date(time)
+    time.strftime("%Y-%m-%d")
+  end
 end

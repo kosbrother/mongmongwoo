@@ -97,6 +97,8 @@ Rails.application.routes.draw do
       collection do
         get "item_sales_result"
         get "item_revenue_result"
+        get "cost_statistics_index"
+        post "/cost_statistics_index", to: "sales_reports#cost_statistics_create"
       end
     end
   end
