@@ -4,8 +4,8 @@ class CartItem < ActiveRecord::Base
   belongs_to :item
   belongs_to :item_spec
 
-  def increment_quantity
-    update_attribute(:item_quantity, item_quantity + 1) if item_quantity < 99
+  def increment_quantity(quantity=1)
+    update_attribute(:item_quantity, item_quantity + quantity) if item_quantity < 99
   end
 
   def decrement_quantity
