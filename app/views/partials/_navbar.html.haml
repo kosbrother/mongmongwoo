@@ -28,6 +28,8 @@
         %li.nav-list
           = link_to cart_path(@cart) do
             .list.cart
-              購物車
+              購物車(
+              %span= @cart.cart_items.count
+              )
         %li.nav-list
           = render_login_or_logout

@@ -2,6 +2,10 @@ class CartItemsController < ApplicationController
 
   def create
     CartItem.create(cart_item_params)
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update
