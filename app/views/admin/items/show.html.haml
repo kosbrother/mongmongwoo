@@ -38,6 +38,10 @@
               按此前往淘寶商品
           %dt 商品名稱
           %dd= @item.name
+          %dt 商品狀態
+          %dd{:id => "status-#{@item.id}"}
+            = link_to ( update_shelf_path(@item) ), method: :patch, remote: true do
+              = item_status(@item.status)
           %dt 商品價格
           %dd
             NT#{number_to_currency(@item.price)}
