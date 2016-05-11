@@ -31,7 +31,7 @@ class CartsController < ApplicationController
                        LogisticsType: 'CVS',
                        LogisticsSubType: 'UNIMART',
                        IsCollection: 'Y',
-                       ServerReplyURL: "https://0c03837f.ngrok.io/carts/#{params[:id]}/store_reply")
+                       ServerReplyURL: "#{ENV['WEB_HOST']}/carts/#{params[:id]}/store_reply")
     redirect_to  url
   end
 

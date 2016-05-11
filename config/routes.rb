@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  get 'cart_infos/create'
+  get  "/auth/:provider/callback" => "sessions#create", as: :login
+  get  "/signout" => "sessions#destroy", as: :signout
 
   mount Ckeditor::Engine => '/ckeditor'
 

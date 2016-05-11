@@ -32,4 +32,18 @@ class User < ActiveRecord::Base
   has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
 
   self.per_page = 20
+
+  def self.find_or_create_from_omniauth(auth)
+      where(uid: auth.id).first_or_initialize.tap do |user|
+        user.uid = auth.id
+        user.user_name = auth.name
+        user.gender = auth.gender
+        user.email = auth.email
+        user.real_name = ''
+        user.address = ''
+        user.phone = ''
+        user.save!
+      end
+  end
+
 end
