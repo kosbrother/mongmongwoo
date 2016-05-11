@@ -11,7 +11,7 @@ class GcmNotifyService
     options = generate_options_for_item(notification)
     DeviceRegistration.select(:id, :registration_id).find_in_batches do |ids|
       registration_ids = ids.map(&:registration_id)
-      self.gcm.send_notification(registration_ids, options)
+      @gcm.send_notification(registration_ids, options)
     end
   end
 
@@ -19,7 +19,7 @@ class GcmNotifyService
     device_id = order.device_registration.registration_id
     registration_id = [device_id]
     options = generate_options_for_pickup(order)
-    self.gcm.send(registration_id, options)
+    @gcm.send(registration_id, options)
   end
 
   private
