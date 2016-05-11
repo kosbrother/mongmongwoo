@@ -1,0 +1,17 @@
+.submit-session{
+  text-align: center;
+  padding-top: 30px;
+  > .btn{
+    border-radius: 5px;
+    background-color: #47b286;
+    font-size: 18.6px;
+    color: #ffffff;
+    line-height: 40px;
+    margin: 30px;
+  }
+
+  > .btn-previous{
+    background-color: #f2f2f2;
+    color: #4a4a4a;
+  }
+}

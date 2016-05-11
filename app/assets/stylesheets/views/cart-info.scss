@@ -1,0 +1,13 @@
+.cart-info{
+  text-align: center;
+  .icon-header{
+    width: 570px;
+    margin: 10px auto;
+    text-align: left;
+  }
+  > form{
+    > .input-block{
+      width: 570px;
+    }
+  }
+}

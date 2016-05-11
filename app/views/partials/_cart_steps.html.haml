@@ -1,15 +1,15 @@
 .step-bar
   .step
-    .done 1
+    = render_cart_step(1)
     .text
       確認訂單
-  .bar
+  = render_step_bar(1)
   .step
-    .undone 2
+    = render_cart_step(2)
     .text
       填寫訂購資料
-  .bar
+  = render_step_bar(2)
   .step
-    .undone 3
+    = render_cart_step(3)
     .text
       確認訂單明細

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'cart_infos/create'
+
   mount Ckeditor::Engine => '/ckeditor'
 
   root 'pages#index'
@@ -9,6 +11,14 @@ Rails.application.routes.draw do
 
   resources :cart_items, only: [:create]
   resources :carts, only: [:show] do
+    member do
+      get 'confirm'
+      get 'info'
+      post 'create_info'
+      get 'select_store'
+      post 'store_reply'
+      post 'submit'
+    end
     resources :cart_items, only: [:update, :destroy]
   end
 

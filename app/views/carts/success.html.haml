@@ -1,0 +1,15 @@
+.success
+  .text-align
+    恭喜您！已成功完成購物！
+  .image
+    = image_tag('img_thx.png')
+  .text-align
+    親愛的訂購人，非常感謝您在萌萌屋消費！
+    %br/
+    此次的購物明細已寄至您的信箱，商品抵達您指定超商時，
+    %br/
+    會有簡訊通知，還請您多加留意！
+    %br/
+    萌萌屋全體期待您再次光臨！！
+  .submit-session
+    =link_to '繼續購物', root_path , class: 'btn'

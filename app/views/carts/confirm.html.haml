@@ -1,4 +1,5 @@
 = render 'partials/cart_steps', step: @step
+.cart-confirm
 .icon-header.-pencil 訂單明細
 %table.cart-result.table
   %thead
@@ -9,7 +10,6 @@
       %td 產品單價
       %td 產品數量
       %td 小計
-      %td 刪除訂單
   %tbody
     - @items.each do |item|
       %tr{id: "cart-item-#{item.id}"}
@@ -17,13 +17,8 @@
         %td= item.item.name
         %td= item.item_spec.style
         %td= price_with_unit(item.item.price)
-        %td.quantity-box
-          .quantity-minus{ 'data-id': item.id, 'data-cart-id': @cart.id } -
-          = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
-          .quantity-plus{ 'data-id': item.id,'data-cart-id': @cart.id } +
-        %td{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
-        %td
-          %button.cancel{"aria-label": "Close", type: "button", class: "cart-item-delete", 'data-id': item.id,'data-cart-id': @cart.id }
+        %td= item.item_quantity
+        %td= price_with_unit(item.subtotal)
     %tr.totalrow
       %td
       %td
@@ -33,9 +28,8 @@
         %div 產品總額
         %div 運費（711超商取貨付款）
       %td
-        #cart-sum= price_with_unit(@cart.total)
+        %div= price_with_unit(@cart.total)
         %div NT.60
-      %td
     %tr.totalrow
       %td
       %td
@@ -44,7 +38,16 @@
       %td
         %div 總計
       %td
-        #totalprice= price_with_unit(@cart.total+60)
-      %td
-.submit-session
-  =link_to '下一步', info_cart_path(@cart) , class: 'btn'
+        %div= price_with_unit(@cart.total+60)
+.icon-header.-pencil 訂單人資料
+.input-block
+  .group
+    = "姓名：#{@info[:ship_name]}  ｜ 電話：#{@info[:ship_phone]} ｜ 連絡信箱：#{@info[:ship_email]} "
+.icon-header.-pencil 取貨門市資訊
+.input-block
+  .group
+    = "門市名稱: #{@store.name} ｜ 地址： #{@store.address} "
+= form_tag submit_cart_path(@cart, info: @info, store: @store), method: :post do
+  .submit-session
+    =link_to '上一步', info_cart_path(@cart) , class: 'btn btn-previous'
+    =submit_tag '送出訂單', class: 'btn'

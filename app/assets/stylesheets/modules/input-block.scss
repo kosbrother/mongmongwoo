@@ -1,0 +1,32 @@
+.input-block{
+  border: solid 1px #dcdcdc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  text-align: left;
+  padding: 20px 40px;
+  >.group{
+    > label{
+      width: 100px;
+      font-size: 14px;
+      color: #262626;
+    }
+    > input{
+      margin: 15px;
+      width: 248px;
+      height: 34px;
+      border-radius: 2px;
+      border: solid 1px #979797;
+    }
+    > .text{
+      text-align: right;
+      width: 308px;
+    }
+    > .regular-btn{
+      width: 120px;
+      height: 30px;
+      line-height: 18px;
+      margin-left: 20px;
+    }
+  }
+}

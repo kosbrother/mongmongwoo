@@ -1,6 +1,7 @@
 class Cart < ActiveRecord::Base
 
   has_many :cart_items, dependent: :destroy
+  has_one :cart_info, dependent: :destroy
   belongs_to :user
 
   def total
