@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def create_cart
-    @cart = Cart.create(user_id: session[:user_id] ||= 31)
+    @cart = Cart.create(user_id: current_user ||= 31)
     session[:cart_id] = @cart.id
   end
 

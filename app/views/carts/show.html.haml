@@ -47,10 +47,11 @@
         %td
           #totalprice= price_with_unit(@cart.total+60)
         %td
-  .submit-session
-    - if current_user
-      = link_to '下一步', info_cart_path(@cart) , class: 'btn'
-    -else
-      = link_to "/auth/facebook" do
-        = image_tag('fb_login_web.png')
-      = link_to '免註冊匿名購買', info_cart_path(@cart) , class: 'btn'
+  - if @cart.cart_items.any?
+    .submit-session
+      - if current_user
+        = link_to '下一步', info_cart_path(@cart) , class: 'btn'
+      -else
+        = link_to "/auth/facebook" do
+          = image_tag('fb_login_web.png')
+        = link_to '免註冊匿名購買', info_cart_path(@cart) , class: 'btn'

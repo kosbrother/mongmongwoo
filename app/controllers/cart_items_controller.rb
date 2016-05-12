@@ -21,8 +21,13 @@ class CartItemsController < ApplicationController
     elsif params['quantity'] == '+'
       @item.increment_quantity
     end
-
-    render json: { subtotal: "NT.#{@item.subtotal}", total: "NT.#{@cart.total}", total_with_shipping: "NT.#{@cart.total+60}" }
+    if @cart.cart_items.empty?
+      respond_to do |format|
+        format.js { render 'remove-submit' }
+      end
+    else
+      render json: { subtotal: "NT.#{@item.subtotal}", total: "NT.#{@cart.total}", total_with_shipping: "NT.#{@cart.total+60}" }
+    end
 
   end
 
@@ -30,15 +35,29 @@ class CartItemsController < ApplicationController
 
     @item = CartItem.find(params[:id])
     @item.destroy
-
-    render :nothing => true
+    if @cart.cart_items.empty?
+      respond_to do |format|
+        format.js { render 'remove-submit' }
+      end
+    else
+      render :nothing => true
+    end
 
   end
 
 
+  private
 
   def cart_item_params
     params.require(:cart_item).permit(:item_id, :item_spec_id, :item_quantity).merge({ cart_id: @cart.id})
+  end
+
+  def remove_submit_if_no_items
+    if @cart.cart_items.empty?
+      respond_to do |format|
+        format.js { render 'remove-submit' }
+      end
+    end
   end
 
 end
