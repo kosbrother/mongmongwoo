@@ -40,9 +40,21 @@ ready = function() {
     });
     //production details page: Show selected spec images
     $('.spec-photos > .icons > .icon').on('click', function(){
-        var url = $(this).attr('src');
+        var url = $(this).attr('src'),
+            spec_id = $(this).data('id');
         $('.spec-photos > .icons > .icon').removeClass('active');
         $(this).addClass('active');
+        $('.show').html("<img class='img-responsive' src=" + url + ">")
+        $('.select option[value='+ spec_id +']').prop('selected', true);
+    });
+
+    //PRODUCTION DETAIL PAGE: show selected spec image from option
+    $('#cart_item_item_spec_id').change(function(){
+       console.log($(this).val());
+        var id = '#spec-' + $(this).val(),
+            url = $(id).attr('src');
+        $('.spec-photos > .icons > .icon').removeClass('active')
+        $(id).addClass('active');
         $('.show').html("<img class='img-responsive' src=" + url + ">")
     });
 
