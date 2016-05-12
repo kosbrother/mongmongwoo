@@ -11,3 +11,26 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .cart-info{
+    .icon-header{
+      width: 100%;
+    }
+    > form{
+      > .input-block{
+        width: 95%;
+      }
+      .submit-session{
+        > .btn{
+          width: 48%;
+          display: inline-block;
+        }
+      }
+    }
+    .divider{
+      border-top: solid 1px #dcdcdc;
+      margin: 15px 0;
+    }
+  }
+}

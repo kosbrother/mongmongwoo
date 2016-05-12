@@ -1,52 +1,53 @@
 = render 'partials/cart_steps', step: @step
 .cart-confirm
-.icon-header.-pencil 訂單明細
-%table.cart-result.table
-  %thead
-    %tr
-      %td 產品照片
-      %td 產品名稱
-      %td 產品樣式
-      %td 產品單價
-      %td 產品數量
-      %td 小計
-  %tbody
+  .icon-header.-pencil 訂單明細
+  .cart-result
+    .hidden-xs.header.row
+      .col-lg-2 產品照片
+      .col-lg-4 產品名稱
+      .col-lg-2 產品樣式
+      .col-lg-1 產品單價
+      .col-lg-2 產品數量
+      .col-lg-1 小計
+    .divider.hidden-xs
     - @items.each do |item|
-      %tr{id: "cart-item-#{item.id}"}
-        %td.icon= image_tag(item.item.cover.icon.url)
-        %td= item.item.name
-        %td= item.item_spec.style
-        %td= price_with_unit(item.item.price)
-        %td= item.item_quantity
-        %td= price_with_unit(item.subtotal)
-    %tr.totalrow
-      %td
-      %td
-      %td
-      %td
-      %td
+      .item-bar.row{id: "cart-item-#{item.id}"}
+        .col-lg-2.col-xs-3.icon= image_tag(item.item.cover.icon.url)
+        .col-lg-4.col-xs-9.itemname
+          = item.item.name
+          .visible-xs-block= item.item_spec.style
+        .col-lg-2.col-xs-3.hidden-xs= item.item_spec.style
+        .col-lg-1.col-xs-2= price_with_unit(item.item.price)
+        .col-lg-2.col-xs-5= item.item_quantity
+        .col-lg-1.col-xs-3{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+    .divider
+    .totalrow.row
+      .col-lg-2.col-lg-offset-8.col-xs-8.text
         %div 產品總額
         %div 運費（711超商取貨付款）
-      %td
-        %div= price_with_unit(@cart.total)
+      .col-lg-1.col-xs-4.number
+        #cart-sum= price_with_unit(@cart.total)
         %div NT.60
-    %tr.totalrow
-      %td
-      %td
-      %td
-      %td
-      %td
+      .col-lg-1.hidden-xs
+    .divider
+    .totalrow.row
+      .col-lg-2.col-lg-offset-8.col-xs-8.text
         %div 總計
-      %td
-        %div= price_with_unit(@cart.total+60)
+      .col-lg-1.col-xs-4.number
+        #totalprice= price_with_unit(@cart.total+60)
+      .col-lg-1.hidden-xs
 .icon-header.-pencil 訂單人資料
-.input-block
+.input-block.-info
   .group
-    = "姓名：#{@info[:ship_name]}  ｜ 電話：#{@info[:ship_phone]} ｜ 連絡信箱：#{@info[:ship_email]} "
+    %div= "姓名：#{@info[:ship_name]}"
+    %div= "電話：#{@info[:ship_phone]}"
+    %div= "連絡信箱：#{@info[:ship_email]}"
 .icon-header.-pencil 取貨門市資訊
-.input-block
+.input-block.-store
   .group
-    = "門市名稱: #{@store.name} ｜ 地址： #{@store.address} "
+    = hidden_field_tag :store_id, '' ,value: @store ? @store.id : nil, required: true
+    %div= "門市名稱： #{@store.name}"
+    %div= "地址： #{@store.address}"
 = form_tag submit_cart_path(@cart, info: @info, store: @store), method: :post do
   .submit-session
     =link_to '上一步', info_cart_path(@cart) , class: 'btn btn-previous'

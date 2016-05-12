@@ -14,13 +14,15 @@
         = text_field_tag :ship_email, '' ,required: true
         .text *名稱和電話必需正確才能取貨
     .icon-header.-mark 7-11取貨門市資訊
-    .input-block
+    .input-block.-store
       .group
         %span 選擇7-11寄送門市
         =link_to '選擇門市', select_store_cart_path(@cart) ,  class: 'btn regular-btn'
+      .divider
       .group
         = hidden_field_tag :store_id, '' ,value: @store ? @store.id : nil, required: true
-        %span= @store ?  "門市名稱： #{@store.name} | 地址： #{@store.address}" : '請選擇送達門市'
+        %div= @store ?  "門市名稱： #{@store.name}" : '請選擇送達門市'
+        %div= @store ?  "地址： #{@store.address}" : ""
     .submit-session
       =link_to '上一步', cart_path(@cart) , class: 'btn btn-previous'
       =submit_tag '下一步', class: 'btn'

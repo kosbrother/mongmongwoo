@@ -14,3 +14,10 @@
 .-mark{
   background-image: image_url('icons/ic_711.png');
 }
+
+@media screen and (max-width: 768px) {
+  .icon-header{
+    font-size: 14px;
+    padding-left: 25px;
+  }
+}

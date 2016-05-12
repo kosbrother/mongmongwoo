@@ -17,6 +17,7 @@
       height: 34px;
       border-radius: 2px;
       border: solid 1px #979797;
+      padding-left: 10px;
     }
     > .text{
       text-align: right;
@@ -27,6 +28,37 @@
       height: 30px;
       line-height: 18px;
       margin-left: 20px;
+    }
+  }
+}
+
+.-store, .-info{
+  > .group > div{
+    margin: 15px 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .input-block{
+    padding: 5px;
+    >.group{
+      > label{
+        text-align: center;
+        width: 23%;
+        font-size: 12px;
+      }
+      > input{
+        width: 73%;
+        margin: 5px 0;
+      }
+      > .text{
+        width: 95%;
+      }
+      > .regular-btn{
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+      }
     }
   }
 }

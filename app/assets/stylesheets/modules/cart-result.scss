@@ -2,64 +2,131 @@
   background-color: #ffffff;
   border: solid 1px #dcdcdc;
   text-align: center;
-  > thead{
-    border-bottom: solid 1px #dcdcdc;
-    margin-bottom: 15px;
-    >tr{
-      height: 75px;
-      >td{
-        vertical-align: middle;
-      }
+  > .row{
+    margin:  0px;
+  }
+  > .divider{
+    width: 95%;
+    margin: 0 auto 30px auto;
+    border-top: solid 1px #dcdcdc;
+  }
+
+  > .header{
+    height: 70px;
+
+    > div {
+      line-height: 70px;
     }
   }
-  > tbody{
-    >tr{
-      td {
-        border: none;
-        vertical-align: middle;
+
+  > .item-bar{
+    > .icon{
+      img{
+        width: 66px;
+        height: 66px;
       }
-      .icon{
-        img{width: 66px;}
+    }
+    > div{
+      height: 66px;
+      line-height: 66px;
+    }
+    .quantity-box{
+      line-height: 0;
+      margin-top: 16px;
+      .quantity, .quantity-minus, .quantity-plus{
+        height: 35px;
+        width: 30px;
+        position: relative;
       }
-      .quantity-box{
-        .quantity, .quantity-minus, .quantity-plus{
-          height: 35px;
-          width: 30px;
-          position: relative;
+      .quantity{
+        left: -4px;
+      }
+      .quantity-plus{
+        left: -8px;
+      }
+    }
+    .cancel{
+      border: none;
+      background-color: transparent;
+      background-image: image_url('icons/ic_cancel.png');
+      background-position: center;
+      background-size: contain;
+      width: 25px;
+      height: 25px;
+      position: relative;
+      top: 5px;
+    }
+    .cancel:focus{
+      outline: none;
+    }
+    .cancel:hover{
+      background-image: image_url('icons/ic_cancel_hover.png');
+    }
+  }
+  > .totalrow{
+    padding-bottom: 30px;
+    > div > div{
+      padding: 15px 0;
+    }
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .cart-result {
+    > .divider{
+      margin: 0 auto 15px auto;
+    }
+    > .item-bar{
+      margin: 15px 0;
+      > div{
+        height: 50px;
+      }
+      .icon{padding: 0 5px;
+        > img {
+        width: 50px;
+        height: 50px;
+        vertical-align: baseline;
         }
-        .quantity{
+      }
+      > .itemname{
+        padding: 0 5px;
+        line-height: 30px;
+        text-align: left;
+      }
+      > .quantity-box {
+        margin-top: 0;
+        .quantity, .quantity-minus, .quantity-plus {
+          height: 20px;
+          width: 20px;
+          position: relative;
+          font-size: 11.2px;
+          line-height: 14px;
+          top: 24px;
+        }
+        .quantity {
           left: -4px;
         }
-        .quantity-plus{
+        .quantity-plus {
           left: -8px;
         }
       }
-      .cancel{
-        border: none;
-        background-color: transparent;
-        background-image: image_url('icons/ic_cancel.png');
-        background-position: center;
-        background-size: contain;
-        width: 25px;
-        height: 25px;
-
-      }
-      .cancel:focus{
-        outline: none;
-      }
-      .cancel:hover{
-        background-image: image_url('icons/ic_cancel_hover.png');
+       .cancel{
+        width: 16px;
+        height: 16px;
+        top: 3px;
       }
     }
-    > .totalrow{
-        border-top:  solid 1px #dcdcdc;
-        border-bottom:  solid 1px #dcdcdc;
-        > td > div{
-          padding-top: 20px;
-          padding-bottom: 20px;
-        }
-      #totalprice{
-        color: #ff0000;
+    .totalrow{
+      padding-bottom: 10px;
+      > div > div{
+        padding: 10px 0;
+      }
+      > .text{
+        text-align: left;
+      }
+      > .number{
+        text-align: right;
       }
     }
   }
