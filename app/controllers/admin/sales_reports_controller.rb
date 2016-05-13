@@ -79,7 +79,7 @@ class Admin::SalesReportsController < AdminController
   end
 
   def search_date_params
-    params[:start_cost_date].to_date..params[:end_cost_date].to_date if params[:start_cost_date] && params[:end_cost_date]
+    TimeSupport.dynamic_time_until(params[:start_cost_date], params[:end_cost_date])
   end
 
   def get_division_operator_value(value_1, value_2)

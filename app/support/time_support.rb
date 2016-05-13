@@ -10,4 +10,8 @@ class TimeSupport
   def self.time_until(time_param)
     TIME_RANGE[time_param]
   end
+
+  def self.dynamic_time_until(earlier_titme, later_time)
+    Range.new(earlier_titme, later_time)
+  end
 end

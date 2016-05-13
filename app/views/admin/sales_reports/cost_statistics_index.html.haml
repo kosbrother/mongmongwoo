@@ -17,7 +17,7 @@
             .form-group
               = f.label :cost_date, "成本日期", class: "col-sm-2 control-label"
               .col-sm-5
-                = f.date_field :cost_date, {  class: "datepicker form-control", placeholder: "請輸入成本日期", required: true }
+                = f.date_field :cost_date, { class: "datepicker form-control", value: Date.today, placeholder: "請輸入成本日期", required: true }
             .form-group
               = f.label :cost_of_goods, "貨物成本", class: "col-sm-2 control-label"
               .col-sm-5
