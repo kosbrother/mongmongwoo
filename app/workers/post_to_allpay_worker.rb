@@ -10,7 +10,7 @@ class PostToAllpayWorker
       "LogisticsC2CReplyURL" => status_update_url,
       "GoodsAmount"=> order.total,
       "CollectionAmount"=> order.total,
-      "GoodsName"=> "kosbrother#{order.id}",
+      "GoodsName"=> "萌萌屋訂單:#{order.id}",
       "SenderName"=> "柯力中",
       "SenderPhone"=>'0912585506',
       "SenderCellPhone" => "0912585506",
