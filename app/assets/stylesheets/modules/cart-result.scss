@@ -7,12 +7,12 @@
   }
   > .divider{
     width: 95%;
-    margin: 0 auto 30px auto;
+    margin: 5px auto 30px auto;
     border-top: solid 1px #dcdcdc;
   }
 
   > .header{
-    height: 70px;
+    height: 50px;
 
     > div {
       line-height: 70px;
@@ -20,23 +20,27 @@
   }
 
   > .item-bar{
+    margin: 13px auto;
+
     > .icon{
       img{
         width: 66px;
         height: 66px;
+        border: solid 0.8px #979797;
       }
     }
     > div{
       height: 66px;
       line-height: 66px;
     }
+
     .quantity-box{
       line-height: 0;
-      margin-top: 16px;
       .quantity, .quantity-minus, .quantity-plus{
         height: 35px;
         width: 30px;
         position: relative;
+        top: 16px;
       }
       .quantity{
         left: -4px;
@@ -45,22 +49,52 @@
         left: -8px;
       }
     }
-    .cancel{
-      border: none;
-      background-color: transparent;
-      background-image: image_url('icons/ic_cancel.png');
-      background-position: center;
-      background-size: contain;
-      width: 25px;
-      height: 25px;
-      position: relative;
-      top: 5px;
-    }
-    .cancel:focus{
-      outline: none;
-    }
-    .cancel:hover{
-      background-image: image_url('icons/ic_cancel_hover.png');
+    > .cancel-block{
+      text-align: center;
+      .cancel{
+        cursor: pointer;
+        display: inline-block;
+        border: none;
+        background-color: transparent;
+        background-image: image_url('icons/ic_cancel.png');
+        background-position: center;
+        background-size: contain;
+        width: 25px;
+        height: 25px;
+        position: relative;
+        top: 5px;
+      }
+      .cancel:focus{
+        outline: none;
+      }
+      .cancel:hover{
+        background-image: image_url('icons/ic_cancel_hover.png');
+      }
+      > .modal{
+        > .modal-dialog{
+          > .modal-content{
+            > .modal-body{
+              text-align: left;
+              font-size: 24px;
+            }
+            .btn-confirm{
+              width: 150px;
+              height: 50px;
+              font-size: 20px;
+              background-color: #47b286;
+              color: #fff;
+            }
+            .btn-close{
+              width: 150px;
+              height: 50px;
+              border: solid 2px #47b286;
+              font-size: 20px;
+              color: #47b286;
+              background-color: transparent;
+            }
+          }
+        }
+      }
     }
   }
   > .totalrow{
@@ -80,29 +114,45 @@
     > .item-bar{
       margin: 15px 0;
       > div{
-        height: 50px;
+        height: 18px;
+        line-height: 18px;
       }
-      .icon{padding: 0 5px;
+      .icon{
+        padding: 0 5px;
+        height: 60px;
         > img {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         vertical-align: baseline;
         }
       }
-      > .itemname{
-        padding: 0 5px;
-        line-height: 30px;
+      .select{
+        margin: 5px 0;
         text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+      > .itemname {
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left: 0px;
+      }
+      > .unitprice{
+        text-align: left;
+        padding-left: 0px;
+      }
+      .quantity> div:before{
+        content: "數量：";
       }
       > .quantity-box {
         margin-top: 0;
         .quantity, .quantity-minus, .quantity-plus {
           height: 20px;
           width: 20px;
-          position: relative;
-          font-size: 11.2px;
-          line-height: 14px;
-          top: 24px;
+          font-size: 12px;
+          line-height: 15px;
+          top: 0px;
         }
         .quantity {
           left: -4px;
@@ -111,11 +161,33 @@
           left: -8px;
         }
       }
-       .cancel{
-        width: 16px;
-        height: 16px;
-        top: 3px;
-      }
+       > .cancel-block {
+         text-align: right;
+         padding: 0px;
+         > .cancel{
+          width: 16px;
+          height: 16px;
+          top: 22px;
+          padding: 0px;
+         }
+         > .modal{
+           > .modal-dialog{
+             > .modal-content{
+               > .modal-body{
+                 font-size: 18px;
+               }
+               .btn-confirm{
+                 width: 45%;
+                 font-size: 14px;
+               }
+               .btn-close{
+                 width: 45%;
+                 font-size: 14px;
+               }
+             }
+           }
+         }
+       }
     }
     .totalrow{
       padding-bottom: 10px;

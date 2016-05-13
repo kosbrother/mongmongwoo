@@ -13,29 +13,26 @@
     - @items.each do |item|
       .item-bar.row{id: "cart-item-#{item.id}"}
         .col-lg-2.col-xs-3.icon= image_tag(item.item.cover.icon.url)
-        .col-lg-4.col-xs-9.itemname
-          = item.item.name
-          .visible-xs-block= item.item_spec.style
-        .col-lg-2.col-xs-3.hidden-xs= item.item_spec.style
-        .col-lg-1.col-xs-2= price_with_unit(item.item.price)
-        .col-lg-2.col-xs-5= item.item_quantity
-        .col-lg-1.col-xs-3{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+        .col-lg-4.col-xs-9.itemname= item.item.name
+        .col-lg-2.col-xs-6.spec= item.item_spec.style
+        .col-lg-1.col-xs-5.price= "#{price_with_unit(item.item.price)}"
+        .col-lg-2.col-xs-3.quantity
+          %div= item.item_quantity
+        .col-lg-1.col-xs-3.hidden-xs= price_with_unit(item.subtotal)
     .divider
     .totalrow.row
-      .col-lg-2.col-lg-offset-8.col-xs-8.text
+      .col-lg-2.col-lg-offset-9.col-xs-8.text
         %div 產品總額
         %div 運費（711超商取貨付款）
       .col-lg-1.col-xs-4.number
         #cart-sum= price_with_unit(@cart.total)
         %div NT.60
-      .col-lg-1.hidden-xs
     .divider
     .totalrow.row
-      .col-lg-2.col-lg-offset-8.col-xs-8.text
+      .col-lg-2.col-lg-offset-9.col-xs-8.text
         %div 總計
       .col-lg-1.col-xs-4.number
         #totalprice= price_with_unit(@cart.total+60)
-      .col-lg-1.hidden-xs
 .icon-header.-pencil 訂單人資料
 .input-block.-info
   .group

@@ -33,8 +33,11 @@
 }
 
 .-store, .-info{
-  > .group > div{
-    margin: 15px 0;
+  > .group {
+    margin: 15px 10px;
+    > div{
+      margin: 10px 0;
+    }
   }
 }
 

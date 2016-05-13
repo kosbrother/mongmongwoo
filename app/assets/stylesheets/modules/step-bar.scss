@@ -54,17 +54,17 @@
 @media screen and (max-width: 768px) {
   .step-bar{
     > .step{
-      width: 20px;
-      height: 20px;
+      width: 23px;
+      height: 23px;
       border: solid 1px #50e3c2;
       > .done, .undone{
-        font-size: 13px;
-        line-height: 14px;
+        font-size: 14px;
+        line-height: 17px;
       }
       > .text{
-        width: 100px;
-        font-size: 9.8px;
-        left: -44px;
+        width: 85px;
+        font-size: 12px;
+        left: -35px;
       }
     }
     > .bar{
