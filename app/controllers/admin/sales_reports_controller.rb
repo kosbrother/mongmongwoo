@@ -19,7 +19,7 @@ class Admin::SalesReportsController < AdminController
   end
 
   def cost_statistics_index
-    @cost_statistics = CostStatistic.cost_date_at.paginate(:page => params[:page])
+    @cost_statistics = CostStatistic.by_cost_date_recent.paginate(:page => params[:page])
   end
 
   def cost_statistics_create
