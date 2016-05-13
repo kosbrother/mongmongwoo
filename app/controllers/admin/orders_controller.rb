@@ -29,13 +29,7 @@ class Admin::OrdersController < AdminController
 
     if @order.update_attributes!(status: status_param)
       @message = "已將編號：#{@order.id} 訂單狀態設為#{@order.status}"
-      if @order.reload.status == "已到店"
-        OrderMailer.delay.notify_user_pikup_item(@order)
-        if @order.device_registration
-          GcmNotifyService.new.send_pickup_notification(@order)
-          logger.info("Sending notification to device: #{@order.device_registration.registration_id}")
-        end
-      end
+      @order.notify_after_update_order_status(@order)
     else
       Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"
