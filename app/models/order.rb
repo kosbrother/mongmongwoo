@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  include Notify
+  include OrderConcern
   
   scope :recent, -> { order(id: :DESC) }
   scope :count_status, ->(status) { where(status: status).count }

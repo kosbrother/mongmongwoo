@@ -29,7 +29,6 @@ class Admin::OrdersController < AdminController
 
     if @order.update_attributes!(status: status_param)
       @message = "已將編號：#{@order.id} 訂單狀態設為#{@order.status}"
-      @order.notify_after_update_order_status(@order)
     else
       Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"
