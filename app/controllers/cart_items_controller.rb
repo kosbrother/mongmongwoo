@@ -2,8 +2,8 @@ class CartItemsController < ApplicationController
 
   def create
 
-    if @cart.cart_items.find_by_item_id(params[:cart_item][:item_id])
-      @cart.cart_items.find_by_item_id(params[:cart_item][:item_id]).increment_quantity(params[:cart_item][:item_quantity].to_i)
+    if @cart.cart_items.find_by_item_spec_id(params[:cart_item][:item_spec_id])
+      @cart.cart_items.find_by_item_spec_id(params[:cart_item][:item_spec_id]).increment_quantity(params[:cart_item][:item_quantity].to_i)
     else
       CartItem.create(cart_item_params)
     end
