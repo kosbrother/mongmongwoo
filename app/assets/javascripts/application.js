@@ -128,6 +128,7 @@ ready = function() {
     });
     //shopping cart page: delete cart item
     $('.cart-item-delete').on('click', function(){
+
         var id = $(this).attr('data-id'),
             cart_id = $(this).data('cart-id'),
             target = $('#cart-item-' + id);
