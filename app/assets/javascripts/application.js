@@ -50,10 +50,9 @@ ready = function() {
 
     //PRODUCTION DETAIL PAGE: show selected spec image from option
     $('#cart_item_item_spec_id').change(function(){
-       console.log($(this).val());
         var id = '#spec-' + $(this).val(),
             url = $(id).attr('src');
-        $('.spec-photos > .icons > .icon').removeClass('active')
+        $('.spec-photos > .icons > .icon').removeClass('active');
         $(id).addClass('active');
         $('.show').html("<img class='img-responsive' src=" + url + ">")
     });
@@ -105,7 +104,7 @@ ready = function() {
 
         var cart_item_id = $(this).attr('data-id'),
             id = '#cart-item-' + cart_item_id + '-quantity',
-            cart_id = $(this).attr('data-cart-id'),
+            cart_id = $(this).data('cart-id'),
             quantity = parseInt($(id).val()),
             max = parseInt($(id).attr('max'));
 
@@ -130,7 +129,7 @@ ready = function() {
     //shopping cart page: delete cart item
     $('.cart-item-delete').on('click', function(){
         var id = $(this).attr('data-id'),
-            cart_id = $(this).attr('data-cart-id'),
+            cart_id = $(this).data('cart-id'),
             target = $('#cart-item-' + id);
         $.ajax({
             url: '/carts/' + cart_id + '/cart_items/' + id,
@@ -144,6 +143,28 @@ ready = function() {
                 alert('錯誤發生，如問題持續發生，請聯繫客服人員');
             }
         })
+    });
+
+    //sopping cart page: change selected item spec
+    $('#select-specs, #min-select-specs').change(function(){
+        var spec_id = $(this).val(),
+            cart_item_id = $(this).data('cart-item'),
+            cart_id = $(this).data('cart-id');
+
+        $.ajax({url: '/carts/' + cart_id + '/cart_items/' + cart_item_id,
+            data: { item_spec: spec_id },
+            type:"PATCH",
+
+            success: function(data){
+                $("#item-spec-pic-" + cart_item_id).attr("src", data['spec_style_pic']);
+            },
+
+            error:function(xhr, ajaxOptions, thrownError){
+                alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+            }
+
+        })
+
     })
 };
 $(document).ready(ready);

@@ -16,17 +16,24 @@ class CartItemsController < ApplicationController
   def update
 
     @item = CartItem.find(params[:id])
-    if params['quantity'] == '-'
-      @item.decrement_quantity
-    elsif params['quantity'] == '+'
-      @item.increment_quantity
-    end
-    if @cart.cart_items.empty?
-      respond_to do |format|
-        format.js { render 'remove-submit' }
+    if params['quantity']
+      if params['quantity'] == '-'
+        @item.decrement_quantity
+      elsif params['quantity'] == '+'
+        @item.increment_quantity
       end
-    else
-      render json: { subtotal: "NT.#{@item.subtotal}", total: "NT.#{@cart.total}", total_with_shipping: "NT.#{@cart.total+60}" }
+      if @cart.cart_items.empty?
+        respond_to do |format|
+          format.js { render 'remove-submit' }
+        end
+      else
+        render json: { subtotal: "NT.#{@item.subtotal}", total: "NT.#{@cart.total}", total_with_shipping: "NT.#{@cart.total+60}" }
+      end
+    elsif params['item_spec']
+      @item.item_spec_id = params['item_spec']
+      @item.save!
+
+      render json: { spec_style_pic: @item.item_spec.style_pic.url }
     end
 
   end

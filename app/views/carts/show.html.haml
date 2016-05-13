@@ -13,11 +13,11 @@
     .divider.hidden-xs
     - @items.each do |item|
       .item-bar.row{id: "cart-item-#{item.id}"}
-        .col-lg-2.col-xs-3.icon= image_tag(item.item.cover.icon.url)
+        .col-lg-2.col-xs-3.icon= image_tag(item.item_spec.style_pic.url, id: "item-spec-pic-#{item.id}")
         .col-lg-3.col-xs-9.itemname
           = item.item.name
-          .visible-xs-block= item.item_spec.style
-        .col-lg-2.col-xs-3.hidden-xs= item.item_spec.style
+          .visible-xs-block= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'select', id: 'min-select-specs', 'data-cart-item': item.id,'data-cart-id': @cart.id
+        .col-lg-2.col-xs-3.hidden-xs= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'select', id: 'select-specs', 'data-cart-item': item.id, 'data-cart-id': @cart.id
         .col-lg-1.col-xs-2= price_with_unit(item.item.price)
         .col-lg-2.col-xs-5.quantity-box
           .quantity-minus{ 'data-id': item.id, 'data-cart-id': @cart.id } -

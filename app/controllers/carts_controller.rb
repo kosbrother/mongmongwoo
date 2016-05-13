@@ -42,7 +42,7 @@ class CartsController < ApplicationController
 
   def show
     @step = 1
-    @items = CartItem.includes(:item, :item_spec).where(cart_id: session[:cart_id])
+    @items = CartItem.includes({item: :specs}, :item_spec).where(cart_id: session[:cart_id])
   end
 
   def confirm
