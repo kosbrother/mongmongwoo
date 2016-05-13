@@ -19,7 +19,9 @@ module OrderConcern
   end
 
   def notification_to_notify_pickup
-    GcmNotifyService.new.send_pickup_notification(self)
-    logger.info("Sending notification to device: #{device_registration.registration_id}")
+    if device_registration.present?
+      GcmNotifyService.new.send_pickup_notification(self)
+      logger.info("Sending notification to device: #{device_registration.registration_id}")
+    end
   end
 end
