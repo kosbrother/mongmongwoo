@@ -1,0 +1,104 @@
+var cart;
+cart = function() {
+    //shopping cart page: minus 1 order quantity
+    $('.cart-result .quantity-minus').on('click', function () {
+
+        var cart_item_id = $(this).attr('data-id'),
+            id = '#cart-item-' + cart_item_id + '-quantity',
+            cart_id = $(this).attr('data-cart-id'),
+            quantity = parseInt($(id).val()),
+            min = parseInt($(id).attr('min'));
+
+        if (quantity > min)
+            $.ajax({
+                url: '/cart_items/' + cart_item_id + '/update_quantity',
+                data: {type: 'quantity-minus'},
+                type: "PATCH",
+
+
+                success: function (data) {
+                    $(id).val(quantity - 1);
+                    $('#cart-item-' + cart_item_id + '-subtotal').text(data.subtotal);
+                    $('#cart-sum').text(data.total);
+                    $('#totalprice').text(data.total_with_shipping);
+                },
+
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+                }
+            });
+        else
+            $("#modal-" + cart_item_id).modal('show');
+    });
+
+    //shopping cart page: plus 1 order quantity
+    $('.cart-result .quantity-plus').on('click', function () {
+
+        var cart_item_id = $(this).attr('data-id'),
+            id = '#cart-item-' + cart_item_id + '-quantity',
+            quantity = parseInt($(id).val()),
+            max = parseInt($(id).attr('max'));
+
+        if (quantity < max)
+            $.ajax({
+                url: '/cart_items/' + cart_item_id + '/update_quantity',
+                data: {type: 'quantity-plus'},
+                type: "PATCH",
+
+                success: function (data) {
+                    $(id).val(quantity + 1);
+                    $('#cart-item-' + cart_item_id + '-subtotal').text(data.subtotal);
+                    $('#cart-sum').text(data.total);
+                    $('#totalprice').text(data.total_with_shipping);
+                },
+
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+                }
+            });
+    });
+
+    //shopping cart page: delete cart item
+    $('.cart-item-delete').on('click', function () {
+
+        var id = $(this).attr('data-id'),
+            cart_id = $(this).data('cart-id'),
+            target = $('#cart-item-' + id);
+        $.ajax({
+            url: '/cart_items/' + id,
+            type: "DELETE",
+
+            success: function () {
+                target.remove();
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+            }
+        })
+    });
+
+    //sopping cart page: change selected item spec
+    $('.cart-result .spec-select').change(function () {
+        var spec_id = $(this).val(),
+            cart_item_id = $(this).data('cart-item'),
+            cart_id = $(this).data('cart-id');
+
+        $.ajax({
+            url: '/cart_items/' + cart_item_id + '/update_spec',
+            data: { item_spec: spec_id },
+            type: "PATCH",
+
+            success: function (data) {
+                $("#item-spec-pic-" + cart_item_id).attr("src", data['spec_style_pic']);
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+            }
+        })
+    });
+};
+
+$(document).ready(cart);
+$(document).on('page:load', cart);

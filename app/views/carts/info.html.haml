@@ -1,6 +1,6 @@
 = render 'partials/cart_steps', step: @step
 .cart-info
-  = form_tag create_info_cart_path, method: :post do
+  = form_tag submit_cart_info_path, method: :post do
     .icon-header.-pencil 訂購人資料
     .input-block
       .group
@@ -17,12 +17,12 @@
     .input-block.-store
       .group
         %span 選擇7-11寄送門市
-        =link_to '選擇門市', select_store_cart_path(@cart) ,  class: 'btn regular-btn'
+        =link_to '選擇門市', select_store_path ,  class: 'btn regular-btn'
       .divider
       .group
         = hidden_field_tag :store_id, '' ,value: @store ? @store.id : nil, required: true
         %div= @store ?  "門市名稱： #{@store.name}" : '請選擇送達門市'
         %div= @store ?  "地址： #{@store.address}" : ""
     .submit-session
-      =link_to '上一步', cart_path(@cart) , class: 'btn btn-previous'
+      =link_to '上一步', checkout_path, class: 'btn btn-previous'
       =submit_tag '下一步', class: 'btn'

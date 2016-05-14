@@ -25,14 +25,14 @@
         %div 產品總額
         %div 運費（711超商取貨付款）
       .col-lg-1.col-xs-4.number
-        #cart-sum= price_with_unit(@cart.total)
+        #cart-sum= price_with_unit(@total)
         %div NT.60
     .divider
     .totalrow.row
       .col-lg-2.col-lg-offset-9.col-xs-8.text
         %div 總計
       .col-lg-1.col-xs-4.number
-        #totalprice= price_with_unit(@cart.total+60)
+        #totalprice= price_with_unit(@total+60)
 .icon-header.-pencil 訂單人資料
 .input-block.-info
   .group
@@ -45,7 +45,7 @@
     = hidden_field_tag :store_id, '' ,value: @store ? @store.id : nil, required: true
     %div= "門市名稱： #{@store.name}"
     %div= "地址： #{@store.address}"
-= form_tag submit_cart_path(@cart, info: @info, store: @store), method: :post do
+= form_tag submit_order_path(info: @info, store: @store), method: :post do
   .submit-session
-    =link_to '上一步', info_cart_path(@cart) , class: 'btn btn-previous'
+    =link_to '上一步', cart_info_path , class: 'btn btn-previous'
     =submit_tag '送出訂單', class: 'btn'

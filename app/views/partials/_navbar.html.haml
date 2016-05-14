@@ -26,10 +26,10 @@
               %li.list
                 = link_to category.name, category_path(category), class: "link"
         %li.nav-list
-          = link_to cart_path(@cart) do
+          = link_to checkout_path do
             .list.cart
               購物車(
-              %span= @cart.cart_items.count
+              %span= current_cart.cart_items.count
               )
         %li.nav-list
           = render_login_or_logout

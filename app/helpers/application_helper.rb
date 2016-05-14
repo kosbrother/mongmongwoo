@@ -46,10 +46,10 @@ module ApplicationHelper
   end
 
   def render_login_or_logout
-    if @current_user.nil?
+    if current_user.nil?
       content_tag(:a, content_tag(:div, '登入/註冊', class: 'list user'), href: "/auth/facebook")
     else
-      content_tag(:a, content_tag(:div, "#{@current_user.user_name} / 登出", class: 'list user'), href: "/signout")
+      content_tag(:a, content_tag(:div, "#{current_user.user_name} / 登出", class: 'list user'), href: "/signout")
     end
 
   end

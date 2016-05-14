@@ -1,27 +1,30 @@
 Rails.application.routes.draw do
 
-  get  "/auth/:provider/callback" => "sessions#create", as: :login
-  get  "/signout" => "sessions#destroy", as: :signout
-
   mount Ckeditor::Engine => '/ckeditor'
 
   root 'pages#index'
+  get  "/auth/:provider/callback" => "sessions#create", as: :login
+  get  "/signout" => "sessions#destroy", as: :signout
+
   resources :categories, only: [:show] do
     resources :items, only: [:show]
   end
 
-  resources :cart_items, only: [:create]
-  resources :carts, only: [:show] do
+  get "/checkout", to: "carts#checkout", as: "checkout"
+  get "/cart_info", to: "carts#info", as: "cart_info"
+  get "/confirm_cart", to: "carts#confirm", as: "confirm_cart"
+  post "/create_info", to: "carts#create_info", as: "submit_cart_info"
+  get "/select_store", to: "carts#select_store", as: "select_store"
+  post "/store_reply", to: "carts#store_reply", as: "store_reply"
+  post "/submit_order", to: "carts#submit", as: "submit_order"
+  get "/success", to: "carts#success", as: "success"
+  resources :cart_items, only: [:create, :destroy] do
     member do
-      get 'confirm'
-      get 'info'
-      post 'create_info'
-      get 'select_store'
-      post 'store_reply'
-      post 'submit'
+      patch "update_quantity"
+      patch "update_spec"
     end
-    resources :cart_items, only: [:update, :destroy]
   end
+
 
   # 助理後台
   namespace :staff do

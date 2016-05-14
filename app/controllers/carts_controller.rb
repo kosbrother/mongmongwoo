@@ -3,61 +3,65 @@ require "net/http"
 
 class CartsController < ApplicationController
   layout 'cart'
-  skip_before_filter :verify_authenticity_token, only: :store_reply
+  skip_before_action :verify_authenticity_token, only: :store_reply
+  skip_before_action :load_popular_items
+
+  def checkout
+    @step = 1
+    @cart =  Cart.find(session[:cart_id])
+    @items = @cart.cart_items.includes({item: :specs}, :item_spec)
+    @total = items_total(@items)
+  end
 
   def info
-
     @step = 2
-
     if params['store']
       @store = Store.find_by(store_code: params['store'])
     end
-
   end
-
-  def create_info
-    @info = {ship_name: params[:ship_name],
-              ship_phone: params[:ship_phone],
-              ship_email: params[:ship_email]}
-    redirect_to confirm_cart_path(@cart, info: @info, store: params[:store_id])
-
-  end
-
 
   def select_store
-    url = generate_url('http://logistics.allpay.com.tw/Express/map',
-                       MerchantID: "1058581",
-                       MerchantTradeNo: '1111',
+    url = generate_url(ENV['ALL_PAY_URL'],
+                       MerchantID: ENV['MerchantID'],
+                       MerchantTradeNo: ENV['MerchantTradeNo'],
                        LogisticsType: 'CVS',
                        LogisticsSubType: 'UNIMART',
                        IsCollection: 'Y',
-                       ServerReplyURL: "#{ENV['WEB_HOST']}/carts/#{params[:id]}/store_reply")
+                       ServerReplyURL: "#{ENV['WEB_HOST']}/store_reply")
     redirect_to  url
   end
 
   def store_reply
-    redirect_to info_cart_path(@cart, store:  params['CVSStoreID'])
+    redirect_to cart_info_path(store:  params['CVSStoreID'])
   end
 
-
-  def show
-    @step = 1
-    @items = CartItem.includes({item: :specs}, :item_spec).where(cart_id: session[:cart_id])
+  def create_info
+    @info = {ship_name: params[:ship_name],
+             ship_phone: params[:ship_phone],
+             ship_email: params[:ship_email]}
+    redirect_to confirm_cart_path(info: @info, store: params[:store_id])
   end
 
   def confirm
     @step = 3
-    @items =CartItem.includes(:item, :item_spec).where(cart_id: session[:cart_id])
+    @cart =  Cart.find(session[:cart_id])
+    @items = @cart.cart_items.includes(:item, :item_spec)
     @store = Store.find(params[:store])
     @info = params[:info]
+    @total = items_total(@items)
   end
 
   def submit
-    @store = Store.find(params[:store])
-    create_order(@cart, params[:info], @store)
+    cart =  Cart.includes({cart_items: [:item, :item_spec]}).find(session[:cart_id])
+    store = Store.find(params[:store])
+    create_order(cart, params[:info], store)
     session[:cart_id] = nil
 
-    render 'success'
+    redirect_to success_path
+  end
+
+  def success
+
   end
 
   private
@@ -87,8 +91,8 @@ class CartsController < ApplicationController
     info.ship_email = cart_info[:ship_email]
     info.save!
 
-    items = cart.cart_items
-    items.each do |cart_item|
+    cart_items = cart.cart_items
+    cart_items.each do |cart_item|
       item = OrderItem.new
       item.order_id = order.id
       item.item_name = cart_item.item.name
