@@ -1,0 +1,31 @@
+.row
+  .col-md-12.panel-warning
+    .content-box-header.panel-heading
+      .panel-title 銷售成本與盈餘
+    .content-box-large.box-with-header
+      .page-type
+        %ul.nav.nav-tabs
+          %li{:role => "presentation"}
+            = link_to "成本資料輸入", cost_statistics_index_admin_sales_reports_path
+          %li.active{:role => "presentation"}
+            = link_to "銷售盈餘查詢", sales_income_result_admin_sales_reports_path
+      .panel-body
+        .input-new-cost-data
+          = form_tag sales_income_result_admin_sales_reports_path, { class: "form-horizontal well", method: :get } do
+            .form-group
+              = label_tag :start_cost_date, "查詢起始日期", class: "col-sm-2 control-label"
+              .col-sm-3
+                = date_field_tag :start_cost_date, Date.today.prev_day(7), {  class: "form-control", placeholder: "請輸入起始日期", required: true }
+            .form-group
+              = label_tag :end_cost_date, "查詢結束日期", class: "col-sm-2 control-label"
+              .col-sm-3
+                = date_field_tag :end_cost_date, Date.today, {  class: "form-control", placeholder: "請輸入結束日期", required: true }
+            .form-group
+              .col-sm-offset-2.col-sm-3
+                = submit_tag "確認", class: "btn btn-primary"
+                = link_to "取消"
+        %hr
+        %p.lead 盈餘查詢結果
+        %p.lead 查詢日期範圍：#{params[:start_cost_date]} -- #{params[:end_cost_date]}
+        - if params[:start_cost_date] && params[:end_cost_date]
+          = render partial: "sales_table"

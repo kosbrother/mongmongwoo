@@ -1,0 +1,65 @@
+.row
+  .col-md-12.panel-warning
+    .content-box-header.panel-heading
+      .panel-title 成本與毛利數據
+    .content-box-large.box-with-header
+      .page-type
+        %ul.nav.nav-tabs
+          %li.active{:role => "presentation"}
+            = link_to "成本資料輸入", cost_statistics_index_admin_sales_reports_path
+          %li{:role => "presentation"}
+            = link_to "銷售盈餘查詢", sales_income_result_admin_sales_reports_path
+      .panel-body
+        .input-new-cost-data
+          
+          = form_for [:admin, CostStatistic.new], url: cost_statistics_index_admin_sales_reports_path, html: { class: "form-horizontal well" } do |f|
+            %p.lead 今日 #{display_date(Time.now)}
+            .form-group
+              = f.label :cost_date, "成本日期", class: "col-sm-2 control-label"
+              .col-sm-5
+                = f.date_field :cost_date, { class: "datepicker form-control", value: Date.today, placeholder: "請輸入成本日期", required: true }
+            .form-group
+              = f.label :cost_of_goods, "貨物成本", class: "col-sm-2 control-label"
+              .col-sm-5
+                = f.number_field :cost_of_goods, { class: "form-control", min: 0, placeholder: "請輸入貨物成本", required: true }
+            .form-group
+              = f.label :cost_of_advertising, "廣告金額", class: "col-sm-2 control-label"
+              .col-sm-5
+                = f.number_field :cost_of_advertising, { class: "form-control", min: 0, placeholder: "請輸入廣告金額", required: true }
+            .form-group
+              = f.label :cost_of_freight_in, "進貨物流費用", class: "col-sm-2 control-label"
+              .col-sm-5
+                = f.number_field :cost_of_freight_in, { class: "form-control", min: 0, placeholder: "請輸入進貨物流費用", required: true }
+            .form-group
+              .col-sm-offset-2.col-sm-10
+                = f.submit "確認", class: "btn btn-primary"
+                = link_to "取消"
+        %hr
+        %p.lead 成本資料列表
+        .apple_pagination
+          = will_paginate @cost_statistics, :container => false
+        %br
+        %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+          %thead
+            %tr
+              %th{width: "15%"} 成本日期
+              %th{width: "10%"} 編號
+              %th{width: "20%"} 貨物成本
+              %th{width: "20%"} 廣告金額
+              %th{width: "20%"} 進貨物流費用
+              %th{width: "15%"} 建檔日期
+          %tbody
+            - @cost_statistics.each do |cost_statistic|
+              %tr
+                %td
+                  = cost_statistic.cost_date
+                %td
+                  = cost_statistic.id
+                %td
+                  = cost_statistic.cost_of_goods
+                %td
+                  = cost_statistic.cost_of_advertising
+                %td
+                  = cost_statistic.cost_of_freight_in
+                %td
+                  = display_date(cost_statistic.created_at)

@@ -3,6 +3,8 @@ class Order < ActiveRecord::Base
   
   scope :recent, -> { order(id: :DESC) }
   scope :count_status, ->(status) { where(status: status).count }
+  scope :created_at_within, -> (time_param) { where(created_at: time_param) }
+  scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
 
   acts_as_paranoid
 
