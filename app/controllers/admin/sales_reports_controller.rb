@@ -29,9 +29,9 @@ class Admin::SalesReportsController < AdminController
   def sales_income_result
     if params[:start_cost_date] && params[:end_cost_date]
       @total_sales_income = get_period_total_sales_data
-      @total_cost_of_goods, @total_cost_of_freight_in, @total_cost_of_advertising = get_period_total_cost_data_of("total_cost_of_goods"), get_period_total_cost_data_of("total_cost_of_freight_in"), get_period_total_cost_data_of("total_cost_of_advertising")
-      @total_order_quantity, @total_cost_ship_fee = get_period_total_order_data_of("total_order_quantity"), get_period_total_order_data_of("total_cost_ship_fee")
-      @cancelled_order_quantity, @cancelled_order_amount, @cancelled_order_ship_fee = get_period_total_cancelled_order_data_of("cancelled_order_quantity"), get_period_total_cancelled_order_data_of("cancelled_order_amount"), get_period_total_cancelled_order_data_of("cancelled_order_ship_fee")
+      @total_cost_of_goods, @total_cost_of_freight_in, @total_cost_of_advertising = get_period_total_cost_data_of_goods_freight_in_and_advertising
+      @total_order_quantity, @total_cost_ship_fee = get_period_total_order_data_of_quantity_and_cost_ship_fee
+      @cancelled_order_quantity, @cancelled_order_amount, @cancelled_order_ship_fee = get_period_total_cancelled_order_data_of_quantity_amount_and_ship_fee
       @gross_profit = (@total_sales_income - @total_cost_of_goods - @total_cost_of_freight_in - @total_cost_ship_fee)
       @gross_profit_per_order = get_division_operator_value(@gross_profit, @total_order_quantity)
       @average_cost_of_advertising = get_division_operator_value(@total_cost_of_advertising, @total_order_quantity)
@@ -59,19 +59,22 @@ class Admin::SalesReportsController < AdminController
     OrderItem.created_at_within(search_date_params).total_sales_income
   end
 
-  def get_period_total_cost_data_of(cost_data)
-    @total_cost = CostStatistic.cost_date_within(search_date_params).select("COALESCE(SUM(cost_of_goods), 0) AS total_cost_of_goods", "COALESCE(SUM(cost_of_freight_in), 0) AS total_cost_of_freight_in", "COALESCE(SUM(cost_of_advertising), 0) AS total_cost_of_advertising")[0].serializable_hash
-    @total_cost[cost_data]
+  def get_period_total_cost_data_of_goods_freight_in_and_advertising
+    total_cost_bunch_data = CostStatistic.cost_date_within(search_date_params).select("COALESCE(SUM(cost_of_goods), 0) AS total_cost_of_goods", "COALESCE(SUM(cost_of_freight_in), 0) AS total_cost_of_freight_in", "COALESCE(SUM(cost_of_advertising), 0) AS total_cost_of_advertising")[0].as_json.to_a.map { |data_name| data_name[1] }
+    total_cost_bunch_data.shift
+    total_cost_bunch_data
   end
-
-  def get_period_total_order_data_of(order_data)
-    @total_order = Order.created_at_within(search_date_params).select("COUNT(*) AS total_order_quantity", "COALESCE(SUM(ship_fee), 0) AS total_cost_ship_fee")[0].serializable_hash
-    @total_order[order_data]
+  
+  def get_period_total_order_data_of_quantity_and_cost_ship_fee
+    total_order_bunch_data = Order.created_at_within(search_date_params).select("COUNT(*) AS total_order_quantity", "COALESCE(SUM(ship_fee), 0) AS total_cost_ship_fee")[0].as_json.to_a.map { |data_name| data_name[1] }
+    total_order_bunch_data.shift
+    total_order_bunch_data
   end
-
-  def get_period_total_cancelled_order_data_of(cancelled_order_data)
-    @cancelled_order = Order.cancelled_at_within(search_date_params).select("COUNT(*) AS cancelled_order_quantity", "COALESCE(SUM(items_price), 0) AS cancelled_order_amount", "COALESCE(SUM(ship_fee), 0) AS cancelled_order_ship_fee")[0].serializable_hash
-    @cancelled_order[cancelled_order_data]
+  
+  def get_period_total_cancelled_order_data_of_quantity_amount_and_ship_fee
+    cancelled_order_bunch_data = Order.cancelled_at_within(search_date_params).select("COUNT(*) AS cancelled_order_quantity", "COALESCE(SUM(items_price), 0) AS cancelled_order_amount", "COALESCE(SUM(ship_fee), 0) AS cancelled_order_ship_fee")[0].as_json.to_a.map { |data_name| data_name[1] }
+    cancelled_order_bunch_data.shift
+    cancelled_order_bunch_data
   end
 
   def get_division_operator_value(value_1, value_2)
