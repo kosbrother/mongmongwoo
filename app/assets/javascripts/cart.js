@@ -63,18 +63,20 @@ cart = function() {
         var id = $(this).attr('data-id'),
             target = $('#cart-item-' + id);
 
-        $.ajax({
-            url: '/cart_items/' + id,
-            type: "DELETE",
-            success: function () {
-                target.remove();
-            },
-
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('錯誤發生，如問題持續發生，請聯繫客服人員');
-            }
-        })
+        setTimeout(function(){
+            $.ajax({
+                url: '/cart_items/' + id,
+                type: "DELETE",
+                success: function (data) {
+                    target.remove();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+                }
+            })
+        }, 200);
     });
+
 
     //sopping cart page: change selected item spec
     $('.cart-result .spec-select').change(function () {
