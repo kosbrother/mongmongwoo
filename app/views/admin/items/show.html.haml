@@ -31,13 +31,18 @@
       .words-intro.col-md-5
         %dl.dl-horizontal
           %dt 商品編號
-          %dd= @item.id
-          %dt 淘寶連結
+          %dd
+            = @item.id
+          %dt 賣場連結
           %dd
             = link_to @item.url, target: "_blank" do
               按此前往淘寶商品
+          %dt 商家名稱
+          %dd
+            = link_to @item.supplier_name, @item.supplier_url, target: "_blank" rescue "沒有商家資料"
           %dt 商品名稱
-          %dd= @item.name
+          %dd
+            = @item.name
           %dt 商品狀態
           %dd{:id => "status-#{@item.id}"}
             = link_to ( update_shelf_path(@item) ), method: :patch, remote: true do
@@ -46,7 +51,8 @@
           %dd
             NT#{number_to_currency(@item.price)}
           %dt 商品敘述
-          %dd= raw @item.description
+          %dd
+            = raw @item.description
     %br/
     / 商品圖片
     .well

@@ -7,7 +7,6 @@
             %a{:href => admin_root_path} 萌萌屋
           %li{:class => "#{"active" if current_page?(admin_taobao_suppliers_path)}"}
             淘寶商家列表
-            / = action_name == "new" ? "新增淘寶商家" : "編輯淘寶商家"
       .pull-right
         = link_to "新增淘寶商家", new_admin_taobao_supplier_path, class: "btn btn-primary"
       %h2 淘寶商家列表
