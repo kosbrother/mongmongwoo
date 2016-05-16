@@ -8,7 +8,7 @@ module ApplicationHelper
     alerts = flash.map do |type, message|
       alert_content = close_button + message
       alert_type = alert_types[type.to_sym] || type
-      alert_class = "alert alert-#{alert_type} alert-dismissable"
+      alert_class = "alert-message alert alert-#{alert_type} alert-dismissable"
       content_tag(:div, alert_content, class: alert_class)
     end
 

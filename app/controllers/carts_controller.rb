@@ -10,6 +10,10 @@ class CartsController < ApplicationController
     @step = 1
     @cart =  Cart.find(session[:cart_id])
     @items = @cart.cart_items.includes({item: :specs}, :item_spec)
+    if @items.empty?
+      flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
+      redirect_to root_path
+    end
     @total = items_total(@items)
   end
 

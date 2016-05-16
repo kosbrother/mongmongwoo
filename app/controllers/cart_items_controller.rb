@@ -43,7 +43,8 @@ class CartItemsController < ApplicationController
     item.destroy
     @cart.reload
     if @cart.cart_items.empty?
-      remove_car_result
+      flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
+      render :js => "window.location = '/'"
     else
       render nothing: true
     end
@@ -68,9 +69,8 @@ class CartItemsController < ApplicationController
   end
 
   def remove_car_result
-    respond_to do |format|
-    format.js { render 'remove_cart_result' }
-    end
+    session[:return_to] ||= request.referer
+    redirect_to session.delete(:return_to)
   end
 
 end
