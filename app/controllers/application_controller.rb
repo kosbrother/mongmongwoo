@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
   def items_total(items)
     items.reduce(0) do |sum, current|
-      sum + current.subtotal.to_i
+      sum + current.subtotal
     end
   end
 

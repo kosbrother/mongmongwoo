@@ -22,9 +22,11 @@ class CartItemsController < ApplicationController
     case params['type']
     when 'quantity-minus'
       item.decrement_quantity
+      items.reload
       render json: return_subtotal_and_total_with_shipping(item, items)
     when 'quantity-plus'
       item.increment_quantity
+      items.reload
       render json: return_subtotal_and_total_with_shipping(item, items)
     end
   end
