@@ -7,7 +7,7 @@
   }
   > .divider{
     width: 95%;
-    margin: 5px auto 30px auto;
+    margin: 5px auto;
     border-top: solid 1px #dcdcdc;
   }
 
@@ -15,12 +15,12 @@
     height: 50px;
 
     > div {
-      line-height: 70px;
+      line-height: 50px;
     }
   }
 
   > .item-bar{
-    margin: 13px auto;
+    margin: 10px auto;
 
     > .icon{
       img{
@@ -43,6 +43,7 @@
         top: 16px;
       }
       .quantity{
+        text-align: center ;
         left: -4px;
       }
       .quantity-plus{
@@ -98,19 +99,16 @@
     }
   }
   > .totalrow{
-    padding-bottom: 30px;
     > div > div{
-      padding: 15px 0;
+      margin: 5px 0;
     }
   }
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
   .cart-result {
-    > .divider{
-      margin: 0 auto 15px auto;
-    }
+
     > .item-bar{
       margin: 15px 0;
       > div{
@@ -190,15 +188,38 @@
        }
     }
     .totalrow{
-      padding-bottom: 10px;
       > div > div{
-        padding: 10px 0;
+        margin: 10px 0;
       }
       > .text{
         text-align: left;
       }
       > .number{
         text-align: right;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+  .cart-result {
+    > .item-bar {
+      > .itemname {
+        padding-left: 15px;
+      }
+      > .spec, .price, .quantity, .subtotal {
+        text-align: left;
+      }
+      > .subtotal:before{
+        content: '小計：'
+      }
+    }
+    .totalrow {
+      > .text{
+        text-align: center;
+      }
+      > .number {
+        text-align: center;
       }
     }
   }

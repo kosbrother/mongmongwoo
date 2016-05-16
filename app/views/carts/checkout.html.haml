@@ -3,7 +3,7 @@
   .icon-header.-pencil 訂單明細
   - if @cart.cart_items.any?
     .cart-result
-      .hidden-xs.header.row
+      .header.row.visible-lg-block
         .col-lg-1 刪除訂單
         .col-lg-2 產品照片
         .col-lg-3 產品名稱
@@ -11,7 +11,7 @@
         .col-lg-1 產品單價
         .col-lg-2 產品數量
         .col-lg-1 小計
-      .divider.hidden-xs
+      .divider.visible-lg-block
       - @items.each do |item|
         .item-bar.row{id: "cart-item-#{item.id}"}
           .col-lg-1.col-xs-1.cancel-block
@@ -30,24 +30,24 @@
           .col-lg-3.col-xs-8.itemname= item.item.name
           .col-lg-2.col-xs-6.select= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'spec-select', id: 'select-specs', 'data-cart-item': item.id, 'data-cart-id': @cart.id
           .col-lg-1.col-xs-3.unitprice= price_with_unit(item.item.price)
-          .col-lg-2.col-xs-4.quantity-box
+          .col-lg-2.col-sm-3.col-xs-4.quantity-box
             .quantity-minus{ 'data-id': item.id } -
             = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
             .quantity-plus{ 'data-id': item.id } +
-          .col-lg-1.col-xs-3.hidden-xs{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+          .col-lg-1.col-sm-2.col-xs-3.subtotal.hidden-xs{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
       .divider
       .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-xs-8.text
+        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
           %div 產品總額
           %div 運費（711超商取貨付款）
-        .col-lg-1.col-xs-4.number
+        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
           #cart-sum= price_with_unit(@total)
           %div NT.60
       .divider
       .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-xs-8.text
+        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
           %div 總計
-        .col-lg-1.col-xs-4.number
+        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
           #totalprice= price_with_unit(@total+60)
     .submit-session
       - if current_user

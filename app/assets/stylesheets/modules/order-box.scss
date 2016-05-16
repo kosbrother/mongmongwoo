@@ -52,15 +52,20 @@
     }
     .add-cart{
       > .add{
-        width: 370px;
+        width: 49%;
         height: 50px;
         border-radius: 4px;
-        background-color: $order-box-add-btn;
-        border: transparent;
-        font-size: $order-box-add-font-size;
-        color: $order-box-add-font-color;
+        background-color: #ff8080;
+        border: solid 1px transparent;
+        font-size: 1.285714em;
+        color: #fff;
         margin-bottom: 5px;
-        float: right;
+      }
+      > .-wishlist{
+        margin-right: 1%;
+        background-color: #fff;
+        color: #ff8080;
+        border: solid 1px #ff8080;
       }
       > .customer{
         font-size: $order-box-customer-font-size;
@@ -87,7 +92,11 @@
       }
       .add-cart{
         .add{
+          max-width: 340px;
           width: 100%;
+        }
+        > .customer{
+          float: none;
         }
       }
     }
