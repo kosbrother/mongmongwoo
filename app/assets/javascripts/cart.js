@@ -5,7 +5,6 @@ cart = function() {
 
         var cart_item_id = $(this).attr('data-id'),
             id = '#cart-item-' + cart_item_id + '-quantity',
-            cart_id = $(this).attr('data-cart-id'),
             quantity = parseInt($(id).val()),
             min = parseInt($(id).attr('min'));
 
@@ -62,12 +61,11 @@ cart = function() {
     $('.cart-item-delete').on('click', function () {
 
         var id = $(this).attr('data-id'),
-            cart_id = $(this).data('cart-id'),
             target = $('#cart-item-' + id);
+
         $.ajax({
             url: '/cart_items/' + id,
             type: "DELETE",
-
             success: function () {
                 target.remove();
             },
@@ -81,8 +79,7 @@ cart = function() {
     //sopping cart page: change selected item spec
     $('.cart-result .spec-select').change(function () {
         var spec_id = $(this).val(),
-            cart_item_id = $(this).data('cart-item'),
-            cart_id = $(this).data('cart-id');
+            cart_item_id = $(this).data('cart-item');
 
         $.ajax({
             url: '/cart_items/' + cart_item_id + '/update_spec',

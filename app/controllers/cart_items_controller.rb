@@ -68,9 +68,4 @@ class CartItemsController < ApplicationController
     { subtotal: "NT.#{item.subtotal}", total: "NT.#{items_total(items)}", total_with_shipping: "NT.#{items_total(items)+60}" }
   end
 
-  def remove_car_result
-    session[:return_to] ||= request.referer
-    redirect_to session.delete(:return_to)
-  end
-
 end
