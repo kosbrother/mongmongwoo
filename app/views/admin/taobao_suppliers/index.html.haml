@@ -1,0 +1,40 @@
+.row
+  .col-md-12
+    .content-box-large.box-with-header
+      .breadcrumb-topbar
+        %ol.breadcrumb
+          %li
+            %a{:href => admin_root_path} 萌萌屋
+          %li{:class => "#{"active" if current_page?(admin_taobao_suppliers_path)}"}
+            淘寶商家列表
+            / = action_name == "new" ? "新增淘寶商家" : "編輯淘寶商家"
+      .pull-right
+        = link_to "新增淘寶商家", new_admin_taobao_supplier_path, class: "btn btn-primary"
+      %h2 淘寶商家列表
+      %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %thead
+          %tr
+            %th 編號
+            %th 商家名稱
+            %th 賣家商品數
+            %th 操作選項
+        %tbody
+          - @taobao_suppliers.each do |supplier|
+            %tr
+              %td
+                = supplier.id
+              %td
+                = supplier.name
+              %td
+                = link_to supplier.url, target: "_blank" do
+                  按此前往商家賣場
+              %td
+                .dropdown
+                  %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                    按此選擇
+                    %span.caret
+                  %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
+                    %li= link_to "編輯", edit_admin_taobao_supplier_path(supplier)
+                    %li= link_to "刪除", admin_taobao_supplier_path(supplier), method: :delete, data: { confirm: "確定刪除？", disable_with: "刪除中..." }
+      .apple_pagination
+        = will_paginate @taobao_suppliers, :container => false

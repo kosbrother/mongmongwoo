@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511133856) do
+ActiveRecord::Schema.define(version: 20160516100720) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -269,6 +269,13 @@ ActiveRecord::Schema.define(version: 20160511133856) do
     t.datetime "updated_at",                                      null: false
     t.decimal  "lat",                    precision: 9,  scale: 7
     t.decimal  "lng",                    precision: 10, scale: 7
+  end
+
+  create_table "taobao_suppliers", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "url",        limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "towns", force: :cascade do |t|
