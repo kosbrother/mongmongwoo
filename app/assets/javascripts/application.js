@@ -44,8 +44,8 @@ ready = function() {
             spec_id = $(this).data('id');
         $('.spec-photos > .icons > .icon').removeClass('active');
         $(this).addClass('active');
-        $('.show').html("<img class='img-responsive' src=" + url + ">")
-        $('.select option[value='+ spec_id +']').prop('selected', true);
+        $('.show').html("<img class='img-responsive' src=" + url + ">");
+        $('.spec-select option[value='+ spec_id +']').prop('selected', true);
     });
 
     //PRODUCTION DETAIL PAGE: show selected spec image from option
