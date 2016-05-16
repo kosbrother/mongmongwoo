@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510025023) do
+ActiveRecord::Schema.define(version: 20160511133856) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -81,6 +81,17 @@ ActiveRecord::Schema.define(version: 20160510025023) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "cost_statistics", force: :cascade do |t|
+    t.integer  "cost_of_goods",       limit: 4
+    t.integer  "cost_of_advertising", limit: 4
+    t.integer  "cost_of_freight_in",  limit: 4
+    t.date     "cost_date"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "cost_statistics", ["cost_date"], name: "index_cost_statistics_on_cost_date", using: :btree
 
   create_table "counties", force: :cascade do |t|
     t.string   "name",       limit: 255
