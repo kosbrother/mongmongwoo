@@ -65,6 +65,11 @@ class Api::V1::OrdersController < ApiController
     render json: user_orders, only: [:id, :uid, :total, :created_on, :status, :user_id]
   end
 
+  def by_email_phone
+    user_orders = Order.joins(:info).where("ship_email = ? and ship_phone = ?", params[:email], params[:phone]).recent
+    render json: user_orders, only: [:id, :uid, :total, :created_on, :status, :user_id]
+  end
+
   private
 
   def get_info_email(email_param,user)
