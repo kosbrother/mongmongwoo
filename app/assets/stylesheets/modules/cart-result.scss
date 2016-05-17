@@ -197,6 +197,9 @@
       > .number{
         text-align: right;
       }
+      #totalprice{
+        color: #ff0000;
+      }
     }
   }
 }
@@ -222,5 +225,19 @@
         text-align: center;
       }
     }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .cart-result{
+    > .item-bar{
+      > .subtotal{
+        padding: 0px;
+      }
+      > .subtotal:before{
+        content: '小計：'
+      }
+    }
+  ;
   }
 }

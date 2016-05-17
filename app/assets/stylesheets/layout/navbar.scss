@@ -44,10 +44,12 @@
       > .user:before {
         content: $url-user;
         vertical-align: -4px;
+        padding-right: 5px;
       }
       > .cart:before {
         content: $url-cart;
         vertical-align: -4px;
+        padding-right: 5px;
       }
       > .diamond:before {
         content: $url-white-diamond;
@@ -78,5 +80,10 @@
         }
       }
     }
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav-bar{
+    margin-bottom: 15px;
   }
 }

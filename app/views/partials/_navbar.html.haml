@@ -11,8 +11,6 @@
         = image_tag('icons/logo.png', class: 'logo')
         .name
           萌萌屋
-    - if mobile?
-      = render 'partials/app_install_banner'
     / Collect the nav links, forms, and other content for toggling
     #nav-bar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
@@ -33,3 +31,5 @@
               )
         %li.nav-list
           = render_login_or_logout
+    - if mobile?
+      = render 'partials/app_install_banner'
