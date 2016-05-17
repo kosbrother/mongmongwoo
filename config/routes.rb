@@ -25,6 +25,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :allpay, only:[] do
+    collection do
+      post "/create/:order_id", to: "allpay#create", as: "create"
+      post "status_update"
+      post "create_reply"
+    end
+  end
+
   # 管理員後台
   namespace :admin do
     root "categories#index"
