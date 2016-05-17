@@ -4,7 +4,7 @@
       .breadcrumb-topbar
         %ol.breadcrumb
           %li
-            %a{:href => admin_root_path} 萌萌屋
+            = link_to "萌萌屋", admin_root_path
           %li{:class => "#{"active" if current_page?(admin_taobao_suppliers_path)}"}
             淘寶商家列表
       .pull-right
