@@ -27,7 +27,6 @@
             - @item.specs.each do |spec|
               %dt= "#{spec.style} :"
               %dd= OrderItem.product_style_sales(@item.id,spec.id).first.sum_item_quantity
-
       .words-intro.col-md-5
         %dl.dl-horizontal
           %dt 商品編號
@@ -39,7 +38,7 @@
               按此前往淘寶商品
           %dt 商家名稱
           %dd
-            = link_to @item.supplier_name, @item.supplier_url, target: "_blank" rescue "沒有商家資料"
+            = link_to_supplier_or_not(@item)
           %dt 商品名稱
           %dd
             = @item.name
