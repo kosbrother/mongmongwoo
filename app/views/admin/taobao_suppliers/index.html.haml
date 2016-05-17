@@ -15,7 +15,7 @@
           %tr
             %th 編號
             %th 商家名稱
-            %th 賣家商品數
+            %th 商家商品列表
             %th 操作選項
         %tbody
           - @taobao_suppliers.each do |supplier|
@@ -23,10 +23,10 @@
               %td
                 = supplier.id
               %td
-                = supplier.name
-              %td
                 = link_to supplier.url, target: "_blank" do
-                  按此前往商家賣場
+                  = supplier.name
+              %td
+                = render partial: "supplier_items_list", locals: { supplier: supplier }
               %td
                 .dropdown
                   %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
