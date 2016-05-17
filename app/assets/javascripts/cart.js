@@ -97,6 +97,16 @@ cart = function() {
             }
         })
     });
+//    Select store
+    $('.select-store').on('click', function() {
+        var name = $('#ship_name').val(),
+            email = $('#ship_email').val(),
+            phone = $('#ship_phone').val();
+
+        $.get( "/select_store", { name: name, email: email, phone: phone }, function(data){
+            window.location = data['url']
+        });
+    });
 };
 
 $(document).ready(cart);

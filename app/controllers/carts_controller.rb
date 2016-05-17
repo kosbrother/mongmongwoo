@@ -25,6 +25,10 @@ class CartsController < ApplicationController
   end
 
   def select_store
+    cookies[:name] = params[:name]
+    cookies[:email] = params[:email]
+    cookies[:phone] = params[:phone]
+
     url = generate_url(ENV['ALL_PAY_URL'],
                        MerchantID: ENV['MerchantID'],
                        MerchantTradeNo: ENV['MerchantTradeNo'],
@@ -32,7 +36,8 @@ class CartsController < ApplicationController
                        LogisticsSubType: 'UNIMART',
                        IsCollection: 'Y',
                        ServerReplyURL: "#{ENV['WEB_HOST']}/store_reply")
-    redirect_to  url
+
+    render json: {url: url}
   end
 
   def store_reply
