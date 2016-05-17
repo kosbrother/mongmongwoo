@@ -13,7 +13,7 @@ class Admin::TaobaoSuppliersController < AdminController
   def create
     @taobao_supplier = TaobaoSupplier.new(taobao_supplier_params)
 
-    if @taobao_supplier.save!
+    if @taobao_supplier.save
       flash[:notice] = "成功新增淘寶商家"
       redirect_to admin_taobao_suppliers_path
     else
@@ -26,7 +26,7 @@ class Admin::TaobaoSuppliersController < AdminController
   end
 
   def update
-    if @taobao_supplier.update!(taobao_supplier_params)
+    if @taobao_supplier.update(taobao_supplier_params)
       flash[:notice] = "淘寶商家資料更新完成"
       redirect_to admin_taobao_suppliers_path
     else
@@ -36,7 +36,7 @@ class Admin::TaobaoSuppliersController < AdminController
   end
 
   def destroy
-    @taobao_supplier.destroy!
+    @taobao_supplier.destroy
     flash[:warning] = "已刪除淘寶商家資料"
     redirect_to admin_taobao_suppliers_path
   end
