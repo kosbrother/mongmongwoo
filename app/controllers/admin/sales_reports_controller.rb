@@ -2,18 +2,32 @@ class Admin::SalesReportsController < AdminController
   before_action :require_manager
 
   def item_sales_result
-    if %w[month week day].include?(params[:time_field])
-      @item_sales = OrderItem.created_at_within(time_until_range).sort_by_sales
+    if params[:supplier_id]
+
+      @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_sales_with_taobao_supplier(params[:supplier_id]))
+
+      # if %w[month week day].include?(params[:time_field])
+      #   @item_sales = OrderItem.created_at_within(time_until_range).sort_by_sales_with_taobao_supplier(params[:supplier_id])
+      # else
+      #   @item_sales = OrderItem.sort_by_sales_with_taobao_supplier(params[:supplier_id])
+      # end
     else
-      @item_sales = OrderItem.sort_by_sales
+
+      @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales : OrderItem.sort_by_sales)
+
+      # if %w[month week day].include?(params[:time_field])
+      #   @item_sales = OrderItem.created_at_within(time_until_range).sort_by_sales
+      # else
+      #   @item_sales = OrderItem.sort_by_sales
+      # end
     end
   end
 
   def item_revenue_result
-    if %w[month week day].include?(params[:time_field])
-      @item_revenue = OrderItem.created_at_within(time_until_range).sort_by_revenue
+    if params[:supplier_id]
+      @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_revenue_with_taobao_supplier(params[:supplier_id]))
     else
-      @item_revenue = OrderItem.sort_by_revenue
+      @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue : OrderItem.sort_by_revenue)
     end
   end
 

@@ -6,7 +6,9 @@ class OrderItem < ActiveRecord::Base
   scope :product_sales, -> (item_id){ select("SUM(item_quantity) as sum_item_quantity").where(source_item_id: item_id) }
   scope :product_style_sales, -> (item_id,spec_id){ select("SUM(item_quantity) as sum_item_quantity").where(source_item_id: item_id,item_spec_id: spec_id) }
   scope :total_sales_income, -> { sum("item_quantity * item_price") }
-
+  scope :sort_by_sales_with_taobao_supplier, -> (supplier_id) { joins(:item, item: [:categories, :taobao_supplier]).select(:id, :source_item_id, :item_name, "SUM(item_quantity) as sum_item_quantity").where(taobao_suppliers: { id: supplier_id }) }
+  scope :sort_by_revenue_with_taobao_supplier, -> (supplier_id) { joins(:item, item: [:categories, :taobao_supplier]).select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").where(taobao_suppliers: { id: supplier_id }) }
+  
   belongs_to :order
   belongs_to :item, :foreign_key => "source_item_id"
   belongs_to :item_spec
