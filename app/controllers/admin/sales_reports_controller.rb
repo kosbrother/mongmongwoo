@@ -3,31 +3,17 @@ class Admin::SalesReportsController < AdminController
 
   def item_sales_result
     if params[:supplier_id]
-
-      @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_sales_with_taobao_supplier(params[:supplier_id]))
-
-      # if %w[month week day].include?(params[:time_field])
-      #   @item_sales = OrderItem.created_at_within(time_until_range).sort_by_sales_with_taobao_supplier(params[:supplier_id])
-      # else
-      #   @item_sales = OrderItem.sort_by_sales_with_taobao_supplier(params[:supplier_id])
-      # end
+      get_item_sales_with_supplier
     else
-
-      @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales : OrderItem.sort_by_sales)
-
-      # if %w[month week day].include?(params[:time_field])
-      #   @item_sales = OrderItem.created_at_within(time_until_range).sort_by_sales
-      # else
-      #   @item_sales = OrderItem.sort_by_sales
-      # end
+      get_item_sales_without_supplier
     end
   end
 
   def item_revenue_result
     if params[:supplier_id]
-      @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_revenue_with_taobao_supplier(params[:supplier_id]))
+      get_item_revenue_with_supplier
     else
-      @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue : OrderItem.sort_by_revenue)
+      get_item_revenue_without_supplier
     end
   end
 
@@ -95,5 +81,21 @@ class Admin::SalesReportsController < AdminController
     value_1 / value_2
     rescue ZeroDivisionError
     0
+  end
+
+  def get_item_sales_with_supplier
+    @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_sales_with_taobao_supplier(params[:supplier_id])) 
+  end
+
+  def get_item_sales_without_supplier
+    @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales : OrderItem.sort_by_sales) 
+  end
+
+  def get_item_revenue_with_supplier
+    @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_revenue_with_taobao_supplier(params[:supplier_id])) 
+  end
+
+  def get_item_revenue_without_supplier
+    @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue : OrderItem.sort_by_revenue) 
   end
 end
