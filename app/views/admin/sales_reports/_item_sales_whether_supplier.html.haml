@@ -1,0 +1,27 @@
+- if @item_sales[0].nil? || @item_sales[0].id.nil?
+  %br
+  %p.lead 資料不存在
+- else
+  %thead
+    %tr
+      %th{width: "10%"} 商品編號
+      %th{width: "15%"} 商品分類
+      %th{width: "45%"} 商品名稱
+      %th{width: "15%"} 淘寶商家
+      %th{width: "15%"} 銷售數量
+  %tbody
+    - @item_sales.each do |item|
+      %tr
+        %td
+          = link_to item.source_item_id, admin_item_path(item.item), target: "_blank"
+        %td
+          - item.categories.each do |category|
+            %ul.list-unstyled
+              %li= link_to category.name, admin_category_path(category), target: "_blank"
+        %td
+          = link_to item.item_name, admin_item_path(item.item), target: "_blank"
+        %td
+          = item.get_taobao_supplier_name
+        %td
+          %p.lead.spec-style-stock
+            %span= item.sum_item_quantity
