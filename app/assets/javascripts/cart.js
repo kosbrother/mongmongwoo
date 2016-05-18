@@ -63,7 +63,8 @@ cart = function() {
     $('.cart-item-delete').on('click', function () {
 
         var id = $(this).attr('data-id'),
-            target = $('#cart-item-' + id);
+            target = $('#cart-item-' + id),
+            counter = parseInt($('#nav-bar-collapse .cart > .counter').text());
 
         setTimeout(function(){
             $.ajax({
@@ -71,6 +72,7 @@ cart = function() {
                 type: "DELETE",
                 success: function (data) {
                     target.remove();
+                    $('#nav-bar-collapse .cart > .counter').text(counter - 1);
                     $('#ship-fee').text(data.ship_fee);
                     $('#cart-sum').text(data.total);
                     $('#totalprice').text(data.total_with_shipping);

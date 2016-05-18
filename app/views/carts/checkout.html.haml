@@ -34,7 +34,7 @@
             .quantity-minus{ 'data-id': item.id } -
             = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
             .quantity-plus{ 'data-id': item.id } +
-          .col-lg-1.col-sm-2.col-xs-3.subtotal{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+          .col-lg-1.col-sm-2.col-xs-3.hidden-xs.subtotal{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
       .divider
       .totalrow.row
         .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text

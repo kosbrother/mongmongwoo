@@ -1,7 +1,7 @@
 .input-block{
-  border: solid 1px #dcdcdc;
+  border: $form-border;
   border-radius: 4px;
-  background-color: #ffffff;
+  background-color: $form-background-color;
   margin: 0 auto;
   text-align: left;
   padding: 5px 30px;
@@ -16,7 +16,7 @@
       width: 248px;
       height: 34px;
       border-radius: 2px;
-      border: solid 1px #979797;
+      border: $form-input-border;
       padding-left: 10px;
     }
     > .text{

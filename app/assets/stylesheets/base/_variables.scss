@@ -21,9 +21,13 @@ $order-box-quantity-font-color: #ff8080;
 $order-box-add-btn: #ff8080;
 $order-box-add-font-color: #fff;
 $order-box-customer-font-color: #ff0725;
+$form-background-color: #ffffff;
+$modal-confirm-btn-color: #47b286;
+$step-bar-color: #50e3c2;
 
 //border
 $regular-border:  solid 1px #9B9B9B;
+$form-border: solid 1px #dcdcdc;
 $regular-border-radius: 5px;
 $regular-dash-border: dashed 2px black;
 $pink-dash-border: dashed 2px #ff7d7d;
@@ -32,6 +36,10 @@ $btn-border-radius: 2px;
 $order-box-quantity-border: solid 1px #ff8080;
 $pagination-border: solid 1px #ff8080;
 $active-border: solid 2px #ff8080;
+$modal-btn-border: solid 2px #47b286;
+$step-bar-border: solid 2px #50e3c2;
+$mobile-step-bar-border: solid 1px #50e3c2;
+$form-input-border: solid 1px #979797;
 //url
 $url-pencil: image-url('icons/pencil.png');
 $url-diamond: image-url('icons/diamond.png');
@@ -43,7 +51,7 @@ $url-diamond: image-url('icons/diamond.png');
 $url-white-diamond: image-url('icons/ic_diamond.png');
 $url-star-l: image-url('icons/star_L.png');
 $url-star-s: image-url('icons/star_s.png');
-
+$url-cancel-btn: image_url('icons/ic_cancel.png');
 //font
 $regular-font-size: 14px;
 $mobile-regular-font-size: 12px;

@@ -26,9 +26,8 @@
         %li.nav-list
           = link_to checkout_path do
             .list.cart
-              購物車(
-              %span= current_cart.cart_items.count
-              )
+              購物車
+              = render_counter
         %li.nav-list
           = render_login_or_logout
     - if mobile?

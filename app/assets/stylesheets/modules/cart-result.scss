@@ -1,6 +1,6 @@
 .cart-result{
-  background-color: #ffffff;
-  border: solid 1px #dcdcdc;
+  background-color: $form-background-color;
+  border: $form-border;
   text-align: center;
   > .row{
     margin:  0px;
@@ -8,7 +8,7 @@
   > .divider{
     width: 95%;
     margin: 5px auto;
-    border-top: solid 1px #dcdcdc;
+    border-top: $form-border;
   }
 
   > .header{
@@ -69,7 +69,7 @@
         outline: none;
       }
       .cancel:hover{
-        background-image: image_url('icons/ic_cancel_hover.png');
+        background-image: $url-cancel-btn;
       }
       > .modal{
         > .modal-dialog{
@@ -82,15 +82,15 @@
               width: 150px;
               height: 50px;
               font-size: 20px;
-              background-color: #47b286;
+              background-color: $modal-confirm-btn-color;
               color: #fff;
             }
             .btn-close{
               width: 150px;
               height: 50px;
-              border: solid 2px #47b286;
+              border: $modal-btn-border;
               font-size: 20px;
-              color: #47b286;
+              color: $modal-confirm-btn-color;
               background-color: transparent;
             }
           }
@@ -138,6 +138,9 @@
       }
       > .unitprice{
         text-align: left;
+        padding-left: 0px;
+      }
+      > .price, .spec{
         padding-left: 0px;
       }
       .quantity> div:before{
@@ -208,7 +211,7 @@
   .cart-result {
     > .item-bar {
       > .itemname {
-        padding-left: 15px;
+        padding-left: 0px;
       }
       > .spec, .price, .quantity, .subtotal {
         text-align: left;
@@ -231,6 +234,10 @@
 @media screen and (max-width: 768px){
   .cart-result{
     > .item-bar{
+      > .price, .quantity > div, .subtotal{
+        font-size: 10px;
+        color: #4a4a4a;
+      }
       > .subtotal{
         padding: 0px;
       }

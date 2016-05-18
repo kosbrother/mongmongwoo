@@ -2,7 +2,7 @@
   > .step{
     width: 40px;
     height: 40px;
-    border: solid 2px #50e3c2;
+    border: $step-bar-border;
     display: inline-block;
     border-radius: 50%;
     > .text{
@@ -17,20 +17,20 @@
     }
     > .done{
       text-align: center;
-      background-color: #50e3c2;
+      background-color: $step-bar-color;
       line-height: 32px;
       border-radius: 50%;
       border: solid #fffef0 2px;
-      color: #fffef0;
+      color: $web-background-color;
       font-size: 27px;
     }
     > .undone{
       text-align: center;
-      background-color: #fffef0;
+      background-color:$web-background-color;
       line-height: 32px;
       border-radius: 50%;
       border: solid #fffef0 2px;
-      color: #50e3c2;
+      color: $step-bar-color;
       font-size: 27px;
     }
   }
@@ -40,14 +40,14 @@
     display: inline-block;
     height: 8px;
     border-radius: 6px;
-    border: solid 2px #50e3c2;
+    border: $step-bar-border;
     width: 190px;
     position: relative;
     z-index: -1;
     top: -44px;
   }
   > .-full{
-    background-color: #50e3c2;
+    background-color: $step-bar-color;
   }
 }
 
@@ -56,7 +56,7 @@
     > .step{
       width: 23px;
       height: 23px;
-      border: solid 1px #50e3c2;
+      border: $mobile-step-bar-border;
       > .done, .undone{
         font-size: 14px;
         line-height: 17px;
@@ -71,7 +71,7 @@
       width: 33%;
       top: -28px;
       height: 4px;
-      border: solid 1px #50e3c2;
+      border: $mobile-step-bar-border;
     }
   }
 

@@ -1,4 +1,4 @@
-$('#nav-bar-collapse .cart > span').text('#{current_cart.cart_items.count}');
+$('#nav-bar-collapse .cart > .counter').removeClass('hidden').text('#{current_cart.cart_items.count}');
 var cart = $('.cart');
 var imgtodrag = $('.spec-photos > .show > img').eq(0);
 var imgclone = imgtodrag.clone().offset({

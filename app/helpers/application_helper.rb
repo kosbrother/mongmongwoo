@@ -62,4 +62,11 @@ module ApplicationHelper
      end
   end
 
+  def render_counter
+    if current_cart.cart_items.count > 0
+      content_tag(:div, current_cart.cart_items.count, class: 'counter' )
+    else
+      content_tag(:div, '', class: 'counter hidden' )
+    end
+  end
 end
