@@ -1,6 +1,6 @@
 = render 'partials/cart_steps', step: @step
 .cart-info
-  = form_tag submit_cart_info_path, method: :post do
+  = form_tag confirm_cart_path, method: :post do
     .icon-header.-pencil 訂購人資料
     .input-block
       .group

@@ -18,6 +18,7 @@ cart = function() {
                 success: function (data) {
                     $(id).val(quantity - 1);
                     $('#cart-item-' + cart_item_id + '-subtotal').text(data.subtotal);
+                    $('#ship-fee').text(data.ship_fee);
                     $('#cart-sum').text(data.total);
                     $('#totalprice').text(data.total_with_shipping);
                 },
@@ -47,6 +48,7 @@ cart = function() {
                 success: function (data) {
                     $(id).val(quantity + 1);
                     $('#cart-item-' + cart_item_id + '-subtotal').text(data.subtotal);
+                    $('#ship-fee').text(data.ship_fee);
                     $('#cart-sum').text(data.total);
                     $('#totalprice').text(data.total_with_shipping);
                 },
@@ -69,6 +71,9 @@ cart = function() {
                 type: "DELETE",
                 success: function (data) {
                     target.remove();
+                    $('#ship-fee').text(data.ship_fee);
+                    $('#cart-sum').text(data.total);
+                    $('#totalprice').text(data.total_with_shipping);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert('錯誤發生，如問題持續發生，請聯繫客服人員');

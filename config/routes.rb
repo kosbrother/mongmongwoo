@@ -12,10 +12,10 @@ Rails.application.routes.draw do
 
   get "/checkout", to: "carts#checkout", as: "checkout"
   get "/cart_info", to: "carts#info", as: "cart_info"
-  get "/confirm_cart", to: "carts#confirm", as: "confirm_cart"
-  post "/create_info", to: "carts#create_info", as: "submit_cart_info"
   get "/select_store", to: "carts#select_store", as: "select_store"
-  post "/store_reply", to: "carts#store_reply", as: "store_reply"
+  post "/store_reply", to: "carts#info", as: "store_reply"
+  post "/confirm_cart", to: "carts#confirm", as: "confirm_cart"
+  get "/confirm_cart", to: "carts#confirm"
   post "/submit_order", to: "carts#submit", as: "submit_order"
   get "/success", to: "carts#success", as: "success"
   resources :cart_items, only: [:create, :destroy] do

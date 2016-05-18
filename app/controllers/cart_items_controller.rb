@@ -1,71 +1,50 @@
 class CartItemsController < ApplicationController
-  before_action :verify_item_belong_cart, only: [:update_quantity, :update_spec, :destroy]
-  skip_before_action :load_categories, :load_popular_items
 
   def create
-    @cart = Cart.find(session[:cart_id])
-    item = @cart.cart_items.find_by_item_spec_id(params[:cart_item][:item_spec_id])
-    if item.present?
-      quantity = params[:cart_item][:item_quantity].to_i
-      item.increment_quantity(quantity)
-    else
-      CartItem.create(cart_item_params)
-    end
-    respond_to do |format|
-      format.js
-    end
+    CartItem.create(cart_item_params)
   end
 
   def update_quantity
-    item = CartItem.find(params[:id])
-    items = @cart.cart_items
+    item = current_cart.cart_items.find(params[:id])
     case params['type']
     when 'quantity-minus'
       item.decrement_quantity
-      items.reload
-      render json: return_subtotal_and_total_with_shipping(item, items)
     when 'quantity-plus'
       item.increment_quantity
-      items.reload
-      render json: return_subtotal_and_total_with_shipping(item, items)
     end
+    items = current_cart.cart_items.includes(:item)
+    render json: subtotal_and_total_with_shipping(item, items)
   end
 
   def update_spec
-    item = CartItem.find(params[:id])
-    item.item_spec_id = params['item_spec']
-    item.save!
+    item = current_cart.cart_items.includes(:item).find(params[:id])
+    item.update_attribute(:item_spec_id,  params['item_spec'])
     render json: { spec_style_pic: item.item_spec.style_pic.url }
   end
 
   def destroy
-    item = CartItem.find(params[:id])
-    item.destroy
-    @cart.reload
-    if @cart.cart_items.empty?
+    current_cart.cart_items.find(params[:id]).destroy
+    if current_cart.cart_items.empty?
       flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
       render :js => "window.location = '/'"
     else
-      render nothing: true
+      items = current_cart.cart_items.includes(:item)
+      render json: total_with_shipping(items)
     end
   end
-
 
   private
 
   def cart_item_params
-    params.require(:cart_item).permit(:item_id, :item_spec_id, :item_quantity).merge({ cart_id: @cart.id})
+    params.require(:cart_item).permit(:item_id, :item_spec_id, :item_quantity).merge({ cart_id: current_cart.id})
   end
 
-  def verify_item_belong_cart
-    @cart = Cart.includes({cart_items: :item}).find(session[:cart_id])
-    unless @cart.cart_items.exists?(params[:id])
-      head(403)
-    end
+  def subtotal_and_total_with_shipping(item, items)
+    { subtotal: "NT.#{item.subtotal}", total: "NT.#{total(items)}", ship_fee:"NT.#{ship_fee(items)}", total_with_shipping: "NT.#{total(items) + ship_fee(items)}" }
   end
 
-  def return_subtotal_and_total_with_shipping(item, items)
-    { subtotal: "NT.#{item.subtotal}", total: "NT.#{items_total(items)}", total_with_shipping: "NT.#{items_total(items)+60}" }
+  def total_with_shipping(items)
+    { total: "NT.#{total(items)}", ship_fee:"NT.#{ship_fee(items)}", total_with_shipping: "NT.#{total(items) + ship_fee(items)}" }
   end
 
 end

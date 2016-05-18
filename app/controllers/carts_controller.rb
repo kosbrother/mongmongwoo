@@ -1,26 +1,24 @@
 require "uri"
-require "net/http"
 
 class CartsController < ApplicationController
   layout 'cart'
-  skip_before_action :verify_authenticity_token, only: :store_reply
-  skip_before_action :load_popular_items
+  skip_before_action :verify_authenticity_token, only: :info
+  before_action  :load_categories
 
   def checkout
-    @step = 1
-    @cart =  Cart.find(session[:cart_id])
-    @items = @cart.cart_items.includes({item: :specs}, :item_spec)
+    @step = Cart::STEP[:checkout]
+    @items = current_cart.cart_items.includes({item: :specs}, :item_spec)
     if @items.empty?
       flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
       redirect_to root_path
     end
-    @total = items_total(@items)
+    @total = total(@items)
   end
 
   def info
-    @step = 2
-    if params['store']
-      @store = Store.find_by(store_code: params['store'])
+    @step = Cart::STEP[:info]
+    if params['CVSStoreID']
+      @store = Store.find_by(store_code: params['CVSStoreID'])
     end
   end
 
@@ -31,40 +29,31 @@ class CartsController < ApplicationController
 
     url = generate_url(ENV['ALL_PAY_URL'],
                        MerchantID: ENV['MerchantID'],
-                       MerchantTradeNo: ENV['MerchantTradeNo'],
+                       MerchantTradeNo: '1111',
                        LogisticsType: 'CVS',
                        LogisticsSubType: 'UNIMART',
                        IsCollection: 'Y',
-                       ServerReplyURL: "#{ENV['WEB_HOST']}/store_reply")
+                       ServerReplyURL: store_reply_url)
 
     render json: {url: url}
   end
 
-  def store_reply
-    redirect_to cart_info_path(store:  params['CVSStoreID'])
-  end
-
-  def create_info
+  def confirm
+    @step = Cart::STEP[:confirm]
     @info = {ship_name: params[:ship_name],
              ship_phone: params[:ship_phone],
              ship_email: params[:ship_email]}
-    redirect_to confirm_cart_path(info: @info, store: params[:store_id])
-  end
-
-  def confirm
-    @step = 3
-    @cart =  Cart.find(session[:cart_id])
-    @items = @cart.cart_items.includes(:item, :item_spec)
-    @store = Store.find(params[:store])
-    @info = params[:info]
-    @total = items_total(@items)
+    @store = Store.find(params[:store_id])
+    @items = current_cart.cart_items.includes(:item, :item_spec)
+    @total = total(@items)
   end
 
   def submit
-    cart =  Cart.includes({cart_items: [:item, :item_spec]}).find(session[:cart_id])
+    items = current_cart.cart_items.includes(:item, :item_spec)
     store = Store.find(params[:store])
-    create_order(cart, params[:info], store)
+    create_order(items, params[:info], store)
     session[:cart_id] = nil
+    create_cart
 
     redirect_to success_path
   end
@@ -81,14 +70,14 @@ class CartsController < ApplicationController
     uri.to_s
   end
 
-  def create_order(cart, cart_info, store)
+  def create_order(cart_items, cart_info, store)
     order = Order.new
-    order.uid = cart.user.uid
-    order.user_id = cart.user.id
-    order.items_price = cart.total
-    order.ship_fee = 60
-    order.total = cart.total + 60
-    order.save!
+    order.uid = current_cart.user.uid
+    order.user_id = current_cart.user_id
+    order.items_price = total(cart_items)
+    order.ship_fee = ship_fee(cart_items)
+    order.total = total(cart_items)+ ship_fee(cart_items)
+    order.save
 
     info = OrderInfo.new
     info.order_id = order.id
@@ -98,19 +87,19 @@ class CartsController < ApplicationController
     info.ship_store_id = store.id
     info.ship_store_name = store.name
     info.ship_email = cart_info[:ship_email]
-    info.save!
+    info.save
 
-    cart_items = cart.cart_items
+
     cart_items.each do |cart_item|
       item = OrderItem.new
       item.order_id = order.id
       item.item_name = cart_item.item.name
-      item.source_item_id = cart_item.item.id
-      item.item_spec_id = cart_item.item_spec.id
+      item.source_item_id = cart_item.item_id
+      item.item_spec_id = cart_item.item_spec_id
       item.item_style = cart_item.item_spec.style
       item.item_quantity = cart_item.item_quantity
       item.item_price = cart_item.item.price
-      item.save!
+      item.save
     end
   end
 

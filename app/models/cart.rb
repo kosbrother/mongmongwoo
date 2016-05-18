@@ -4,10 +4,9 @@ class Cart < ActiveRecord::Base
   has_one :cart_info, dependent: :destroy
   belongs_to :user
 
-  def total
-    cart_items.reduce(0) do |sum, current|
-      sum + current.subtotal.to_i
-    end
-  end
+  STEP = { checkout: 1, info: 2, confirm: 3}
+  FREE_SHIPPING_PRICE = 490
+  SHIP_FEE = 60
+
 
 end

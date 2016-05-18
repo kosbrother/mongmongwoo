@@ -54,4 +54,12 @@ module ApplicationHelper
 
   end
 
+  def ship_fee
+     if @total > 490
+       0
+     else
+       60
+     end
+  end
+
 end
