@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511133856) do
+ActiveRecord::Schema.define(version: 20160516102356) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -143,19 +143,21 @@ ActiveRecord::Schema.define(version: 20160511133856) do
   add_index "item_specs", ["item_id"], name: "index_item_specs_on_item_id", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",        limit: 255,               null: false
-    t.integer  "price",       limit: 4,                 null: false
-    t.string   "slug",        limit: 255
-    t.integer  "status",      limit: 4,     default: 0
+    t.string   "name",               limit: 255,               null: false
+    t.integer  "price",              limit: 4,                 null: false
+    t.string   "slug",               limit: 255
+    t.integer  "status",             limit: 4,     default: 0
     t.datetime "deleted_at"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.text     "description", limit: 65535
-    t.string   "cover",       limit: 255
-    t.string   "url",         limit: 255
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.text     "description",        limit: 65535
+    t.string   "cover",              limit: 255
+    t.string   "url",                limit: 255
+    t.integer  "taobao_supplier_id", limit: 4
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
+  add_index "items", ["taobao_supplier_id"], name: "index_items_on_taobao_supplier_id", using: :btree
 
   create_table "managers", force: :cascade do |t|
     t.string   "username",        limit: 255
@@ -269,6 +271,13 @@ ActiveRecord::Schema.define(version: 20160511133856) do
     t.datetime "updated_at",                                      null: false
     t.decimal  "lat",                    precision: 9,  scale: 7
     t.decimal  "lng",                    precision: 10, scale: 7
+  end
+
+  create_table "taobao_suppliers", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "url",        limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "towns", force: :cascade do |t|

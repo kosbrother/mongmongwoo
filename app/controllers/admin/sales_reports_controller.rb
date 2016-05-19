@@ -2,19 +2,11 @@ class Admin::SalesReportsController < AdminController
   before_action :require_manager
 
   def item_sales_result
-    if %w[month week day].include?(params[:time_field])
-      @item_sales = OrderItem.created_at_within(time_until_range).sort_by_sales
-    else
-      @item_sales = OrderItem.sort_by_sales
-    end
+    @item_sales = get_item_sales(params)
   end
 
   def item_revenue_result
-    if %w[month week day].include?(params[:time_field])
-      @item_revenue = OrderItem.created_at_within(time_until_range).sort_by_revenue
-    else
-      @item_revenue = OrderItem.sort_by_revenue
-    end
+    @item_revenue = get_item_revenue(params)
   end
 
   def cost_statistics_index
@@ -81,5 +73,29 @@ class Admin::SalesReportsController < AdminController
     value_1 / value_2
     rescue ZeroDivisionError
     0
+  end
+
+  def get_item_sales(params)
+    if(params[:time_field] && params[:supplier_id])
+      OrderItem.sort_by_sales.created_at_within(time_until_range).with_supplier(params[:supplier_id])
+    elsif(params[:supplier_id])
+      OrderItem.sort_by_sales.with_supplier(params[:supplier_id])
+    elsif(params[:time_field])
+      OrderItem.sort_by_sales.created_at_within(time_until_range)
+    else
+      OrderItem.sort_by_sales
+    end
+  end
+
+  def get_item_revenue(params)
+    if(params[:time_field] && params[:supplier_id])
+      OrderItem.sort_by_revenue.created_at_within(time_until_range).with_supplier(params[:supplier_id])
+    elsif(params[:supplier_id])
+      OrderItem.sort_by_revenue.with_supplier(params[:supplier_id])
+    elsif(params[:time_field])
+      OrderItem.sort_by_revenue.created_at_within(time_until_range)
+    else
+      OrderItem.sort_by_revenue
+    end
   end
 end

@@ -1,0 +1,14 @@
+.row
+  .col-md-12
+    .content-box-large
+      .breadcrumb-topbar
+        %ol.breadcrumb
+          %li
+            = link_to "萌萌屋", admin_root_path
+          %li.active 新增淘寶商家
+      .panel-heading
+        .panel-title
+          %h3 新增淘寶商家
+      .panel-body
+        = form_for [:admin, @taobao_supplier], html: { class: "form-horizontal" } do |f|
+          = render partial: "taobao_supplier_form", locals: { f: f }

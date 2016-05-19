@@ -1,0 +1,12 @@
+.form-group
+  = f.label :name, "商家名稱", class: "col-sm-1 control-label"
+  .col-sm-9
+    = f.text_field :name, class: "form-control", placeholder: "請輸入名稱", required: true
+.form-group
+  = f.label :url, "商家連結", class: "col-sm-1 control-label"
+  .col-sm-9
+    = f.url_field :url, class: "form-control", placeholder: "請輸入連結", required: true
+.form-group
+  .col-sm-offset-1.col-sm-9
+    = f.submit "確認送出", class: "btn btn-primary"
+    = link_to "取消離開", admin_taobao_suppliers_path, class: "btn btn-warning"

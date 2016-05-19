@@ -1,0 +1,23 @@
+%button.btn.btn-default{"data-target" => "#supplier-#{supplier.id}", "data-toggle" => "modal", :type => "button"}
+  進貨商品數：#{supplier.count}
+/ Modal
+.modal.fade{"aria-labelledby" => "myModalLabel", :id => "supplier-#{supplier.id}", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#myModalLabel.modal-title #{supplier.name} 商品列表
+      .modal-body
+        %table.table.table-bordered
+          %thead
+            %tr.active
+              %th 商品編號
+              %th 商品名稱
+          %tbody
+            - supplier.items.each do |item|
+              %tr
+                %td= item.id
+                %td= link_to item.name, admin_item_path(item), target: "_blank"
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

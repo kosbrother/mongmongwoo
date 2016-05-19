@@ -1,38 +1,32 @@
 .row
-  .row
-    .col-md-12.panel-warning
-      .content-box-header.panel-heading
-        .panel-title 商品銷售金額列表
-      .content-box-large.box-with-header
-        .panel-body
-          .report-type
-            .time_field_button.pull-right
-              %ul.nav.nav-pills
-                %li{ class: all_time_tab_active(params[:time_field]) }= link_to "全部", item_revenue_result_admin_sales_reports_path
-                %li{ class: option_time_tab_active(params[:time_field], "month") }= link_to "按月排序", item_revenue_result_admin_sales_reports_path(:time_field => "month")
-                %li{ class: option_time_tab_active(params[:time_field], "week") }= link_to "按週排序", item_revenue_result_admin_sales_reports_path(:time_field => "week")
-                %li{ class: option_time_tab_active(params[:time_field], "day") }= link_to "按日排序", item_revenue_result_admin_sales_reports_path(:time_field => "day")
-            %ul.nav.nav-tabs
-              %li.active{:role => "presentation"}
-                = link_to "商品銷售金額", item_revenue_result_admin_sales_reports_path
-              %li{:role => "presentation"}
-                = link_to "商品銷售數量", item_sales_result_admin_sales_reports_path
-          %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
-            %thead
-              %tr
-                %th{width: "10%"} 商品編號
-                %th{width: "15%"} 商品分類
-                %th{width: "55%"} 商品名稱
-                %th 銷售金額
-            %tbody
-              - @item_revenue.each do |item|
-                %tr
-                  %td= link_to item.source_item_id, admin_item_path(item.item), target: "_blank"
-                  %td
-                    - item.categories.each do |category|
-                      %ul.list-unstyled
-                        %li= link_to category.name, admin_category_path(category), target: "_blank"
-                  %td= link_to item.item_name, admin_item_path(item.item), target: "_blank"
-                  %td
-                    %p.lead.spec-style-stock
-                      %span= item.sum_item_revenue
+  .col-md-12.panel-warning
+    .content-box-header.panel-heading
+      .panel-title 商品銷售金額列表
+    .content-box-large.box-with-header
+      .panel-body
+        .dropdown
+          %button#taobao-revenue-menu.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+            選擇淘寶商家
+            %span.caret
+          %ul.dropdown-menu.list-group{"aria-labelledby" => "taobao-revenue-menu"}
+            %li= link_to "全部商家", item_revenue_result_admin_sales_reports_path
+            - TaobaoSupplier.all.each do |supplier|
+              %li= link_to "編號#{supplier.id}：#{supplier.name}", item_revenue_result_admin_sales_reports_path(supplier_id: supplier.id, time_field: params[:time_field])  
+        %br
+        %p.lead.current-taobao-supplier
+          = get_taobao_supplier_name(params[:supplier_id])
+        %hr
+        .report-type
+          .time_field_button.pull-right
+            %ul.nav.nav-pills
+              = li_revenue_link_all_time_and_supplier("全部")
+              = li_revenue_link_with_periods_and_supplier("month", "按月排序")
+              = li_revenue_link_with_periods_and_supplier("week", "按週排序")
+              = li_revenue_link_with_periods_and_supplier("day", "按日排序")
+          %ul.nav.nav-tabs
+            %li{:role => "presentation"}
+              = link_to "商品銷售數量", item_sales_result_admin_sales_reports_path
+            %li.active{:role => "presentation"}
+              = link_to "商品銷售金額", item_revenue_result_admin_sales_reports_path              
+        %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+          = render partial: "item_revenue_whether_supplier"
