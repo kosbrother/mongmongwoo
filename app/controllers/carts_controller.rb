@@ -58,10 +58,6 @@ class CartsController < ApplicationController
     redirect_to success_path
   end
 
-  def success
-
-  end
-
   private
 
   def generate_url(url, params = {})

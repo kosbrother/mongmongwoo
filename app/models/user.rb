@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
         user.user_name = auth.name
         user.gender = auth.gender
         user.email = auth.email
-        user.save!
+        user.save
       end
   end
 

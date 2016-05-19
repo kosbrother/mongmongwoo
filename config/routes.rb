@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
   root 'pages#index'
-  get  "/auth/:provider/callback" => "sessions#create", as: :login
-  get  "/signout" => "sessions#destroy", as: :signout
+  get  "/auth/:provider/callback" => "sessions#create", as: "login"
+  get '/auth/:provider', to: lambda{|env| [404, {}, ["Not Found"]]}, as: 'auth'
+  get  "/signout" => "sessions#destroy", as: "signout"
 
   resources :categories, only: [:show] do
     resources :items, only: [:show]

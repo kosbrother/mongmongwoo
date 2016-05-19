@@ -102,13 +102,15 @@
     > div > div{
       margin: 5px 0;
     }
+    #totalprice{
+      color: #ff0000;
+    }
   }
 }
 
 
 @media screen and (max-width: 1200px) {
   .cart-result {
-
     > .item-bar{
       margin: 15px 0;
       > div{
@@ -200,9 +202,6 @@
       > .number{
         text-align: right;
       }
-      #totalprice{
-        color: #ff0000;
-      }
     }
   }
 }
@@ -234,9 +233,19 @@
 @media screen and (max-width: 768px){
   .cart-result{
     > .item-bar{
-      > .price, .quantity > div, .subtotal{
+      >.unitprice, .price, .quantity > div, .subtotal{
         font-size: 10px;
         color: #4a4a4a;
+      }
+      > .quantity-box {
+        padding: 0;
+        .quantity, .quantity-minus, .quantity-plus {
+          height: 15px;
+          width: 15px;
+          font-size: 10px;
+          line-height: 12px;
+          top: 2px;
+        }
       }
       > .subtotal{
         padding: 0px;

@@ -33,33 +33,12 @@ module ApplicationHelper
     will_paginate(collection, options)
   end
 
-  def price_with_unit(price)
-    "NT." + price.to_s
-  end
-
-  def render_cart_step(step)
-    content_tag(:div, @step > step ? "✓" : step , class: @step < step ? 'undone' : 'done')
-  end
-
-  def render_step_bar(step)
-    content_tag(:div, '',  class: @step > step ?  'bar -full' : 'bar')
-  end
-
   def render_login_or_logout
     if current_user.nil?
-      content_tag(:a, content_tag(:div, '登入/註冊', class: 'list user'), href: "/auth/facebook")
+      content_tag(:a, content_tag(:div, '登入/註冊', class: 'list user'), href: auth_path("facebook"))
     else
-      content_tag(:a, content_tag(:div, "#{current_user.user_name} / 登出", class: 'list user'), href: "/signout")
+      content_tag(:a, content_tag(:div, "#{current_user.user_name} / 登出", class: 'list user'), href: signout_path)
     end
-
-  end
-
-  def ship_fee
-     if @total > 490
-       0
-     else
-       60
-     end
   end
 
   def render_counter

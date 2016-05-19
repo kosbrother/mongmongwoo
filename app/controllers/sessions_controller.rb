@@ -5,18 +5,18 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"].extra.raw_info
     user = User.find_or_create_from_omniauth(auth)
     session[:user_id] = user.id
-    cart = Cart.find(session[:cart_id])
+    cart = current_cart
     cart.user = user
-    cart.save!
+    cart.save
 
     redirect_to root_path
   end
 
   def destroy
     session[:user_id] = nil
-    cart = Cart.find(session[:cart_id])
-    cart.user = User.find(31)
-    cart.save!
+    cart = current_cart
+    cart.user_id = User::ANONYMOUS
+    cart.save
 
     redirect_to root_path
   end

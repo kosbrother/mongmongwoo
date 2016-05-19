@@ -38,11 +38,10 @@ class ApplicationController < ActionController::Base
 
   def ship_fee(items)
     if total(items) > Cart::FREE_SHIPPING_PRICE
-      ship_fee = 0
+      0
     else
-      ship_fee = Cart::SHIP_FEE
+      Cart::SHIP_FEE
     end
-    ship_fee
   end
 
 end
