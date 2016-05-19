@@ -28,7 +28,7 @@ class CartsController < ApplicationController
     cookies[:phone] = params[:phone]
 
     url = generate_url(ENV['ALL_PAY_URL'],
-                       MerchantID: ENV['MerchantID'],
+                       MerchantID: ENV['MERCHANT_ID'],
                        MerchantTradeNo: '1111',
                        LogisticsType: 'CVS',
                        LogisticsSubType: 'UNIMART',
