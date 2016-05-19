@@ -82,7 +82,7 @@ module Admin::ItemsHelper
     item.on_shelf? ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item)
   end
 
-  def link_to_supplier_or_not(item)
+  def link_to_supplier(item)
     link_to item.supplier_name, item.supplier_url, target: "_blank" rescue "沒有商家資料"
   end
 end
