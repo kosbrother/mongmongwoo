@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   scope :count_status, ->(status) { where(status: status).count }
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
-  scope :get_status_count, -> { select(:id, :status, :user_id, 'COUNT(status) AS status_count').group(:status) }
+  scope :status_count, -> { group(:status).size }
 
   acts_as_paranoid
 
@@ -82,11 +82,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def get_user_all_orders
-    user_orders
-  end
-
-  def get_order_status_count(order_status)
+  def user_status_count(order_status)
     user_orders.where(status: order_status).count
   end
 end

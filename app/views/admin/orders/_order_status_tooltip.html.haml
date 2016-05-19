@@ -15,12 +15,12 @@
               %th 訂單狀態
               %th 訂單數量
           %tbody
-            - if order.get_user_all_orders
-              - order.get_user_all_orders.get_status_count.each do |order|
+            - if order.user_orders
+              - order.user_orders.status_count.each do |status_number, count|
                 %tr
                   %td
-                    = order.status
+                    = order_status(status_number)
                   %td
-                    = order.status_count
+                    = count
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

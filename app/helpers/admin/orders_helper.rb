@@ -33,4 +33,8 @@ module Admin::OrdersHelper
   def eq_to_status?(status)
     params[:status].to_i == status ? 'active' : ''
   end
+
+  def order_status(status_number)
+    Order.statuses.key(status_number)
+  end
 end
