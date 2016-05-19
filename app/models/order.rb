@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   scope :count_status, ->(status) { where(status: status).count }
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
+  scope :status_count, -> { group(:status).size }
 
   acts_as_paranoid
 
@@ -18,6 +19,7 @@ class Order < ActiveRecord::Base
   self.per_page = 100
 
   delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, to: :info
+  delegate :orders, to: :user, prefix: true
 
   def info_user_name
     user.user_name
@@ -78,5 +80,9 @@ class Order < ActiveRecord::Base
         csv << ["K", "1", order.info_user_name, order.info_user_phone, "user@example.com", order.info_store_code, order.total]
       end
     end
+  end
+
+  def user_status_count(order_status)
+    user_orders.where(status: order_status).count
   end
 end

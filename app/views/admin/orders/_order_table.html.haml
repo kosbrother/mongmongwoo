@@ -50,7 +50,17 @@
                   = link_to_update_order_status("訂單變更", order)
                 %li
                   = link_to_update_order_status("訂單取消", order)
-          %td= link_to order.info_user_name, admin_user_path(order.user)
+          %td
+            = link_to order.info_user_name, admin_user_path(order.user)
+            %br
+            - statuses_count = order.user_orders.status_count
+            購買次數：#{order.user_orders.count}
+            %br
+            完成取貨：#{statuses_count[Order.statuses["完成取貨"]]}
+            %br
+            未取訂貨：#{statuses_count[Order.statuses["未取訂貨"]]}
+            %br
+            = render partial: "order_status_tooltip", locals:{ order: order, statuses_count: statuses_count }
           %td
             %table.table.table-bordered
               %thead
