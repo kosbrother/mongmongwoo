@@ -3,11 +3,29 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
   root 'pages#index'
+  get  "/auth/:provider/callback" => "sessions#create", as: "login"
+  get '/auth/:provider', to: lambda{|env| [404, {}, ["Not Found"]]}, as: 'auth'
+  get  "/signout" => "sessions#destroy", as: "signout"
+
   resources :categories, only: [:show] do
     resources :items, only: [:show]
   end
 
-  resources :cart_items, only: [:create]
+  get "/checkout", to: "carts#checkout", as: "checkout"
+  get "/cart_info", to: "carts#info", as: "cart_info"
+  get "/select_store", to: "carts#select_store", as: "select_store"
+  post "/store_reply", to: "carts#info", as: "store_reply"
+  post "/confirm_cart", to: "carts#confirm", as: "confirm_cart"
+  get "/confirm_cart", to: "carts#confirm"
+  post "/submit_order", to: "carts#submit", as: "submit_order"
+  get "/success", to: "carts#success", as: "success"
+  resources :cart_items, only: [:create, :destroy] do
+    member do
+      patch "update_quantity"
+      patch "update_spec"
+    end
+  end
+
 
   # 助理後台
   namespace :staff do

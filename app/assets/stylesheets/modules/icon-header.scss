@@ -1,0 +1,23 @@
+.icon-header{
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+  font-size: 20px;
+  color: #000;
+  padding-left: 40px;
+}
+
+.-pencil{
+  background-image: image_url('icons/pencil.png');
+}
+
+.-mark{
+  background-image: image_url('icons/ic_711.png');
+}
+
+@media screen and (max-width: 768px) {
+  .icon-header{
+    font-size: 14px;
+    padding-left: 25px;
+  }
+}

@@ -8,7 +8,7 @@ module ApplicationHelper
     alerts = flash.map do |type, message|
       alert_content = close_button + message
       alert_type = alert_types[type.to_sym] || type
-      alert_class = "alert alert-#{alert_type} alert-dismissable"
+      alert_class = "alert-message alert alert-#{alert_type} alert-dismissable"
       content_tag(:div, alert_content, class: alert_class)
     end
 
@@ -33,4 +33,19 @@ module ApplicationHelper
     will_paginate(collection, options)
   end
 
+  def render_login_or_logout
+    if current_user.nil?
+      content_tag(:a, content_tag(:div, '登入/註冊', class: 'list user'), href: auth_path("facebook"))
+    else
+      content_tag(:a, content_tag(:div, "#{current_user.user_name} / 登出", class: 'list user'), href: signout_path)
+    end
+  end
+
+  def render_counter
+    if current_cart.cart_items.count > 0
+      content_tag(:div, current_cart.cart_items.count, class: 'counter' )
+    else
+      content_tag(:div, '', class: 'counter hidden' )
+    end
+  end
 end

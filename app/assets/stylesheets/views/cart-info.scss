@@ -1,0 +1,30 @@
+.cart-info{
+  text-align: center;
+  .icon-header{
+    width: 570px;
+    margin: 10px auto;
+    text-align: left;
+  }
+  > form{
+    > .input-block{
+      width: 570px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cart-info{
+    .icon-header{
+      width: 100%;
+    }
+    > form{
+      > .input-block{
+        width: 95%;
+      }
+    }
+    .divider{
+      border-top: $form-border;
+      margin: 15px 0;
+    }
+  }
+}

@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(version: 20160511133856) do
   create_table "cart_items", force: :cascade do |t|
     t.integer  "cart_id",       limit: 4
     t.integer  "item_id",       limit: 4
-    t.string   "item_spec_id",  limit: 255
+    t.integer  "item_spec_id",  limit: 4
     t.integer  "item_quantity", limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "cart_items", ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree

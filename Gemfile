@@ -33,6 +33,7 @@ gem 'selenium-webdriver'
 gem "figaro"
 gem 'sidekiq'
 gem "gretel"
+gem 'omniauth-facebook'
 
 # cronjob
 gem 'whenever', :require => false

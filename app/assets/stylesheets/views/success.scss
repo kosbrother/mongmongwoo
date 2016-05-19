@@ -1,0 +1,37 @@
+.success{
+  > .text-align{
+    width: 570px;
+    margin: 0 auto;
+    font-size: 20px;
+    color: #000000;
+  }
+  > .image{
+    width: 570px;
+    height: 290px;
+    margin: 40px auto;
+    background-image: image_url('img_thx.png');
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
+  .name{
+    color: #fca3a3;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .success{
+    > .image{
+      width: 95%;
+      height: 200px;
+      margin: 20px auto;
+      background-size: contain;
+      background-image: image_url('img_thx_s.png');
+
+    }
+    > .text-align{
+      width: 100%;
+      font-size: 14px;
+    }
+  }
+}

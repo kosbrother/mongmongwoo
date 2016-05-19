@@ -10,3 +10,20 @@
   }
 
 }
+
+@media screen and (max-width: 768px) {
+  .index {
+    > .category-header {
+      height: 35px;
+      margin-top: 10px;
+      > .group{
+        > .text{
+          top: -5px;
+        }
+      }
+    }
+    .product-list {
+      margin-top: 15px;
+    }
+  }
+}

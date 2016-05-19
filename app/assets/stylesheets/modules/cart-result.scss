@@ -1,0 +1,259 @@
+.cart-result{
+  background-color: $form-background-color;
+  border: $form-border;
+  text-align: center;
+  > .row{
+    margin:  0px;
+  }
+  > .divider{
+    width: 95%;
+    margin: 5px auto;
+    border-top: $form-border;
+  }
+
+  > .header{
+    height: 50px;
+
+    > div {
+      line-height: 50px;
+    }
+  }
+
+  > .item-bar{
+    margin: 10px auto;
+
+    > .icon{
+      img{
+        width: 66px;
+        height: 66px;
+        border: solid 0.8px #979797;
+      }
+    }
+    > div{
+      height: 66px;
+      line-height: 66px;
+    }
+
+    .quantity-box{
+      line-height: 0;
+      .quantity, .quantity-minus, .quantity-plus{
+        height: 35px;
+        width: 30px;
+        position: relative;
+        top: 16px;
+      }
+      .quantity{
+        text-align: center ;
+        left: -4px;
+      }
+      .quantity-plus{
+        left: -8px;
+      }
+    }
+    > .cancel-block{
+      text-align: center;
+      .cancel{
+        cursor: pointer;
+        display: inline-block;
+        border: none;
+        background-color: transparent;
+        background-image: image_url('icons/ic_cancel.png');
+        background-position: center;
+        background-size: contain;
+        width: 25px;
+        height: 25px;
+        position: relative;
+        top: 5px;
+      }
+      .cancel:focus{
+        outline: none;
+      }
+      .cancel:hover{
+        background-image: $url-cancel-btn;
+      }
+      > .modal{
+        > .modal-dialog{
+          > .modal-content{
+            > .modal-body{
+              text-align: left;
+              font-size: 24px;
+            }
+            .btn-confirm{
+              width: 150px;
+              height: 50px;
+              font-size: 20px;
+              background-color: $modal-confirm-btn-color;
+              color: #fff;
+            }
+            .btn-close{
+              width: 150px;
+              height: 50px;
+              border: $modal-btn-border;
+              font-size: 20px;
+              color: $modal-confirm-btn-color;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+  > .totalrow{
+    > div > div{
+      margin: 5px 0;
+    }
+    #totalprice{
+      color: #ff0000;
+    }
+  }
+}
+
+
+@media screen and (max-width: 1200px) {
+  .cart-result {
+    > .item-bar{
+      margin: 15px 0;
+      > div{
+        height: 18px;
+        line-height: 18px;
+      }
+      .icon{
+        padding: 0 5px;
+        height: 60px;
+        > img {
+        width: 60px;
+        height: 60px;
+        vertical-align: baseline;
+        }
+      }
+      .select{
+        margin: 5px 0;
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+      > .itemname {
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left: 0px;
+      }
+      > .unitprice{
+        text-align: left;
+        padding-left: 0px;
+      }
+      > .price, .spec{
+        padding-left: 0px;
+      }
+      .quantity> div:before{
+        content: "數量：";
+      }
+      > .quantity-box {
+        margin-top: 0;
+        .quantity, .quantity-minus, .quantity-plus {
+          height: 20px;
+          width: 20px;
+          font-size: 12px;
+          line-height: 15px;
+          top: 0px;
+        }
+        .quantity {
+          left: -4px;
+        }
+        .quantity-plus {
+          left: -8px;
+        }
+      }
+       > .cancel-block {
+         text-align: right;
+         padding: 0px;
+         > .cancel{
+          width: 16px;
+          height: 16px;
+          top: 22px;
+          padding: 0px;
+         }
+         > .modal{
+           > .modal-dialog{
+             > .modal-content{
+               > .modal-body{
+                 font-size: 18px;
+               }
+               .btn-confirm{
+                 width: 45%;
+                 font-size: 14px;
+               }
+               .btn-close{
+                 width: 45%;
+                 font-size: 14px;
+               }
+             }
+           }
+         }
+       }
+    }
+    .totalrow{
+      > div > div{
+        margin: 10px 0;
+      }
+      > .text{
+        text-align: left;
+      }
+      > .number{
+        text-align: right;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+  .cart-result {
+    > .item-bar {
+      > .itemname {
+        padding-left: 0px;
+      }
+      > .spec, .price, .quantity, .subtotal {
+        text-align: left;
+      }
+      > .subtotal:before{
+        content: '小計：'
+      }
+    }
+    .totalrow {
+      > .text{
+        text-align: center;
+      }
+      > .number {
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .cart-result{
+    > .item-bar{
+      >.unitprice, .price, .quantity > div, .subtotal{
+        font-size: 10px;
+        color: #4a4a4a;
+      }
+      > .quantity-box {
+        padding: 0;
+        .quantity, .quantity-minus, .quantity-plus {
+          height: 15px;
+          width: 15px;
+          font-size: 10px;
+          line-height: 12px;
+          top: 2px;
+        }
+      }
+      > .subtotal{
+        padding: 0px;
+      }
+      > .subtotal:before{
+        content: '小計：'
+      }
+    }
+  ;
+  }
+}

@@ -41,13 +41,28 @@
         display: inline-block;
         color: #ffffff;
       }
+      > .cart{
+        > .counter{
+          width: 15px;
+          height: 15px;
+          font-size: 10px;
+          text-align: center;
+          line-height: 15px;
+          background-color: red;
+          position: absolute;
+          top: -7px;
+          left: 28px;
+        }
+      }
       > .user:before {
         content: $url-user;
         vertical-align: -4px;
+        padding-right: 5px;
       }
       > .cart:before {
         content: $url-cart;
         vertical-align: -4px;
+        padding-right: 5px;
       }
       > .diamond:before {
         content: $url-white-diamond;
@@ -78,5 +93,10 @@
         }
       }
     }
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav-bar{
+    margin-bottom: 15px;
   }
 }

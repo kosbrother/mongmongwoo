@@ -1,0 +1,28 @@
+= render 'partials/cart_steps', step: @step
+.cart-info
+  = form_tag confirm_cart_path, method: :post do
+    .icon-header.-pencil 訂購人資料
+    .input-block
+      .group
+        = label :ship_name, '姓名'
+        = text_field_tag :ship_name, '' ,required: true, value: cookies[:name]
+      .group
+        = label :ship_phone, '電話'
+        = text_field_tag :ship_phone, '' ,required: true, value: cookies[:phone]
+      .group
+        = label :ship_email, '電子信箱'
+        = text_field_tag :ship_email, '' ,required: true, value: cookies[:email]
+        .text *名稱和電話必需正確才能取貨
+    .icon-header.-mark 7-11取貨門市資訊
+    .input-block.-store
+      .group
+        %span 選擇7-11寄送門市
+        =link_to '選擇門市', '',  class: 'btn regular-btn select-store', remote: true
+      .divider
+      .group
+        = hidden_field_tag :store_id, '' ,value: @store ? @store.id : nil, required: true
+        %div= @store ?  "門市名稱： #{@store.name}" : '請選擇送達門市'
+        %div= @store ?  "地址： #{@store.address}" : ""
+    .submit-session
+      =link_to '上一步', checkout_path, class: 'btn btn-previous'
+      =submit_tag '下一步', class: 'btn'

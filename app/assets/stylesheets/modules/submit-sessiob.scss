@@ -1,0 +1,40 @@
+.submit-session{
+  text-align: center;
+  > .btn{
+    width: 271px;
+    height: 60px;
+    border-radius: 5px;
+    background-color: #47b286;
+    font-size: 18.6px;
+    color: #ffffff;
+    line-height: 45px;
+    margin: 30px;
+  }
+  > .fb-login{
+    background-image: image_url('fb_login_web.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #3b5998;
+  }
+  > .btn-previous{
+    background-color: #f2f2f2;
+    color: #4a4a4a;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .submit-session{
+    > .btn{
+      width: 95%;
+      height: 40px;
+      display: block;
+      margin: 10px auto;
+      font-size: 12px;
+      line-height: 28px;
+    }
+    > .fb-login{
+      background-image: image_url('fb_login_mobile.png');
+    }
+  }
+}

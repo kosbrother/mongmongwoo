@@ -1,0 +1,32 @@
+$('#nav-bar-collapse .cart > .counter').removeClass('hidden').text('#{current_cart.cart_items.count}');
+var cart = $('.cart');
+var imgtodrag = $('.spec-photos > .show > img').eq(0);
+var imgclone = imgtodrag.clone().offset({
+top: imgtodrag.offset().top,
+left: imgtodrag.offset().left + 200
+}).css({
+'opacity': '0.5',
+'position': 'absolute',
+'height': '50px',
+'width': '50px',
+'z-index': '100'
+}).appendTo($('body')).animate({
+'top': cart.offset().top + 10,
+'left': cart.offset().left + 10,
+'width': 30,
+'height': 30
+}, 700, 'easeInOutExpo');
+
+setTimeout(function () {
+cart.fadeOut(200);
+cart.fadeIn(200);
+cart.fadeOut(200);
+cart.fadeIn(200);}
+, 800);
+
+imgclone.animate({
+'width': 0,
+'height': 0
+}, function () {
+$(this).detach()
+});

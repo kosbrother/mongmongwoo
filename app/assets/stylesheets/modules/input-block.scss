@@ -1,0 +1,81 @@
+.input-block{
+  border: $form-border;
+  border-radius: 4px;
+  background-color: $form-background-color;
+  margin: 0 auto;
+  text-align: left;
+  padding: 5px 30px;
+  >.group{
+    > label{
+      width: 100px;
+      font-size: 14px;
+      color: #262626;
+    }
+    > input{
+      margin: 15px;
+      width: 248px;
+      height: 34px;
+      border-radius: 2px;
+      border: $form-input-border;
+      padding-left: 10px;
+    }
+    > .text{
+      text-align: right;
+      width: 308px;
+    }
+    > .regular-btn{
+      width: 120px;
+      height: 30px;
+      line-height: 18px;
+      margin-left: 20px;
+    }
+  }
+}
+
+.-store, .-info{
+  min-height: 100px;
+  padding: 10px 15px 0 15px;
+  > .group {
+    > div{
+      margin-bottom: 10px;
+    }
+    > .btn{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .input-block{
+    padding: 5px 5px 0 5px;
+    >.group{
+      > div{
+        margin-bottom: 5px;
+      }
+      > label{
+        text-align: center;
+        width: 23%;
+        font-size: 12px;
+      }
+      > input{
+        width: 73%;
+        margin: 5px 0;
+      }
+      > .text{
+        width: 95%;
+      }
+      > .regular-btn{
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+      }
+    }
+  }
+  .-store{
+    min-height: 50px;
+  }
+  .-info{
+    min-height: 80px;
+  }
+}

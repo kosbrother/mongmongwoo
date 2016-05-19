@@ -1,0 +1,57 @@
+= render 'partials/cart_steps', step: @step
+.cart-show
+  .icon-header.-pencil 訂單明細
+  - if @cart.cart_items.any?
+    .cart-result
+      .header.row.visible-lg-block
+        .col-lg-1 刪除訂單
+        .col-lg-2 產品照片
+        .col-lg-3 產品名稱
+        .col-lg-2 產品樣式
+        .col-lg-1 產品單價
+        .col-lg-2 產品數量
+        .col-lg-1 小計
+      .divider.visible-lg-block
+      - @items.each do |item|
+        .item-bar.row{id: "cart-item-#{item.id}"}
+          .col-lg-1.col-xs-1.cancel-block
+            .cancel{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#modal-#{item.id}"}
+            .modal.fade{"aria-labelledby" => "mySmallModalLabel", :role => "dialog", :tabindex => "-1", id: "modal-#{item.id}"}
+              .modal-dialog
+                .modal-content
+                  .modal-body
+                    %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                      %span{"aria-hidden" => "true"} &times;
+                    您確定要刪除此產品？
+                  .modal-footer
+                    %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 關閉視窗
+                    %button.btn.btn-confirm.cart-item-delete{:type => "button","data-dismiss": "modal", 'data-id': item.id,'data-cart-id': @cart.id} 刪除
+          .col-lg-2.col-xs-3.icon= image_tag(item.item_spec.style_pic.url, id: "item-spec-pic-#{item.id}")
+          .col-lg-3.col-xs-8.itemname= item.item.name
+          .col-lg-2.col-xs-7.select= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'spec-select', id: 'select-specs', 'data-cart-item': item.id, 'data-cart-id': @cart.id
+          .col-lg-1.col-xs-2.unitprice= price_with_unit(item.item.price)
+          .col-lg-2.col-sm-4.col-xs-3.quantity-box
+            .quantity-minus{ 'data-id': item.id } -
+            = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
+            .quantity-plus{ 'data-id': item.id } +
+          .col-lg-1.col-sm-2.col-xs-3.subtotal{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+      .divider
+      .totalrow.row
+        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
+          %div 產品總額
+          %div 運費（711超商取貨付款）
+        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+          #cart-sum= price_with_unit(@total)
+          #ship-fee= "NT.#{ship_fee}"
+      .divider
+      .totalrow.row
+        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
+          %div 總計
+        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+          #totalprice= price_with_unit(@total + ship_fee)
+    .submit-session
+      - if current_user
+        = link_to '下一步', cart_info_path , class: 'btn'
+      -else
+        = link_to '', auth_path("facebook"), class: 'btn fb-login'
+        = link_to '免註冊匿名購買', cart_info_path , class: 'btn'

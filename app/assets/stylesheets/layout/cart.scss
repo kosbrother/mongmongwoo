@@ -1,0 +1,25 @@
+.cart{
+  .step-bar{
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .cart-result{
+    margin-bottom: 20px;
+  }
+  .icon-header{
+    margin: 10px auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cart{
+    .step-bar{
+      margin-bottom: 5px;
+    }
+    .cart-result{
+      margin-bottom: 5px;
+    }
+  }
+}

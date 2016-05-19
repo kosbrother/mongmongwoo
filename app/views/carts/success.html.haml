@@ -1,0 +1,27 @@
+.success
+  .text-align
+    恭喜您！已成功完成購物！
+  .image
+  - if current_user
+    .text-align
+      親愛的
+      %span.name= current_user.user_name
+      ，非常感謝您在萌萌屋消費！
+      %br/
+      您可以在「我的訂單」掌握商品的最新動向。
+      %br/
+      商品抵達您指定超商時，會有簡訊通知，
+      %br/
+      還請您多加留意！萌萌屋全體期待您再次光臨！！
+  -else
+    .text-align
+      親愛的訂購人，非常感謝您在萌萌屋消費！
+      %br/
+      此次的購物明細已寄至您的信箱，商品抵達您指定超商時，
+      %br/
+      會有簡訊通知，還請您多加留意！
+      %br/
+      萌萌屋全體期待您再次光臨！！
+
+  .submit-session
+    =link_to '繼續購物', root_path , class: 'btn'
