@@ -33,5 +33,4 @@ module Admin::OrdersHelper
   def eq_to_status?(status)
     params[:status].to_i == status ? 'active' : ''
   end
-
 end
