@@ -55,9 +55,9 @@
             %br
             購買次數：#{order.get_user_all_orders.count}
             %br
-            完成取貨：#{order.get_pickup_status_order_count}
+            完成取貨：#{order.get_order_status_count(Order.statuses["完成取貨"])}
             %br
-            未取訂貨：#{order.get_no_pickup_status_order_count}
+            未取訂貨：#{order.get_order_status_count(Order.statuses["未取訂貨"])}
             %br
             = render partial: "order_status_tooltip", locals:{ order: order }
           %td

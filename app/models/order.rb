@@ -86,11 +86,7 @@ class Order < ActiveRecord::Base
     user_orders
   end
 
-  def get_pickup_status_order_count
-    user_orders.where(status: Order.statuses["完成取貨"]).count
-  end
-
-  def get_no_pickup_status_order_count
-    user_orders.where(status: Order.statuses["未取訂貨"]).count
+  def get_order_status_count(order_status)
+    user_orders.where(status: order_status).count
   end
 end
