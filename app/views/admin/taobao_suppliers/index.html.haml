@@ -5,7 +5,7 @@
         %ol.breadcrumb
           %li
             = link_to "萌萌屋", admin_root_path
-          %li{:class => "#{"active" if current_page?(admin_taobao_suppliers_path)}"}
+          %li.active
             淘寶商家列表
       .pull-right
         = link_to "新增淘寶商家", new_admin_taobao_supplier_path, class: "btn btn-primary"

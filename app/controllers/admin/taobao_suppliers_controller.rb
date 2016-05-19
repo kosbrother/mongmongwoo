@@ -3,7 +3,7 @@ class Admin::TaobaoSuppliersController < AdminController
   before_action :find_taobao_supplier, only: [:edit, :update, :destroy]
 
   def index
-    @taobao_suppliers = TaobaoSupplier.includes(:items).all.paginate(page: params[:page])
+    @taobao_suppliers = TaobaoSupplier.includes(:items).paginate(page: params[:page])
   end
 
   def new
