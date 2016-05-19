@@ -53,13 +53,14 @@
           %td
             = link_to order.info_user_name, admin_user_path(order.user)
             %br
+            - statuses_count = order.user_orders.status_count
             購買次數：#{order.user_orders.count}
             %br
-            完成取貨：#{order.user_status_count(Order.statuses["完成取貨"])}
+            完成取貨：#{statuses_count[Order.statuses["完成取貨"]]}
             %br
-            未取訂貨：#{order.user_status_count(Order.statuses["未取訂貨"])}
+            未取訂貨：#{statuses_count[Order.statuses["未取訂貨"]]}
             %br
-            = render partial: "order_status_tooltip", locals:{ order: order }
+            = render partial: "order_status_tooltip", locals:{ order: order, statuses_count: statuses_count }
           %td
             %table.table.table-bordered
               %thead
