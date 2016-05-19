@@ -1,32 +1,12 @@
 class Admin::SalesReportsController < AdminController
   before_action :require_manager
 
-  # 1. 無 params
-  # 2. 有 params[:time_field]
-  # 3. 有 params[:supplier_id]
-  # 4. params[:time_field] && params[:supplier_id]
-
-
   def item_sales_result
-    # binding.pry
-
-    # @item_sales = get_item_sales(params)
-    @item_sales = OrderItem.get_item_sales(params)
-
-    
-    # if params[:supplier_id]
-    #   get_item_sales_with_supplier
-    # else
-    #   get_item_sales_without_supplier
-    # end
+    @item_sales = get_item_sales(params)
   end
 
   def item_revenue_result
-    if params[:supplier_id]
-      get_item_revenue_with_supplier
-    else
-      get_item_revenue_without_supplier
-    end
+    @item_revenue = get_item_revenue(params)
   end
 
   def cost_statistics_index
@@ -107,19 +87,15 @@ class Admin::SalesReportsController < AdminController
     end
   end
 
-  # def get_item_sales_with_supplier
-  #   @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_sales_with_taobao_supplier(params[:supplier_id])) 
-  # end
-
-  # def get_item_sales_without_supplier
-  #   @item_sales = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_sales : OrderItem.sort_by_sales) 
-  # end
-
-  # def get_item_revenue_with_supplier
-  #   @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue_with_taobao_supplier(params[:supplier_id]) : OrderItem.sort_by_revenue_with_taobao_supplier(params[:supplier_id])) 
-  # end
-
-  # def get_item_revenue_without_supplier
-  #   @item_revenue = (%w[month week day].include?(params[:time_field]) ? OrderItem.created_at_within(time_until_range).sort_by_revenue : OrderItem.sort_by_revenue) 
-  # end
+  def get_item_revenue(params)
+    if(params[:time_field] && params[:supplier_id])
+      OrderItem.sort_by_revenue.created_at_within(time_until_range).with_supplier(params[:supplier_id])
+    elsif(params[:supplier_id])
+      OrderItem.sort_by_revenue.with_supplier(params[:supplier_id])
+    elsif(params[:time_field])
+      OrderItem.sort_by_revenue.created_at_within(time_until_range)
+    else
+      OrderItem.sort_by_revenue
+    end
+  end
 end
