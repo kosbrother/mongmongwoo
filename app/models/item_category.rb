@@ -13,4 +13,6 @@
 class ItemCategory < ActiveRecord::Base
   belongs_to :item
   belongs_to :category
+
+  validates_uniqueness_of :item_id, :scope => [:category_id]
 end
