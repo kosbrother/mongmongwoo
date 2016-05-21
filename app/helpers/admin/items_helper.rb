@@ -85,4 +85,22 @@ module Admin::ItemsHelper
   def link_to_supplier(item)
     link_to item.supplier_name, item.supplier_url, target: "_blank" rescue "沒有商家資料"
   end
+
+  def category_checkbox(cb,f)
+    if cb.object.id == 10 || cb.object.id == 11
+      if f.object.new_record?
+        cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox", disabled: "disabled", checked:"checked") + cb.text}
+      else
+        cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox", disabled: "disabled") + cb.text}
+      end
+    else
+      cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox") + cb.text}
+    end
+  end
+
+  def categories_checkox(f)
+    f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb|
+      category_checkbox(cb,f)
+    end
+  end
 end

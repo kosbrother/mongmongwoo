@@ -2,18 +2,18 @@ namespace :items do
 
   task :item_position  => :environment do
 
-    # 最新上架 only keep 100 items
+    # 最新上架 only keep 150 items
     cs = ItemCategory.where(category_id: 11).order(created_at: :desc)
     cs.each_with_index do |c,index|
-      c.delete if index > 99
+      c.delete if index > 149
     end
 
     Category.all.each do |category|
       position_cs = []
 
-      # select 3 items from within three days
+      # select 3 items from within 7 days
       cs = ItemCategory.where(category_id: category.id).order(created_at: :desc).map(&:id)
-      recent_cs = ItemCategory.where('category_id = ? and created_at >= ? and created_at <= ?', category.id, 3.day.ago, 0.day.ago)
+      recent_cs = ItemCategory.where(category: category, created_at: TimeSupport.time_until('week'))
       recent_cs = recent_cs.shuffle
       (0..2).each do |i|
         next unless recent_cs[i]
@@ -22,7 +22,7 @@ namespace :items do
       end
 
       # select 20 items by item sales times
-      ois = OrderItem.includes(:item).group(:source_item_id).select(:id,:source_item_id, "SUM(item_quantity) as sum_item_quantity").order("sum_item_quantity DESC").limit(20)
+      ois = OrderItem.sort_by_sales.limit(20)
       ois.each do |oi|
         item_cs = ItemCategory.where(category_id: category.id, item_id: oi.source_item_id)
         next if item_cs.blank?
@@ -34,7 +34,7 @@ namespace :items do
       end
 
       # select 30 items by item sales　amount
-      ois = OrderItem.includes(:item).group(:source_item_id).select(:id, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue").order("sum_item_revenue DESC").limit(30)
+      ois = OrderItem.sort_by_revenue.limit(30)
       ois.each do |oi|
         item_cs = ItemCategory.where(category_id: category.id, item_id: oi.source_item_id)
         next if item_cs.blank?
