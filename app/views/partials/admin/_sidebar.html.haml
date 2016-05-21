@@ -22,10 +22,6 @@
       %ul
         %li
           = link_to "分類列表", admin_categories_path
-        - Category.all.each do |category|
-          %li
-            = link_to admin_category_path(category) do
-              = category.name
         %li
           = link_to "新增分類", new_admin_category_path
     %li.submenu
