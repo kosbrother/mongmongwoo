@@ -8,5 +8,8 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @order = Order.find(params[:id])
+    @items = @order.items.includes(:item_spec)
+    @info = @order.info
   end
 end

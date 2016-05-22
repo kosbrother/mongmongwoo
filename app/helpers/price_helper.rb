@@ -10,4 +10,8 @@ module PriceHelper
       Cart::SHIP_FEE
     end
   end
+
+  def subtotal(price, quantity)
+    quantity *  price
+  end
 end

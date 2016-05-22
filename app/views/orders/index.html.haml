@@ -19,4 +19,4 @@
           .col-1-5.col-xs-6.total= order.total
           .col-1-5.col-xs-6.status= order.status
           .col-1-5.col-xs-6.detail
-            = link_to '查看訂單明細', '', class: "check-btn"
+            = link_to '查看訂單明細', order_path(order), class: "check-btn"
