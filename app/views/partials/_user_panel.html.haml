@@ -1,11 +1,11 @@
 .user-panel
   =image_tag('profile.png', class: 'profilePic')
   .name
-    賴萌萌
+    = current_user.user_name
   .email
-    monmon@email.com
+    = current_user.email
   .divider
   .selectList.-active
-    我的訂單
+    = link_to '我的訂單', orders_path
   .selectList
-    我的收藏
+    = link_to '我的收藏', ''

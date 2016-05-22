@@ -54,19 +54,33 @@
           left: 28px;
         }
       }
-      > .user:before {
-        content: $url-user;
-        vertical-align: -4px;
-        padding-right: 5px;
-      }
       > .cart:before {
         content: $url-cart;
         vertical-align: -4px;
         padding-right: 5px;
       }
+      > .user:before {
+        content: $url-user;
+        vertical-align: -4px;
+        padding-right: 5px;
+      }
+    }
+    > .dropdown{
+      padding: 0 15px;
+      margin: 15px 10px;
+      cursor: pointer;
+      > .list {
+        display: inline-block;
+        color: #ffffff;
+      }
       > .diamond:before {
         content: $url-white-diamond;
         vertical-align: -4px;
+      }
+      > .user:before {
+        content: $url-user;
+        vertical-align: -4px;
+        padding-right: 5px;
       }
     }
   }
@@ -98,5 +112,12 @@
 @media screen and (max-width: 768px) {
   .nav-bar{
     margin-bottom: 15px;
+    .nav-list{
+      .dropdown-menu{
+        margin: 0 -25px;
+      }
+    }
   }
+
+
 }
