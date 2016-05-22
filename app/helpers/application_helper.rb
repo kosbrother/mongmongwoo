@@ -40,4 +40,8 @@ module ApplicationHelper
       content_tag(:div, '', class: 'counter hidden' )
     end
   end
+
+  def fb_picture
+    "http://graph.facebook.com/#{current_user.uid}/picture?width=100&height=100"
+  end
 end
