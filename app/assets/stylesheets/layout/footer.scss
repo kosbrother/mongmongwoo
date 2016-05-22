@@ -1,23 +1,47 @@
 .footer{
   margin-top: 100px;
-  height: 50px;
+  height: 100px;
   background-color: $footer-background-color;
-  .list {
+  .section{
     position: relative;
     top: 1px;
     margin: 0 5px;
     color: #fff;
     display: inline-block;
-    > a{
-      color: #fff;
+    vertical-align: middle;
+    > .list{
+      text-decoration: none;
+      display: inline-block;
+      > a{
+        color: #fff;
+      }
+    }
+    > .icon{
+      margin: 10px 10PX 10PX 0;
+    }
+    > .about{
+      max-width: 450px;
     }
   }
   .divider{
-    height: 30px;
-    border: $footer-divider;
-    position: relative;
-    top: 10px;
+    height: 85px;
+    vertical-align: -30px;
+    border: solid 1px #ffffff;
     display: inline-block;
+    position: relative;
+    top: 8px;
   }
 }
 
+@media screen and (max-width: 768px){
+
+  .footer{
+    .section{
+      > .about{
+        max-width: 250px;
+      }
+    }
+  }
+
+
+  }
