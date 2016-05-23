@@ -44,7 +44,7 @@ class AllpayGoodsService
   # IsCollection 代收付款 Y, N
 
   def default_params
-    {"LogisticsType" => "CVS","LogisticsSubType" => "UNIMART","IsCollection" => "Y"}
+    {"LogisticsType" => "CVS","LogisticsSubType" => "UNIMARTC2C","IsCollection" => "Y"}
   end
 
   def add_field(name, value)

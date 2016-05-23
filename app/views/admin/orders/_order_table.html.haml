@@ -50,6 +50,12 @@
                   = link_to_update_order_status("訂單變更", order)
                 %li
                   = link_to_update_order_status("訂單取消", order)
+            %hr
+            物流狀態：
+            %br
+            %span{id: "logistis-#{order.id}"}= logistics_status(order)
+            %br
+            = link_to_update_logistics_status(order)
           %td
             = link_to order.info_user_name, admin_user_path(order.user)
             %br

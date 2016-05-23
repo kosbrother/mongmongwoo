@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516102356) do
+ActiveRecord::Schema.define(version: 20160523091409) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -231,10 +231,12 @@ ActiveRecord::Schema.define(version: 20160516102356) do
     t.date     "created_on"
     t.string   "note",                   limit: 255, default: ""
     t.integer  "device_registration_id", limit: 4
+    t.integer  "logistics_status_code",  limit: 4
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
   add_index "orders", ["device_registration_id"], name: "index_orders_on_device_registration_id", using: :btree
+  add_index "orders", ["logistics_status_code"], name: "index_orders_on_logistics_status_code", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "photos", force: :cascade do |t|

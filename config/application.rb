@@ -7,6 +7,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+Logistics_Status = YAML.load(File.read(File.expand_path('../allpay_logistics_status.yml', __FILE__)))
+
 module Monmonhouse
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
