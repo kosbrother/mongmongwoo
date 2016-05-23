@@ -1,6 +1,6 @@
 module PriceHelper
   def price_with_unit(price)
-    "NT." + price.to_s
+    "NT$ " + price.to_s
   end
 
   def ship_fee
@@ -9,9 +9,5 @@ module PriceHelper
     else
       Cart::SHIP_FEE
     end
-  end
-
-  def subtotal(price, quantity)
-    quantity *  price
   end
 end

@@ -4,7 +4,17 @@
   }
   .cart-result{
     margin-bottom: 20px;
+    > .item-bar{
+       .price, .subtotal{
+         padding-left:0px;
+       }
     }
+    > .totalrow{
+      > .number{
+        padding-left: 0px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {

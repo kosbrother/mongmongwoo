@@ -42,7 +42,7 @@
           %div 運費（711超商取貨付款）
         .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
           #cart-sum= price_with_unit(@total)
-          #ship-fee= "NT.#{ship_fee}"
+          #ship-fee= price_with_unit(ship_fee)
       .divider
       .totalrow.row
         .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
