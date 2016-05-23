@@ -11,5 +11,8 @@ class AllpayController < ActionController::Base
   end
 
   def create_reply
+    order = Order.find(params[:MerchantTradeNo].to_i)
+    order.update_attributes(logistics_status_code: params[:RtnCode].to_i)
+    @message = "已將訂單：#{order.id}的物流狀態更新為：#{Logistics_Status[order.logistics_status_code]}"
   end
 end
