@@ -59,11 +59,11 @@ ready = function() {
     });
 
     //Hover on navbar's user, will show dropdown menu
-    $('#user').mouseenter(function(){
-        $(this).addClass('open');
+    $('#user-nav').mouseenter(function(){
+        $('#user').addClass('open');
     });
-    $('#user').mouseleave(function(){
-        $(this).removeClass('open');
+    $('#user-nav').mouseleave(function(){
+        $('#user').removeClass('open');
     });
 };
 $(document).ready(ready);
