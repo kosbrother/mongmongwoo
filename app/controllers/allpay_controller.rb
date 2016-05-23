@@ -8,6 +8,14 @@ class AllpayController < ActionController::Base
   end
 
   def status_update
+    @order = Order.find(params[:order_id])
+    
+    if @order.logistics_status_code
+      @order.reload
+      @message = "訂單：#{@order.id}的物流狀態已更新為：#{Logistics_Status[@order.logistics_status_code]}"
+    else
+      @message = "尚未建立資料"
+    end
   end
 
   def create_reply

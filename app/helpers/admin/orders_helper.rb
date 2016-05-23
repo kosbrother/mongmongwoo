@@ -45,4 +45,8 @@ module Admin::OrdersHelper
       "尚未建立資料"
     end
   end
+
+  def link_to_update_logistics_status(order)
+    link_to "更新物流狀態", status_update_allpay_index_path(order_id: order.id), { class: "btn btn-default btn-sm", method: :post, remote: true }
+  end
 end
