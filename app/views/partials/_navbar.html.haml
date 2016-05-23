@@ -34,7 +34,7 @@
               .list.user 登入/註冊
         -else
           %li.nav-list
-            .dropdown
+            .dropdown#user
               .list.user.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
                 = current_user.user_name
                 %span.caret
