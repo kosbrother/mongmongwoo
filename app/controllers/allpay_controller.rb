@@ -7,9 +7,8 @@ class AllpayController < ActionController::Base
     end
   end
 
-  def status_update
-  end
-
   def create_reply
+    order = Order.find(params[:MerchantTradeNo].to_i)
+    order.update_attributes(logistics_status_code: params[:RtnCode].to_i)
   end
 end
