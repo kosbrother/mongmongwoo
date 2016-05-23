@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get  "/signout" => "sessions#destroy", as: "signout"
 
   resources :categories, only: [:show] do
-    resources :items, only: [:show]
+    resources :items, only: [:show] do
+      put :favorite, on: :member
+    end
   end
 
   get "/checkout", to: "carts#checkout", as: "checkout"

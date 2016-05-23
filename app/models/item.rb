@@ -34,6 +34,8 @@ class Item < ActiveRecord::Base
   has_many :specs, class_name: "ItemSpec", dependent: :destroy
   has_many :notifications, dependent: :destroy
   belongs_to :taobao_supplier
+  has_many :favorite_items
+  has_many :favorited_by, through: :favorite_items, source: :user
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 

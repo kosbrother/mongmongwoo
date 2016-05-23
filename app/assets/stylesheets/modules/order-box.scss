@@ -70,6 +70,18 @@
         color: #ff8080;
         border: solid 1px #ff8080;
       }
+      > .uncheck{
+        background-image: image_url('background/btn_favorite_uncheck.png');
+        background-repeat: no-repeat;
+        background-position: 45px 15px;
+      }
+      > .checked{
+        background-image: image_url('background/btn_favorite_checked.png');
+        background-repeat: no-repeat;
+        background-position: 45px 15px;
+        background-color: #ff8080;
+        color: #fff;
+      }
       > .customer{
         font-size: $order-box-customer-font-size;
         float: right;
