@@ -1,0 +1,11 @@
+.user-panel
+  =image_tag( fb_picture, class: 'profilePic')
+  .name
+    = current_user.user_name
+  .email
+    = current_user.email
+  .divider
+  .selectList.-active
+    = link_to '我的訂單', orders_path
+  .selectList
+    = link_to '我的收藏', ''

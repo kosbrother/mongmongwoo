@@ -57,6 +57,14 @@ ready = function() {
         $(id).addClass('active');
         $('.show').html("<img class='img-responsive' src=" + url + ">")
     });
+
+    //Hover on navbar's user, will show dropdown menu
+    $('#user-nav').mouseenter(function(){
+        $('#user').addClass('open');
+    });
+    $('#user-nav').mouseleave(function(){
+        $('#user').removeClass('open');
+    });
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);

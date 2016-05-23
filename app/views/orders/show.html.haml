@@ -1,0 +1,49 @@
+- breadcrumb :order_detail, @order
+.orders
+  .icon-header.-pencil 訂單明細
+  .cart-result
+    .header.row.visible-lg-block
+      .col-lg-2.no-padding 產品照片
+      .col-lg-4.no-padding 產品名稱
+      .col-lg-2.no-padding 產品樣式
+      .col-lg-1.no-padding 產品單價
+      .col-lg-2.no-padding 產品數量
+      .col-lg-1.no-padding 小計
+    .divider.visible-lg-block
+    - @items.each do |item|
+      .item-bar.row{id: "cart-item-#{item.id}"}
+        .col-lg-2.col-sm-2.col-xs-3.icon= image_tag(item.item_spec.style_pic.url)
+        .col-lg-4.col-xs-8.itemname= item.item_name
+        .col-lg-2.col-sm-10.col-xs-9.spec= item.item_style
+        .col-lg-1.col-sm-4.col-xs-2.price= price_with_unit(item.item_price)
+        .col-lg-2.col-sm-2.col-xs-4.quantity
+          %div= item.item_quantity
+        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-1.col-xs-3.subtotal= price_with_unit(item.item_price * item.item_quantity)
+    .divider
+    .totalrow.row
+      .col-lg-3.col-lg-offset-8.col-xs-8.text
+        %div 產品總額
+        %div 運費（711超商取貨付款）
+      .col-lg-1.col-xs-4.number
+        %div= price_with_unit(@order.items_price)
+        %div= price_with_unit(@order.ship_fee)
+    .divider
+    .totalrow.row
+      .col-lg-3.col-lg-offset-8.col-xs-8.text
+        %div 總計
+      .col-lg-1.col-xs-4.number
+        #totalprice= price_with_unit(@order.total)
+  .row
+    .col-lg-6
+      .icon-header.-pencil 訂購人資料
+      .input-block.-info
+        .group
+          %div= "姓名：#{@info.ship_name}"
+          %div= "電話：#{@info.ship_phone}"
+          %div= "連絡信箱：#{@info.ship_email}"
+    .col-lg-6
+      .icon-header.-pencil 取貨門市資訊
+      .input-block.-store
+        .group
+          %div= "門市名稱： #{@info.ship_store_name}"
+          %div= "地址： #{@info.store.address}"

@@ -3,11 +3,10 @@
   = render 'layouts/partials/web_header'
   %body
     = render 'partials/navbar'
-    = notice_message
-    .container
+    .container.user
+      = breadcrumbs
       .col-lg-3.visible-lg-block
-        = render 'partials/sidebar'
+        = render 'partials/user_panel'
       .col-lg-9.col-xs-12.xs-padding
-        = breadcrumbs
         = yield
     = render 'partials/footer'

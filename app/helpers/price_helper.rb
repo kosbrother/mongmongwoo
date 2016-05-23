@@ -1,6 +1,6 @@
 module PriceHelper
   def price_with_unit(price)
-    "NT." + price.to_s
+    "NT$ " + price.to_s
   end
 
   def ship_fee

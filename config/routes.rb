@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   mount Ckeditor::Engine => '/ckeditor'
 
   root 'pages#index'
@@ -19,6 +18,7 @@ Rails.application.routes.draw do
   get "/confirm_cart", to: "carts#confirm"
   post "/submit_order", to: "carts#submit", as: "submit_order"
   get "/success", to: "carts#success", as: "success"
+
   resources :cart_items, only: [:create, :destroy] do
     member do
       patch "update_quantity"
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :orders, only: [:index, :show]
 
   # 助理後台
   namespace :staff do

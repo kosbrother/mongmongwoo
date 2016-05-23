@@ -33,19 +33,15 @@ module ApplicationHelper
     will_paginate(collection, options)
   end
 
-  def render_login_or_logout
-    if current_user.nil?
-      content_tag(:a, content_tag(:div, '登入/註冊', class: 'list user'), href: auth_path("facebook"))
-    else
-      content_tag(:a, content_tag(:div, "#{current_user.user_name} / 登出", class: 'list user'), href: signout_path)
-    end
-  end
-
   def render_counter
     if current_cart.cart_items.count > 0
       content_tag(:div, current_cart.cart_items.count, class: 'counter' )
     else
       content_tag(:div, '', class: 'counter hidden' )
     end
+  end
+
+  def fb_picture
+    "http://graph.facebook.com/#{current_user.uid}/picture?width=100&height=100"
   end
 end

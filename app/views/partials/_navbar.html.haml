@@ -14,21 +14,36 @@
     / Collect the nav links, forms, and other content for toggling
     #nav-bar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
-        %li.nav-list.dropdown.visible-xs-block
-          %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-            .list.diamond
+        %li.nav-list.visible-xs-block
+          .dropdown
+            .list.diamond.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               商品分類
-            %span.caret
-          %ul.dropdown-menu
-            - @categories.each do |category|
-              %li.list
-                = link_to category.name, category_path(category), class: "link"
+              %span.caret
+            %ul.dropdown-menu
+              - @categories.each do |category|
+                %li.list
+                  = link_to category.name, category_path(category), class: "link"
         %li.nav-list
           = link_to checkout_path do
             .list.cart
               購物車
               = render_counter
-        %li.nav-list
-          = render_login_or_logout
+        - if current_user.nil?
+          %li.nav-list
+            = link_to auth_path("facebook") do
+              .list.user 登入/註冊
+        -else
+          %li.nav-list#user-nav
+            .dropdown#user
+              .list.user.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                = current_user.user_name
+                %span.caret
+              %ul.dropdown-menu
+                %li.list
+                  = link_to "我的訂單", orders_path, class: 'link'
+                %li.list
+                  = link_to "我的收藏", '#', class: 'link'
+                %li.list
+                  = link_to "登出", signout_path, class: 'link'
     - if mobile?
       = render 'partials/app_install_banner'

@@ -1,0 +1,22 @@
+- breadcrumb :orders
+.orders
+  .icon-header.-pencil 我的訂單
+  .form-list
+    .header.row.hidden-xs
+      .col-1-5 訂單日期
+      .col-1-5 訂單編號
+      .col-1-5 總金額
+      .col-1-5 訂單狀態
+      .col-1-5 購物明細
+    .divider.hidden-xs
+    .body
+      - @orders.each_with_index do |order, index|
+        - if index > 0
+          .divider.visible-xs-block
+        .row
+          .col-1-5.col-xs-12.date= order.created_on
+          .col-1-5.col-xs-6.id= order.id
+          .col-1-5.col-xs-6.total= price_with_unit(order.total)
+          .col-1-5.col-xs-6.status= order.status
+          .col-1-5.col-xs-6.detail
+            = link_to '查看訂單明細', order_path(order), class: "check-btn"

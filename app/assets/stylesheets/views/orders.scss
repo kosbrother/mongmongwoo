@@ -1,0 +1,42 @@
+.orders{
+  .icon-header{
+    margin-bottom: 20px;
+  }
+  .cart-result{
+    margin-bottom: 20px;
+    > .item-bar{
+       .price, .subtotal{
+         padding-left:0px;
+       }
+    }
+    > .totalrow{
+      > .number{
+        padding-left: 0px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .orders{
+    .cart-result {
+      > .item-bar{
+        > .itemname{
+          margin-left: 0px;
+        }
+        > .spec{
+          text-align: left;
+          padding-left: 0;
+          margin: 3px 0px;
+        }
+        > .price{
+          text-align: left;
+          padding-left: 0;
+        }
+      }
+    }
+    .input-block{
+      margin-bottom: 20px;
+    }
+  }
+}
