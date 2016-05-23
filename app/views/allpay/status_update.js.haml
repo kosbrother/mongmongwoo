@@ -1,5 +1,4 @@
-- if @order.logistics_status_code
-  $("#logistis-#{@order.id}").html('#{Logistics_Status[@order.logistics_status_code]}')
+$("#logistis-#{@order.id}").html('#{Logistics_Status[@order.logistics_status_code]}')
 $(function(){
 new PNotify({title: "#{j(@message)}"});
 });
