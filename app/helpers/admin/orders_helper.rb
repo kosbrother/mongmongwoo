@@ -37,4 +37,12 @@ module Admin::OrdersHelper
   def order_status(status_number)
     Order.statuses.key(status_number)
   end
+
+  def logistics_status(order)
+    if order.logistics_status_code
+      Logistics_Status[order.logistics_status_code]
+    else
+      "尚未建立資料"
+    end
+  end
 end
