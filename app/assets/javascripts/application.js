@@ -71,7 +71,7 @@ ready = function() {
             var id = $(this).data('id');
         if ($(this).hasClass('checked')){
             $.ajax({
-                url: "/categories/10/items/" + id + "/favorite",
+                url: "/favorite_items/" + id + "/favorite",
                 data: { type: 'un-favorite' },
                 method: "PUT",
 
@@ -85,7 +85,7 @@ ready = function() {
         }
         else if ($(this).hasClass('uncheck')){
             $.ajax({
-                url: "/categories/10/items/" + id + "/favorite",
+                url: "/favorite_items/" + id + "/favorite",
                 data: { type: 'favorite' },
                 method: "PUT",
 
@@ -98,6 +98,23 @@ ready = function() {
             })
         }
     });
+    //rmove from favorite list
+    $('.remove-fav').on('click', function(){
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: "/favorite_items/" + id + "/favorite",
+            data: { type: 'un-favorite' },
+            method: "PUT",
+
+            success: function() {
+               $('#row-item-' + id).remove();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+            }
+        })
+    })
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);

@@ -6,7 +6,7 @@
     .container.user
       = breadcrumbs
       .col-lg-3.visible-lg-block
-        = render 'partials/user_panel'
+        = render 'partials/user_panel', type: request.path
       .col-lg-9.col-xs-12.xs-padding
         = yield
     = render 'partials/footer'

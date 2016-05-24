@@ -7,9 +7,7 @@ Rails.application.routes.draw do
   get  "/signout" => "sessions#destroy", as: "signout"
 
   resources :categories, only: [:show] do
-    resources :items, only: [:show] do
-      put :favorite, on: :member
-    end
+    resources :items, only: [:show]
   end
 
   get "/checkout", to: "carts#checkout", as: "checkout"
@@ -29,7 +27,9 @@ Rails.application.routes.draw do
   end
 
   resources :orders, only: [:index, :show]
-
+  resources :favorite_items, only: [:index] do
+    put :favorite, on: :member
+  end
   # 助理後台
   namespace :staff do
     root "categories#index"
