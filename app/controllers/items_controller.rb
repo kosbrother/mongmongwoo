@@ -10,16 +10,4 @@ class ItemsController < ApplicationController
       @in_favorite = false
     end
   end
-
-  def favorite
-    @item = Item.find(params[:id])
-    type = params[:type]
-    case type
-    when 'favorite'
-      current_user.favorites << @item
-    when 'un-favorite'
-      current_user.favorites.destroy(@item)
-    end
-    render nothing: true
-  end
 end

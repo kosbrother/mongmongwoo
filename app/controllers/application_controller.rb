@@ -9,6 +9,16 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def require_user
+    unless current_user
+      flash[:info] = "此功能為會員專屬，請先登入或註冊會員。"
+      respond_to do |format|
+        format.js { render 'alert' }
+        format.html { redirect_to root_path}
+      end
+    end
+  end
+
   def load_categories
     @categories = Category.except_the_all_category
   end

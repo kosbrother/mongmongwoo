@@ -89,12 +89,9 @@ ready = function() {
                 data: { type: 'favorite' },
                 method: "PUT",
 
-                success: function(data) {
-                    if (data.login){
-                        $('#add-favorite').addClass('checked').removeClass('uncheck')
-                    }
-                    else{
-                        alert('請先登入，才能加入我的收藏喔')
+                success: function(error) {
+                    if (!error){
+                    $('#add-favorite').addClass('checked').removeClass('uncheck')
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
