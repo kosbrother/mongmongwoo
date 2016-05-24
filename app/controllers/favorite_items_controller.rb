@@ -5,6 +5,9 @@ class FavoriteItemsController < ApplicationController
 
   def index
     @items = current_user.favorites
+    if @items.any?
+      @category_all = Category.find(10)
+    end
   end
 
   def favorite
