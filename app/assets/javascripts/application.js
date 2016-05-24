@@ -89,8 +89,13 @@ ready = function() {
                 data: { type: 'favorite' },
                 method: "PUT",
 
-                success: function() {
-                    $('#add-favorite').addClass('checked').removeClass('uncheck')
+                success: function(data) {
+                    if (data.login){
+                        $('#add-favorite').addClass('checked').removeClass('uncheck')
+                    }
+                    else{
+                        alert('請先登入，才能加入我的收藏喔')
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert('錯誤發生，如問題持續發生，請聯繫客服人員');

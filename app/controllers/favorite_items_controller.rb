@@ -8,14 +8,19 @@ class FavoriteItemsController < ApplicationController
   end
 
   def favorite
-    @item = Item.find(params[:id])
-    type = params[:type]
-    case type
-      when 'favorite'
-        current_user.favorites << @item
-      when 'un-favorite'
-        current_user.favorites.destroy(@item)
+    if current_user
+      login_status = true
+      @item = Item.find(params[:id])
+      type = params[:type]
+      case type
+        when 'favorite'
+          current_user.favorites << @item
+        when 'un-favorite'
+          current_user.favorites.destroy(@item)
+      end
+    else
+      login_status = false
     end
-    render nothing: true
+    render json: { login: login_status }
   end
 end
