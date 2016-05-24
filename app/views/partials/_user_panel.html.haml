@@ -5,7 +5,7 @@
   .email
     = current_user.email
   .divider
-  .selectList{ class: current_active_class(current_path, orders_path) }
+  .selectList{ class: current_active_class(request.path, orders_path) }
     = link_to '我的訂單', orders_path
-  .selectList{ class: current_active_class(current_path, favorite_items_path) }
+  .selectList{ class: current_active_class(request.path, favorite_items_path) }
     = link_to '我的收藏', favorite_items_path
