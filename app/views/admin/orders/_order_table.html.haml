@@ -27,7 +27,7 @@
                 %li
                   %button.edit-order-btn
                     刪除
-            = button_to "傳送至歐付寶", create_allpay_index_path(order), remote: true, class: "btn btn-primary"
+            = create_allpay_index_button(order)
           %td
             = order.created_on
             %br
