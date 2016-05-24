@@ -15,18 +15,9 @@
         %tr
           %td
             = render(partial: "info_and_items_list", locals: { order: order })
+            %br
             = render(partial: "edit_order", locals: { order: order })
-            .dropdown
-              %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                按此選擇
-                %span.caret
-              %ul.dropdown-menu.list-group
-                %li
-                  %button.edit-order-btn{"data-target" => "#edit-order-#{order.id}", "data-toggle" => "modal", remote: true, :type => "button"}
-                    編輯
-                %li
-                  %button.edit-order-btn
-                    刪除
+            %br
             = create_allpay_index_button(order)
           %td
             = order.created_on
