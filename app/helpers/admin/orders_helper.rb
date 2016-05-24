@@ -45,4 +45,12 @@ module Admin::OrdersHelper
       "尚未建立資料"
     end
   end
+
+  def create_allpay_index_button(order)
+    if order.logistics_status_code.nil?
+      button_to "傳送至歐付寶", create_allpay_index_path(order), remote: true, class: "btn btn-primary"
+    else
+      content_tag(:span, '已傳送至歐付寶', class: "label label-default")
+    end
+  end
 end
