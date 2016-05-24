@@ -15,6 +15,8 @@
         %dd= @user.phone
         %dt UID
         %dd= @user.uid
+        %dt Email
+        %dd= @user.email
     .user-orders-list.well
       %p.lead 用戶訂單：
       %table.table.table-bordered
@@ -23,6 +25,7 @@
             %th 訂單編號
             %th 訂單金額
             %th 訂單聯絡電話
+            %th 訂單Email
             %th 訂單狀態
             %th 訂購明細
         %tbody
@@ -31,5 +34,6 @@
               %td= order.id
               %td= order.total
               %td= order.ship_phone
+              %td= order.ship_email
               %td= order.status
               %td= render(partial: "admin/orders/info_and_items_list", locals: { order: order })
