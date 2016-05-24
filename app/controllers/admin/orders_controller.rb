@@ -14,7 +14,7 @@ class Admin::OrdersController < AdminController
   end
 
   def update
-    if @order.update(note: params['order']['note'])
+    if @order.update(note: params['order']['note'], total: params['order']['total'])
       @result = "訂單變更完成"
     else
       @result = "訂單變更失敗"

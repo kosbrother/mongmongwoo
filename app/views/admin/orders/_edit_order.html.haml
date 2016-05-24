@@ -25,6 +25,9 @@
           %br/
           .form-group
             .form-group
+              = f.label :total, "總金額"
+              = f.text_field :total, class: 'form-control'
+            .form-group
               = f.label :note, "訂單備註"
               = f.text_area :note, class: 'form-control', rows: 5, place_horder: order.note
         .modal-footer
