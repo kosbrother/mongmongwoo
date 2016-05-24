@@ -4,8 +4,7 @@ class Admin::OrdersController < AdminController
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
-    params[:status] ||= 0
-    @orders = Order.includes(:user, info: :store, items: :item).where(status: params[:status]).recent.paginate(page: params[:page])
+    @orders = get_orders
   end
 
   def show
@@ -53,5 +52,13 @@ class Admin::OrdersController < AdminController
 
   def find_order
     @order = Order.includes(:user, :info, :items).find(params[:id])
+  end
+
+  def get_orders
+    if params[:status]
+      Order.includes(:user, info: :store, items: :item).current_status(params[:status]).recent.paginate(page: params[:page])
+    else
+      Order.includes(:user, info: :store, items: :item).recent.paginate(page: params[:page])
+    end 
   end
 end

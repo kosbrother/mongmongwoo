@@ -24,14 +24,24 @@ module Admin::OrdersHelper
     link_to status_text, update_status_admin_order_path(order, status: Order.statuses[status_text]), { method: :patch, remote: true, disable_with: '狀態更新中' }
   end
 
-  def li_status_link(status)
-    content_tag(:li, '' , class: eq_to_status?(status)) do
-      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", admin_orders_path(status: status)
+  def li_status_link(status=nil)
+    if status
+      content_tag(:li, '' , class: eq_to_status?(status)) do
+        link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", admin_orders_path(status: status)
+      end
+    else
+      content_tag(:li, '' , class: url_without_status_params) do
+        link_to "所有訂單: #{Order.count}", admin_orders_path
+      end
     end
   end
 
   def eq_to_status?(status)
-    params[:status].to_i == status ? 'active' : ''
+    params[:status].to_i == status ? 'active' : '' if request.original_url.include?('status')
+  end
+
+  def url_without_status_params
+    params.has_key?('status') ? '' : 'active'
   end
 
   def order_status(status_number)

@@ -10,6 +10,7 @@
             %i.glyphicon.glyphicon-cog
       .content-box-large.box-with-header
         %ul.nav.nav-tabs
+          = li_status_link
           = li_status_link(Order.statuses["新訂單"])
           = li_status_link(Order.statuses["處理中"])
           = li_status_link(Order.statuses["已出貨"])
