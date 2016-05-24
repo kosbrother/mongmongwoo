@@ -6,7 +6,7 @@ CarrierWave.configure do |config|
       google_storage_secret_access_key: ENV["google_storage_secret_access_key"]
   }
   # Choose what kind of storage to use for this uploader:
-  if Rails.env.production?
+  if Rails.env.production? || Rails.env.web?
     # For google cloud storage
     config.storage :fog
     config.asset_host = ENV['production_asset_host']
