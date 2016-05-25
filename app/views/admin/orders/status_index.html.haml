@@ -1,0 +1,21 @@
+.row
+  .row
+    .col-md-12.panel-warning
+      .content-box-header.panel-heading
+        .panel-title 狀態分類列表
+        .panel-options
+          %a{"data-rel" => "collapse", :href => "#"}
+            %i.glyphicon.glyphicon-refresh
+          %a{"data-rel" => "reload", :href => "#"}
+            %i.glyphicon.glyphicon-cog
+      .content-box-large.box-with-header
+        %ul.nav.nav-tabs
+          = li_status_link(Order.statuses["新訂單"])
+          = li_status_link(Order.statuses["處理中"])
+          = li_status_link(Order.statuses["已出貨"])
+          = li_status_link(Order.statuses["已到店"])
+          = li_status_link(Order.statuses["完成取貨"])
+          = li_status_link(Order.statuses["未取訂貨"])
+          = li_status_link(Order.statuses["訂單變更"])
+          = li_status_link(Order.statuses["訂單取消"])
+        = render "order_table", orders: @orders
