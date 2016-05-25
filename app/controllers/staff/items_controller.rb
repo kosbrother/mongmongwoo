@@ -56,7 +56,7 @@ class Staff::ItemsController < StaffController
   end
 
   def find_item
-    @item = Item.includes(:photos, :specs).find(params[:id])
+    @item = Item.find(params[:id])
     @photos = @item.photos
     @specs = @item.specs
   end

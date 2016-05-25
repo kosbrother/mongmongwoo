@@ -15,3 +15,8 @@
 //= require ckeditor/init
 //= require pnotify.custom.min
 //= require_tree ./staff
+
+// cancell disabled before submit
+$("form.staff-item-form").submit(function() {
+    $("input.disabled").removeAttr("disabled");
+});
