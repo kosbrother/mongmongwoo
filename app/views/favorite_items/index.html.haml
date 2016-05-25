@@ -16,7 +16,7 @@
           .col-lg-4.col-sm-4.col-xs-9.xs-padding.name= link_to item.name, category_item_path(@category_all, item)
           .col-lg-2.col-sm-2.col-xs-6.xs-padding.price= price_with_unit(item.price)
           .col-lg-2.col-sm-2.col-xs-4.xs-padding.status
-            .block= t(item.status)
+            = render_item_status_block(item.status)
           .col-lg-2.col-sm-2.col-xs-4.heart
             = link_to remove_favorite_item_path(item), class: 'remove-fav', remote: true do
               %span.glyphicon.glyphicon-heart

@@ -22,4 +22,8 @@ module ItemHelper
       category_checkbox(cb,f)
     end
   end
+
+  def render_item_status_block(status)
+    content_tag(:div, t(status), class: status == "on_shelf" ? 'block' :  'block -off-shelf')
+  end
 end
