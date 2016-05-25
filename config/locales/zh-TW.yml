@@ -1,3 +1,5 @@
 zh-TW:
   on_shelf: "已上架"
   off_shelf: "已下架"
+  will_paginate:
+    page_gap: "......"

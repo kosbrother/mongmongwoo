@@ -13,6 +13,13 @@
       color: #fff;
     }
   }
+  > .disabled{
+    > .gap{
+      background-color: transparent;
+      color: #ff8080;
+      border: $pagination-border;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
