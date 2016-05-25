@@ -18,5 +18,5 @@
           .col-lg-2.col-sm-2.col-xs-4.xs-padding.status
             .block= I18n.t item.status
           .col-lg-2.col-sm-2.col-xs-4.heart
-            = link_to '', 'data-id': item.id, class: 'remove-fav', remote: true do
+            = link_to remove_favorite_item_path(item), class: 'remove-fav', remote: true do
               %span.glyphicon.glyphicon-heart

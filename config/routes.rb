@@ -28,7 +28,11 @@ Rails.application.routes.draw do
 
   resources :orders, only: [:index, :show]
   resources :favorite_items, only: [:index] do
-    put :favorite, on: :member
+    member do
+      get :favorite
+      get :remove
+    end
+
   end
   # 助理後台
   namespace :staff do

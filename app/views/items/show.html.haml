@@ -38,7 +38,7 @@
             付款方式：超商付款取貨
         .col-lg-12.col-xs-12.no-padding
           .add-cart
-            = render_favorite_btn(@in_favorite)
+            = render_favorite_btn(@item, @in_favorite)
             = f.submit '加入購物車', class: 'add '
             .customer
               購物遇到問題？
