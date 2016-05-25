@@ -51,9 +51,9 @@ class CartsController < ApplicationController
   def submit
     items = current_cart.cart_items.includes(:item, :item_spec)
     store = Store.find(params[:store])
-    create_order(items, params[:info], store)
+    order = create_order(items, params[:info], store)
     session[:cart_id] = nil
-    create_cart
+    OrderMailer.delay.notify_order_placed(order)
 
     redirect_to success_path
   end
@@ -85,7 +85,6 @@ class CartsController < ApplicationController
     info.ship_email = cart_info[:ship_email]
     info.save
 
-
     cart_items.each do |cart_item|
       item = OrderItem.new
       item.order_id = order.id
@@ -97,6 +96,8 @@ class CartsController < ApplicationController
       item.item_price = cart_item.item.price
       item.save
     end
+
+    order
   end
 
 end
