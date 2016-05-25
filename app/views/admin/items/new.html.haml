@@ -17,5 +17,5 @@
             %a{"data-rel" => "reload", :href => "#"}
               %i.glyphicon.glyphicon-cog
         .panel-body
-          = form_for [:admin, @item], html: { class: "form-horizontal" } do |f|
+          = form_for [:admin, @item], html: { class: "form-horizontal cancell-disabled-item-form" } do |f|
             = render partial: "form", locals: { f: f }

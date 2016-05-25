@@ -16,10 +16,13 @@
         = item_cover(@item.cover)
       .words-intro.col-md-5
         %dl.dl-horizontal
-          %dt 淘寶連結
+          %dt 賣場連結
           %dd
             = link_to @item.url, target: "_blank" do
               按此前往淘寶商品頁
+          %dt 商家名稱
+          %dd
+            = link_to_supplier(@item)
           %dt 商品名稱
           %dd= @item.name
           %dt 商品價格

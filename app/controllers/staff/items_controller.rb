@@ -1,6 +1,6 @@
 class Staff::ItemsController < StaffController
   before_action :require_assistant
-  before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf]
+  before_action :find_item, only: [:show, :edit, :update, :destroy]
 
   def index
     @item_page = @items = Item.priority.paginate(:page => params[:page])
@@ -49,38 +49,14 @@ class Staff::ItemsController < StaffController
     redirect_to staff_root_path
   end
 
-  # def on_shelf
-  #   @item.update_column(:status, 0)
-  #   respond_to do |format|
-  #     format.html do
-  #       flash[:notice] = "#{@item.name}已上架"
-  #       redirect_to :back
-  #     end
-
-  #     format.js
-  #   end
-  # end
-
-  # def off_shelf
-  #   @item.update_column(:status, 1)
-  #   respond_to do |format|
-  #     format.html do
-  #       flash[:notice] = "#{@item.name}已下架"
-  #       redirect_to :back
-  #     end
-
-  #     format.js
-  #   end
-  # end
-
   private
 
   def item_params
-    params.require(:item).permit(:name, :price, :cover, :slug, :description, :url, category_ids: [])
+    params.require(:item).permit(:name, :price, :cover, :slug, :description, :url, :taobao_supplier_id, category_ids: [])
   end
 
   def find_item
-    @item = Item.includes(:photos, :specs).find(params[:id])
+    @item = Item.find(params[:id])
     @photos = @item.photos
     @specs = @item.specs
   end

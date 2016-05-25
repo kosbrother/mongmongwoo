@@ -15,3 +15,13 @@
 //= require ckeditor/init
 //= require pnotify.custom.min
 //= require_tree ./staff
+
+var ready;
+ready = function() {
+   // cancell disabled before submit
+   $("form.cancell-disabled-item-form").submit(function() {
+     $("input.disabled").removeAttr("disabled");
+   });
+};
+$(document).ready(ready);
+$(document).on('page:load', ready);
