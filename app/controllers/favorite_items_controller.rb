@@ -14,10 +14,10 @@ class FavoriteItemsController < ApplicationController
     @item = Item.find(params[:id])
     @type = params[:type]
     case @type
-      when 'favorite'
-        current_user.favorites << @item
-      when 'un-favorite'
-        current_user.favorites.destroy(@item)
+    when 'favorite'
+      current_user.favorites << @item
+    when 'un-favorite'
+      current_user.favorites.destroy(@item)
     end
   end
 
