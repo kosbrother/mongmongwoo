@@ -20,7 +20,8 @@ class Item < ActiveRecord::Base
   scope :recent, lambda { order(id: :DESC) }
   scope :update_time, lambda { order(updated_at: :DESC) }
   scope :priority, lambda { order("item_categories.position ASC") }
-  scope :category_new, ->(num){ order(created_at: :asc).limit(num) }
+  scope :latest, ->(num){ order(created_at: :asc).limit(num) }
+  scope :on_shelf, lambda{ where(status: 0) }
 
   enum status: { on_shelf: 0, off_shelf: 1 }
 
