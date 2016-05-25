@@ -32,6 +32,11 @@
           color:  #fd6879;
         }
       }
+      > .name{
+        padding-left: 0px;
+        padding-right: 0px;
+        text-align: left;
+      }
       > .status{
         > .block{
           margin: 20px auto;
@@ -41,6 +46,18 @@
           background-color: #47b286;
           line-height: 28px;
           color: #fff;
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1200px){
+  .favorite-list{
+    .body {
+      > .row{
+        > .name{
+          line-height: 20px;
+          padding-top: 20px;
         }
       }
     }
