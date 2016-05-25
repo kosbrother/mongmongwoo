@@ -23,6 +23,10 @@ ready = function() {
        var id = $(this).data('target');
        $(id).modal('hide');
     })
+   // cancell disabled before submit
+   $("form.cancell-disabled-item-form").submit(function() {
+     $("input.disabled").removeAttr("disabled");
+   });
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);

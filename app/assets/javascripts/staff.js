@@ -16,7 +16,12 @@
 //= require pnotify.custom.min
 //= require_tree ./staff
 
-// cancell disabled before submit
-$("form.staff-item-form").submit(function() {
-    $("input.disabled").removeAttr("disabled");
-});
+var ready;
+ready = function() {
+   // cancell disabled before submit
+   $("form.cancell-disabled-item-form").submit(function() {
+     $("input.disabled").removeAttr("disabled");
+   });
+};
+$(document).ready(ready);
+$(document).on('page:load', ready);
