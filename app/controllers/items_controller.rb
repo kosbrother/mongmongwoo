@@ -4,5 +4,10 @@ class ItemsController < ApplicationController
   def show
     @category = Category.find(params['category_id'])
     @item = Item.find(params['id'])
+    if current_user && current_user.favorites.exists?(@item)
+      @in_favorite = true
+    else
+      @in_favorite = false
+    end
   end
 end

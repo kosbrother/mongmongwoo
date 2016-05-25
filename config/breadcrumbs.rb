@@ -21,3 +21,8 @@ crumb :order_detail do |order|
   link "訂單明細", order_path(order)
   parent :orders
 end
+
+crumb :favorites do
+  link "我的收藏", favorite_items_path
+  parent :root
+end

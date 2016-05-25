@@ -1,0 +1,6 @@
+- if @type == 'favorite'
+    $('#add-favorite').addClass('checked').removeClass('uncheck');
+    $('#add-favorite').attr('href', '#{ favorite_favorite_item_path(@item.id, type: 'un-favorite' ) }');
+-elsif @type == 'un-favorite'
+    $('#add-favorite').addClass('uncheck').removeClass('checked');
+    $('#add-favorite').attr('href', '#{ favorite_favorite_item_path(@item.id, type: 'favorite' ) }');

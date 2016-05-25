@@ -1,0 +1,22 @@
+- breadcrumb :favorites
+.orders
+  .icon-header.-pencil 我的收藏
+  .favorite-list
+    .header.row.hidden-xs
+      .col-lg-2.col-sm-2 商品照片
+      .col-lg-4.col-sm-4 商品名稱
+      .col-lg-2.col-sm-2 商品單價
+      .col-lg-2.col-sm-2 商品狀態
+      .col-lg-2.col-sm-2 取消收藏
+    .divider.hidden-xs
+    .body
+      - @items.each do |item|
+        .row{id: "row-item-#{item.id}"}
+          .col-lg-2.col-sm-2.col-xs-3.image= image_tag(item.cover.icon.url, class: 'cover')
+          .col-lg-4.col-sm-4.col-xs-9.xs-padding.name= link_to item.name, category_item_path(@category_all, item)
+          .col-lg-2.col-sm-2.col-xs-6.xs-padding.price= price_with_unit(item.price)
+          .col-lg-2.col-sm-2.col-xs-4.xs-padding.status
+            .block= t(item.status)
+          .col-lg-2.col-sm-2.col-xs-4.heart
+            = link_to remove_favorite_item_path(item), class: 'remove-fav', remote: true do
+              %span.glyphicon.glyphicon-heart

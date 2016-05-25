@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
 
   has_many :orders, dependent: :destroy
   has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
+  has_many :favorite_items
+  has_many :favorites, through: :favorite_items, source: :item
 
   self.per_page = 20
 

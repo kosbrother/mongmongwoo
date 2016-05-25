@@ -27,7 +27,13 @@ Rails.application.routes.draw do
   end
 
   resources :orders, only: [:index, :show]
+  resources :favorite_items, only: [:index] do
+    member do
+      get :favorite
+      get :remove
+    end
 
+  end
   # 助理後台
   namespace :staff do
     root "categories#index"

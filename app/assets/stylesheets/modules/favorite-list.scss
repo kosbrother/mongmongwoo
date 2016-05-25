@@ -1,0 +1,84 @@
+.favorite-list{
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: solid 1px #dcdcdc;
+  padding-bottom: 15px;
+  font-size: 16px;
+  color: #262626;
+  .header{
+    height: 50px;
+    text-align: center;
+    > div{
+      line-height: 50px;
+    }
+  }
+  .divider{
+    width: 97%;
+    border-top: solid 1px #dcdcdc;
+    margin: 5px auto;
+  }
+  .body {
+    > .row {
+      > div {
+        text-align: center;
+        height: 70px;
+        line-height: 70px;
+        > .cover {
+          width: 56px;
+          height: 56px;
+          border: solid 1px #979797;
+        }
+        > a .glyphicon {
+          color:  #fd6879;
+        }
+      }
+      > .status{
+        > .block{
+          margin: 20px auto;
+          width: 82px;
+          height: 28px;
+          border-radius: 3px;
+          background-color: #47b286;
+          line-height: 28px;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .favorite-list{
+    .body {
+      > .row{
+        font-size: 12px;
+        margin-top: 15px;
+        > .image{
+          padding-right: 10px;
+        }
+        > .name, .price, .status {
+          text-align: left;
+          line-height: 20px;
+          height: 20px;
+          margin-top: 5px;
+        }
+        > .heart{
+          text-align: right;
+          line-height: 20px;
+          height: 20px;
+          font-size: 16px;
+          margin-top: 5px;
+        }
+        > .status{
+          > .block{
+            margin: 0;
+            width: 58px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}

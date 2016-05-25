@@ -21,6 +21,11 @@
         text-align: center;
         height: 30px;
         line-height: 29px;
+        > .cover{
+          width: 56px;
+          height: 56px;
+          border: solid 1px #979797;
+        }
       }
       > .status{
         color: #009587;
