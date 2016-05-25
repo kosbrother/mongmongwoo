@@ -6,6 +6,7 @@ class Order < ActiveRecord::Base
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
   scope :status_count, -> { group(:status).size }
+  scope :status, -> (status_param) { where(status: status_param) }
 
   acts_as_paranoid
 
@@ -16,7 +17,7 @@ class Order < ActiveRecord::Base
   has_one :info, class_name: "OrderInfo", dependent: :destroy
   belongs_to :device_registration
 
-  self.per_page = 100
+  self.per_page = 50
 
   delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, to: :info
   delegate :orders, to: :user, prefix: true

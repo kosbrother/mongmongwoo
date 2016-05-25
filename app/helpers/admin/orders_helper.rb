@@ -26,7 +26,7 @@ module Admin::OrdersHelper
 
   def li_status_link(status)
     content_tag(:li, '' , class: eq_to_status?(status)) do
-      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", admin_orders_path(status: status)
+      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", status_index_admin_orders_path(status: status)
     end
   end
 

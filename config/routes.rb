@@ -112,6 +112,7 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show, :update] do
       collection do
         get "exporting_files"
+        get "status_index"
       end
 
       member do

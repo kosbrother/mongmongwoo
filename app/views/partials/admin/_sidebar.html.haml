@@ -44,11 +44,11 @@
       / Sub menu
       %ul
         %li
-          = link_to "訂單列表", admin_orders_path
+          = link_to "狀態分類列表", status_index_admin_orders_path
+        %li
+          = link_to "所有訂單列表", admin_orders_path
         %li
           = link_to "寄件列表", exporting_files_admin_orders_path
-        %li
-          %a{:href => "#"} 訂單選項
     %li.submenu
       %a{:href => "#"}
         %i.fa.fa-bell>
