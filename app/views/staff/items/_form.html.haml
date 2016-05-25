@@ -25,7 +25,8 @@
 .form-group
   = f.label "商品分類", class: "col-sm-2 control-label"
   .col-sm-10
-    = categories_checkox(f)
+    = f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb|
+      = cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox") + cb.text}
 .form-group
   .col-sm-offset-2.col-sm-10
     = f.submit "確認送出", class: "btn btn-primary"
