@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action  :load_categories, :require_user
 
   def index
-    @orders = current_user.orders
+    @orders = current_user.orders.recent
   end
 
   def show
