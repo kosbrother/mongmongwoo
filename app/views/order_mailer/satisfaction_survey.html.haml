@@ -1,0 +1,38 @@
+.row
+  .col-md-12
+    %table{align: "center"}
+      %tbody
+        %tr
+          %td{style: "color: #000"}
+            %h3 
+              親愛的
+              %span{style: "padding: .2em;color: hotpink;"}=@order_info.ship_name
+              您好，
+            %br
+            %p 感謝您對萌萌屋的支持。為了提供更優質的服務，希望能填寫以下問卷。
+            %p 若能完成問卷，將享有購買任一商品免運費 或 超過 NT$490 隨機贈送可愛手機擦 優惠              
+        %tr
+          %td{align: "center", style: "color: #000"}
+            %table{border: "1", cellpadding: "0", cellspacing: "0", width: "100%"}
+              %thead
+                %tr{align: "center", style: "background-color: antiquewhite;"}
+                  %th{style: "padding: 5px;"} App使用滿意度調查
+                  %th{style: "padding: 5px;"} 商品滿意度調查
+                  %th{style: "padding: 5px;"} 客服滿意度調查
+                  %th{style: "padding: 5px;"} 建議事項與改進
+              %tbody
+                %tr{align: "center", style: "background-color: rgba(47, 176, 39, 0.05);"}
+                  %td{style: "padding: 7px;"} 問題
+                  %td{style: "padding: 7px;"} 問題
+                  %td{style: "padding: 7px;"} 問題
+        %tr
+          %td{style: "color: #000"}
+            %p 萌萌屋感謝您
+            %br
+            %p 萌萌屋客服
+            %p 
+              %span{style: "display: block; margin: 10px 0;"}
+                = link_to "Line@ 客服", "http://line.me/ti/p/%40kya5456n", {style: "color: darkgreen;border: 1px solid;padding: 8px;border-radius: 20px;text-decoration: none;"}
+              %br
+              %span{style: "display: block; margin: 10px 0;"}
+                = link_to "FB 粉絲頁", "https://www.facebook.com/kingofgametw/", {style: "text-decoration: none;color: royalblue;border: 1px solid;padding: 8px;border-radius: 20px;"}
