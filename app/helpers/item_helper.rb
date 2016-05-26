@@ -10,7 +10,7 @@ module ItemHelper
       if f.object.new_record?
         cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox disabled", disabled: "disabled", checked:"checked") + cb.text}
       else
-        cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox", disabled: "disabled") + cb.text}
+        cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox disabled", disabled: "disabled") + cb.text}
       end
     else
       cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox") + cb.text}
