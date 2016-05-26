@@ -20,6 +20,15 @@
       border: $pagination-border;
     }
   }
+  > .disabled {
+    cursor: default;
+    > a:hover{
+    background-color: transparent;
+    border: solid 1px #ff8080;
+    color: #ff8080;
+    cursor: default;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
