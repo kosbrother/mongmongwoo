@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "service@kosbrother.com", css: :admin
+  default from: "\"萌萌屋\" <service@kosbrother.com>", css: :admin
   layout 'mailer'
 end
