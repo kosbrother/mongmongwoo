@@ -28,8 +28,33 @@
           height: 56px;
           border: solid 1px #979797;
         }
-        > a .glyphicon {
+        > .glyphicon {
+          cursor: pointer;
           color:  #fd6879;
+        }
+        > .modal{
+          > .modal-dialog{
+            width: 350px;
+            height: 200px;
+            > .modal-content{
+              .btn-confirm{
+                width: 150px;
+                height: 50px;
+                font-size: 20px;
+                background-color: $modal-confirm-btn-color;
+                color: #fff;
+                line-height: 38px;
+              }
+              .btn-close{
+                width: 150px;
+                height: 50px;
+                border: $modal-btn-border;
+                font-size: 20px;
+                color: $modal-confirm-btn-color;
+                background-color: transparent;
+              }
+            }
+          }
         }
       }
       > .name{
