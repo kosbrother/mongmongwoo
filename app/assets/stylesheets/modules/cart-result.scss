@@ -233,6 +233,12 @@
 @media screen and (max-width: 768px){
   .cart-result{
     > .item-bar{
+      > .quantity {
+        padding: 0px;
+      }
+      > .price{
+        padding-right: 0px;
+      }
       >.unitprice, .price, .quantity > div, .subtotal{
         font-size: 10px;
         color: #4a4a4a;
@@ -248,7 +254,8 @@
         }
       }
       > .subtotal{
-        padding: 0px;
+        padding-left: 15px;
+        text-align: right;
       }
       > .subtotal:before{
         content: '小計：'

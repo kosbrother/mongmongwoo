@@ -13,11 +13,35 @@
       color: #fff;
     }
   }
+  > .disabled{
+    > .gap{
+      background-color: transparent;
+      color: #ff8080;
+      border: $pagination-border;
+    }
+  }
+  > .disabled {
+    cursor: default;
+    > a:hover{
+    background-color: transparent;
+    border: solid 1px #ff8080;
+    color: #ff8080;
+    cursor: default;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
   .pagination{
     margin: 30px 0;
     font-size: $mobile-pagination-font-size;
+    > li{
+      > .page, .previous_page, .next_page, .gap{
+        padding: 6px 10PX;
+      }
+      > .previous_page, .next_page{
+        display: none;
+      }
+    }
   }
 }

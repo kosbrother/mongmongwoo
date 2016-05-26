@@ -1,5 +1,7 @@
 $('#nav-bar-collapse .cart > .counter').removeClass('hidden').text('#{current_cart.cart_items.count}');
-var cart = $('.cart');
+$('#cart-info').removeClass('hidden');
+$('#cart-info > .counter').removeClass('hidden').text('#{current_cart.cart_items.count}');
+var cart = $('#cart-info');
 var imgtodrag = $('.spec-photos > .show > img').eq(0);
 var imgclone = imgtodrag.clone().offset({
 top: imgtodrag.offset().top,
@@ -15,7 +17,7 @@ left: imgtodrag.offset().left + 200
 'left': cart.offset().left + 10,
 'width': 30,
 'height': 30
-}, 700, 'easeInOutExpo');
+}, 1000, 'easeInOutExpo');
 
 setTimeout(function () {
 cart.fadeOut(200);

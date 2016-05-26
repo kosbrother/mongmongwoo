@@ -16,7 +16,17 @@
           .col-lg-4.col-sm-4.col-xs-9.xs-padding.name= link_to item.name, category_item_path(@category_all, item)
           .col-lg-2.col-sm-2.col-xs-6.xs-padding.price= price_with_unit(item.price)
           .col-lg-2.col-sm-2.col-xs-4.xs-padding.status
-            .block= t(item.status)
+            = render_item_status_block(item.status)
           .col-lg-2.col-sm-2.col-xs-4.heart
-            = link_to remove_favorite_item_path(item), class: 'remove-fav', remote: true do
-              %span.glyphicon.glyphicon-heart
+            -#= link_to remove_favorite_item_path(item), class: 'remove-fav', remote: true do
+            %span.glyphicon.glyphicon-heart{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#modal-#{item.id}"}
+            .modal.fade{ :role => "dialog", :tabindex => "-1", id: "modal-#{item.id}"}
+              .modal-dialog
+                .modal-content
+                  .modal-body
+                    %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                      %span{"aria-hidden" => "true"} &times;
+                    您確定要移除此產品？
+                  .modal-footer
+                    %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 關閉視窗
+                    = link_to '刪除', remove_favorite_item_path(item), class: 'btn btn-confirm', remote: true

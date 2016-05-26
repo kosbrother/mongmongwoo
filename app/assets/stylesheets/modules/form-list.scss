@@ -54,6 +54,9 @@
         > .date, .id, .total, .status{
           text-align: left;
         }
+        > .total{
+          text-align: center;
+        }
         > .id:before{
           content: '訂單編號： ';
         }
@@ -62,7 +65,7 @@
         }
         > .detail{
           > .check-btn{
-            margin-left: 0px;
+            margin: 0 auto;
           }
         }
       }

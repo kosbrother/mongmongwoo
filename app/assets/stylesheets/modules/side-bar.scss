@@ -15,15 +15,16 @@
   > a{color: $regular-font-color;
     vertical-align: 4px;
     > .list{
+      padding: 10px;
       font-size: $sidebar-list-font-size;
-      margin: 19px 0;
+      margin: 5px 0;
     }
     > .list:before{
       content: $url-diamond;
       vertical-align: text-top;
     }
     > .list:hover{
-      background-color: $hover-background-color;
+      background-color: $side-bar-hover-background-color;
     }
   }
 

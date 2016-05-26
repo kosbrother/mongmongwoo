@@ -28,9 +28,39 @@
           height: 56px;
           border: solid 1px #979797;
         }
-        > a .glyphicon {
+        > .glyphicon {
+          cursor: pointer;
           color:  #fd6879;
         }
+        > .modal{
+          > .modal-dialog{
+            width: 350px;
+            height: 200px;
+            > .modal-content{
+              .btn-confirm{
+                width: 150px;
+                height: 50px;
+                font-size: 20px;
+                background-color: $modal-confirm-btn-color;
+                color: #fff;
+                line-height: 38px;
+              }
+              .btn-close{
+                width: 150px;
+                height: 50px;
+                border: $modal-btn-border;
+                font-size: 20px;
+                color: $modal-confirm-btn-color;
+                background-color: transparent;
+              }
+            }
+          }
+        }
+      }
+      > .name{
+        padding-left: 0px;
+        padding-right: 0px;
+        text-align: left;
       }
       > .status{
         > .block{
@@ -41,6 +71,21 @@
           background-color: #47b286;
           line-height: 28px;
           color: #fff;
+        }
+        > .-off-shelf{
+          background-color: #b5b5b5;
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1200px){
+  .favorite-list{
+    .body {
+      > .row{
+        > .name{
+          line-height: 20px;
+          padding-top: 20px;
         }
       }
     }

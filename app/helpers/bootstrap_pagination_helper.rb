@@ -12,7 +12,7 @@ module BootstrapPaginationHelper
 
     def gap
       text = @template.will_paginate_translate(:page_gap) { '&hellip;' }
-      %(<li class="disabled"><a>#{text}</a></li>)
+      %(<li class="disabled"><a class="gap">#{text}</a></li>)
     end
 
     def previous_page

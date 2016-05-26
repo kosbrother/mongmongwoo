@@ -1,6 +1,9 @@
 .more-btn{
   border: $more-btn-border;
   border-radius: $btn-border-radius;
+  background-image: image_url('icons/arrow.png');
+  background-repeat: no-repeat;
+  background-position: 220px 12px;
   padding: 10px 40px;
   text-align: center;
   color: $more-btn-color;
@@ -10,7 +13,14 @@
 }
 
 .more-btn:hover{
-  background-color: $hover-background-color;
+  background-color: $order-box-add-btn;
+  background-image: image_url('icons/hover_arrow.png');
   text-decoration: none;
   color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+  .more-btn {
+    background-position: 250px 12px;
+  }
 }
