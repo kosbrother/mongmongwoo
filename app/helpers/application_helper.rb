@@ -41,6 +41,16 @@ module ApplicationHelper
     end
   end
 
+  def render_float_cart
+    link_to checkout_path do
+      content_tag(:div, class: current_cart.cart_items.count > 0  ? 'float-box' : 'float-box hidden', id: 'cart-info') do
+        image_tag('float_cart.png') +
+        render_counter
+      end
+    end
+  end
+
+
   def fb_picture
     "http://graph.facebook.com/#{current_user.uid}/picture?width=100&height=100"
   end
