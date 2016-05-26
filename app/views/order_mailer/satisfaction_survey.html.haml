@@ -9,27 +9,18 @@
               %span{style: "padding: .2em;color: hotpink;"}=@order_info.ship_name
               您好，
             %br
-            %p 感謝您對萌萌屋的支持。為了提供更優質的服務，希望能填寫以下問卷。
-            %p 若能完成問卷，將享有購買任一商品免運費 或 超過 NT$490 隨機贈送可愛手機擦 優惠              
-        %tr
-          %td{align: "center", style: "color: #000"}
-            %table{border: "1", cellpadding: "0", cellspacing: "0", width: "100%"}
-              %thead
-                %tr{align: "center", style: "background-color: antiquewhite;"}
-                  %th{style: "padding: 5px;"} App使用滿意度調查
-                  %th{style: "padding: 5px;"} 商品滿意度調查
-                  %th{style: "padding: 5px;"} 客服滿意度調查
-                  %th{style: "padding: 5px;"} 建議事項與改進
-              %tbody
-                %tr{align: "center", style: "background-color: rgba(47, 176, 39, 0.05);"}
-                  %td{style: "padding: 7px;"} 問題
-                  %td{style: "padding: 7px;"} 問題
-                  %td{style: "padding: 7px;"} 問題
+            %p 感謝您在萌萌屋購物，同時也恭喜您成為我們滿意度調查的對象。
+            %p 透過滿意度的調查，我們希望能帶給更多人愉快的購物經驗。
+            %br
+            %p 請您利用數分鐘的時間，為我們填寫以下連結的問券。
+            %p
+              = link_to "問卷連結", "https://docs.google.com/forms/d/1BU888U6aA8vxuBZ6jbwaCIG02nUmD103GgGry_7LE4I/viewform?c=0&w=1", target: "_blank"
+            %p 在您下次購物時, 我們會隨機贈送價值60元的禮品作為謝禮喔 ^^
         %tr
           %td{style: "color: #000"}
             %p 萌萌屋感謝您
             %br
-            %p 萌萌屋客服
+            %p 萌萌屋敬上
             %p 
               %span{style: "display: block; margin: 10px 0;"}
                 = link_to "Line@ 客服", "http://line.me/ti/p/%40kya5456n", {style: "color: darkgreen;border: 1px solid;padding: 8px;border-radius: 20px;text-decoration: none;"}

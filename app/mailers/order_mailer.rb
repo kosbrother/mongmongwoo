@@ -20,6 +20,6 @@ class OrderMailer < ApplicationMailer
     @order       = order
     @order_info  = @order.info
     Rails.logger.warn("mail to : #{@order_info.ship_email}")
-    mail(to: @order_info.ship_email , subject: "[萌萌屋] 滿意度問卷")
+    mail(to: @order_info.ship_email , subject: "[萌萌屋] 購物滿意度調查")
   end
 end
