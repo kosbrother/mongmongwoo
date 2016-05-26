@@ -26,5 +26,13 @@
   .pagination{
     margin: 30px 0;
     font-size: $mobile-pagination-font-size;
+    > li{
+      > .page, .previous_page, .next_page, .gap{
+        padding: 6px 10PX;
+      }
+      > .previous_page, .next_page{
+        display: none;
+      }
+    }
   }
 }

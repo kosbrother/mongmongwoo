@@ -16,9 +16,9 @@
         .col-lg-4.col-xs-8.itemname= item.item.name
         .col-lg-2.col-sm-10.col-xs-9.spec= item.item_spec.style
         .col-lg-1.col-sm-4.col-xs-2.price= "#{price_with_unit(item.item.price)}"
-        .col-lg-2.col-sm-2.col-xs-4.quantity
+        .col-lg-2.col-sm-2.col-xs-2.quantity
           %div= item.item_quantity
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-1.col-xs-3.subtotal= price_with_unit(item.subtotal)
+        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-1.col-xs-5.subtotal= price_with_unit(item.subtotal)
     .divider
     .totalrow.row
       .col-lg-2.col-lg-offset-9.col-xs-8.text
