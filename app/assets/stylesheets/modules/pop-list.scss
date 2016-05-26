@@ -1,7 +1,8 @@
 .pop-list{
+  padding: 10px;
   vertical-align: middle;
-  height: 60px;
-  margin-bottom: 15px;
+  height: 80px;
+  margin-bottom: 5px;
   >.image{
     display: inline-block;
     width: 90px;
@@ -24,5 +25,5 @@
   }
 }
 .pop-list:hover{
-  background-color: $hover-background-color;
+  background-color: $side-bar-hover-background-color;
 }
