@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523091409) do
+ActiveRecord::Schema.define(version: 20160526102919) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20160523091409) do
   end
 
   add_index "categories", ["deleted_at"], name: "index_categories_on_deleted_at", using: :btree
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_id",           limit: 255, null: false
@@ -124,6 +125,19 @@ ActiveRecord::Schema.define(version: 20160523091409) do
   add_index "favorite_items", ["item_id"], name: "index_favorite_items_on_item_id", using: :btree
   add_index "favorite_items", ["user_id"], name: "index_favorite_items_on_user_id", using: :btree
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",           limit: 255, null: false
+    t.integer  "sluggable_id",   limit: 4,   null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope",          limit: 255
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
   create_table "item_categories", force: :cascade do |t|
     t.integer  "item_id",     limit: 4
     t.integer  "category_id", limit: 4
@@ -167,6 +181,7 @@ ActiveRecord::Schema.define(version: 20160523091409) do
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
+  add_index "items", ["slug"], name: "index_items_on_slug", unique: true, using: :btree
   add_index "items", ["taobao_supplier_id"], name: "index_items_on_taobao_supplier_id", using: :btree
 
   create_table "managers", force: :cascade do |t|
