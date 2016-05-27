@@ -19,10 +19,6 @@
               .col-sm-5
                 = f.date_field :cost_date, { class: "datepicker form-control", value: Date.today, placeholder: "請輸入成本日期", required: true }
             .form-group
-              = f.label :cost_of_goods, "貨物成本", class: "col-sm-2 control-label"
-              .col-sm-5
-                = f.number_field :cost_of_goods, { class: "form-control", min: 0, placeholder: "請輸入貨物成本", required: true }
-            .form-group
               = f.label :cost_of_advertising, "廣告金額", class: "col-sm-2 control-label"
               .col-sm-5
                 = f.number_field :cost_of_advertising, { class: "form-control", min: 0, placeholder: "請輸入廣告金額", required: true }
@@ -44,7 +40,6 @@
             %tr
               %th{width: "15%"} 成本日期
               %th{width: "10%"} 編號
-              %th{width: "20%"} 貨物成本
               %th{width: "20%"} 廣告金額
               %th{width: "20%"} 進貨物流費用
               %th{width: "15%"} 建檔日期
@@ -55,8 +50,6 @@
                   = cost_statistic.cost_date
                 %td
                   = cost_statistic.id
-                %td
-                  = cost_statistic.cost_of_goods
                 %td
                   = cost_statistic.cost_of_advertising
                 %td

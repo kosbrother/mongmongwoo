@@ -40,7 +40,7 @@ class Admin::SalesReportsController < AdminController
   end
 
   def cost_statistic_params
-    params.require(:cost_statistic).permit(:cost_of_goods, :cost_of_advertising, :cost_of_freight_in, :cost_date)
+    params.require(:cost_statistic).permit(:cost_of_advertising, :cost_of_freight_in, :cost_date)
   end
 
   def search_date_params
