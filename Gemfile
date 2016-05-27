@@ -41,6 +41,7 @@ gem 'whenever', :require => false
 gem 'friendly_id', '~> 5.1.0'
 gem 'babosa'
 gem 'meta-tags'
+gem 'sitemap_generator'
 
 group :development do
   gem "better_errors"
