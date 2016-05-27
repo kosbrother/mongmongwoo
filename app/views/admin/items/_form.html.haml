@@ -7,6 +7,10 @@
   .col-sm-10
     = f.select :taobao_supplier_id, TaobaoSupplier.all.collect { |supplier| ["編號#{supplier.id}：#{supplier.name}", supplier.id] }, { include_blank: "請選擇商家" }, { class: "form-control", required: true }
 .form-group
+  = f.label :cost, "淘寶價格", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.number_field :cost, class: "form-control", placeholder: "請輸入價格", step: "0.01", required: true
+.form-group
   = f.label :name, "商品名稱", class: "col-sm-2 control-label"
   .col-sm-10
     = f.text_field :name, class: "form-control", placeholder: "請輸入名稱", required: true
