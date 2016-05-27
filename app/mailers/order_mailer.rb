@@ -15,4 +15,11 @@ class OrderMailer < ApplicationMailer
     Rails.logger.warn("mail to : #{@order_info.ship_email}")
     mail(to: @order_info.ship_email , subject: "[萌萌屋] 貨物到店通知")
   end
+
+  def satisfaction_survey(order)
+    @order       = order
+    @order_info  = @order.info
+    Rails.logger.warn("mail to : #{@order_info.ship_email}")
+    mail(to: @order_info.ship_email , subject: "[萌萌屋] 購物滿意度調查")
+  end
 end

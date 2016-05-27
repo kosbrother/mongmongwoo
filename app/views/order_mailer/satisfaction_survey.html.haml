@@ -1,0 +1,33 @@
+.row
+  .col-md-12
+    %table{align: "center"}
+      %tbody
+        %tr
+          %td{style: "color: #000"}
+            %h3 
+              親愛的
+              %span{style: "padding: .2em;color: hotpink;"}=@order_info.ship_name
+              您好，
+            %br
+            %p 感謝您在萌萌屋購物，同時也恭喜您成為我們滿意度調查的對象。
+            %p 透過滿意度的調查，我們希望能帶給更多人愉快的購物經驗。
+            %br
+            %p 請您利用數分鐘的時間，為我們填寫以下連結的問券。
+            %p
+              = link_to "問卷連結", "https://docs.google.com/forms/d/1BU888U6aA8vxuBZ6jbwaCIG02nUmD103GgGry_7LE4I/viewform?c=0&w=1", { target: "_blank", style: "background: #36A940 none repeat scroll 0 0; border-radius: .2rem; color: #fcfcfc; text-decoration: none; cursor: pointer; display: inline-block; font-size: 1em; font-weight: 700; line-height: 20px; padding: 7px 18px 7px; text-align: center; width: 300px; height: 23px; letter-spacing: 0.7em;" }
+            %p 
+              在您下次購物時, 我們會隨機
+              %span{style: "color: crimson; font-weight: 900; font-style: oblique;"} 贈送
+              價值60元的禮品作為謝禮喔 ^^
+        %tr
+          %td{style: "color: #000"}
+            %p 萌萌屋感謝您
+            %br
+            = image_tag("https://www.mmwooo.com/assets/brand-bd79662f0ee01e000515cb351346af5ec583096d27499019403fb3070f4f55b9.png")
+            %p 萌萌屋敬上
+            %p 
+              %span{style: "display: block; margin: 10px 0;"}
+                = link_to "Line@ 客服", "http://line.me/ti/p/%40kya5456n", {style: "color: darkgreen;border: 1px solid;padding: 8px;border-radius: 20px;text-decoration: none;"}
+              %br
+              %span{style: "display: block; margin: 10px 0;"}
+                = link_to "FB 粉絲頁", "https://www.facebook.com/kingofgametw/", {style: "text-decoration: none;color: royalblue;border: 1px solid;padding: 8px;border-radius: 20px;"}
