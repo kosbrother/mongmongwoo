@@ -13,6 +13,7 @@ class CartsController < ApplicationController
       redirect_to root_path
     end
     @total = total(@items)
+    set_meta_tags title: "確認訂單", noindex: true
   end
 
   def info
@@ -20,6 +21,7 @@ class CartsController < ApplicationController
     if params['CVSStoreID']
       @store = Store.find_by(store_code: params['CVSStoreID'])
     end
+    set_meta_tags title: "訂購資料", noindex: true
   end
 
   def select_store
@@ -46,6 +48,7 @@ class CartsController < ApplicationController
     @store = Store.find(params[:store_id])
     @items = current_cart.cart_items.includes(:item, :item_spec)
     @total = total(@items)
+    set_meta_tags title: "確認訂單", noindex: true
   end
 
   def submit

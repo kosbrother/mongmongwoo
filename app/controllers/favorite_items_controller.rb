@@ -8,6 +8,7 @@ class FavoriteItemsController < ApplicationController
     if @items.any?
       @category_all = Category.find(10)
     end
+    set_meta_tags title: "我的收藏", noindex: true
   end
 
   def favorite
