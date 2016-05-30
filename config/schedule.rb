@@ -22,3 +22,7 @@
 every 3.hours do
   rake 'items:item_position',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
+
+every 1.day, :at => '5:00 am' do
+  rake "-s sitemap:refresh"
+end

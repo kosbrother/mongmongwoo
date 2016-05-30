@@ -52,6 +52,6 @@ module ApplicationHelper
 
 
   def fb_picture
-    "http://graph.facebook.com/#{current_user.uid}/picture?width=100&height=100"
+    "https://graph.facebook.com/#{current_user.uid}/picture?width=100&height=100"
   end
 end

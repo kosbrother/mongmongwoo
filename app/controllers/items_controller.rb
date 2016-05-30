@@ -9,5 +9,7 @@ class ItemsController < ApplicationController
     else
       @in_favorite = false
     end
+    set_meta_tags title: @item.name,
+                  description: @item.description
   end
 end

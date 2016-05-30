@@ -3,6 +3,6 @@ class PagesController < ApplicationController
 
   def index
     @category_with_items = @categories.map { |category| {category: category, items: category.items.on_shelf.latest(6)} }
+    set_meta_tags title: '首頁'
   end
-
 end

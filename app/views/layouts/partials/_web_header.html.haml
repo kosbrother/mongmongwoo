@@ -1,6 +1,8 @@
 %head
   %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-  %title 萌萌屋
+  = display_meta_tags site: '萌萌屋-青年流行最前線', reverse: true,
+                      description: '萌萌屋走在青年流行的前線, 為年輕人們提供一個快樂購物的管道, 想知道最近流行些什麼, 有什麼可愛的東東, 來萌萌屋就對了!',
+                      keywords: %W[文具 生活 日韓 生日 卡片 禮品 贈品 飾品 耳環 髮圈 髮夾 雜貨 3C商品 手機用品 餐具]
   %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
   = stylesheet_link_tag    'application', media: 'all'
   = javascript_include_tag 'application'
