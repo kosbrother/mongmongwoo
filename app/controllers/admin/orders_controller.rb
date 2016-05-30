@@ -1,6 +1,6 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
-  before_action :find_order, only: [:show, :update, :update_status]
+  before_action :find_order, only: [:show, :update, :update_status, :sending_survey_email]
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
@@ -51,6 +51,16 @@ class Admin::OrdersController < AdminController
       format.html
       format.csv { send_data @orders_for_file.to_csv }
     end
+  end
+
+  def sending_survey_email
+    if @order.status == "完成取貨" && @order.is_send_survey_email_change.nil? && @order.send_survey_email_at.nil?
+      @order.update_attributes(is_send_survey_email: true, send_survey_email_at: Time.now)
+      flash[:notice] = "滿意度調查問卷已寄出"
+    else
+      flash[:danger] = "信件無法寄出"
+    end
+    redirect_to admin_user_path(@order.user)
   end
 
   private

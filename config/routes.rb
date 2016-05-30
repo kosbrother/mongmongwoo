@@ -117,6 +117,7 @@ Rails.application.routes.draw do
 
       member do
         patch "update_status"
+        patch "sending_survey_email"
       end
     end
 

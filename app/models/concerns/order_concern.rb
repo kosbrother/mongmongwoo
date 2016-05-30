@@ -14,7 +14,7 @@ module OrderConcern
   end
 
   def send_satisfaction_survey_if_pickup
-    if (status_changed? && status == "完成取貨")
+    if (is_send_survey_email_changed? && send_survey_email_at?)
       email_to_satisfaction_survey
     end
   end

@@ -53,4 +53,12 @@ module Admin::OrdersHelper
       content_tag(:span, '已傳送至歐付寶', class: "label label-default")
     end
   end
+
+  def link_to_send_survey_email(order)
+    if order.is_send_survey_email? && order.send_survey_email_at
+     content_tag(:span, "已寄出", class: "badge")
+    else
+      link_to "寄出問卷調查", sending_survey_email_admin_order_path(order), class: "btn btn-info", method: :patch, data: { confirm: "確定寄送Eamil給：#{order.ship_name}？" }
+    end
+  end
 end

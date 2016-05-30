@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531090559) do
+ActiveRecord::Schema.define(version: 20160601033034) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -179,12 +179,23 @@ ActiveRecord::Schema.define(version: 20160531090559) do
     t.string   "url",                limit: 255
     t.integer  "taobao_supplier_id", limit: 4
     t.decimal  "cost",                             precision: 10, scale: 2
-    t.integer  "special_price",      limit: 4
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", unique: true, using: :btree
   add_index "items", ["taobao_supplier_id"], name: "index_items_on_taobao_supplier_id", using: :btree
+
+  create_table "mail_records", force: :cascade do |t|
+    t.integer  "recordable_id",   limit: 4
+    t.string   "recordable_type", limit: 255
+    t.integer  "mail_type",       limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "mail_records", ["mail_type"], name: "index_mail_records_on_mail_type", using: :btree
+  add_index "mail_records", ["recordable_id"], name: "index_mail_records_on_recordable_id", using: :btree
+  add_index "mail_records", ["recordable_type"], name: "index_mail_records_on_recordable_type", using: :btree
 
   create_table "managers", force: :cascade do |t|
     t.string   "username",        limit: 255
