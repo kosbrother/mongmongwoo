@@ -49,7 +49,7 @@ class Admin::SalesReportsController < AdminController
 
   def get_period_total_sales_income_and_cost_of_goods
     total_income_and_cost = OrderItem.created_at_within(search_date_params).total_income_and_cost[0]
-    [total_income_and_cost.total_sales_income, total_income_and_cost.total_cost_of_goods]
+    [total_income_and_cost.total_sales_income, (total_income_and_cost.total_cost_of_goods) * 5]
   end
 
   def get_period_total_cost_data_of_goods_freight_in_and_advertising
