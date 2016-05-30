@@ -44,4 +44,8 @@ module Admin::SalesReportsHelper
       link_to link_text, item_revenue_result_admin_sales_reports_path(time_field: time_option, supplier_id: params[:supplier_id])
     end
   end
+
+  def round_decimal_number(decimal_number)
+    decimal_number.round(2)
+  end
 end

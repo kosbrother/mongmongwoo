@@ -8,23 +8,28 @@
         %tr
           %td 
             %span.data-subject a. 總訂單數
-            %span.data-value.pull-right= @total_order_quantity
+            %span.data-value.pull-right
+              = @total_order_quantity
         %tr
           %td
             %span.data-subject b. 總銷售金額
-            %span.data-value.pull-right= @total_sales_income
+            %span.data-value.pull-right
+              = @total_sales_income
         %tr
           %td
             %span.data-subject c. 總貨物成本
-            %span.data-value.pull-right= @total_cost_of_goods
+            %span.data-value.pull-right
+              = @total_cost_of_goods
         %tr
           %td
             %span.data-subject d. 總進貨物流費
-            %span.data-value.pull-right= @total_cost_of_freight_in
+            %span.data-value.pull-right
+              = @total_cost_of_freight_in
         %tr
           %td 
             %span.data-subject e. 總出貨物流費
-            %span.data-value.pull-right= @total_cost_ship_fee
+            %span.data-value.pull-right
+              = @total_cost_ship_fee
         %tr
           %td
             %span
@@ -32,12 +37,12 @@
           %td 
             %span.data-subject f. 毛利(b - c - d - e)
             %span.data-value.pull-right
-              = @gross_profit
+              = round_decimal_number(@gross_profit)
         %tr
           %td 
             %span.data-subject g. 平均訂單毛利(f / a)
             %span.data-value.pull-right
-              = @gross_profit_per_order
+              = round_decimal_number(@gross_profit_per_order)
   .col-md-4
     %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
       %tbody
@@ -47,17 +52,18 @@
         %tr
           %td 
             %span.data-subject h. 總廣告費用
-            %span.data-value.pull-right= @total_cost_of_advertising
+            %span.data-value.pull-right
+              = @total_cost_of_advertising
         %tr
           %td 
             %span.data-subject i. 平均廣告費用(h / a)
             %span.data-value.pull-right
-              = @average_cost_of_advertising
+              = round_decimal_number(@average_cost_of_advertising)
         %tr
           %td 
             %span.data-subject j. 平均扣廣告訂單毛利(g - i)
             %span.data-value.pull-right
-              = @average_gross_profit_except_ads
+              = round_decimal_number(@average_gross_profit_except_ads)
   .col-md-4
     %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
       %tbody
@@ -83,9 +89,9 @@
           %td 
             %span.data-subject n. 實際毛利(f - l)
             %span.data-value.pull-right
-              = @actual_gross_profit
+              = round_decimal_number(@actual_gross_profit)
         %tr
           %td 
             %span.data-subject o. 實際平均訂單毛利(f - l / a - k)
             %span.data-value.pull-right
-              = @actual_average_gross_profit
+              = round_decimal_number(@actual_average_gross_profit)
