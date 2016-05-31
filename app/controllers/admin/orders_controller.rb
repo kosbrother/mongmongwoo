@@ -66,6 +66,6 @@ class Admin::OrdersController < AdminController
   private
 
   def find_order
-    @order = Order.includes(:user, :info, :items).find(params[:id])
+    @order = Order.includes(:user, :info, :mail_concern, :items).find(params[:id])
   end
 end
