@@ -117,7 +117,6 @@ Rails.application.routes.draw do
 
       member do
         patch "update_status"
-        patch "sending_survey_email"
       end
     end
 
@@ -139,6 +138,12 @@ Rails.application.routes.draw do
     end
 
     resources :taobao_suppliers, only: [:index, :new, :create, :edit, :update, :destroy]
+
+    resources :mail_concerns, only: [] do
+      collection do
+        patch "/sending_survey_email/:order_id/", to: "mail_concerns#sending_survey_email", as: "sending_survey_email"
+      end
+    end
   end
 
   # API for App
