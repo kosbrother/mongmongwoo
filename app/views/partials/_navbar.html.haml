@@ -2,7 +2,7 @@
   .container
     / Brand and toggle get grouped for better mobile display
     .navbar-header
-      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#nav-bar-collapse", "data-toggle" => "collapse", :type => "button"}
+      %button#nav-drop.navbar-toggle.collapsed{"aria-expanded": "false", "data-target": "#nav-bar-collapse", "data-toggle": "collapse", type: "button"}
         %span.sr-only Toggle navigation
         %span.icon-bar
         %span.icon-bar
@@ -22,9 +22,9 @@
             %ul.dropdown-menu
               - @categories.each do |category|
                 %li.list
-                  = link_to category.name, category_path(category), class: "link"
+                  = link_to category.name, category_path(category), class: "link", onClick: analytic_event('navigation_dropdown', 'click', "#{category.name}")
         %li.nav-list
-          = link_to checkout_path do
+          = link_to checkout_path, onClick: analytic_event('cart', 'click', '無') do
             .list.cart
               購物車
               = render_counter

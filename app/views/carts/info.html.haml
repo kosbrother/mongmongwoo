@@ -24,5 +24,5 @@
         %div= @store ?  "門市名稱： #{@store.name}" : '請選擇送達門市'
         %div= @store ?  "地址： #{@store.address}" : ""
     .submit-session
-      =link_to '上一步', checkout_path, class: 'btn btn-previous'
-      =submit_tag '下一步', class: 'btn'
+      =link_to '上一步', checkout_path, class: 'btn btn-previous', onClick: analytic_event("checkout_step_2", "click", "previous_step")
+      =submit_tag '下一步', class: 'btn', onClick: analytic_event("checkout_step_3", "enter", "無")

@@ -10,7 +10,7 @@
     .header
       熱門商品
     - @pop_items.each do |item|
-      = link_to category_item_path(@category_all, item) do
+      = link_to category_item_path(@category_all, item), onClick: analytic_event("popular_product", "view", "#{item.name}") do
         .pop-list
           .image
             = image_tag(item.cover.icon.url)
