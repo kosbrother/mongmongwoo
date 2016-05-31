@@ -55,12 +55,12 @@ module Admin::OrdersHelper
   end
 
   def link_to_send_survey_email(order)
-    if order.is_send_survey_email? && order.send_survey_email_at
+    if order.mail_concern && order.mail_concern.is_sent && order.mail_concern.sent_email_at
      content_tag(:span, "已寄出", class: "label label-default")
-    elsif order.status == "完成取貨" && order.is_send_survey_email_change.nil? && order.send_survey_email_at.nil?
+    elsif order.status == "完成取貨" && order.mail_concern.is_sent_change.nil? && order.mail_concern.sent_email_at.nil?
       link_to "寄出問卷調查", sending_survey_email_admin_order_path(order), class: "btn btn-info", method: :patch, data: { confirm: "確定寄送Eamil給：#{order.ship_name}？" }
     else
-      content_tag(:span, "尚未完成取貨", class: "label label-warning")
+      content_tag(:span, "未完成取貨", class: "label label-warning")
     end
   end
 end
