@@ -8,7 +8,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |order, evaluator|
-        FactoryGirl.create_list(:item, evaluator.items_count, :order => order)
+        FactoryGirl.create_list(:order_item, evaluator.items_count, :order => order)
       end
     end
   end

@@ -17,5 +17,22 @@ CarrierWave.configure do |config|
     config.fog_directory = ENV['staging_fog_directory']
   elsif Rails.env.development?
     config.storage :file
+  elsif Rails.env.test?
+    config.storage :file
+    config.enable_processing = false
+    ItemCoverUploader
+    SpecPicUploader
+    ImageUploader
+    CarrierWave::Uploader::Base.descendants.each do |uploader|
+      uploader.class_eval do
+        def cache_dir
+          "#{Rails.root}/spec/support/uploads/tmp"
+        end
+
+        def store_dir
+          "#{Rails.root}/spec/support/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+        end
+      end
+    end
   end
 end

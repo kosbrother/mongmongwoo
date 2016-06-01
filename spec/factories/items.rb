@@ -1,7 +1,19 @@
-
 FactoryGirl.define do
-  factory :item, class: OrderItem do
-    item_name Faker::Commerce.product_name
-    item_price Faker::Commerce.price
+  factory :item, class: Item do
+    name Faker::Commerce.product_name
+    price Faker::Number.between(1, 100)
+    description Faker::Lorem.paragraph
+    cover  { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'cover.jpg')) }
+    factory :item_with_specs_and_photos do
+      transient do
+        item_specs_count 3
+        photos_count 3
+      end
+
+      after(:create) do |item, evaluator|
+        FactoryGirl.create_list(:item_spec, evaluator.item_specs_count, :item => item)
+        FactoryGirl.create_list(:photo, evaluator.photos_count, :item => item)
+      end
+    end
   end
 end
