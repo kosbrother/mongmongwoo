@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 20160601033034) do
     t.string   "url",                limit: 255
     t.integer  "taobao_supplier_id", limit: 4
     t.decimal  "cost",                             precision: 10, scale: 2
+    t.integer  "special_price",      limit: 4
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
