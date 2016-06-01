@@ -42,7 +42,7 @@ module ApplicationHelper
   end
 
   def render_float_cart
-    link_to checkout_path do
+    link_to checkout_path, onClick: analytic_event('float_cart', 'click', '無') do
       content_tag(:div, class: current_cart.cart_items.count > 0  ? 'float-box' : 'float-box hidden', id: 'cart-info') do
         image_tag('float_cart.png') +
         render_counter
@@ -50,8 +50,13 @@ module ApplicationHelper
     end
   end
 
-
   def fb_picture
     "https://graph.facebook.com/#{current_user.uid}/picture?width=100&height=100"
+  end
+
+  def analytic_event(category, action, label)
+    if Rails.env == "production"
+      "ga('send', 'event', '#{category}', '#{action}', '#{label}');"
+    end
   end
 end

@@ -25,15 +25,16 @@
                     您確定要刪除此產品？
                   .modal-footer
                     %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 關閉視窗
-                    %button.btn.btn-confirm.cart-item-delete{:type => "button","data-dismiss": "modal", 'data-id': item.id,'data-cart-id': @cart.id} 刪除
+                    %button.btn.btn-confirm.cart-item-delete{type: "button", "data-dismiss": "modal", 'data-id': item.id,
+                      'data-cart-id': @cart.id, onClick: analytic_event("checkout_step_1", "click", "product_delete")} 刪除
           .col-lg-2.col-xs-3.icon= image_tag(item.item_spec.style_pic.url, id: "item-spec-pic-#{item.id}")
           .col-lg-3.col-xs-8.itemname= item.item.name
           .col-lg-2.col-xs-7.select= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'spec-select', id: 'select-specs', 'data-cart-item': item.id, 'data-cart-id': @cart.id
           .col-lg-1.col-xs-2.unitprice= price_with_unit(item.item.price)
           .col-lg-2.col-sm-4.col-xs-3.quantity-box
-            .quantity-minus{ 'data-id': item.id } -
+            .quantity-minus{ 'data-id': item.id, onClick: analytic_event("checkout_step_1", "click", "number_change") } -
             = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
-            .quantity-plus{ 'data-id': item.id } +
+            .quantity-plus{ 'data-id': item.id, onClick: analytic_event("checkout_step_1", "click", "number_change") } +
           .col-lg-1.col-sm-2.col-xs-3.subtotal{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
       .divider
       .totalrow.row
@@ -51,7 +52,7 @@
           #totalprice= price_with_unit(@total + ship_fee)
     .submit-session
       - if current_user
-        = link_to '下一步', cart_info_path , class: 'btn'
+        = link_to '下一步', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_2", "enter", "無")
       -else
-        = link_to '', auth_path("facebook"), class: 'btn fb-login'
-        = link_to '免註冊匿名購買', cart_info_path , class: 'btn'
+        = link_to '', auth_path("facebook"), class: 'btn fb-login', onClick: analytic_event("checkout_step_1", "click", "facebook_login")
+        = link_to '免註冊匿名購買', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_1", "click", "anonymous_purchase")
