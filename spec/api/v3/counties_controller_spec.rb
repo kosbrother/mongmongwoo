@@ -5,14 +5,12 @@ RSpec.describe Api::V3::CountiesController, type: :controller do
   let!(:town) { FactoryGirl.create(:town, county: county) }
 
   describe "Get index" do
-    it "should return status code 200" do
-      get :index
-      expect(response).to have_http_status(200)
+    it_behaves_like "return correct http status code" do
+      let(:action) { get :index }
     end
 
-    it "should return JSON format" do
-      get :index
-      expect(response.content_type).to eq("application/json")
+    it_behaves_like "return correct response format" do
+      let(:action) { get :index }
     end
 
     it "should return correct county data" do
@@ -20,23 +18,21 @@ RSpec.describe Api::V3::CountiesController, type: :controller do
       json = JSON.parse(response.body)
       expect(json[0]['name']).to eq(county.name)
     end
+  end
 
-    describe "Get show" do
-      it "should return status code 200" do
-        get :show, id: county.id
-        expect(response).to have_http_status(200)
-      end
+  describe "Get show" do
+    it_behaves_like "return correct http status code" do
+      let(:action) { get :show, id: county.id }
+    end
 
-      it "should return JSON format" do
-        get :show, id: county.id
-        expect(response.content_type).to eq("application/json")
-      end
+    it_behaves_like "return correct response format" do
+      let(:action) { get :show, id: county.id }
+    end
 
-      it "should return correct town data" do
-        get :show, id: county.id
-        json = JSON.parse(response.body)
-        expect(json[0]['name']).to eq(town.name)
-      end
+    it "should return correct town data" do
+      get :show, id: county.id
+      json = JSON.parse(response.body)
+      expect(json[0]['name']).to eq(town.name)
     end
   end
 end
