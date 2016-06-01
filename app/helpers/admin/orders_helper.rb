@@ -53,4 +53,14 @@ module Admin::OrdersHelper
       content_tag(:span, '已傳送至歐付寶', class: "label label-default")
     end
   end
+
+  def link_to_send_survey_email(order)
+    if order.status == "完成取貨" && order.survey_mail
+     content_tag(:span, "已寄出", class: "label label-default")
+    elsif order.status == "完成取貨" && order.survey_mail.nil?
+      link_to "寄出問卷調查", sending_survey_email_admin_mail_records_path(order), class: "btn btn-info", method: :patch, data: { confirm: "確定寄送Email給：#{order.ship_name}？" }
+    else
+      content_tag(:span, "未完成取貨", class: "label label-warning")
+    end
+  end
 end

@@ -16,11 +16,16 @@ class Order < ActiveRecord::Base
   has_many :items, class_name: "OrderItem", dependent: :destroy
   has_one :info, class_name: "OrderInfo", dependent: :destroy
   belongs_to :device_registration
+  has_many :mail_records, as: :recordable
 
   self.per_page = 50
 
   delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, to: :info
   delegate :orders, to: :user, prefix: true
+
+  def survey_mail
+    mail_records.find_by(mail_type: MailRecord.mail_types["satisfaction_survey"])
+  end
 
   def info_user_name
     user.user_name

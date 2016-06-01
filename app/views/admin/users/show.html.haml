@@ -28,6 +28,7 @@
             %th 訂單Email
             %th 訂單狀態
             %th 訂購明細
+            %th 寄送滿意度問卷
         %tbody
           - @user.orders.each do |order|
             %tr
@@ -37,3 +38,4 @@
               %td= order.ship_email
               %td= order.status
               %td= render(partial: "admin/orders/info_and_items_list", locals: { order: order })
+              %td= link_to_send_survey_email(order)
