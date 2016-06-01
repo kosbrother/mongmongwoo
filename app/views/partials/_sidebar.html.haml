@@ -3,14 +3,14 @@
     .header
       商品清單
     - @categories.each do |category|
-      = link_to category_path(category) do
+      = link_to category_path(category), onClick: analytic_event("category", "click", category.name) do
         .list
           = category.name
   .side-bar
     .header
       熱門商品
     - @pop_items.each do |item|
-      = link_to category_item_path(@category_all, item), onClick: analytic_event("popular_product", "view", "#{item.name}") do
+      = link_to category_item_path(@category_all, item), onClick: analytic_event("popular_product", "view", item.name) do
         .pop-list
           .image
             = image_tag(item.cover.icon.url)

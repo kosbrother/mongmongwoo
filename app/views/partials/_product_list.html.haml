@@ -2,7 +2,7 @@
   - items.each do |item|
     .col-lg-4.col-xs-6.xs-padding
       .product-list
-        = link_to category_item_path(category, item), onClick: analytic_event("product", "view", "#{item.name}")  do
+        = link_to category_item_path(category, item), onClick: analytic_event("product", "view", item.name)  do
           .image
             = image_tag(item.cover.url, class: 'img-responsive center-block')
           .text

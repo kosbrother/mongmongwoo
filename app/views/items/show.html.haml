@@ -39,7 +39,7 @@
         .col-lg-12.col-xs-12.no-padding
           .add-cart
             = render_favorite_btn(@item, @in_favorite)
-            = f.submit '加入購物車', class: 'add ', onClick: analytic_event("product", "add_to_cart", "#{@item.name}")
+            = f.submit '加入購物車', class: 'add ', onClick: analytic_event("product", "add_to_cart", @item.name)
             .customer
               購物遇到問題？
               = link_to '聯繫客服', 'http://line.me/ti/p/%40kya5456n'
