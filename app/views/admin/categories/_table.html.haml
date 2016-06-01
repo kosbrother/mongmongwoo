@@ -7,6 +7,7 @@
       %th 商品圖片
       %th 商品名稱
       %th 商品價格
+      %th 優惠價格
       %th 淘寶價格
       %th 操作選項
   %tbody#items-sort-list{"data-sort-url" => sort_items_priority_admin_categories_path(category: @category)}
@@ -28,6 +29,7 @@
             = item_icon(item.cover)
         %td= link_to item.name, admin_item_path(item)
         %td= item.price
+        %td= item.special_price
         %td= item.cost
         %td
           .dropdown

@@ -19,6 +19,10 @@
   .col-sm-10
     = f.number_field :price, class: "form-control", placeholder: "請輸入價格", required: true
 .form-group
+  = f.label :special_price, "優惠價格", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.number_field :special_price, class: "form-control", placeholder: "請輸入價格"
+.form-group
   = f.label :cover, "商品封面圖", class: "col-sm-2 control-label"
   .col-sm-10
     = f.file_field :cover, class: "form-control"

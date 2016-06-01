@@ -52,6 +52,9 @@
           %dt 商品價格
           %dd
             = number_to_currency(@item.price, unit: "NT$ ")
+          %dt 優惠價格
+          %dd
+            = number_to_currency(@item.special_price, unit: "NT$ ")
           %dt 商品敘述
           %dd
             = raw @item.description

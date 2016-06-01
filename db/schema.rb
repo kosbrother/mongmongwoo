@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527100815) do
+ActiveRecord::Schema.define(version: 20160531090559) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 20160527100815) do
     t.string   "url",                limit: 255
     t.integer  "taobao_supplier_id", limit: 4
     t.decimal  "cost",                             precision: 10, scale: 2
+    t.integer  "special_price",      limit: 4
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
