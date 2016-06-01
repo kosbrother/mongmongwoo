@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
   has_many :items, class_name: "OrderItem", dependent: :destroy
   has_one :info, class_name: "OrderInfo", dependent: :destroy
   belongs_to :device_registration
-  has_one :mail_concern, as: :mailable
+  has_one :mail_record, as: :recordable
 
   self.per_page = 50
 

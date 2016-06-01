@@ -3,8 +3,6 @@ module OrderConcern
 
   included do    
     after_update :notify_user_if_arrive_store
-    after_update :generate_mail_concern
-    after_update :destroy_mail_concern_if_order_status_not_pikup
   end
 
   def notify_user_if_arrive_store
@@ -24,18 +22,6 @@ module OrderConcern
     if device_registration.present?
       GcmNotifyService.new.send_pickup_notification(self)
       logger.info("Sending notification to device: #{device_registration.registration_id}")
-    end
-  end
-
-  def generate_mail_concern
-    if (status_changed? && status == "完成取貨")
-      self.mail_concern = MailConcern.create!
-    end
-  end
-
-  def destroy_mail_concern_if_order_status_not_pikup
-    if (mail_concern && status_changed? && status != "完成取貨")
-      self.mail_concern.destroy!
     end
   end
 end

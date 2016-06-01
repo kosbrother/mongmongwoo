@@ -139,9 +139,9 @@ Rails.application.routes.draw do
 
     resources :taobao_suppliers, only: [:index, :new, :create, :edit, :update, :destroy]
 
-    resources :mail_concerns, only: [] do
+    resources :mail_records, only: [] do
       collection do
-        patch "/sending_survey_email/:order_id/", to: "mail_concerns#sending_survey_email", as: "sending_survey_email"
+        patch "/sending_survey_email/:order_id/", to: "mail_records#sending_survey_email", as: "sending_survey_email"
       end
     end
   end

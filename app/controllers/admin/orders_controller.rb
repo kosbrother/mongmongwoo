@@ -1,6 +1,6 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
-  before_action :find_order, only: [:show, :update, :update_status, :sending_survey_email]
+  before_action :find_order, only: [:show, :update, :update_status]
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
@@ -56,6 +56,6 @@ class Admin::OrdersController < AdminController
   private
 
   def find_order
-    @order = Order.includes(:user, :info, :mail_concern, :items).find(params[:id])
+    @order = Order.includes(:user, :info, :items).find(params[:id])
   end
 end

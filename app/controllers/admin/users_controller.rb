@@ -15,7 +15,7 @@ class Admin::UsersController < AdminController
   end
 
   def show
-    @user = User.includes(orders: [:info, :mail_concern, :items, items: :item, info: :store]).find(params[:id])
+    @user = User.includes(orders: [:info, :mail_record, :items, items: :item, info: :store]).find(params[:id])
 
     respond_to do |format|
       format.html
