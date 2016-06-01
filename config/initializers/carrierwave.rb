@@ -20,17 +20,25 @@ CarrierWave.configure do |config|
   elsif Rails.env.test?
     config.storage :file
     config.enable_processing = false
-    ItemCoverUploader
-    SpecPicUploader
-    ImageUploader
-    CarrierWave::Uploader::Base.descendants.each do |uploader|
-      uploader.class_eval do
+  end
+
+  ItemCoverUploader
+  SpecPicUploader
+  ImageUploader
+  # Change store_dir depends on environment
+  CarrierWave::Uploader::Base.descendants.each do |uploader|
+    uploader.class_eval do
+      if Rails.env.test?
         def cache_dir
           "#{Rails.root}/spec/support/uploads/tmp"
         end
 
         def store_dir
           "#{Rails.root}/spec/support/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+        end
+      else
+        def store_dir
+          "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
         end
       end
     end
