@@ -14,6 +14,7 @@ class Api::V3::ItemsController < ApiController
     result[:id] = item.id
     result[:name] = item.name
     result[:price] = item.price
+    result[:special_price] = item.special_price
     result[:cover] = item.cover.url
     result[:description] = item.description
     result[:status] = item.status

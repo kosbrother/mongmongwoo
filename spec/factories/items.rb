@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :item, class: Item do
     name Faker::Commerce.product_name
-    price Faker::Number.between(1, 100)
+    price Faker::Number.between(100, 1000)
+    special_price Faker::Number.between(1, 99)
     description Faker::Lorem.paragraph
     cover  { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'cover.jpg')) }
     factory :item_with_specs_and_photos do
