@@ -195,7 +195,7 @@ Rails.application.routes.draw do
     end
 
     namespace :v3 do
-      resources :counties, only: [:index, :show] do
+      resources :counties, only: [:index] do
         resources :towns, only: [:index] do
           resources :roads, only: [:index] do
             resources :stores, only: [:index]
