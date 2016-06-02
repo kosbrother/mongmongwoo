@@ -5,6 +5,8 @@ FactoryGirl.define do
     special_price Faker::Number.between(1, 99)
     description Faker::Lorem.paragraph
     cover  { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'cover.jpg')) }
+    url Faker::Internet.url
+
     factory :item_with_specs_and_photos do
       transient do
         item_specs_count 3
