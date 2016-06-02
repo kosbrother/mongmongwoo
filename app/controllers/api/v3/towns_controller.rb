@@ -1,8 +1,7 @@
 class Api::V3::TownsController < ApiController
-  before_action :find_county, only: [:index]
-
   def index
-    @towns = @county.towns.includes(:roads, :stores)
+    county = County.find(params[:county_id])
+    @towns = county.towns.includes(:roads, :stores)
 
     render json: @towns, only: [:id, :name]
   end

@@ -6,8 +6,8 @@ class Api::V3::CountiesController < ApiController
   end
 
   def show
-    @county = County.find(params[:id])
-    @towns_in_county = @county.towns
+    county = County.find(params[:id])
+    @towns_in_county = county.towns
 
     render json: @towns_in_county, only: [:id, :name]
   end
