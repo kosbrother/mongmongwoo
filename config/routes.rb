@@ -203,6 +203,7 @@ Rails.application.routes.draw do
         end  
       end
       resources :items, only: [:show]
+      resources :users, only: [:create]
     end
   end
 end
