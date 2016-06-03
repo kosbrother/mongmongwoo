@@ -6,13 +6,14 @@ describe Api::V3::ItemsController, :type => :controller  do
       item =  FactoryGirl.create(:item_with_specs_and_photos)
       get :show, id: item
       json = ActiveSupport::JSON.decode(response.body)
-      expect(json['name']).not_to be_nil
-      expect(json['price']).not_to be_nil
-      expect(json['cover']).not_to be_nil
-      expect(json['description']).not_to be_nil
-      expect(json['status']).not_to be_nil
-      expect(json['photos']).not_to be_nil
-      expect(json['specs']).not_to be_nil
+      expect(json['name']).to eq(item.name)
+      expect(json['price']).to eq(item.price)
+      expect(json['cover']).to eq(item.cover.url)
+      expect(json['description']).to eq(item.description)
+      expect(json['status']).to eq(item.status)
+      expect(json['photos']).to match_array(item.photos.collect { |photo| {"image_url" => photo.image.url} })
+      expect(json['specs']).to match_array(item.specs.collect { |spec| {"id" => spec.id, "style" => spec.style,
+                                                                        "pic" => spec.style_pic.url}})
     end
   end
 end
