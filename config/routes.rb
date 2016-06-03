@@ -203,7 +203,6 @@ Rails.application.routes.draw do
         end  
       end
 
-      # resources :items, only: [:show]
       resources :users, only: [:create]
       
       resources :categories, only: [:index] do
