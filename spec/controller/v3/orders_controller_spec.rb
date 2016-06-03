@@ -86,4 +86,27 @@ describe Api::V3::OrdersController, type: :controller do
       end
     end
   end
+
+  describe "get #by_email_phone" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:orders) { create_list(:order_with_items, 3, user_id: user.id, uid: user.uid) }
+    let!(:email) { orders[0].info.ship_email }
+    let!(:phone) { orders[0].info.ship_phone }
+    before :each do
+      get :by_email_phone, email: email, phone: phone
+    end
+    context 'when user email and phone are provided' do
+      it 'does generate correct order list' do
+        result = ActiveSupport::JSON.decode(response.body)
+        orders.reverse!
+        expect(result.size).to eq(orders.size)
+        expect(result[0]['id']).to eq(orders[0].id)
+        expect(result[0]['user_id']).to eq(orders[0].user_id)
+        expect(result[0]['uid']).to eq(orders[0].uid)
+        expect(result[0]['total']).to eq(orders[0].total)
+        expect(result[0]['status']).to eq(orders[0].status)
+        expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
+      end
+    end
+  end
 end
