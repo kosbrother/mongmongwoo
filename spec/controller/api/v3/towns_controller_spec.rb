@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::V3::TownsController, type: :controller do
-  let!(:county) { FactoryGirl.create(:seven_store_county) }
-  let!(:town) { FactoryGirl.create(:town, county: county) }
-
   describe "Get index" do
+    let!(:county) { FactoryGirl.create(:seven_store_county) }
+    let!(:town) { FactoryGirl.create(:town, county: county) }
+
     it_behaves_like "return correct http status code" do
       let(:action) { get :index, county_id: county.id }
     end
@@ -12,13 +12,17 @@ RSpec.describe Api::V3::TownsController, type: :controller do
     it_behaves_like "return correct response format" do
       let(:action) { get :index, county_id: county.id }
     end
-    
-    it "should find county's towns" do
+
+    it "should contain correct county's towns quantity" do
       get :index, county_id: county.id
       json = JSON.parse(response.body)
       expect(json.length).to eq(county.towns.length)
-      expect(json[0]['id']).to eq(county.towns[0].id)
-      expect(json[0]['name']).to eq(county.towns[0].name)
+    end
+
+    it "should contain county's towns data" do
+      get :index, county_id: county.id
+      json = JSON.parse(response.body)
+      expect(json).to match_array(county.towns.id_and_name.as_json)
     end
   end
 end
