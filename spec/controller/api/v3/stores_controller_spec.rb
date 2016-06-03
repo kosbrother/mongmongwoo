@@ -15,7 +15,7 @@ RSpec.describe Api::V3::StoresController, type: :controller do
       let(:action) { get :index, county_id: county.id, town_id: town.id, road_id: road.id }
     end
 
-    it "should find road's stores" do
+    it "should contain corrcet road's stores quantity" do
       get :index, county_id: county.id, town_id: town.id, road_id: road.id
       json = JSON.parse(response.body)
       expect(json.length).to eq(road.stores.length)
