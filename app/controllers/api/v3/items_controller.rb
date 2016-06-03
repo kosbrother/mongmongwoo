@@ -2,8 +2,9 @@ class Api::V3::ItemsController < ApiController
   def index
     category = Category.find(params[:category_id])
 
-    items = category.items.priority.joins("left join photos on items.id = photos.item_id").select(:id, :name, :price, :cover, :description, :status, 'photos.image').on_shelf.group(:name).page(params[:page]).per_page(20)
-    render json: items
+    items = category.items.on_shelf.priority.includes(:specs).select(:id, :name, :price, :cover, :description, :status).page(params[:page]).per_page(20)
+
+    render json: items.as_json(include: { specs: { only: [:id, :style], include: { style_pic: { only: :url } } } })
   end
 
   def show
@@ -27,7 +28,5 @@ class Api::V3::ItemsController < ApiController
     result[:status] = item.status
     result[:photos] = item.photos.collect { |photo| {image_url: photo.image.url} }
     result[:specs] = spec_collection
-
-    render json: result
   end
 end
