@@ -58,10 +58,31 @@ describe Api::V3::OrdersController, type: :controller do
       get :show, id: order.id
     end
     context 'when order id provide' do
-      it 'should generate correct order info' do
+      it 'does generate correct order info' do
         result = response.body
         json = order.generate_result_order.to_json
         expect(result).to eq(json)
+      end
+    end
+  end
+
+  describe "get #user_owned_orders" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:orders) { create_list(:order_with_items, 3, user_id: user.id, uid: user.uid) }
+    before :each do
+      get :user_owned_orders, uid: user.uid, page: '1'
+    end
+    context 'when user id and page are provide' do
+      it 'does generate correct order list' do
+        result = ActiveSupport::JSON.decode(response.body)
+        orders.reverse!
+        expect(result.size).to eq(orders.size)
+        expect(result[0]['id']).to eq(orders[0].id)
+        expect(result[0]['user_id']).to eq(orders[0].user_id)
+        expect(result[0]['uid']).to eq(orders[0].uid)
+        expect(result[0]['total']).to eq(orders[0].total)
+        expect(result[0]['status']).to eq(orders[0].status)
+        expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
       end
     end
   end
