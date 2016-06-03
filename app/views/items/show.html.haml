@@ -1,3 +1,6 @@
+- content_for :head do
+  %link{href: "android-app://com.android.mmwooo/http/www.mmwooo.com/#{category_item_path(@category, @item)}-#{@item.id}", rel: "alternate"}
+
 - breadcrumb :item, @category, @item
 .product-block.row
   .col-lg-6.xs-padding
