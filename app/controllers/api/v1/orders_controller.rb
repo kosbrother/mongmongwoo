@@ -47,11 +47,6 @@ class Api::V1::OrdersController < ApiController
     render json: "Succes：新增一筆訂單"
   end
 
-  def index
-    orders = Order.includes(:user, :info, :items).recent.page(params[:page]).per_page(20)
-    render json: orders, only: [:id, :user_id, :total, :status, :uid]
-  end
-
   def show
     order = Order.includes(:user, :info, :items).find(params[:id])
     info = order.info

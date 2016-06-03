@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe ApiController, :type => :controller  do
-
   describe 'get android_version' do
     it 'should contain correct info' do
       FactoryGirl.create(:android_version)

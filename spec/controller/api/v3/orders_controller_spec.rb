@@ -2,23 +2,22 @@ require 'spec_helper'
 
 describe Api::V3::OrdersController, type: :controller do
   describe "post #create" do
-    let!(:user) { FactoryGirl.create(:user) }
-    let!(:item) { FactoryGirl.create(:item) }
-    let!(:item_spec) { FactoryGirl.create(:item_spec) }
+    let!(:user) { FactoryGirl.create(:user_with_registration_device) }
+    let!(:item) { FactoryGirl.create(:item_with_specs_and_photos) }
     let!(:store) { FactoryGirl.create(:store) }
 
     let!(:uid) { user.uid }
     let!(:items_price) { item.price }
     let!(:ship_fee) { 60 }
     let!(:total) { items_price + ship_fee }
-    let!(:registration_id) { Faker::Lorem.characters }
+    let!(:registration_id) { user.devices.first.registration_id }
     let!(:ship_name) { Faker::Name.name }
     let!(:ship_phone) { Faker::PhoneNumber.phone_number }
     let!(:ship_store_code) {store.store_code}
     let!(:ship_store_id) { store.id }
     let!(:ship_store_name) { store.name }
     let!(:ship_email) { Faker::Internet.email }
-    let!(:product) { {name: item.name, style: item_spec.style, quantity: 1, price: item.price} }
+    let!(:product) { {id: item.id, name: item.name, spec_id: item.specs.first.id, style: item.specs.first.style, quantity: 1, price: item.price} }
     let!(:products) { [product] }
 
     before :each do
@@ -27,6 +26,7 @@ describe Api::V3::OrdersController, type: :controller do
            ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
            ship_email: ship_email, products: products
     end
+
     it "does create correct order" do
       order_id = ActiveSupport::JSON.decode(response.body)['id']
       order = Order.find(order_id)
@@ -42,10 +42,10 @@ describe Api::V3::OrdersController, type: :controller do
       expect(order.items.size).to eq(products.size)
       expect(order.items[0].item_name).to eq(product[:name])
     end
+
     context 'when registration id exist' do
       rg = FactoryGirl.create(:device_registration)
       let!(:registration_id) { rg.registration_id }
-      # let!(:registration_id)
       it 'does not create new device_registration' do
         expect(DeviceRegistration.all.size).to eq(1)
       end
