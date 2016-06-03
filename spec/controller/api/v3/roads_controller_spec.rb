@@ -23,7 +23,7 @@ RSpec.describe Api::V3::RoadsController, type: :controller do
     it "should find town's roads" do
       get :index, county_id: county.id, town_id: town.id
       json = JSON.parse(response.body)
-      expect(json).to match_array(town.roads.id_and_name.as_json)
+      expect(json).to match_array(town.roads.select_api_fields.as_json)
     end
   end
 end

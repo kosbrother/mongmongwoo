@@ -22,7 +22,7 @@ RSpec.describe Api::V3::TownsController, type: :controller do
     it "should contain county's towns data" do
       get :index, county_id: county.id
       json = JSON.parse(response.body)
-      expect(json).to match_array(county.towns.id_and_name.as_json)
+      expect(json).to match_array(county.towns.select_api_fields.as_json)
     end
   end
 end
