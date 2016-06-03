@@ -34,5 +34,12 @@ RSpec.describe Api::V3::UsersController, :type => :controller do
         expect(User.where(uid: user.uid).size).to eq(1)
       end
     end
+
+    context "when no email provide" do
+      let!(:email){ "" }
+      it "does create a random email" do
+        expect(User.find_by(uid: uid).email).not_to be_nil
+      end
+    end
   end
 end
