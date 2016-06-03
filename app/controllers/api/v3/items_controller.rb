@@ -2,8 +2,7 @@ class Api::V3::ItemsController < ApiController
   def index
     category = Category.find(params[:category_id])
 
-    items = category.items.priority.select(:id, :name, :price, :cover, :position).on_shelf.page(params[:page]).per_page(20)
-
+    items = category.items.priority.joins("left join photos on items.id = photos.item_id").select(:id, :name, :price, :cover, :description, :status, 'photos.image').on_shelf.group(:name).page(params[:page]).per_page(20)
     render json: items
   end
 
