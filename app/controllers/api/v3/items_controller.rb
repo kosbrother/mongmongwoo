@@ -1,4 +1,12 @@
 class Api::V3::ItemsController < ApiController
+  def index
+    category = Category.find(params[:category_id])
+
+    items = category.items.priority.select(:id, :name, :price, :cover, :position).on_shelf.page(params[:page]).per_page(20)
+
+    render json: items
+  end
+
   def show
     item = Item.includes(:photos).find(params[:id])
     specs = item.specs.on_shelf.select(:id,:style,:style_pic)

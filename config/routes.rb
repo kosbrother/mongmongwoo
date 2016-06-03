@@ -209,6 +209,6 @@ Rails.application.routes.draw do
       resources :categories, only: [:index] do
         resources :items, only: [:index, :show]
       end
-    end
+    end 
   end
 end
