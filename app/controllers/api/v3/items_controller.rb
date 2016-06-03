@@ -1,12 +1,12 @@
 class Api::V3::ItemsController < ApiController
   def show
-    item = Item.includes(:photos, :specs).find(params[:id])
-    specs = item.specs.collect { |spec| spec if spec.status == "on_shelf" }
+    item = Item.includes(:photos).find(params[:id])
+    specs = item.specs.on_shelf.select(:id,:style,:style_pic)
     spec_collection = specs.map do |spec|
       spec_hash = {}
       spec_hash[:id] = spec.id
       spec_hash[:style] = spec.style
-      spec_hash[:pic] = spec.style_pic.url
+      spec_hash[:style_pic] = spec.style_pic.url
       spec_hash
     end
 

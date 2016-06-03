@@ -12,8 +12,8 @@ describe Api::V3::ItemsController, :type => :controller  do
       expect(json['description']).to eq(item.description)
       expect(json['status']).to eq(item.status)
       expect(json['photos']).to match_array(item.photos.collect { |photo| {"image_url" => photo.image.url} })
-      expect(json['specs']).to match_array(item.specs.collect { |spec| {"id" => spec.id, "style" => spec.style,
-                                                                        "pic" => spec.style_pic.url}})
+      expect(json['specs']).to match_array(item.specs.on_shelf.collect { |spec| {"id" => spec.id, "style" => spec.style,
+                                                                        "style_pic" => spec.style_pic.url}})
     end
   end
 end
