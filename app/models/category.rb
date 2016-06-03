@@ -1,7 +1,7 @@
 class Category < ActiveRecord::Base
   scope :recent, -> { order(id: :DESC) }
   scope :except_the_all_category, -> { where.not(id: 10) }
-  scope :id_and_name, -> { select(:id, :name) }
+  scope :select_api_fields, -> { select(:id, :name) }
 
   enum status: { disable: 0, enable: 1 }
 

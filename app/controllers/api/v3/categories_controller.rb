@@ -1,6 +1,6 @@
 class Api::V3::CategoriesController < ApiController
   def index
-    categories = Category.id_and_name
+    categories = Category.select_api_fields
 
     render json: categories
   end

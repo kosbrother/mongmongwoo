@@ -14,7 +14,7 @@ RSpec.describe Api::V3::CategoriesController, type: :controller do
     it "should contain correct category data" do
       get :index
       json = JSON.parse(response.body)
-      expect(json).to match_array(Category.id_and_name.as_json)
+      expect(json).to match_array(Category.select_api_fields.as_json)
     end
   end
 end
