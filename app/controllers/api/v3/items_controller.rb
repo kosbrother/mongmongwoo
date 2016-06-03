@@ -8,7 +8,8 @@ class Api::V3::ItemsController < ApiController
   end
 
   def show
-    item = Item.includes(:photos).find(params[:id])
+    category = Category.find(params[:category_id])
+    item = category.items.includes(:photos).find(params[:id])
     specs = item.specs.on_shelf.select(:id,:style,:style_pic)
     spec_collection = specs.map do |spec|
       spec_hash = {}
@@ -28,5 +29,7 @@ class Api::V3::ItemsController < ApiController
     result[:status] = item.status
     result[:photos] = item.photos.collect { |photo| {image_url: photo.image.url} }
     result[:specs] = spec_collection
+
+    render json: result
   end
 end
