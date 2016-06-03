@@ -51,4 +51,18 @@ describe Api::V3::OrdersController, type: :controller do
       end
     end
   end
+
+  describe "get #show" do
+    let!(:order) { FactoryGirl.create(:order_with_items) }
+    before :each do
+      get :show, id: order.id
+    end
+    context 'when order id provide' do
+      it 'should generate correct order info' do
+        result = response.body
+        json = order.generate_result_order.to_json
+        expect(result).to eq(json)
+      end
+    end
+  end
 end

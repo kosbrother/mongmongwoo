@@ -56,7 +56,7 @@ class Api::V1::OrdersController < ApiController
     order = Order.includes(:user, :info, :items).find(params[:id])
     info = order.info
     items = order.items
-    result_order = order.generate_result_order(order, info, items)
+    result_order = order.generate_result_order
     render json: result_order
   end
 

@@ -36,18 +36,18 @@ class Order < ActiveRecord::Base
   end
 
 
-  def generate_result_order(order, info, items)
+  def generate_result_order
     # 訂單資料
     result_order = {}
-    result_order[:id] = order.id
-    result_order[:uid] = order.uid
-    result_order[:user_id] = order.user_id
-    result_order[:status] = order.status
-    result_order[:created_on] = order.created_on
-    result_order[:items_price] = order.items_price
-    result_order[:ship_fee] = order.ship_fee
-    result_order[:total] = order.total
-    result_order[:note] = order.note
+    result_order[:id] = id
+    result_order[:uid] = uid
+    result_order[:user_id] = user_id
+    result_order[:status] = status
+    result_order[:created_on] = created_on
+    result_order[:items_price] = items_price
+    result_order[:ship_fee] = ship_fee
+    result_order[:total] = total
+    result_order[:note] = note
 
     # 收件明細
     include_info = {}

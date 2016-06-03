@@ -40,4 +40,9 @@ class Api::V3::OrdersController < ApiController
     render json: order, only: [:id]
   end
 
+  def show
+    order = Order.includes(:user, :info, :items).find(params[:id])
+    result_order = order.generate_result_order
+    render json: result_order
+  end
 end
