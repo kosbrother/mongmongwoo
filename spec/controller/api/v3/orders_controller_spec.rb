@@ -43,13 +43,6 @@ describe Api::V3::OrdersController, type: :controller do
       expect(order.items[0].item_name).to eq(product[:name])
     end
 
-    context 'when registration id exist' do
-      rg = FactoryGirl.create(:device_registration)
-      let!(:registration_id) { rg.registration_id }
-      it 'does not create new device_registration' do
-        expect(DeviceRegistration.all.size).to eq(1)
-      end
-    end
   end
 
   describe "get #show" do
