@@ -202,12 +202,11 @@ Rails.application.routes.draw do
           end
         end  
       end
-
-      resources :users, only: [:create]
-      
+      resources :users, only: [:create]      
       resources :categories, only: [:index] do
         resources :items, only: [:index, :show]
       end
-    end 
+      resources :device_registrations, only: [:create]
+    end
   end
 end
