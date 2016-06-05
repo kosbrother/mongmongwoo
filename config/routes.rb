@@ -207,6 +207,12 @@ Rails.application.routes.draw do
         resources :items, only: [:index, :show]
       end
       resources :device_registrations, only: [:create]
+      resources :orders, only: [:create, :show] do
+        collection do
+          get "/user_owned_orders/:uid" => "orders#user_owned_orders"
+          get "by_email_phone"
+        end
+      end
     end
   end
 end

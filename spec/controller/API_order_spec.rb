@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Api::V1::OrdersController, :type => :controller  do
-
   describe '#show'
   before :each do
     @order = FactoryGirl.create(:order_with_items)

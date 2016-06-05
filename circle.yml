@@ -1,4 +1,8 @@
 dependencies:
+  cache_directories:
+      - redis-3.2.0   # relative to the build directory
+  pre:
+     - if [[ ! -e redis-3.2.0/src/redis-server ]]; then wget http://download.redis.io/releases/redis-3.2.0.tar.gz && tar xzf redis-3.2.0.tar.gz && cd redis-3.2.0 && make; fi
   override:
     - mv config/secrets.ci.yml config/secrets.yml
     - bundle install: # note ':' here

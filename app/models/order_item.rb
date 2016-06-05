@@ -21,6 +21,7 @@ class OrderItem < ActiveRecord::Base
   delegate :categories, :taobao_supplier, to: :item
 
   validates_presence_of :source_item_id, allow_blank: true
+  validates_presence_of :item_name, :item_spec_id, :item_style, :item_quantity, :item_price
 
   def get_taobao_supplier_name
     item.supplier_name rescue "沒有商家資料"
