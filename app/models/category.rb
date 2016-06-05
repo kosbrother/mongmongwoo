@@ -1,19 +1,7 @@
-# == Schema Information
-#
-# Table name: categories
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  slug       :string(255)
-#  status     :integer          default(0)
-#  deleted_at :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
 class Category < ActiveRecord::Base
   scope :recent, -> { order(id: :DESC) }
   scope :except_the_all_category, -> { where.not(id: 10) }
+  scope :select_api_fields, -> { select(:id, :name) }
 
   enum status: { disable: 0, enable: 1 }
 

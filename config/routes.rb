@@ -202,8 +202,12 @@ Rails.application.routes.draw do
           end
         end  
       end
-      resources :items, only: [:show]
+
       resources :users, only: [:create]
-    end
+      
+      resources :categories, only: [:index] do
+        resources :items, only: [:index, :show]
+      end
+    end 
   end
 end

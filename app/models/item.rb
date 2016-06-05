@@ -1,27 +1,9 @@
-# == Schema Information
-#
-# Table name: items
-#
-#  id          :integer          not null, primary key
-#  name        :string(255)      not null
-#  price       :integer          not null
-#  slug        :string(255)
-#  status      :integer          default(0)
-#  deleted_at  :datetime
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  description :text(65535)
-#  cover       :string(255)
-#  position    :integer          default(1)
-#  url         :string(255)
-#
-
 class Item < ActiveRecord::Base
-  scope :recent, lambda { order(id: :DESC) }
-  scope :update_time, lambda { order(updated_at: :DESC) }
-  scope :priority, lambda { order("item_categories.position ASC") }
+  scope :recent, -> { order(id: :DESC) }
+  scope :update_time, -> { order(updated_at: :DESC) }
+  scope :priority, -> { order("item_categories.position ASC") }
   scope :latest, ->(num){ order(created_at: :asc).limit(num) }
-  scope :on_shelf, lambda{ where(status: 0) }
+  scope :on_shelf, ->{ where(status: 0) }
 
   enum status: { on_shelf: 0, off_shelf: 1 }
 
@@ -56,7 +38,6 @@ class Item < ActiveRecord::Base
     input.to_s.to_slug.normalize.to_s
   end
 
-  # 封面圖
   def intro_cover
     cover
   end
@@ -77,5 +58,4 @@ class Item < ActiveRecord::Base
   def self.search_categories_new(category_id, num)
     self.joins(:categories).select("`items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id").where(categories: {id: category_id}).order(created_at: :asc).limit(num)
   end
-
 end
