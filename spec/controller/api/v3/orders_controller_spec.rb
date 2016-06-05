@@ -20,14 +20,11 @@ describe Api::V3::OrdersController, type: :controller do
     let!(:product) { {id: item.id, name: item.name, spec_id: item.specs.first.id, style: item.specs.first.style, quantity: 1, price: item.price} }
     let!(:products) { [product] }
 
-    before :each do
+    it "does create correct order" do
       post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
            registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
            ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
            ship_email: ship_email, products: products
-    end
-
-    it "does create correct order" do
       order_id = ActiveSupport::JSON.decode(response.body)['id']
       order = Order.find(order_id)
       expect(order.uid).to eq(uid)
@@ -43,6 +40,29 @@ describe Api::V3::OrdersController, type: :controller do
       expect(order.items[0].item_name).to eq(product[:name])
     end
 
+    it "return errors if missing order params" do
+      post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+           ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+           ship_email: ship_email, products: products
+      message = JSON.parse(response.body)
+      expect(message).not_to be_nil
+    end
+
+    it "return errors if missing ship params" do
+      post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+           registration_id: registration_id, products: products
+      message = JSON.parse(response.body)
+      expect(message).not_to be_nil
+    end
+
+    it "return errors if missing products params" do
+      post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+           registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+           ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+           ship_email: ship_email
+      message = JSON.parse(response.body)
+      expect(message).not_to be_nil
+    end
   end
 
   describe "get #show" do

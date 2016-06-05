@@ -23,6 +23,8 @@ class Order < ActiveRecord::Base
   delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, to: :info
   delegate :orders, to: :user, prefix: true
 
+  validates_presence_of :uid, :user_id, :items_price, :ship_fee, :total
+
   def survey_mail
     mail_records.find_by(mail_type: MailRecord.mail_types["satisfaction_survey"])
   end
