@@ -59,4 +59,8 @@ module ItemHelper
       content_tag(:div, @item.price, class: 'price')
     end
   end
+
+  def item_current_price(item)
+    item.special_price ? price_with_unit(item.special_price) : price_with_unit(item.price)
+  end
 end
