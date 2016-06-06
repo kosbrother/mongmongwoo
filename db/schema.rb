@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606030304) do
+ActiveRecord::Schema.define(version: 20160601033034) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -219,10 +219,8 @@ ActiveRecord::Schema.define(version: 20160606030304) do
     t.string   "content_pic",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category_id",   limit: 4
   end
 
-  add_index "notifications", ["category_id"], name: "index_notifications_on_category_id", using: :btree
   add_index "notifications", ["item_id"], name: "index_notifications_on_item_id", using: :btree
 
   create_table "order_infos", force: :cascade do |t|
