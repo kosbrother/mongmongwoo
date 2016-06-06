@@ -3,7 +3,7 @@ class Admin::NotificationsController < AdminController
   before_action :find_notification, only: [:show]
 
   def index
-    @notification_page = @notifications = Notification.includes(item: [:specs]).recent.paginate(page: params[:page])
+    @notification_page = @notifications = Notification.includes(:item).recent.paginate(page: params[:page])
   end
 
   def show
@@ -18,7 +18,7 @@ class Admin::NotificationsController < AdminController
     @notification = Notification.new(notification_params)
 
     if @notification.save!
-      GcmNotifyService.new.send_item_event_notification(@notification)
+      # GcmNotifyService.new.send_item_event_notification(@notification)
 
       flash[:notice] = "成功推播訊息"
       redirect_to admin_notifications_path
@@ -31,7 +31,7 @@ class Admin::NotificationsController < AdminController
   private
 
   def notification_params
-    params.require(:notification).permit(:item_id, :content_title, :content_text, :content_pic)
+    params.require(:notification).permit(:item_id, :content_title, :content_text, :content_pic, :category_id)
   end
 
   def find_notification
