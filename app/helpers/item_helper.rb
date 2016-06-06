@@ -46,4 +46,15 @@ module ItemHelper
       content_tag(:div, "-優惠價-", class: "special")
     end
   end
+
+  def detail_item_current_price(item)
+    if item.special_price
+      content_tag(:div, class: 'price') do
+        content_tag(:span, @item.special_price) +
+        content_tag(:span, price_with_unit(@item.price), class: 'origin')
+      end
+    else
+      content_tag(:div, @item.price, class: 'price')
+    end
+  end
 end
