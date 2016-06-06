@@ -124,7 +124,11 @@ Rails.application.routes.draw do
     resources :device_registrations, only: [:index, :show]
 
     # 推播訊息
-    resources :notifications, only: [:index, :show, :new, :create]
+    resources :notifications, only: [:index, :show, :new, :create] do
+      collection do
+        get :get_items
+      end
+    end
 
     # 銷售統計
     resources :sales_reports, only: [:index] do

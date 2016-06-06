@@ -18,7 +18,7 @@ class Admin::NotificationsController < AdminController
     @notification = Notification.new(notification_params)
 
     if @notification.save!
-      # GcmNotifyService.new.send_item_event_notification(@notification)
+      GcmNotifyService.new.send_item_event_notification(@notification)
 
       flash[:notice] = "成功推播訊息"
       redirect_to admin_notifications_path
@@ -26,6 +26,12 @@ class Admin::NotificationsController < AdminController
       flash.now[:alert] = "請確認訊息內容"
       render :new
     end
+  end
+
+  def get_items
+    category = Category.find(params[:category_id])
+    items_list = category.items
+    render json: items_list
   end
 
   private

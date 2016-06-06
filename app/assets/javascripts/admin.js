@@ -23,43 +23,33 @@ ready = function() {
     var id = $(this).data('target');
     $(id).modal('hide');
   })
+
   // cancell disabled before submit
   $("form.cancell-disabled-item-form").submit(function() {
     $("input.disabled").removeAttr("disabled");
   });
-  // select item for notification
-  // $("#select-item").hide();
-  $('#notification_category_id').on('change', function() {
-    if ( this.value == '16') {
-      $("#select-item").show();
-    }
-  });
 
+  // select item for notification
   $('#notification_category_id').change(function() {
     $.ajax({
-       url: "admin/notifications/new", // this will be routed
-       type: 'GET',
-       data: {
-         send_id: $("#yourIdContainer").val()
-       },
-       async: true,
-       dataType: "json",
-       error: function(XMLHttpRequest, errorTextStatus, error){
-                  alert("Failed: "+ errorTextStatus+" ;"+error);
-              },
-       success: function(data){
-          // here we iterate the json result
-          for(var i in data)
-          {
-            var id = data[i].id;
-            var title = data[i].title;
-            $("#subject_select").append(new Option(title, id));
-          }        
-
-       }
-     });
+      url: "/admin/notifications/get_items",
+      type: 'GET',
+      data: {
+        category_id: $("#notification_category_id").val()
+      },
+      success: function(data){
+        for (var i in data) {
+          var id = data[i].id;
+          var title = id + '：' + data[i].name;
+          $("#notification_item_id").append(new Option(title, id));
+        }
+      },
+      error: function(XMLHttpRequest, errorTextStatus, error){
+        alert("Failed: "+ errorTextStatus+" ;"+error);
+      }
+    });
   });
-
 };
+
 $(document).ready(ready);
 $(document).on('page:load', ready);
