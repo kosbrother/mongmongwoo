@@ -9,7 +9,9 @@ SitemapGenerator::Sitemap.create do
   end
   Item.find_each do |item|
     item.categories.each do |category|
-      add category_item_path(category, item),  :changefreq => 'daily', :priority => 0.9
+      add category_item_path(category, item),  :changefreq => 'daily', :priority => 0.9 ,
+          alternate: { href: "android-app://com.kosbrother.mongmongwoo/mmwooo/www.mmwooo.com/categories/#{category.name}-#{category.id}/items/#{item.name}-#{item.id}",
+                        lang: "zh-TW"}
     end
   end
 end
