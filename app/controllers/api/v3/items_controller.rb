@@ -3,7 +3,7 @@ class Api::V3::ItemsController < ApiController
     category = Category.find(params[:category_id])
     items = category.items.on_shelf.priority.includes(:specs).select(:id, :name, :price, :special_price, :cover).page(params[:page]).per_page(20)
 
-    render json: items.as_json(include: { specs: { only: [:id, :style, :style_pic] } })
+    render status: 200, json: {data: items.as_json(include: { specs: { only: [:id, :style, :style_pic] } })}
   end
 
   def show
@@ -16,6 +16,6 @@ class Api::V3::ItemsController < ApiController
     item_json[:specs] = specs.as_json(only: [:id, :style, :style_pic])
     item_json[:photos] = photos.as_json(only: [:image])
 
-    render json: item_json
+    render status: 200, json: {data: item_json}
   end
 end

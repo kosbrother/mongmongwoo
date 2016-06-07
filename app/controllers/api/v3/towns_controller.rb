@@ -3,6 +3,6 @@ class Api::V3::TownsController < ApiController
     county = County.find(params[:county_id])
     towns = county.towns.select_api_fields
 
-    render json: towns
+    render status: 200, json: {data: towns}
   end
 end

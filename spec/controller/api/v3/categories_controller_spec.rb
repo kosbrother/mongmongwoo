@@ -7,14 +7,14 @@ RSpec.describe Api::V3::CategoriesController, type: :controller do
 
     it "should contain correct category quantity" do
       get :index
-      json = JSON.parse(response.body)
-      expect(json.count).to eq(Category.count)
+      data = JSON.parse(response.body)["data"]
+      expect(data.count).to eq(Category.count)
     end
 
     it "should contain correct category data" do
       get :index
-      json = JSON.parse(response.body)
-      expect(json).to match_array(Category.select_api_fields.as_json)
+      data = JSON.parse(response.body)["data"]
+      expect(data).to match_array(Category.select_api_fields.as_json)
     end
   end
 end

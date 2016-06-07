@@ -16,14 +16,14 @@ RSpec.describe Api::V3::CountiesController, type: :controller do
     context "with seven store type" do
       it "should contain correct county number" do
         get :index
-        json = JSON.parse(response.body)
-        expect(json.length).to eq(County.seven_stores.length)
+        data = JSON.parse(response.body)["data"]
+        expect(data.length).to eq(County.seven_stores.length)
       end
 
       it "should contain correct county data" do
         get :index
-        json = JSON.parse(response.body)
-        expect(json).to match_array(County.seven_stores.select_api_fields.as_json)
+        data = JSON.parse(response.body)["data"]
+        expect(data).to match_array(County.seven_stores.select_api_fields.as_json)
       end
     end
   end
