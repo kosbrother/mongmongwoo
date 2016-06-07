@@ -19,14 +19,39 @@
 //Ajax
 var ready;
 ready = function() {
-   $('.edit_order').submit(function(){
-       var id = $(this).data('target');
-       $(id).modal('hide');
-    })
-   // cancell disabled before submit
-   $("form.cancell-disabled-item-form").submit(function() {
-     $("input.disabled").removeAttr("disabled");
-   });
+  $('.edit_order').submit(function(){
+    var id = $(this).data('target');
+    $(id).modal('hide');
+  })
+
+  // cancell disabled before submit
+  $("form.cancell-disabled-item-form").submit(function() {
+    $("input.disabled").removeAttr("disabled");
+  });
+
+  // select item for notification
+  $('#notification_category_id').change(function() {
+    $.ajax({
+      url: "/admin/notifications/get_items",
+      type: 'GET',
+      data: {
+        category_id: $("#notification_category_id").val()
+      },
+      success: function(data){
+        $("#notification_item_id").empty();
+
+        for (var i in data) {
+          var id = data[i].id;
+          var title = id + '：' + data[i].name;
+          $("#notification_item_id").append(new Option(title, id));
+        }
+      },
+      error: function(XMLHttpRequest, errorTextStatus, error){
+        alert("Failed: "+ errorTextStatus+" ;"+error);
+      }
+    });
+  });
 };
+
 $(document).ready(ready);
 $(document).on('page:load', ready);

@@ -3,7 +3,7 @@ class Admin::NotificationsController < AdminController
   before_action :find_notification, only: [:show]
 
   def index
-    @notification_page = @notifications = Notification.includes(item: [:specs]).recent.paginate(page: params[:page])
+    @notification_page = @notifications = Notification.includes(:item).recent.paginate(page: params[:page])
   end
 
   def show
@@ -28,10 +28,16 @@ class Admin::NotificationsController < AdminController
     end
   end
 
+  def get_items
+    category = Category.find(params[:category_id])
+    items_list = category.items.on_shelf.order("id")
+    render json: items_list
+  end
+
   private
 
   def notification_params
-    params.require(:notification).permit(:item_id, :content_title, :content_text, :content_pic)
+    params.require(:notification).permit(:item_id, :content_title, :content_text, :content_pic, :category_id)
   end
 
   def find_notification

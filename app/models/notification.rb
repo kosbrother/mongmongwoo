@@ -1,6 +1,7 @@
 class Notification < ActiveRecord::Base
   scope :recent, lambda { order(id: :DESC) }
 
+  belongs_to :category
   belongs_to :item
 
   validates_presence_of :item_id, on: :create

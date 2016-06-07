@@ -6,11 +6,14 @@
   = f.label :content_text, "訊息內容", class: "col-sm-2 control-label"
   .col-sm-10
     = f.text_field :content_text, { class: "form-control", placeholder: "請輸入內容", required: true }
-/ TODO 邏輯移至helper
+.form-group
+  = f.label :category_id, "推播分類", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.select :category_id, Category.all.collect { |category| ["#{category.id} : #{category.name}", category.id] }, { include_blank: "請選擇分類" }, { class: "form-control", required: true }
 .form-group
   = f.label :item_id, "推播商品", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.select :item_id, Item.all.collect { |item| ["#{item.id} : #{item.name}", item.id] }, { include_blank: "請選擇商品" }, { class: "form-control", required: true }
+    = f.select :item_id, [], { include_blank: "請選擇商品" }, { class: "form-control", required: true }
 .form-group
   .col-sm-offset-2.col-sm-10
     = f.submit "確認送出", class: "btn btn-primary"
