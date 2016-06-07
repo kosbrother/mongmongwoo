@@ -42,26 +42,26 @@ class Api::V3::OrdersController < ApiController
     end
     if errors.blank?
       OrderMailer.delay.notify_order_placed(@order)
-      render json: @order, only: [:id]
+      render status: 200, json: {data: @order.as_json(only: [:id])}
     else
       Rails.logger.error("error: #{errors}")
-      render status: 400, json: errors
+      render status: 400, json: {error: {message: errors}}
     end
   end
 
   def show
     order = Order.includes(:user, :info, :items).find(params[:id])
     result_order = order.generate_result_order
-    render json: result_order
+    render status: 200, json: {data: result_order}
   end
 
   def user_owned_orders
     user_orders = Order.includes(:user).where(uid: params[:uid]).recent.page(params[:page]).per_page(20)
-    render json: user_orders, only: [:id, :uid, :total, :created_on, :status, :user_id]
+    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
   end
 
   def by_email_phone
     user_orders = Order.joins(:info).where("ship_email = ? and ship_phone = ?", params[:email], params[:phone]).recent
-    render json: user_orders, only: [:id, :uid, :total, :created_on, :status, :user_id]
+    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
   end
 end

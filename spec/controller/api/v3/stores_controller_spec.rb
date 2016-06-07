@@ -17,20 +17,20 @@ RSpec.describe Api::V3::StoresController, type: :controller do
 
     it "should contain corrcet road's stores quantity" do
       get :index, county_id: county.id, town_id: town.id, road_id: road.id
-      json = JSON.parse(response.body)
-      expect(json.length).to eq(road.stores.length)
+      data = JSON.parse(response.body)["data"]
+      expect(data.length).to eq(road.stores.length)
     end
 
     it "should contain correct store data" do
       get :index, county_id: county.id, town_id: town.id, road_id: road.id
-      json = JSON.parse(response.body)
-      expect(json[0]['id']).to eq(road.stores[0].id)
-      expect(json[0]['name']).to eq(road.stores[0].name)
-      expect(json[0]['store_code']).to eq(road.stores[0].store_code)
-      expect(json[0]['address']).to eq(road.stores[0].address)
-      expect(json[0]['phone']).to eq(road.stores[0].phone)
-      expect(json[0]['lat']).to eq(road.stores[0].lat.to_s)
-      expect(json[0]['lng']).to eq(road.stores[0].lng.to_s)
+      data = JSON.parse(response.body)["data"]
+      expect(data[0]['id']).to eq(road.stores[0].id)
+      expect(data[0]['name']).to eq(road.stores[0].name)
+      expect(data[0]['store_code']).to eq(road.stores[0].store_code)
+      expect(data[0]['address']).to eq(road.stores[0].address)
+      expect(data[0]['phone']).to eq(road.stores[0].phone)
+      expect(data[0]['lat']).to eq(road.stores[0].lat.to_s)
+      expect(data[0]['lng']).to eq(road.stores[0].lng.to_s)
     end
   end
 end

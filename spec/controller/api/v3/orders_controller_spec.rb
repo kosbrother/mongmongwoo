@@ -25,7 +25,7 @@ describe Api::V3::OrdersController, type: :controller do
            registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
            ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
            ship_email: ship_email, products: products
-      order_id = ActiveSupport::JSON.decode(response.body)['id']
+      order_id = ActiveSupport::JSON.decode(response.body)["data"]['id']
       order = Order.find(order_id)
       expect(order.uid).to eq(uid)
       expect(order.items_price).to eq(items_price)
@@ -44,14 +44,14 @@ describe Api::V3::OrdersController, type: :controller do
       post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
            ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
            ship_email: ship_email, products: products
-      message = JSON.parse(response.body)
+      message = JSON.parse(response.body)["error"]["message"]
       expect(message).not_to be_nil
     end
 
     it "return errors if missing ship params" do
       post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
            registration_id: registration_id, products: products
-      message = JSON.parse(response.body)
+      message = JSON.parse(response.body)["error"]["message"]
       expect(message).not_to be_nil
     end
 
@@ -60,7 +60,7 @@ describe Api::V3::OrdersController, type: :controller do
            registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
            ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
            ship_email: ship_email
-      message = JSON.parse(response.body)
+      message = JSON.parse(response.body)["error"]["message"]
       expect(message).not_to be_nil
     end
   end
@@ -72,9 +72,9 @@ describe Api::V3::OrdersController, type: :controller do
     end
     context 'when order id provide' do
       it 'does generate correct order info' do
-        result = response.body
+        result = JSON.parse(response.body)["data"]
         json = order.generate_result_order.to_json
-        expect(result).to eq(json)
+        expect(result.to_json).to eq(json)
       end
     end
   end
@@ -87,7 +87,7 @@ describe Api::V3::OrdersController, type: :controller do
     end
     context 'when user id and page are provide' do
       it 'does generate correct order list' do
-        result = ActiveSupport::JSON.decode(response.body)
+        result = JSON.parse(response.body)["data"]
         orders.reverse!
         expect(result.size).to eq(orders.size)
         expect(result[0]['id']).to eq(orders[0].id)
@@ -110,7 +110,7 @@ describe Api::V3::OrdersController, type: :controller do
     end
     context 'when user email and phone are provided' do
       it 'does generate correct order list' do
-        result = ActiveSupport::JSON.decode(response.body)
+        result = JSON.parse(response.body)["data"]
         orders.reverse!
         expect(result.size).to eq(orders.size)
         expect(result[0]['id']).to eq(orders[0].id)

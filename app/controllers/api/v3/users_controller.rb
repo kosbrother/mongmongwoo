@@ -8,10 +8,10 @@ class Api::V3::UsersController < ApiController
     user.phone = params[:phone]
     user.address = params[:address]
     if user.save
-      render json: "Successfully Create"
+      render status: 200, json: {data: "success"}
     else
       Rails.logger.error("error: #{user.errors.messages}")
-      render json: "Error: #{user.errors.messages}", status: 400
+      render status: 400, json: {error: {message: user.errors.messages}}
     end
   end
 end

@@ -5,6 +5,6 @@ class Api::V3::StoresController < ApiController
     road = town.roads.find(params[:road_id])
     stores = road.stores.select_api_fields
 
-    render json: stores
+    render status: 200, json: {data: stores}
   end
 end

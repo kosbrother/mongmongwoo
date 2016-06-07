@@ -16,14 +16,14 @@ RSpec.describe Api::V3::RoadsController, type: :controller do
 
     it "should contain correct town's roads quantity" do
       get :index, county_id: county.id, town_id: town.id
-      json = JSON.parse(response.body)
-      expect(json.length).to eq(town.roads.length)
+      data = JSON.parse(response.body)["data"]
+      expect(data.length).to eq(town.roads.length)
     end
 
     it "should find town's roads" do
       get :index, county_id: county.id, town_id: town.id
-      json = JSON.parse(response.body)
-      expect(json).to match_array(town.roads.select_api_fields.as_json)
+      data = JSON.parse(response.body)["data"]
+      expect(data).to match_array(town.roads.select_api_fields.as_json)
     end
   end
 end
