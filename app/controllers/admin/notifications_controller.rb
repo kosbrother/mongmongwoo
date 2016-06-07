@@ -30,7 +30,7 @@ class Admin::NotificationsController < AdminController
 
   def get_items
     category = Category.find(params[:category_id])
-    items_list = category.items
+    items_list = category.items.on_shelf.order("id")
     render json: items_list
   end
 

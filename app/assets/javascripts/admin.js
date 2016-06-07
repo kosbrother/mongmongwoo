@@ -38,6 +38,8 @@ ready = function() {
         category_id: $("#notification_category_id").val()
       },
       success: function(data){
+        $("#notification_item_id").empty();
+
         for (var i in data) {
           var id = data[i].id;
           var title = id + '：' + data[i].name;
