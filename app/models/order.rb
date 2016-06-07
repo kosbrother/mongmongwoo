@@ -18,6 +18,8 @@ class Order < ActiveRecord::Base
   belongs_to :device_registration
   has_many :mail_records, as: :recordable
 
+  accepts_nested_attributes_for :info
+
   self.per_page = 50
 
   delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, to: :info

@@ -15,6 +15,8 @@
       - orders.each do |order|
         %tr
           %td
+            %button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
+              = order.id
             = render(partial: "info_and_items_list", locals: { order: order })
             %br
             = render(partial: "edit_order", locals: { order: order })

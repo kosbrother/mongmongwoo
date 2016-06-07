@@ -18,7 +18,7 @@ class Admin::OrdersController < AdminController
   end
 
   def update
-    if @order.update(note: params['order']['note'], total: params['order']['total'])
+    if @order.update(order_params)
       @result = "訂單變更完成"
     else
       @result = "訂單變更失敗"
@@ -57,5 +57,9 @@ class Admin::OrdersController < AdminController
 
   def find_order
     @order = Order.includes(:user, :info, :items).find(params[:id])
+  end
+
+  def order_params
+    params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id])
   end
 end
