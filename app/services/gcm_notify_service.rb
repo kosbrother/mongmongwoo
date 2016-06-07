@@ -32,7 +32,9 @@ class GcmNotifyService
         content_pic: notification.send_content_pic,
         item_id: notification.item_id,
         item_name: notification.item.name,
-        item_price: notification.item.price
+        item_price: notification.item.price,
+        category_id: notification.category_id,
+        category_name: notification.category.name
         },
       collapse_key: "updated_score"
     }
