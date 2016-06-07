@@ -39,13 +39,11 @@ module ItemHelper
 
   def list_item_current_price(item)
     if item.special_price
-      content_tag(:span, price_with_unit(item.special_price)) +
-      content_tag(:div, "優惠價", class: "special -delete") +
-      content_tag(:div, "#{price_with_unit(item.price)}", class: "special -delete")
-
+      content_tag(:span, "優惠價#{price_with_unit(item.price)}", class: "special -delete") +
+      content_tag(:span, price_with_unit(item.special_price))
     else
-      content_tag(:span, price_with_unit(item.price)) +
-      content_tag(:div, "-優惠價-", class: "special")
+      content_tag(:span, "-優惠價-", class: "special") +
+      content_tag(:span, price_with_unit(item.price))
     end
   end
 
