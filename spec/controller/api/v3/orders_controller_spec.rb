@@ -46,6 +46,8 @@ describe Api::V3::OrdersController, type: :controller do
            ship_email: ship_email, products: products
       message = JSON.parse(response.body)["error"]["message"]
       expect(message).not_to be_nil
+      expect(Order.all.size).to eq(0)
+      expect(OrderInfo.all.size).to eq(0)
     end
 
     it "return errors if missing ship params" do
@@ -53,6 +55,8 @@ describe Api::V3::OrdersController, type: :controller do
            registration_id: registration_id, products: products
       message = JSON.parse(response.body)["error"]["message"]
       expect(message).not_to be_nil
+      expect(Order.all.size).to eq(0)
+      expect(OrderInfo.all.size).to eq(0)
     end
 
     it "return errors if missing products params" do
@@ -62,6 +66,8 @@ describe Api::V3::OrdersController, type: :controller do
            ship_email: ship_email
       message = JSON.parse(response.body)["error"]["message"]
       expect(message).not_to be_nil
+      expect(Order.all.size).to eq(0)
+      expect(OrderInfo.all.size).to eq(0)
     end
   end
 

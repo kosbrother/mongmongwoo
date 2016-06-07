@@ -39,13 +39,14 @@ class Api::V3::OrdersController < ApiController
       else
         errors << ["params[products] is blank"] 
       end
+      raise ActiveRecord::Rollback if errors.present?
     end
-    if errors.blank?
-      OrderMailer.delay.notify_order_placed(@order)
-      render status: 200, json: {data: @order.as_json(only: [:id])}
-    else
+    if errors.present?
       Rails.logger.error("error: #{errors}")
       render status: 400, json: {error: {message: errors}}
+    else
+      OrderMailer.delay.notify_order_placed(@order)
+      render status: 200, json: {data: @order.as_json(only: [:id])}
     end
   end
 
