@@ -71,6 +71,15 @@
           = link_to "商品銷量與金額", item_sales_result_admin_sales_reports_path
         %li
           = link_to "成本與毛利數據", cost_statistics_index_admin_sales_reports_path
+    %li.submenu
+      %a{:href => "#"}
+        %i.fa.fa-commenting>
+        訊息管理
+        %span.caret.pul-right
+      / Sub menu
+      %ul
+        %li
+          = link_to "官方訊息列表", admin_messages_path
     %li
       %a{:href => "#"}
         %i.glyphicon.glyphicon-calendar
