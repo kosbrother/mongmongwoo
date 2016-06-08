@@ -28,6 +28,6 @@ class Admin::MessagesController < AdminController
   private
 
   def message_params
-    params.require(:message).permit(:title, :content, :message_type, user_ids: [])
+    params.require(:message).permit(:content_title, :content_text, :message_type, user_ids: [])
   end
 end

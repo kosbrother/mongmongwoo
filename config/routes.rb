@@ -219,6 +219,8 @@ Rails.application.routes.draw do
           get "by_email_phone"
         end
       end
+
+      resources :messages, only: [:index, :show]
     end
   end
 end
