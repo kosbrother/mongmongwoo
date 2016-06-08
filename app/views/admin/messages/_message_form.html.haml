@@ -3,13 +3,13 @@
   .col-sm-10
     = f.select :message_type, Message.messagr_type_lists, { include_blank: "請選擇類型" }, class: "form-control", required: true
 .form-group
-  = f.label :content_title, "訊息標題", class: "col-sm-2 control-label"
+  = f.label :title, "訊息標題", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.text_field :content_title, { class: "form-control", placeholder: "請輸入標題", required: true }
+    = f.text_field :title, { class: "form-control", placeholder: "請輸入標題", required: true }
 .form-group
-  = f.label :content_text, "訊息內容", class: "col-sm-2 control-label"
+  = f.label :content, "訊息內容", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.text_area :content_text, { rows: 6, class: "form-control", placeholder: "請輸入內容", required: true }
+    = f.text_area :content, { rows: 6, class: "form-control", placeholder: "請輸入內容", required: true }
 .form-group
   .col-sm-offset-2.col-sm-10
     = f.submit "確認送出", class: "btn btn-primary"
