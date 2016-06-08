@@ -20,7 +20,6 @@ class CartItem < ActiveRecord::Base
   end
 
   def subtotal
-    item_quantity *  item.price
+    item_quantity *  (item.special_price || item.price)
   end
-
 end

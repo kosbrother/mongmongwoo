@@ -25,6 +25,12 @@
       font-size: $order-box-price-font-size;
       display: inline-block;
       margin-bottom: 25px;
+      > .origin{
+        margin-left: 5px;
+        text-decoration: line-through;
+        font-size: 12px;
+        color: #4a4a4a;
+      }
     }
     .spec-select{
       height: 35px;

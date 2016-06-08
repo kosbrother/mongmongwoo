@@ -17,10 +17,10 @@
       = form_for :cart_item, url: :cart_items, remote: true do |f|
         = f.hidden_field(:item_id, value: @item.id)
         .col-lg-3.col-xs-3.no-padding
-          .header 定價
+          .header 優惠價
         .col-lg-9.col-xs-9
-          .dollar NT.
-          .price= @item.price
+          .dollar NT$
+          = detail_item_current_price(@item)
         .col-lg-3.col-xs-3.no-padding
           .header 樣式名稱
         .col-lg-9.col-xs-9

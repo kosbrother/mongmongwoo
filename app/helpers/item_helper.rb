@@ -26,4 +26,39 @@ module ItemHelper
   def render_item_status_block(status)
     content_tag(:div, t(status), class: status == "on_shelf" ? 'block' :  'block -off-shelf')
   end
+
+  def side_item_current_price(item)
+    if item.special_price
+      content_tag(:div, "優惠價#{price_with_unit(item.price)}", class: "special -delete") +
+      content_tag(:div, price_with_unit(item.special_price), class: "price")
+    else
+      content_tag(:div, "-優惠價-", class: "special") +
+      content_tag(:div, price_with_unit(item.price), class: "price")
+    end
+  end
+
+  def list_item_current_price(item)
+    if item.special_price
+      content_tag(:span, "優惠價#{price_with_unit(item.price)}", class: "special -delete") +
+      content_tag(:span, price_with_unit(item.special_price))
+    else
+      content_tag(:span, "-優惠價-", class: "special") +
+      content_tag(:span, price_with_unit(item.price))
+    end
+  end
+
+  def detail_item_current_price(item)
+    if item.special_price
+      content_tag(:div, class: 'price') do
+        content_tag(:span, @item.special_price) +
+        content_tag(:span, price_with_unit(@item.price), class: 'origin')
+      end
+    else
+      content_tag(:div, @item.price, class: 'price')
+    end
+  end
+
+  def item_current_price(item)
+    item.special_price ? price_with_unit(item.special_price) : price_with_unit(item.price)
+  end
 end

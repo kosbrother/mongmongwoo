@@ -96,7 +96,7 @@ class CartsController < ApplicationController
       item.item_spec_id = cart_item.item_spec_id
       item.item_style = cart_item.item_spec.style
       item.item_quantity = cart_item.item_quantity
-      item.item_price = cart_item.item.price
+      item.item_price = cart_item.item.special_price ||  cart_item.item.price
       item.save
     end
 

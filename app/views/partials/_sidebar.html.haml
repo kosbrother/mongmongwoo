@@ -17,8 +17,7 @@
           .group
             .list
               = item.name
-            .price
-              = "NT #{item.price}"
+            = side_item_current_price(item)
   .app-banner
     .logo
       = image_tag('brand.png')
