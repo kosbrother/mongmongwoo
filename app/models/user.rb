@@ -5,18 +5,17 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  validates_presence_of :user_name, :uid, :email
-  validates_presence_of :real_name, allow_blank: true
-  validates_presence_of :gender, allow_blank: true
-  validates_presence_of :address, allow_blank: true
-  validates_presence_of :phone, allow_blank: true
+  has_secure_password validations: false
 
+  validates :email, :presence => true,
+            :uniqueness => true
   has_many :orders, dependent: :destroy
   has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
   has_many :favorite_items
   has_many :favorites, through: :favorite_items, source: :item
   has_many :message_records, dependent: :destroy
   has_many :messages, through: :message_records
+  has_many :logins
 
   self.per_page = 20
 
