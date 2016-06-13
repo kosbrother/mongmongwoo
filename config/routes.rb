@@ -223,6 +223,7 @@ Rails.application.routes.draw do
       end
       resources :messages, only: [:index, :show]
       resources :mmw_registrations, only: [:create]
+      resources :fb_registrations, only: [:create]
     end
   end
 end

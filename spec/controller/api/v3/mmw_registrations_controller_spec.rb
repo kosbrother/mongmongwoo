@@ -9,8 +9,9 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
     end
 
     it 'should create new user' do
+
       user = User.find_by(email: email)
-      # expect(user).to be_present
+      expect(user).to be_present
     end
   end
 end
