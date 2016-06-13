@@ -1,7 +1,7 @@
 .form-group
   = f.label :message_type, "訊息類型", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.select :message_type, Message.messagr_type_lists, { include_blank: "請選擇類型" }, class: "form-control", required: true
+    = f.select :message_type, Message.message_type_lists, { include_blank: "請選擇類型" }, class: "form-control", required: true
 .form-group
   = f.label :title, "訊息標題", class: "col-sm-2 control-label"
   .col-sm-10
