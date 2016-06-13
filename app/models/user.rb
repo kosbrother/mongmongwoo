@@ -31,8 +31,4 @@ class User < ActiveRecord::Base
         user.save
       end
   end
-
-  def id_with_name
-    "#{id}：#{user_name}"
-  end
 end
