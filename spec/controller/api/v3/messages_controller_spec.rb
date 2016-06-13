@@ -13,8 +13,8 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
     
     it "should contain correct message data" do
       get :index
-      data = JSON.parse(response.body)[0]
-      expect(data).to match_array(Message.official_messages.select_api_fields[0].as_json)
+      data = JSON.parse(response.body)["data"]
+      expect(data).to match_array(Message.official_messages.select_api_fields.as_json)
     end 
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
 
     it "should contain correct message data" do
       get :show, id: message.id
-      data = JSON.parse(response.body)
+      data = JSON.parse(response.body)["data"]
       expect(data["id"]).to eq(message.id)
       expect(data["message_type"]).to eq(message.message_type)
       expect(data["title"]).to eq(message.title)
