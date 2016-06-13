@@ -222,7 +222,11 @@ Rails.application.routes.draw do
         end
       end
       resources :messages, only: [:index, :show]
-      resources :mmw_registrations, only: [:create]
+      resources :mmw_registrations, only: [:create] do
+        collection do
+          post "login"
+        end
+      end
       resources :fb_registrations, only: [:create]
     end
   end

@@ -9,4 +9,13 @@ class Api::V3::MmwRegistrationsController < ApiController
       render status: 400, json: {error: {message: user.errors.messages}}
     end
   end
+
+  def login
+    user = User.find_by(email: params[:email])
+    if user.authenticate(params[:password])
+      render status: 200, json: {data: "success"}
+    else
+      render status: 400, json: {error: {message: 'password is not correct'}}
+    end
+  end
 end
