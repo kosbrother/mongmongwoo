@@ -58,4 +58,14 @@ class Item < ActiveRecord::Base
   def self.search_categories_new(category_id, num)
     self.joins(:categories).select("`items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id").where(categories: {id: category_id}).order(created_at: :asc).limit(num)
   end
+
+  def final_price
+    (special_price) ? special_price : price
+  end
+
+  def as_json(options = { })
+    h = super(options)
+    h[:final_price] = final_price
+    h
+  end
 end
