@@ -3,10 +3,10 @@ class Category < ActiveRecord::Base
   scope :except_the_all_category, -> { where.not(id: 10) }
   scope :select_api_fields, -> { select(:id, :name) }
 
-  enum status: { disable: 0, enable: 1 }
-
   has_many :item_categories
   has_many :items, through: :item_categories
+
+  mount_uploader :image, SpecPicUploader
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged

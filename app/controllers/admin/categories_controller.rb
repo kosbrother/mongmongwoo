@@ -1,6 +1,6 @@
 class Admin::CategoriesController < AdminController
-  layout "admin"
   before_action :require_manager
+  before_action :find_category, only: [:show, :edit, :update]
 
   def index
     @categories = Category.recent
@@ -12,7 +12,7 @@ class Admin::CategoriesController < AdminController
 
   def create
     @category = Category.new(category_params)
-
+    binding.pry
     if @category.save
       flash[:notice] = "新增分類成功"
       redirect_to admin_categories_path
@@ -22,8 +22,7 @@ class Admin::CategoriesController < AdminController
     end
   end
 
-  def show
-    @category = Category.find(params[:id])
+  def show    
     params['order'] = 'position' if params['order'].nil?
     if params['order'] == 'update'
       @on_shelf_items = @category.items.on_shelf.update_time
@@ -31,6 +30,19 @@ class Admin::CategoriesController < AdminController
     elsif params['order'] == 'position'
       @on_shelf_items = @category.items.on_shelf.priority
       @off_shelf_items = @category.items.off_shelf.priority
+    end
+  end
+
+  def edit 
+  end
+
+  def update
+    if @category.update(category_params)
+      flash[:notice] = "分類已更新完成"
+      redirect_to admin_categories_path
+    else
+      flash[:danger] = "請確認欄位資料"
+      render :edit
     end
   end
 
@@ -45,7 +57,10 @@ class Admin::CategoriesController < AdminController
   private
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name, :image)
   end
 
+  def find_category
+    @category = Category.find(params[:id]) 
+  end
 end

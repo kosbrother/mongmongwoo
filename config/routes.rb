@@ -85,7 +85,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :categories, only: [:new, :create, :show, :index] do
+    resources :categories, only: [:new, :create, :show, :index, :edit, :update] do
       # 商品重新排序
       collection do
         post "sort_items_priority"
