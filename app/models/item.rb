@@ -19,6 +19,8 @@ class Item < ActiveRecord::Base
   belongs_to :taobao_supplier
   has_many :favorite_items
   has_many :favorited_by, through: :favorite_items, source: :user
+  has_many :item_promotions
+  has_many :promotions, through: :item_promotions
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 

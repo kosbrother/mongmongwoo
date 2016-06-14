@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608003840) do
+ActiveRecord::Schema.define(version: 20160613095916) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -151,6 +151,18 @@ ActiveRecord::Schema.define(version: 20160608003840) do
   add_index "item_categories", ["deleted_at"], name: "index_item_categories_on_deleted_at", using: :btree
   add_index "item_categories", ["item_id"], name: "index_item_categories_on_item_id", using: :btree
   add_index "item_categories", ["position"], name: "index_item_categories_on_position", using: :btree
+
+  create_table "item_promotions", force: :cascade do |t|
+    t.integer  "item_id",      limit: 4
+    t.integer  "promotion_id", limit: 4
+    t.date     "ending_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "item_promotions", ["ending_on"], name: "index_item_promotions_on_ending_on", using: :btree
+  add_index "item_promotions", ["item_id"], name: "index_item_promotions_on_item_id", using: :btree
+  add_index "item_promotions", ["promotion_id"], name: "index_item_promotions_on_promotion_id", using: :btree
 
   create_table "item_specs", force: :cascade do |t|
     t.integer  "item_id",      limit: 4
@@ -310,6 +322,14 @@ ActiveRecord::Schema.define(version: 20160608003840) do
   end
 
   add_index "photos", ["deleted_at"], name: "index_photos_on_deleted_at", using: :btree
+
+  create_table "promotions", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.string   "content",    limit: 255
+    t.decimal  "discount",               precision: 10, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roads", force: :cascade do |t|
     t.integer  "town_id",    limit: 4
