@@ -1,0 +1,16 @@
+.row
+  .col-md-10
+    .content-box-large
+      .breadcrumb-topbar
+        %ol.breadcrumb
+          %li
+            = link_to "萌萌屋", admin_root_path
+          %li
+            = link_to "優惠活動列表", admin_promotions_path
+          %li.active 新增優惠活動
+      .panel-heading
+        .panel-title
+          %h2 新增優惠活動
+      .panel-body
+        = form_for [:admin, @promotion], html: { class: "form-horizontal" } do |f|
+          = render partial: "promotion_form", locals: { f: f }

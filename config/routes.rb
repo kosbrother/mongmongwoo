@@ -151,6 +151,7 @@ Rails.application.routes.draw do
     end
 
     resources :messages, only: [:index, :new, :create, :show, :destroy]
+    resources :promotions, only: [:index, :new, :create, :destroy]
   end
 
   # API for App

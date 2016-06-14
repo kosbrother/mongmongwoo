@@ -86,12 +86,10 @@
         Calendar
     %li.submenu
       %a{:href => "#"}
-        %i.glyphicon.glyphicon-list
-        Pages
+        %i.fa.fa-star
+        優惠活動管理
         %span.caret.pull-right
       / Sub menu
       %ul
         %li
-          %a{:href => "#"} Login
-        %li
-          %a{:href => "#"} Signup
+          = link_to "優惠列表", admin_promotions_path
