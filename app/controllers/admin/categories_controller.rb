@@ -12,7 +12,7 @@ class Admin::CategoriesController < AdminController
 
   def create
     @category = Category.new(category_params)
-
+    binding.pry
     if @category.save
       flash[:notice] = "新增分類成功"
       redirect_to admin_categories_path

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615134609) do
+ActiveRecord::Schema.define(version: 20160614065652) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -341,7 +341,10 @@ ActiveRecord::Schema.define(version: 20160615134609) do
     t.decimal  "discount",               precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< f38125775215f6c0db9c8b9addf82774b450792c
     t.string   "image",      limit: 255
+=======
+>>>>>>> Category image
   end
 
   create_table "roads", force: :cascade do |t|
