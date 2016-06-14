@@ -1,9 +1,10 @@
 .row
   .col-md-12.panel-warning
     .content-box-header.panel-heading
-      .panel-title 狀態分類列表
+      .panel-title 訂單狀態分類列表
     .content-box-large.box-with-header
       = render "search_form"
+      %hr
       %ul.nav.nav-tabs
         = li_status_link(Order.statuses["新訂單"])
         = li_status_link(Order.statuses["處理中"])
