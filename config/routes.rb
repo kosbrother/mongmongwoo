@@ -149,7 +149,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :messages, only: [:index, :new, :create, :show]
+    resources :messages, only: [:index, :new, :create, :show, :destroy]
   end
 
   # API for App

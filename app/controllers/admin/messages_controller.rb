@@ -25,6 +25,13 @@ class Admin::MessagesController < AdminController
     @message = Message.find(params[:id])
   end
 
+  def destroy
+    @message = Message.find(params[:id])
+    @message.destroy
+    flash[:warning] = "訊息已刪除"
+    redirect_to admin_messages_path
+  end
+
   private
 
   def message_params

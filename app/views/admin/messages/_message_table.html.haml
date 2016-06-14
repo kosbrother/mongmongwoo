@@ -23,4 +23,4 @@
               按此選擇
               %span.caret
             %ul.dropdown-menu.list-group
-              %li= link_to "刪除"
+              %li= link_to "刪除", admin_message_path(message), method: :delete, data: { confirm: "確定刪除？" }
