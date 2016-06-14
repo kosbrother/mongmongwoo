@@ -6,8 +6,7 @@
       .content.row
         - @categories.each do |category|
           .col-sm-6.col-md-4
-            .list-group
-              = link_to admin_category_path(category) do
-                = image_tag(category.image_url)
-                %h3= category.name
-                %br
+            = link_to admin_category_path(category) do
+              = category_photo(category)
+              %h3= category.name
+              %br
