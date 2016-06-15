@@ -31,6 +31,6 @@ class Admin::PromotionsController < AdminController
   private
 
   def promotion_params
-    params.require(:promotion).permit(:title, :content, :discount) 
+    params.require(:promotion).permit(:title, :content, :discount, :image)
   end
 end

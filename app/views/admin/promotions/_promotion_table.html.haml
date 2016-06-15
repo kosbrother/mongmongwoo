@@ -3,6 +3,7 @@
     %tr
       %th 優惠活動編號
       %th 優惠活動標題
+      %th 優惠活動圖片
       %th 優惠活動折扣
       %th 操作選項
   %tbody
@@ -12,6 +13,8 @@
           = promotion.id
         %td
           = promotion.title
+        %td
+          = show_image(promotion.image, "120x120")
         %td
           = promotion.discount
         %td

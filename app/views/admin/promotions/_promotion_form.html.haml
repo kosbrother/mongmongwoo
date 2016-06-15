@@ -3,6 +3,10 @@
   .col-sm-10
     = f.text_field :title, { class: "form-control", placeholder: "請輸入標題", required: true }
 .form-group
+  = f.label :image, "優惠活動圖片", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.file_field :image, { class: "form-control", required: true }
+.form-group
   = f.label :content, "優惠活動內容", class: "col-sm-2 control-label"
   .col-sm-10
     = f.text_area :content, { rows: 6, class: "form-control", placeholder: "請輸入內容", required: true }

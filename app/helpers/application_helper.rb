@@ -59,4 +59,14 @@ module ApplicationHelper
       "ga('send', 'event', '#{category}', '#{action}', '#{label}');"
     end
   end
+
+  def show_image(obj_image, image_size=nil)
+    if obj_image.present?
+      image_url = obj_image.url
+    else
+      image_url = "http://placehold.it/120x120&text=No Pic"
+    end
+
+    image_size ? image_tag(image_url, size: image_size) : image_tag(image_url)
+  end
 end
