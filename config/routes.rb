@@ -227,7 +227,7 @@ Rails.application.routes.draw do
           post "login"
         end
       end
-      resources :fb_registrations, only: [:create]
+      resources :oauth_sessions, only: [:create]
     end
   end
 end

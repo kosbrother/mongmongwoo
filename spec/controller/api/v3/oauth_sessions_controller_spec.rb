@@ -1,18 +1,19 @@
 require 'spec_helper'
-RSpec.describe Api::V3::FbRegistrationsController, type: :controller do
+RSpec.describe Api::V3::OauthSessionsController, type: :controller do
   describe "post #create" do
     let!(:email) { Faker::Internet.email }
     let!(:uid) {Faker::Number.number(10)}
     let!(:user_name) { Faker::Internet.user_name }
     let!(:gender) { 'female' }
+    let!(:provider) {'facebook'}
     before :each do
-      post :create, email: email, uid: uid, user_name: user_name, gender: gender
+      post :create, email: email, uid: uid, provider: provider, user_name: user_name, gender: gender
     end
 
     context 'when user and login does not exist' do
       it 'does create new user and new fb login' do
         user = User.find_by(email: email)
-        login = user.logins.find_by(provider: 'facebook', uid: uid)
+        login = user.logins.find_by(provider: provider, uid: uid)
         expect(user).to be_present
         expect(login).to be_present
         expect(login.user_name).to eq(user_name)
@@ -30,7 +31,7 @@ RSpec.describe Api::V3::FbRegistrationsController, type: :controller do
 
       it 'does not create new user and new fb login' do
         expect(User.where(email: email).size).to eq(1)
-        expect(Login.where(provider: 'facebook', uid: uid).size).to eq(1)
+        expect(Login.where(provider: provider, uid: uid).size).to eq(1)
       end
     end
   end
