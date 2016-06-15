@@ -7,6 +7,6 @@
         - @categories.each do |category|
           .col-sm-6.col-md-4
             = link_to admin_category_path(category) do
-              = category_photo(category)
+              = show_image(category.image, "120x120")
               %h3= category.name
               %br
