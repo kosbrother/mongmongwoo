@@ -6,7 +6,7 @@ class Category < ActiveRecord::Base
   has_many :item_categories
   has_many :items, through: :item_categories
 
-  mount_uploader :image, SpecPicUploader
+  mount_uploader :image, OriginalPicUploader
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
