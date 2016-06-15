@@ -1,0 +1,15 @@
+.col-md-10
+  .content-box-large
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li
+          = link_to "官方訊息列表", admin_messages_path
+        %li.active 新增訊息
+    .panel-heading
+      .panel-title
+        %h3 新增訊息
+    .panel-body
+      = form_for [:admin, @message], html: { class: "form-horizontal" } do |f|
+        = render partial: "message_form", locals: { f: f }

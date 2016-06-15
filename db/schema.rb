@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606030304) do
+ActiveRecord::Schema.define(version: 20160608003840) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -211,6 +211,26 @@ ActiveRecord::Schema.define(version: 20160606030304) do
   end
 
   add_index "managers", ["deleted_at"], name: "index_managers_on_deleted_at", using: :btree
+
+  create_table "message_records", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "message_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "message_records", ["message_id"], name: "index_message_records_on_message_id", using: :btree
+  add_index "message_records", ["user_id"], name: "index_message_records_on_user_id", using: :btree
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "message_type", limit: 255
+    t.string   "title",        limit: 255
+    t.text     "content",      limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["message_type"], name: "index_messages_on_message_type", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "item_id",       limit: 4

@@ -148,6 +148,8 @@ Rails.application.routes.draw do
         patch "/sending_survey_email/:order_id/", to: "mail_records#sending_survey_email", as: "sending_survey_email"
       end
     end
+
+    resources :messages, only: [:index, :new, :create, :show, :destroy]
   end
 
   # API for App
@@ -217,6 +219,8 @@ Rails.application.routes.draw do
           get "by_email_phone"
         end
       end
+
+      resources :messages, only: [:index, :show]
     end
   end
 end

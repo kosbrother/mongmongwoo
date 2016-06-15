@@ -1,0 +1,26 @@
+%table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %thead
+    %tr
+      %th 訊息編號      
+      %th 訊息標題
+      %th 訊息內容
+      %th 訊息類型
+      %th 操作選項
+  %tbody
+    - @messages.each do |message|
+      %tr
+        %td
+          = link_to message.id, admin_message_path(message)
+        %td
+          = link_to message.title, admin_message_path(message)
+        %td
+          = truncate(message.content, length: 55)
+        %td
+          = message.message_type
+        %td
+          .dropdown
+            %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+              按此選擇
+              %span.caret
+            %ul.dropdown-menu.list-group
+              %li= link_to "刪除", admin_message_path(message), method: :delete, data: { confirm: "確定刪除？" }
