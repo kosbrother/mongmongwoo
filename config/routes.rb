@@ -113,6 +113,7 @@ Rails.application.routes.draw do
       collection do
         get "exporting_files"
         get "status_index"
+        get "search"
       end
 
       member do

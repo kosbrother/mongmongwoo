@@ -1,0 +1,9 @@
+.search-order
+  = form_tag search_admin_orders_path, { class: "form-inline", method: :get } do
+    .form-group
+      = label_tag :ship_phone_data, "輸入手機號碼", class: "sr-only"
+      = search_field_tag :ship_phone_data, params[:ship_phone_data], class: "form-control", placeholder: "輸入手機號碼", required: true
+    .form-group
+      = label_tag :ship_email_data, "輸入Email", class: "sr-only"
+      = search_field_tag :ship_email_data, params[:ship_email_data], class: "form-control", placeholder: "輸入Email", required: true
+    = button_tag "搜尋訂單", class: "btn btn-info"

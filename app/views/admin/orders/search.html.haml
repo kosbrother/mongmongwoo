@@ -1,0 +1,12 @@
+.row
+  .col-md-12.panel-warning
+    .content-box-header.panel-heading
+      .panel-title 訂單查詢結果
+    .content-box-large.box-with-header
+      = render "search_form"
+      %br
+      .search_term_field.panel.panel-primary
+        .panel-body
+          %p 查詢的手機號碼：#{params[:ship_phone_data]}
+          %p 查詢的Email：#{params[:ship_email_data]}
+      = render "order_table", orders: @search_results
