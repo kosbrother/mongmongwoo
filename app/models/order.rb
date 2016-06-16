@@ -1,8 +1,5 @@
 class Order < ActiveRecord::Base
   include OrderConcern
-
-  Order::Email_Format = /\A[a-z0-9._%+]+@[a-z0-9.]+\.[a-z]{2,4}\Z/i
-  Order::Phone_Format = /\A(0)(9)+\d{8}\Z/
   
   scope :recent, -> { order(id: :DESC) }
   scope :count_status, ->(status) { where(status: status).count }
@@ -32,14 +29,6 @@ class Order < ActiveRecord::Base
 
   def self.search_by_phone_and_email(phone, email)
     self.joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
-  end
-
-  def check_blacklists
-    OrderBlacklist.email_blacklists.include?(self.ship_email) || OrderBlacklist.phone_blacklists.include?(self.ship_phone)
-  end
-
-  def check_data_format
-    !(Order::Email_Format.match(self.ship_email)) || !(Order::Phone_Format.match(self.ship_phone))
   end
 
   def survey_mail

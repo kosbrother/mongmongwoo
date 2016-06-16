@@ -25,6 +25,14 @@ module OrderConcern
     end
   end
 
+  def check_blacklists
+    OrderBlacklist.email_blacklists.include?(self.ship_email) || OrderBlacklist.phone_blacklists.include?(self.ship_phone)
+  end
+
+  def check_data_format
+    !(OrderBlacklist::Email_Format.match(self.ship_email)) || !(OrderBlacklist::Phone_Format.match(self.ship_phone))
+  end
+
   private
 
   def email_to_notify_pickup
