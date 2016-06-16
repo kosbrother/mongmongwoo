@@ -44,5 +44,14 @@ RSpec.describe Api::V3::OauthSessionsController, type: :controller do
         end
       end
     end
+
+    context 'when email is not provided' do
+      let!(:email) { nil }
+      it_behaves_like  "return JSON 400 status code with error message"
+    end
+    context 'when provider is not provided' do
+      let!(:provider) { nil }
+      it_behaves_like  "return JSON 400 status code with error message"
+    end
   end
 end
