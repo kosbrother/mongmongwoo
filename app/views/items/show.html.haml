@@ -1,5 +1,5 @@
 - content_for :head do
-  %link{href: "android-app://com.kosbrother.mongmongwoo/mmwooo/www.mmwooo.com/categories/#{@category.slug}-#{@category.id}/items/#{@item.slug}-#{@item.id}", rel: "alternate"}
+  %link{href: "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{category_item_path(@category,@item)}", rel: "alternate"}
 
 - breadcrumb :item, @category, @item
 .product-block.row
