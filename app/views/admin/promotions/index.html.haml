@@ -1,0 +1,17 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 優惠活動列表
+  .pull-right
+    = link_to "新增優惠", new_admin_promotion_path, { class: "btn btn-primary" }
+  %h2 優惠活動列表
+  .category-all-items
+    .panel-body
+      .apple_pagination
+        = will_paginate @promotions, :container => false
+      %br/
+      = render "promotion_table"
+      .apple_pagination
+        = will_paginate @promotions, :container => false

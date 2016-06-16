@@ -25,6 +25,7 @@ CarrierWave.configure do |config|
   ItemCoverUploader
   SpecPicUploader
   ImageUploader
+  OriginalPicUploader
   # Change store_dir depends on environment
   CarrierWave::Uploader::Base.descendants.each do |uploader|
     uploader.class_eval do
