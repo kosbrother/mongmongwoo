@@ -4,10 +4,7 @@ class Api::V1::UsersController < ApiController
     params[:email] = SecureRandom.base64(20) if params[:email].blank?
     user.email = params[:email]
     user.user_name = params[:user_name]
-    user.real_name = params[:real_name]
     user.gender = params[:gender]
-    user.phone = params[:phone]
-    user.address = params[:address]
     if user.save
       render json: "Successfully Create"
     else

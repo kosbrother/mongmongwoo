@@ -208,9 +208,9 @@ Rails.application.routes.draw do
           resources :roads, only: [:index] do
             resources :stores, only: [:index]
           end
-        end  
+        end
       end
-      resources :users, only: [:create]      
+      resources :users, only: [:create]
       resources :categories, only: [:index] do
         resources :items, only: [:index, :show]
       end
@@ -221,8 +221,13 @@ Rails.application.routes.draw do
           get "by_email_phone"
         end
       end
-
       resources :messages, only: [:index, :show]
+      resources :mmw_registrations, only: [:create] do
+        collection do
+          post "login"
+        end
+      end
+      resources :oauth_sessions, only: [:create]
     end
   end
 end
