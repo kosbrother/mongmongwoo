@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
         user.uid = auth.id
         user.user_name = auth.name
         user.gender = auth.gender
+        auth.email = "#{auth.uid}@mmwooo.fake.com" if auth.email.blank?
         user.email = auth.email
         user.save
       end
