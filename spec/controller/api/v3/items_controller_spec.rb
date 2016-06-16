@@ -19,6 +19,7 @@ RSpec.describe Api::V3::ItemsController, type: :controller do
         expect(data[0]['id']).to eq(Category.find(category.id).items.on_shelf[0].id)
         expect(data[0]['name']).to eq(Category.find(category.id).items.on_shelf[0].name)
         expect(data[0]['price']).to eq(Category.find(category.id).items.on_shelf[0].price)
+        expect(data[0]['slug']).to eq(Category.find(category.id).items.on_shelf[0].slug)
         expect(data[0]['cover']['url']).to eq(Category.find(category.id).items.on_shelf[0].cover_url)
         expect(data[0]['specs']).to match_array(Category.find(category.id).items.on_shelf.as_json(include: { specs: { only: [:id, :style], include: { style_pic: { only: :url } } } })[0]['specs'])
       end
@@ -37,6 +38,7 @@ RSpec.describe Api::V3::ItemsController, type: :controller do
       expect(data['cover']['url']).to eq(item.cover.url)
       expect(data['description']).to eq(item.description)
       expect(data['status']).to eq(item.status)
+      expect(data['slug']).to eq(item.slug)
       expect(data['photos']).to match_array(JSON.parse(item.photos.as_json(only: [:image]).to_json))
       expect(data['specs']).to match_array(JSON.parse(item.specs.as_json(only: [:id, :style, :style_pic]).to_json))
     end
