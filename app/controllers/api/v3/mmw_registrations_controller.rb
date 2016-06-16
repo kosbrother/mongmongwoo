@@ -12,7 +12,9 @@ class Api::V3::MmwRegistrationsController < ApiController
 
   def login
     user = User.find_by(email: params[:email])
-    if user.authenticate(params[:password])
+    if user.nil?
+      render status: 400, json: {error: {message: 'can not find user'}}
+    elsif  user.authenticate(params[:password])
       render status: 200, json: {data: "success"}
     else
       render status: 400, json: {error: {message: 'password is not correct'}}
