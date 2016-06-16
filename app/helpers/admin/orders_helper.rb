@@ -46,4 +46,10 @@ module Admin::OrdersHelper
       content_tag(:span, "未完成取貨", class: "label label-warning")
     end
   end
+
+  def blacklist_warning(order)
+    if order.check_blacklists || order.check_data_format
+      content_tag(:span, "問題訂單", class: "label label-danger")
+    end
+  end
 end

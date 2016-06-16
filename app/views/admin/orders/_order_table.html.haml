@@ -49,6 +49,8 @@
             %br
             %span{id: "logistis-#{order.id}"}= logistics_status(order)
           %td
+            = blacklist_warning(order)
+            %br
             = link_to order.info_user_name, admin_user_path(order.user)
             %br
             - statuses_count = order.user_orders.status_count
