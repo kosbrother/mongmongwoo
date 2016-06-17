@@ -1,10 +1,10 @@
 class OrderItem < ActiveRecord::Base
-  scope :sort_by_sales, -> { joins(:item, item: [:categories])
-    .group(:source_item_id)
+  scope :sort_by_sales, -> { 
+    group(:source_item_id)
     .select(:id, :item_name, :source_item_id, "SUM(item_quantity) as sum_item_quantity")
     .order("sum_item_quantity DESC") }
-  scope :sort_by_revenue, -> { joins(:item, item: [:categories])
-    .group(:source_item_id)
+  scope :sort_by_revenue, -> { 
+    group(:source_item_id)
     .select(:id, :item_name, :source_item_id, "SUM(item_quantity * item_price) as sum_item_revenue")
     .order("sum_item_revenue DESC") }
   scope :with_supplier, -> (supplier_id) { joins("left join taobao_suppliers on taobao_suppliers.id = items.taobao_supplier_id").where(taobao_suppliers: { id: supplier_id })}
