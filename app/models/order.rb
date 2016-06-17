@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :uid, :user_id, :items_price, :ship_fee, :total
 
   def self.search_by_phone_and_email(phone, email)
-    self.joins(:info).where(order_infos: {ship_phone: phone, ship_email: email}).recent
+    self.joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
   end
 
   def survey_mail
