@@ -1,4 +1,13 @@
 .content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li
+        = link_to "用戶名稱列表", admin_users_path
+      %li.active 用戶詳細資料
+  .pull-right
+    = link_to "返回狀態分類列表", status_index_admin_orders_path, class: "btn btn-success"
   %h2
     用戶名稱：#{@user.user_name}
   .user-infos.well
