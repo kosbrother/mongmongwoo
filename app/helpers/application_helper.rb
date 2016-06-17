@@ -66,7 +66,7 @@ module ApplicationHelper
     else
       image_url = "http://placehold.it/120x120&text=No Pic"
     end
-
+    
     image_size ? image_tag(image_url, size: image_size) : image_tag(image_url)
   end
 end
