@@ -21,7 +21,7 @@ RSpec.describe Api::V3::ItemsController, type: :controller do
         expect(data[0]['price']).to eq(Category.find(category.id).items.on_shelf[0].price)
         expect(data[0]['slug']).to eq(Category.find(category.id).items.on_shelf[0].slug)
         expect(data[0]['cover']['url']).to eq(Category.find(category.id).items.on_shelf[0].cover_url)
-        expect(data[0]['specs']).to match_array(Category.find(category.id).items.on_shelf.as_json(include: { specs: { only: [:id, :style], include: { style_pic: { only: :url } } } })[0]['specs'])
+        expect(data[0]['specs']).to match_array(JSON.parse(Category.find(category.id).items.on_shelf.to_json(include: { specs: { only: [:id, :style, :style_pic] } }))[0]['specs'])
       end
     end
     context "with sort param" do
