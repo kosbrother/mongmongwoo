@@ -20,4 +20,14 @@ class Api::V3::MmwRegistrationsController < ApiController
       render status: 400, json: {error: {message: 'password is not correct'}}
     end
   end
+
+  def forget
+    user = User.find_by_email(params[:email])
+    if user
+      user.sent_password_reset
+      render status: 200, json: {data: "success"}
+    else
+      render status: 400, json: {error: {message: 'can not find user'}}
+    end
+  end
 end
