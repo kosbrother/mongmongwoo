@@ -1,4 +1,4 @@
-module Admin::CategoriesHelper
+module CategoriesHelper
   def get_btn_class(order)
     if order == params['order']
       'btn btn-primary'

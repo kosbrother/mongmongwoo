@@ -1,30 +1,31 @@
-%div{:clas => "row"}
-  .content-box-large
-    .breadcrumb-topbar
-      %ol.breadcrumb
-        %li
-          %a{:href => "#"} 萌萌屋
-        %li{:class => "#{"active" if current_page?(controller: "admin/categories", action: "index")}"}
-          %a{:href => admin_categories_path} 分類列表
-        %li{:class => "#{"active" if current_page?(controller: "admin/categories", action: "index")}"}= @category.name
-    %h2= @category.name
-    .category-all-items
-      .panel-body
-        .btn-group{"aria-label" => "排序方式", :role => "group"}
-          = link_to '依照排名', url_for(order: 'position'), class:  get_btn_class('position')
-          = link_to '依照更新時間', url_for(order: 'update'), class:  get_btn_class('update')
-        %div
-          / Nav tabs
-          %ul.nav.nav-tabs{:role => "tablist"}
-            %li.active{:role => "presentation"}
-              %a{"aria-controls" => "on-shelf", "data-toggle" => "tab", :href => "#on-shelf", :role => "tab"}
-                = "上架中:  #{@on_shelf_items.count}"
-            %li{:role => "presentation"}
-              %a{"aria-controls" => "off-shelf", "data-toggle" => "tab", :href => "#off-shelf", :role => "tab"}
-                = "下架中:  #{@off_shelf_items.count}"
-          / Tab panes
-          .tab-content
-            #on-shelf.tab-pane.active{:role => "tabpanel"}
-              = render "table", category_items: @on_shelf_items
-            #off-shelf.tab-pane{:role => "tabpanel"}
-              = render "table", category_items: @off_shelf_items
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li
+        = link_to "分類列表", admin_categories_path
+      %li.active= @category.name
+  .pull-right
+    = link_to "編輯分類", edit_admin_category_path(@category), class: "btn btn-success"
+  %h2= @category.name
+  .category-all-items    
+    .panel-body
+      .btn-group{"aria-label" => "排序方式", :role => "group"}
+        = link_to '依照排名', url_for(order: 'position'), class:  get_btn_class('position')
+        = link_to '依照更新時間', url_for(order: 'update'), class:  get_btn_class('update')
+      %div
+        / Nav tabs
+        %ul.nav.nav-tabs{:role => "tablist"}
+          %li.active{:role => "presentation"}
+            %a{"aria-controls" => "on-shelf", "data-toggle" => "tab", :href => "#on-shelf", :role => "tab"}
+              = "上架中:  #{@on_shelf_items.count}"
+          %li{:role => "presentation"}
+            %a{"aria-controls" => "off-shelf", "data-toggle" => "tab", :href => "#off-shelf", :role => "tab"}
+              = "下架中:  #{@off_shelf_items.count}"
+        / Tab panes
+        .tab-content
+          #on-shelf.tab-pane.active{:role => "tabpanel"}
+            = render "table", category_items: @on_shelf_items
+          #off-shelf.tab-pane{:role => "tabpanel"}
+            = render "table", category_items: @off_shelf_items
