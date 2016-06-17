@@ -48,7 +48,7 @@ module Admin::OrdersHelper
   end
 
   def blacklist_warning(order)
-    if order.is_blacklist
+    if order.blacklist?
       content_tag(:span, "問題訂單", class: "label label-danger")
     end
   end

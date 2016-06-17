@@ -16,7 +16,7 @@ module OrderConcern
   def create_order_blacklist
     if (status_changed? && status == "未取訂貨")
       create_new_blacklist
-      self.info.update_attribute(:is_blacklist, true)
+      self.info.update_attribute(:in_blacklist, true)
     end
   end
 
