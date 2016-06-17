@@ -16,21 +16,8 @@ module OrderConcern
   def create_order_blacklist
     if (status_changed? && status == "未取訂貨")
       create_new_blacklist
+      self.info.update_attribute(:is_blacklist, true)
     end
-  end
-
-  def inspec_order_blacklist
-    if check_blacklists
-      create_new_blacklist
-    end
-  end
-
-  def check_blacklists
-    OrderBlacklist.email_blacklists.include?(self.ship_email) || OrderBlacklist.phone_blacklists.include?(self.ship_phone)
-  end
-
-  def check_data_format
-    !(OrderBlacklist::Email_Format.match(self.ship_email)) || !(OrderBlacklist::Phone_Format.match(self.ship_phone))
   end
 
   private

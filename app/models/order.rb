@@ -22,7 +22,7 @@ class Order < ActiveRecord::Base
 
   self.per_page = 50
 
-  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, to: :info
+  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, :is_blacklist, to: :info
   delegate :orders, to: :user, prefix: true
 
   validates_presence_of :uid, :user_id, :items_price, :ship_fee, :total

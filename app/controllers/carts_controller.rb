@@ -100,7 +100,6 @@ class CartsController < ApplicationController
       item.save
     end
 
-    order.inspec_order_blacklist
     order
   end
 end
