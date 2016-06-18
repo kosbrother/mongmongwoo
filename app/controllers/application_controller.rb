@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_popular_items
-    @pop_items = Item.joins(:item_categories).on_shelf.order( "item_categories.position asc").limit(6)
+    @pop_items = Item.joins(:item_categories).on_shelf.where('item_categories.category_id = 10').order( "item_categories.position asc").limit(6)
     @category_all = Category.find(10)
   end
 
