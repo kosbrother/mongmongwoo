@@ -24,6 +24,48 @@ RSpec.describe Api::V3::ItemsController, type: :controller do
         expect(data[0]['specs']).to match_array(Category.find(category.id).items.on_shelf.as_json(include: { specs: { only: [:id, :style], include: { style_pic: { only: :url } } } })[0]['specs'])
       end
     end
+    context "with sort param" do
+      let!(:category) { FactoryGirl.create(:category) }
+      let!(:on_shelf_item_1) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 50, created_at: Time.now) }
+      let!(:on_shelf_item_2) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 100, created_at: Time.now + 1) }
+      let!(:on_shelf_item_3) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 70, created_at: Time.now + 2) }
+
+      it "should order by price desc when with sort param price_desc" do
+        get :index, category_id: category.id, sort: "price_desc"
+        data = JSON.parse(response.body)["data"]
+        expect(data[0]['id']).to eq(on_shelf_item_2.id)
+        expect(data[1]['id']).to eq(on_shelf_item_3.id)
+        expect(data[2]['id']).to eq(on_shelf_item_1.id)
+      end
+
+      it "should order by price asc when with sort param price_asc" do
+        get :index, category_id: category.id, sort: "price_asc"
+        data = JSON.parse(response.body)["data"]
+        expect(data[0]['id']).to eq(on_shelf_item_1.id)
+        expect(data[1]['id']).to eq(on_shelf_item_3.id)
+        expect(data[2]['id']).to eq(on_shelf_item_2.id)
+      end
+
+      it "should order by priority when with sort param popular" do
+        on_shelf_item_1.item_categories[0].update_attribute(:position, 3)
+        on_shelf_item_2.item_categories[0].update_attribute(:position, 1)
+        on_shelf_item_3.item_categories[0].update_attribute(:position, 2)
+
+        get :index, category_id: category.id, sort: "popular"
+        data = JSON.parse(response.body)["data"]
+        expect(data[0]['id']).to eq(on_shelf_item_2.id)
+        expect(data[1]['id']).to eq(on_shelf_item_3.id)
+        expect(data[2]['id']).to eq(on_shelf_item_1.id)
+      end
+
+      it "should order by create date when with sort param date" do
+        get :index, category_id: category.id, sort: "date"
+        data = JSON.parse(response.body)["data"]
+        expect(data[0]['id']).to eq(on_shelf_item_3.id)
+        expect(data[1]['id']).to eq(on_shelf_item_2.id)
+        expect(data[2]['id']).to eq(on_shelf_item_1.id)
+      end
+    end
   end
 
   describe "get #show" do
