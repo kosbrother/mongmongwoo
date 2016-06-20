@@ -1,6 +1,6 @@
 class Admin::TaobaoSuppliersController < AdminController
   before_action :require_manager
-  before_action :find_taobao_supplier, only: [:edit, :update, :destroy]
+  before_action :find_taobao_supplier, only: [:edit, :update, :destroy, :items]
 
   def index
     @taobao_suppliers = TaobaoSupplier.includes(:items).paginate(page: params[:page])
@@ -39,6 +39,11 @@ class Admin::TaobaoSuppliersController < AdminController
     @taobao_supplier.destroy
     flash[:warning] = "已刪除淘寶商家資料"
     redirect_to admin_taobao_suppliers_path
+  end
+
+  def items
+    list =  @taobao_supplier.items.collect{|i| {id: i.id, name: i.name }}
+    render json: list
   end
 
   private
