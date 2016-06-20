@@ -62,4 +62,29 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
       end
     end
   end
+
+  describe 'post #forget' do
+    let!(:user) { FactoryGirl.create(:user, email: email, password: password) }
+
+    context 'when user provide exist email' do
+      it 'does find the user and create password reset token' do
+        post :forget, email: email
+        user = User.find_by_email(email)
+        expect(user).to be_present
+        expect(user.password_reset_token).to_not be_nil
+        expect(response.status).to eq(200)
+        expect(response.content_type).to eq 'application/json'
+      end
+    end
+
+    context 'when user did not provide correct email' do
+      it 'return 400 status code' do
+        post :forget, email: 'xxxxx'
+        message = JSON.parse(response.body)['error']
+        expect(response.status).to eq(400)
+        expect(response.content_type).to eq 'application/json'
+        expect(message).not_to be_nil
+      end
+    end
+  end
 end

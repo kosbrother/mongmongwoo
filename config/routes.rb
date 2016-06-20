@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get "/confirm_cart", to: "carts#confirm"
   post "/submit_order", to: "carts#submit", as: "submit_order"
   get "/success", to: "carts#success", as: "success"
+  get "/password_resets/edit", to: "password_resets#edit"
+  put "/password_resets/update", to: "password_resets#update"
+  get "/password_resets/success", to: "password_resets#success"
 
   resources :cart_items, only: [:create, :destroy] do
     member do
@@ -225,6 +228,7 @@ Rails.application.routes.draw do
       resources :mmw_registrations, only: [:create] do
         collection do
           post "login"
+          post "forget"
         end
       end
       resources :oauth_sessions, only: [:create]
