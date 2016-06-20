@@ -1,0 +1,34 @@
+.checkout
+  .content-box-large
+    %h1 淘寶購物車
+    = form_tag admin_admin_cart_items_path, method: 'post', remote: true do
+      = label_tag :taobao_supplier_id, '淘寶店家'
+      = select_tag :taobao_supplier_id,  options_for_select(TaobaoSupplier.all.collect{ |t| [t.name, t.id] }), id: 'select-taobao'
+      = label_tag :item_id, '商品名稱'
+      = select_tag :item_id, '', id: 'item-list'
+      = label_tag :item_spec_id, '商品樣式'
+      = select_tag :item_spec_id, '', id: 'spec-list'
+      = label_tag :item_quantity, '商品數量'
+      = number_field_tag :item_quantity, 1, min: 1
+      = submit_tag '加入購物車'
+    = link_to '送出購物車清單', admin_submit_order_path, method: 'post', class: 'btn btn-primary'
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th 商品編號
+          %th 商品狀態
+          %th 商品名稱
+          %th 樣式名稱
+          %th 樣式圖片
+          %th 商品數量
+          %th 移除商品
+      %tbody#cart_items_list
+        - @admin_cart_items.each do |cart_item|
+          %tr{id: "cart-item-#{cart_item.id}"}
+            %td= cart_item.item_id
+            %td= item_status(cart_item.item.status)
+            %td= cart_item.item.name
+            %td= cart_item.item_spec.style
+            %td= image_tag(cart_item.item_spec.style_pic.url)
+            %td= cart_item.item_quantity
+            %td= link_to '刪除', admin_admin_cart_item_path(cart_item), method: 'delete', remote: true, class: 'btn btn-warning'
