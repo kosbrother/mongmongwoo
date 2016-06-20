@@ -13,6 +13,24 @@
 
 ActiveRecord::Schema.define(version: 20160623030151) do
 
+  create_table "admin_cart_items", force: :cascade do |t|
+    t.integer  "admin_cart_id", limit: 4
+    t.integer  "item_id",       limit: 4
+    t.integer  "item_spec_id",  limit: 4
+    t.integer  "item_quantity", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "admin_cart_items", ["admin_cart_id"], name: "index_admin_cart_items_on_admin_cart_id", using: :btree
+  add_index "admin_cart_items", ["item_id"], name: "index_admin_cart_items_on_item_id", using: :btree
+  add_index "admin_cart_items", ["item_spec_id"], name: "index_admin_cart_items_on_item_spec_id", using: :btree
+
+  create_table "admin_carts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
     t.integer "version_code",   limit: 4
