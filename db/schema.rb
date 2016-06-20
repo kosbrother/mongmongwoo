@@ -394,15 +394,17 @@ ActiveRecord::Schema.define(version: 20160617075923) do
   add_index "towns", ["store_type"], name: "index_towns_on_store_type", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "user_name",       limit: 255
-    t.string   "gender",          limit: 255
-    t.string   "uid",             limit: 255
-    t.integer  "status",          limit: 4,   default: 1
+    t.string   "user_name",              limit: 255
+    t.string   "gender",                 limit: 255
+    t.string   "uid",                    limit: 255
+    t.integer  "status",                 limit: 4,   default: 1
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email",           limit: 255
-    t.string   "password_digest", limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "password_digest",        limit: 255
+    t.string   "password_reset_token",   limit: 255
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
