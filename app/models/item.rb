@@ -5,6 +5,7 @@ class Item < ActiveRecord::Base
   scope :latest, ->(num){ order(created_at: :asc).limit(num) }
   scope :on_shelf, ->{ where(status: 0) }
 
+  enum sort_params: { price_desc: "price desc", price_asc: "price asc", popular: "item_categories.position ASC", date: "items.created_at desc" }
   enum status: { on_shelf: 0, off_shelf: 1 }
 
   acts_as_paranoid
