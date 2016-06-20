@@ -4,9 +4,9 @@ class SpecPicUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   # 預設圖片尺寸
-  process resize_to_fit: [150, 150]
+  process resize_to_fit: [500, 500]
 
-  version :web do
-    process resize_to_fit: [300, 300]
+  version :small do
+    process resize_to_fit: [150, 150]
   end
 end
