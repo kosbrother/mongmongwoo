@@ -2,12 +2,12 @@ module InfoInspector
   extend ActiveSupport::Concern
 
   included do
-    after_create :inspec_is_blacklist
+    after_save :inspec_info_if_blacklisted
   end
 
-  def inspec_is_blacklist
+  def inspec_info_if_blacklisted
     if has_data_in_blacklist? || invalid_data_format?
-      self.update_attribute(:in_blacklist, true)
+      self.update_column(:is_blacklisted, true)
     end
   end
 
