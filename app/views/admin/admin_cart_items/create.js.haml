@@ -1,0 +1,17 @@
+$('#cart_items_list').prepend('<tr></tr>');
+$('#cart_items_list > tr:first').attr('id', 'cart-item-#{@cart_item.id}');
+$('#cart_items_list > tr:first').append($('<td/>'));
+$('#cart_items_list > tr:first > td:last').text("#{@cart_item.item_id}");
+$('#cart_items_list > tr:first').append($('<td/>'));
+$('#cart_items_list > tr:first > td:last').text("#{@cart_item.item.status}");
+$('#cart_items_list > tr:first').append($('<td/>'));
+$('#cart_items_list > tr:first > td:last').text("#{@cart_item.item.name}");
+$('#cart_items_list > tr:first').append($('<td/>'));
+$('#cart_items_list > tr:first > td:last').text("#{@cart_item.item_spec.style}");
+$('#cart_items_list > tr:first').append($('<td/>'));
+$('#cart_items_list > tr:first > td:last').append($('<img/>'));
+$('#cart_items_list > tr:first > td:last > img').attr({src: '#{@cart_item.item_spec.style_pic.url}'})
+$('#cart_items_list > tr:first').append($('<td/>'));
+$('#cart_items_list > tr:first > td:last').text("#{@cart_item.item_quantity}");
+$('#cart_items_list > tr:first').append($('<td/>'));
+$('#cart_items_list > tr:first > td:last').append('#{ link_to '刪除', admin_admin_cart_item_path(@cart_item), method: 'delete', remote: true, class: 'btn btn-success'  }');

@@ -55,8 +55,16 @@ div.item-cover-words-intro, div.notification-intro {
 }
 
 /*庫存列表頁*/
-.inline-display{
+.inline-display {
   display: inline-block;
   list-style: none;
   padding-left: 10px;
+}
+.checkout{
+  .table{
+    margin-top: 20px;
+  }
+  #item_quantity{
+    width: 50px;
+  }
 }
