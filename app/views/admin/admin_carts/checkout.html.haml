@@ -28,7 +28,7 @@
             %td= cart_item.item_id
             %td= item_status(cart_item.item.status)
             %td= cart_item.item.name
-            %td= cart_item.item_spec.style
+            %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
             %td= image_tag(cart_item.item_spec.style_pic.url)
             %td= cart_item.item_quantity
             %td= link_to '刪除', admin_admin_cart_item_path(cart_item), method: 'delete', remote: true, class: 'btn btn-warning'

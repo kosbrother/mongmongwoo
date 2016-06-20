@@ -48,7 +48,22 @@ cart = function() {
 
             }
         })
-    })
+    });
+    //Select spec and update cart item spec_id
+    $('.update-spec-id').change(function(){
+        var cart_item_id =  $(this).data('cart-item'),
+            spec_item_id = $(this).val();
+
+        $.ajax({
+            url: '/admin/admin_cart_items/' + cart_item_id + '/update_spec',
+            data: {spec_item_id: spec_item_id},
+            type: 'PATCH',
+
+            success: function(data){
+
+        }
+        })
+    });
 };
 
 $(document).ready(cart);
