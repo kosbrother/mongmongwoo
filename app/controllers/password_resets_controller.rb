@@ -13,6 +13,7 @@ class PasswordResetsController < ApplicationController
       redirect_to :back
     else
       user.password = params['password']
+      user.password_reset_token = nil
       user.save
       redirect_to  password_resets_success_path
     end

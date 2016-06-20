@@ -33,9 +33,11 @@ class User < ActiveRecord::Base
   end
 
   def sent_password_reset
-    self.password_reset_token = SecureRandom.urlsafe_base64
-    self.password_reset_sent_at = Time.zone.now
-    self.save
+    unless self.password_reset_token
+      self.password_reset_token = SecureRandom.urlsafe_base64
+      self.password_reset_sent_at = Time.zone.now
+      self.save
+    end
     UserMailer.delay.password_reset(self)
   end
 end
