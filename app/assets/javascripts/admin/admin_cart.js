@@ -14,7 +14,7 @@ cart = function() {
                 data.forEach(function(item){
                     item_list.append($("<option/>", {
                         value: item.id,
-                        text: item.name
+                        text: item.id + '-' + item.name
                     }))
                 });
             },
@@ -39,7 +39,7 @@ cart = function() {
                 data.forEach(function(spec){
                     spec_list.append($("<option/>", {
                         value: spec.id,
-                        text: spec.style
+                        text: spec.id + '-' + spec.style
                     }))
                 });
             },
