@@ -2,8 +2,22 @@ class Admin::AdminCartItemsController < AdminController
   before_action :find_cart_item, only: [:update_spec, :destroy]
   before_action :create_cart_item, only: [:create, :add]
 
+  def create
+    redirect_to :back
+  end
+
+
   def add
     @result = '以新增至購物車'
+  end
+
+  def find_by_id
+    @item = Item.joins(:taobao_supplier).select('taobao_suppliers.name as supplier', :id, :status, :name).find_by_id(params[:item_id])
+    if @item
+      @specs = @item.specs.select(:id, :style, :style_pic)
+    else
+      render js: "alert('找不到該商品');"
+    end
   end
 
   def update_spec
