@@ -20,7 +20,7 @@ cart = function() {
             },
 
             error: function(){
-
+                alert('錯誤發生');
             }
         })
     });
@@ -45,7 +45,7 @@ cart = function() {
             },
 
             error: function(){
-
+                alert('錯誤發生');
             }
         })
     });
@@ -59,9 +59,9 @@ cart = function() {
             data: {spec_item_id: spec_item_id},
             type: 'PATCH',
 
-            success: function(data){
-
-        }
+            error: function(){
+                alert('錯誤發生');
+            }
         })
     });
 };
