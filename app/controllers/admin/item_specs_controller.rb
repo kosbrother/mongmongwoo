@@ -1,7 +1,7 @@
 class Admin::ItemSpecsController < AdminController
   before_action :require_manager
   before_action :find_item
-  before_action :find_spec, only: [:edit, :update, :destroy, :on_shelf, :off_shelf]
+  before_action :find_spec, only: [:edit, :update, :destroy, :on_shelf, :off_shelf, :style_pic]
 
   def index
     @item_specs = @item.specs
@@ -15,6 +15,12 @@ class Admin::ItemSpecsController < AdminController
       format.js
     end
   end
+
+  def style_pic
+    url = @item_spec.style_pic.url
+    render json: {style_pic: url}
+  end
+
 
   def create
     # 多圖上傳
