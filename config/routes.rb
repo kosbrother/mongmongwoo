@@ -71,6 +71,9 @@ Rails.application.routes.draw do
     post "/submit_order", to: "admin_carts#submit", as: "submit_order"
 
     resources :admin_cart_items, only: [:create, :destroy] do
+      collection do
+        post "add"
+      end
       member do
         patch "update_quantity"
         patch "update_spec"
