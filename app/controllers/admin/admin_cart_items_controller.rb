@@ -1,8 +1,9 @@
 class Admin::AdminCartItemsController < AdminController
   before_action :find_cart_item, only: [:update_spec, :destroy]
+  before_action :create_cart_item, only: [:create, :add]
 
-  def create
-    @cart_item = AdminCartItem.create(cart_item_params)
+  def add
+    @result = '以新增至購物車'
   end
 
   def update_spec
@@ -19,6 +20,11 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   private
+
+  def create_cart_item
+    @cart_item = AdminCartItem.create(cart_item_params)
+  end
+
   def find_cart_item
     @cart_item = current_admin_cart.admin_cart_items.find(params[:id])
   end

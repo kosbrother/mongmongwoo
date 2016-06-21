@@ -1,7 +1,7 @@
 .checkout
   .content-box-large
     %h1 淘寶購物車
-    = form_tag admin_admin_cart_items_path, method: 'post', remote: true do
+    = form_tag admin_admin_cart_items_path, remote: true do
       = label_tag :taobao_supplier_id, '淘寶店家'
       = select_tag :taobao_supplier_id,  options_for_select(TaobaoSupplier.all.collect{ |t| [t.name, t.id] }), id: 'select-taobao'
       = label_tag :item_id, '商品名稱'
