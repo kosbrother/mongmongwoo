@@ -64,6 +64,24 @@ cart = function() {
             }
         })
     });
+    //search by item id: Select spec and update cart item spec_id
+    $('#result-spec-id').change(function(){
+        var item_id = $(this).data('item-id'),
+            spec_item_id = $(this).val();
+
+        $.ajax({
+            url: '/admin/items/'+ item_id +'/item_specs/'+ spec_item_id +'/style_pic',
+            type: 'GET',
+
+            success: function(data){
+                   $('#result-spec-pic > img').attr({'src': data['style_pic'] })
+            },
+
+            error: function(){
+                alert('錯誤發生');
+            }
+        })
+    });
 };
 
 $(document).ready(cart);
