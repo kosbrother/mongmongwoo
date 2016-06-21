@@ -3,11 +3,11 @@
     %h1 淘寶購物車
     = form_tag admin_admin_cart_items_path, remote: true do
       = label_tag :taobao_supplier_id, '淘寶店家'
-      = select_tag :taobao_supplier_id,  options_for_select(TaobaoSupplier.all.collect{ |t| [t.name, t.id] }), id: 'select-taobao'
+      = select_tag :taobao_supplier_id,  options_for_select(@taobao_list.collect{ |t| [t.name, t.id] }), id: 'select-taobao'
       = label_tag :item_id, '商品名稱'
-      = select_tag :item_id, '', id: 'item-list'
+      = select_tag :item_id, options_for_select(@first_taobao_items.collect{ |i| [i.name, i.id] }), id: 'item-list'
       = label_tag :item_spec_id, '商品樣式'
-      = select_tag :item_spec_id, '', id: 'spec-list'
+      = select_tag :item_spec_id, options_for_select(@first_item_specs.collect{ |s| [s.style, s.id] }), id: 'spec-list'
       = label_tag :item_quantity, '商品數量'
       = number_field_tag :item_quantity, 1, min: 1
       = submit_tag '加入購物車'
