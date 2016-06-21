@@ -73,23 +73,20 @@ Rails.application.routes.draw do
     resources :admin_cart_items, only: [:create, :destroy] do
       collection do
         post "add"
+        post "find_by_id"
       end
       member do
         patch "update_quantity"
         patch "update_spec"
       end
     end
-
     resources :items do
-      member do
-        get "specs"
-      end
-
       collection do
         get "search"
       end
 
       member do
+        get "specs"
         patch "on_shelf"
         patch "off_shelf"
       end
@@ -100,6 +97,7 @@ Rails.application.routes.draw do
         member do
           patch "on_shelf"
           patch "off_shelf"
+          get "style_pic"
         end
       end
     end

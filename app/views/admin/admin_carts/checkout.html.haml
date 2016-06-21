@@ -1,7 +1,8 @@
 .checkout
   .content-box-large
     %h1 淘寶購物車
-    = form_tag admin_admin_cart_items_path, remote: true do
+    %h3 透過淘寶商家找尋商品
+    = form_tag admin_admin_cart_items_path do
       = label_tag :taobao_supplier_id, '淘寶店家'
       = select_tag :taobao_supplier_id,  options_for_select(@taobao_list.collect{ |t| [t.name, t.id] }), id: 'select-taobao'
       = label_tag :item_id, '商品名稱'
@@ -9,8 +10,36 @@
       = label_tag :item_spec_id, '商品樣式'
       = select_tag :item_spec_id, options_for_select(@first_item_specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }), id: 'spec-list'
       = label_tag :item_quantity, '商品數量'
-      = number_field_tag :item_quantity, 1, min: 1
+      = number_field_tag :item_quantity, 1, min: 1, require: true
       = submit_tag '加入購物車'
+    %h3 透過商品編號找尋商品
+    = form_tag   find_by_id_admin_admin_cart_items_path, remote: true do
+      = label_tag :item_id, '商品編號'
+      = number_field_tag :item_id, 31, min: Item.first.id, max: Item.last.id, require: true
+      = submit_tag '搜尋'
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th 淘寶店家
+          %th 商品編號
+          %th 商品狀態
+          %th 商品名稱
+          %th 樣式名稱
+          %th 樣式圖片
+          %th 商品數量
+          %th 新增商品
+      %tboady
+        %tr
+          = form_tag admin_admin_cart_items_path do
+            = hidden_field_tag :item_id, '', id: 'result-hidden-item-id'
+            %th#result-supplier
+            %th#result-item-id
+            %th#result-item-status
+            %th#result-item-name
+            %th#result-spec-style= select_tag :item_spec_id, '', id: 'result-spec-id'
+            %th#result-spec-pic=image_tag ''
+            %th#result-quantity= number_field_tag :item_quantity, 1, min: 1, require: true
+            %th#result-submit= submit_tag '加入購物車'
     = link_to '送出購物車清單', admin_submit_order_path, method: 'post', class: 'btn btn-primary'
     %table.table.table-striped.table-bordered
       %thead
