@@ -3,7 +3,7 @@ module OrderConcern
 
   included do
     after_update :notify_user_if_arrive_store
-    after_update :check_order_if_blacklisted
+    after_update :set_blacklisted_if_not_pickup
   end
 
   def notify_user_if_arrive_store
@@ -13,7 +13,7 @@ module OrderConcern
     end
   end
 
-  def check_order_if_blacklisted
+  def set_blacklisted_if_not_pickup
     if status == "未取訂貨"
       set_to_blacklist      
     end
