@@ -12,8 +12,9 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def find_by_id
-    @item = Item.joins(:taobao_supplier).select('taobao_suppliers.name as supplier', :id, :status, :name).find_by_id(params[:item_id])
+    @item = Item.joins('LEFT JOIN taobao_suppliers ON taobao_suppliers.id = items.taobao_supplier_id').select('taobao_suppliers.name as supplier', :id, :status, :name, :taobao_supplier_id).find_by_id(params[:item_id])
     if @item
+      @item.supplier = '無' unless @item.supplier
       @specs = @item.specs.select(:id, :style, :style_pic)
     else
       render js: "alert('找不到該商品');"
@@ -40,10 +41,10 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def find_cart_item
-    @cart_item = current_admin_cart.admin_cart_items.find(params[:id])
+    @cart_item = current_supplier_cart(params['taobao_supplier_id']).admin_cart_items.find(params[:id])
   end
 
   def cart_item_params
-    params.permit(:item_id, :item_spec_id, :item_quantity).merge({ admin_cart_id: current_admin_cart.id})
+    params.permit(:item_id, :item_spec_id, :item_quantity).merge({ admin_cart_id: current_supplier_cart( params['taobao_supplier_id']).id})
   end
 end

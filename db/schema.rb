@@ -27,9 +27,12 @@ ActiveRecord::Schema.define(version: 20160623030151) do
   add_index "admin_cart_items", ["item_spec_id"], name: "index_admin_cart_items_on_item_spec_id", using: :btree
 
   create_table "admin_carts", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "taobao_supplier_id", limit: 4
   end
+
+  add_index "admin_carts", ["taobao_supplier_id"], name: "index_admin_carts_on_taobao_supplier_id", using: :btree
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
