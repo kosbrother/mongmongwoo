@@ -102,5 +102,4 @@ class CartsController < ApplicationController
 
     order
   end
-
 end

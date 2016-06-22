@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616005415) do
+ActiveRecord::Schema.define(version: 20160617075923) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -56,13 +56,11 @@ ActiveRecord::Schema.define(version: 20160616005415) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.string   "slug",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "slug",       limit: 255
     t.string   "image",      limit: 255
   end
-
-  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_id",           limit: 255, null: false
@@ -267,6 +265,16 @@ ActiveRecord::Schema.define(version: 20160616005415) do
   add_index "notifications", ["category_id"], name: "index_notifications_on_category_id", using: :btree
   add_index "notifications", ["item_id"], name: "index_notifications_on_item_id", using: :btree
 
+  create_table "order_blacklists", force: :cascade do |t|
+    t.string   "email",      limit: 255
+    t.string   "phone",      limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_blacklists", ["email"], name: "index_order_blacklists_on_email", using: :btree
+  add_index "order_blacklists", ["phone"], name: "index_order_blacklists_on_phone", using: :btree
+
   create_table "order_infos", force: :cascade do |t|
     t.integer  "order_id",        limit: 4
     t.string   "ship_name",       limit: 255
@@ -278,6 +286,7 @@ ActiveRecord::Schema.define(version: 20160616005415) do
     t.integer  "ship_store_id",   limit: 4
     t.string   "ship_store_name", limit: 255
     t.string   "ship_email",      limit: 255
+    t.boolean  "is_blacklisted"
   end
 
   add_index "order_infos", ["order_id"], name: "index_order_infos_on_order_id", using: :btree
