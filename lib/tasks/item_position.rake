@@ -8,33 +8,20 @@ namespace :items do
       c.delete if index > 149
     end
 
+    # put all goods in 所有商品
+    category = Category.first
+    Item.all.each do |i|
+      category.items << i unless category.items.include?(i)
+    end
+
     Category.all.each do |category|
       position_cs = []
 
-      # select 3 items from within 7 days
       cs = ItemCategory.where(category_id: category.id).order(created_at: :desc).map(&:id)
-      recent_cs = ItemCategory.where(category: category, created_at: TimeSupport.time_until('week'))
-      recent_cs = recent_cs.shuffle
-      (0..2).each do |i|
-        next unless recent_cs[i]
-        position_cs << recent_cs[i]
-        cs.delete(recent_cs[i].id)
-      end
-
       # select 20 items by item sales times
-      ois = OrderItem.sort_by_sales.limit(20)
-      ois.each do |oi|
-        item_cs = ItemCategory.where(category_id: category.id, item_id: oi.source_item_id)
-        next if item_cs.blank?
-        item_c = item_cs[0]
-        unless position_cs.include?(item_c)
-          position_cs << item_c
-          cs.delete(item_c.id)
-        end
-      end
-
-      # select 30 items by item sales　amount
-      ois = OrderItem.sort_by_revenue.limit(30)
+      ois = OrderItem.sort_by_sales.limit(30) + OrderItem.sort_by_revenue.limit(30)
+      ois.shuffle!
+      
       ois.each do |oi|
         item_cs = ItemCategory.where(category_id: category.id, item_id: oi.source_item_id)
         next if item_cs.blank?
