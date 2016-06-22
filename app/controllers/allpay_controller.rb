@@ -18,9 +18,9 @@ class AllpayController < ActionController::Base
   private
 
   def update_order_status_if_goods_arrive_store_or_pickup
-    if params[:RtnCode].to_i == 2073
+    if params[:RtnCode].to_i == Logistics_Status.key("商品配達買家取貨門市")
       @order.update_attributes(status: Order.statuses["已到店"])
-    elsif params[:RtnCode].to_i == 3022
+    elsif params[:RtnCode].to_i == Logistics_Status.key("買家已到店取貨")
       @order.update_attributes(status: Order.statuses["完成取貨"])
     end
   end
