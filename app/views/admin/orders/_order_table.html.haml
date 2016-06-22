@@ -88,7 +88,7 @@
           %td
             = link_to_send_survey_email(order)
             %hr
-            = link_to "合併其他訂單", select_orders_admin_order_path(order), class: "btn btn-default"
+            = link_to_combine_orders(order)
 .apple_pagination
   = will_paginate orders, :container => false
 %br/

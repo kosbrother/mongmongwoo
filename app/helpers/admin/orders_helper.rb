@@ -60,4 +60,10 @@ module Admin::OrdersHelper
       check_box_tag "selected_order_ids[]", order.id
     end
   end
+
+  def link_to_combine_orders(order)
+    if order.status == "新訂單" || order.status == "處理中"
+      link_to "合併其他訂單", select_orders_admin_order_path(order), class: "btn btn-default"
+    end
+  end
 end
