@@ -6,23 +6,6 @@
       %li
         = link_to "訂單列表", status_index_admin_orders_path
       %li.active 合併訂單
-  / .panel.panel-success
-  /   .content-box-header.panel-heading
-  /     %h3.panel-title 已選擇的訂單
-  /   .panel-body
-  /     %table.table.table-bordered.table-striped
-  /       %thead
-  /         %tr
-  /           %th 訂單編號
-  /           %th 訂購用戶
-  /           %th 聯絡電話
-  /           %th Email
-  /       %tbody
-  /         %tr
-  /           %td= @selected_order.id
-  /           %td= @selected_order.user.user_name
-  /           %td= @selected_order.ship_phone
-  /           %td= @selected_order.ship_email
   .panel.panel-primary
     .content-box-header.panel-heading
       %h3.panel-title 選擇要合併的訂單
@@ -42,7 +25,7 @@
             %tr
               %td
                 = label_tag "請勾選"
-                = check_box_tag "selected_order_ids[]", order.id
+                = check_orders_to_combine(order)
               %td= order.id
               %td= order.user.user_name
               %td= order.ship_phone

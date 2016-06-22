@@ -52,4 +52,12 @@ module Admin::OrdersHelper
       content_tag(:span, "問題訂單", class: "label label-danger")
     end
   end
+
+  def check_orders_to_combine(order)
+    if params[:id].to_i == order.id
+      check_box_tag "selected_order_ids[]", order.id, checked: true
+    else
+      check_box_tag "selected_order_ids[]", order.id
+    end
+  end
 end
