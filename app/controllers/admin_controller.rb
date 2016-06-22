@@ -21,7 +21,7 @@ class AdminController < ActionController::Base
 
   def current_admin_carts
     session[:admin_cart_id] = [] unless session[:admin_cart_id]
-    session[:admin_cart_id].blank? ? @cart = [] : @cart = AdminCart.where(id: session[:admin_cart_id])
+    session[:admin_cart_id].blank? ? @cart = [] : @cart = AdminCart.where(id: session[:admin_cart_id]).includes(:taobao_supplier, {admin_cart_items: [{item: :specs}, :item_spec]})
   end
 
   def current_supplier_cart(supplier_id)
