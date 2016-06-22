@@ -2,7 +2,7 @@ class AdminController < ActionController::Base
   layout "admin"
   protect_from_forgery with: :exception
 
-  helper_method :current_manager, :manager_logged_in?, :current_admin_cart
+  helper_method :current_manager, :manager_logged_in?, :current_admin_carts
 
   def current_manager
     @current_manager ||= Manager.find_by(remember_token: cookies[:remember_token]) if cookies[:remember_token]
@@ -19,17 +19,26 @@ class AdminController < ActionController::Base
     end
   end
 
-  def current_admin_cart
-    @cart ||= AdminCart.find(session[:admin_cart_id]) if session[:admin_cart_id]
-    @cart = create_admin_cart unless @cart
-    @cart
+  def current_admin_carts
+    session[:admin_cart_id] = [] unless session[:admin_cart_id]
+    session[:admin_cart_id].blank? ? @cart = [] : @cart = AdminCart.where(id: session[:admin_cart_id])
+  end
+
+  def current_supplier_cart(supplier_id)
+    supplier_id = supplier_id.to_i
+    if current_admin_carts.any?
+      supplier_cart = current_admin_carts.select{|cart| cart.taobao_supplier_id == supplier_id}.first
+      supplier_cart ||= create_supplier_cart(supplier_id)
+    else
+      create_supplier_cart(supplier_id)
+    end
   end
 
   private
 
-  def create_admin_cart
-    admin_cart = AdminCart.create
-    session[:admin_cart_id] = admin_cart.id
+  def create_supplier_cart(supplier_id)
+    admin_cart = AdminCart.create(taobao_supplier_id: supplier_id)
+    session[:admin_cart_id] << admin_cart.id
     admin_cart
   end
 end
