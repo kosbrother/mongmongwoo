@@ -20,15 +20,15 @@ class AdminController < ActionController::Base
   end
 
   def current_admin_carts
-    session[:admin_cart_id] = [] unless session[:admin_cart_id]
-    session[:admin_cart_id].blank? ? @cart = [] : @cart = AdminCart.where(id: session[:admin_cart_id]).includes(:taobao_supplier, {admin_cart_items: [{item: :specs}, :item_spec]})
+    session[:admin_cart_ids].blank? ? [] : AdminCart.where(id: session[:admin_cart_ids]).includes(:taobao_supplier, {admin_cart_items: [{item: :specs}, :item_spec]})
   end
 
   def current_supplier_cart(supplier_id)
     supplier_id = supplier_id.to_i
     if current_admin_carts.any?
-      supplier_cart = current_admin_carts.select{|cart| cart.taobao_supplier_id == supplier_id}.first
-      supplier_cart ||= create_supplier_cart(supplier_id)
+      supplier_cart = current_admin_carts.select{|cart| cart.taobao_supplier_id == supplier_id}[0]
+      supplier_cart = create_supplier_cart(supplier_id) unless supplier_cart
+      supplier_cart
     else
       create_supplier_cart(supplier_id)
     end
@@ -38,7 +38,8 @@ class AdminController < ActionController::Base
 
   def create_supplier_cart(supplier_id)
     admin_cart = AdminCart.create(taobao_supplier_id: supplier_id)
-    session[:admin_cart_id] << admin_cart.id
+    session[:admin_cart_ids] = [] unless session[:admin_cart_ids]
+    session[:admin_cart_ids] << admin_cart.id
     admin_cart
   end
 end
