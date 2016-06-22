@@ -43,7 +43,7 @@
             %th#result-submit= submit_tag '加入購物車'
     %h1 現有購物車
     - current_admin_carts.each do |cart|
-      %h3= cart.taobao_supplier.name
+      %h3= render_supplier_name(cart)
       %table.table.table-striped.table-bordered
         %thead
           %tr
