@@ -32,6 +32,7 @@
         %tr
           = form_tag admin_admin_cart_items_path do
             = hidden_field_tag :item_id, '', id: 'result-hidden-item-id'
+            = hidden_field_tag :taobao_supplier_id, '', id: 'result-hidden-supplier-id'
             %th#result-supplier
             %th#result-item-id
             %th#result-item-status
@@ -40,24 +41,26 @@
             %th#result-spec-pic=image_tag ''
             %th#result-quantity= number_field_tag :item_quantity, 1, min: 1, require: true
             %th#result-submit= submit_tag '加入購物車'
-    = link_to '送出購物車清單', admin_submit_order_path, method: 'post', class: 'btn btn-primary'
-    %table.table.table-striped.table-bordered
-      %thead
-        %tr
-          %th 商品編號
-          %th 商品狀態
-          %th 商品名稱
-          %th 樣式名稱
-          %th 樣式圖片
-          %th 商品數量
-          %th 移除商品
-      %tbody#cart_items_list
-        - @admin_cart_items.each do |cart_item|
-          %tr{id: "cart-item-#{cart_item.id}"}
-            %td= cart_item.item_id
-            %td= item_status(cart_item.item.status)
-            %td= cart_item.item.name
-            %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
-            %td= image_tag(cart_item.item_spec.style_pic.url)
-            %td= cart_item.item_quantity
-            %td= link_to '刪除', admin_admin_cart_item_path(cart_item), method: 'delete', remote: true, class: 'btn btn-warning'
+    %h1 現有購物車
+    - current_admin_carts.each do |cart|
+      %h3= cart.taobao_supplier.name
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th 商品編號
+            %th 商品狀態
+            %th 商品名稱
+            %th 樣式名稱
+            %th 樣式圖片
+            %th 商品數量
+            %th 移除商品
+        %tbody{id: "cart-#{cart.id}-items-list"}
+          - cart.admin_cart_items.each do |cart_item|
+            %tr{id: "cart-item-#{cart_item.id}"}
+              %td= cart_item.item_id
+              %td= item_status(cart_item.item.status)
+              %td= cart_item.item.name
+              %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-supplier-id': cart.taobao_supplier_id ,'data-cart-item': cart_item.id
+              %td= image_tag(cart_item.item_spec.style_pic.url)
+              %td= cart_item.item_quantity
+              %td= link_to '刪除', admin_admin_cart_item_path(cart_item, taobao_supplier_id: cart.taobao_supplier_id), method: 'delete', remote: true, class: 'btn btn-warning'
