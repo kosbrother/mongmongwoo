@@ -42,8 +42,11 @@ class Admin::TaobaoSuppliersController < AdminController
   end
 
   def items
-    list =  @taobao_supplier.items.collect{|i| {id: i.id, name: i.name }}
-    render json: list
+    items = @taobao_supplier.items
+    item_list =  items.collect{|i| {id: i.id, name: i.name}}
+    first_item_specs = items.first.specs.collect{|s| {id: s.id, style: s.style}}
+
+    render json: {items: item_list, specs: first_item_specs}
   end
 
   private

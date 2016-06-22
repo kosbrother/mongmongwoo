@@ -3,7 +3,9 @@ cart = function() {
     //Ajax: select Taobao supplier and show items
     $('#select-taobao').change(function(){
         var taobao_id =  $(this).val(),
-            item_list = $('#item-list');
+            item_list = $('#item-list'),
+            spec_list = $('#spec-list');
+
 
         $.ajax({
             url: '/admin/taobao_suppliers/'+ taobao_id +'/items',
@@ -11,10 +13,17 @@ cart = function() {
 
             success: function(data){
                 $('#item-list option').remove();
-                data.forEach(function(item){
+                data.items.forEach(function(item){
                     item_list.append($("<option/>", {
                         value: item.id,
                         text: item.id + '-' + item.name
+                    }))
+                });
+                $('#spec-list option').remove();
+                data.specs.forEach(function(spec){
+                    spec_list.append($("<option/>", {
+                        value: spec.id,
+                        text: spec.id + '-' + spec.style
                     }))
                 });
             },
@@ -52,11 +61,12 @@ cart = function() {
     //Select spec and update cart item spec_id
     $('.update-spec-id').change(function(){
         var cart_item_id =  $(this).data('cart-item'),
-            spec_item_id = $(this).val();
+            spec_item_id = $(this).val(),
+            taobao_supplier_id = $(this).data('supplier-id');
 
         $.ajax({
             url: '/admin/admin_cart_items/' + cart_item_id + '/update_spec',
-            data: {spec_item_id: spec_item_id},
+            data: {spec_item_id: spec_item_id, taobao_supplier_id: taobao_supplier_id},
             type: 'PATCH',
 
             error: function(){
