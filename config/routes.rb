@@ -233,6 +233,7 @@ Rails.application.routes.draw do
         end
       end
       resources :oauth_sessions, only: [:create]
+      resources :shop_infos, only: [:index]
     end
   end
 end
