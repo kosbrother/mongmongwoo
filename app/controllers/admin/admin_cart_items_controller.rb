@@ -8,7 +8,7 @@ class Admin::AdminCartItemsController < AdminController
 
 
   def add
-    @result = '以新增至購物車'
+    @result = '已新增至購物車'
     render 'notify'
   end
 
@@ -42,7 +42,13 @@ class Admin::AdminCartItemsController < AdminController
   private
 
   def create_cart_item
-    @cart_item = AdminCartItem.create(cart_item_params)
+    @cart_item = AdminCartItem.find_by(item_id: params[:item_id], item_spec_id: params[:item_spec_id])
+    if @cart_item
+      @cart_item.item_quantity += params[:item_quantity].to_i
+      @cart_item.save
+    else
+      @cart_item = AdminCartItem.create(cart_item_params)
+    end
   end
 
   def find_cart_item
