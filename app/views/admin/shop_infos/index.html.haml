@@ -1,0 +1,18 @@
+.content-box-large
+  .pull-right
+    = link_to "新增須知", new_admin_shop_info_path, { class: "btn btn-primary" }
+  %h2 優惠活動列表
+  .category-all-items
+    %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+      %thead
+        %tr
+          %th Question
+          %th Answer
+          %th 操作
+      %tboady
+        - @infos.each do |i|
+          %tr
+            %th= i.question
+            %th= i.answer
+            %th
+              = link_to '刪除',  admin_shop_info_path(i) ,class: 'btn btn-danger', method: 'delete'

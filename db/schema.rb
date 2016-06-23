@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617075923) do
+ActiveRecord::Schema.define(version: 20160623030151) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -56,11 +56,13 @@ ActiveRecord::Schema.define(version: 20160617075923) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
+    t.string   "slug",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "slug",       limit: 255
     t.string   "image",      limit: 255
   end
+
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_id",           limit: 255, null: false
@@ -360,6 +362,13 @@ ActiveRecord::Schema.define(version: 20160617075923) do
   end
 
   add_index "roads", ["store_type"], name: "index_roads_on_store_type", using: :btree
+
+  create_table "shop_infos", force: :cascade do |t|
+    t.string   "question",   limit: 255
+    t.string   "answer",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "stores", force: :cascade do |t|
     t.integer  "county_id",  limit: 4
