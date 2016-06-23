@@ -22,7 +22,7 @@
       - @item_specs.each do |spec|
         %tr{:id => "spec-#{spec.id}"}
           %td
-            = spec_photo(spec)
+            = spec_photo(spec, photo_size="150x150")
           %td{:id => "status-#{spec.id}"}
             = link_to (spec.on_shelf? ? off_shelf_admin_item_item_spec_path(@item, spec) : on_shelf_admin_item_item_spec_path(@item, spec)), method: :patch, remote: true do
               = spec_status(spec.status)

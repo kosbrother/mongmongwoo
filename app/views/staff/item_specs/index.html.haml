@@ -22,7 +22,7 @@
       - @item_specs.each do |spec|
         %tr{:id => "spec-#{spec.id}"}
           %td
-            = spec_photo(spec)
+            = spec_photo(spec, photo_size="150x150")
           %td{:id => "status-#{spec.id}"}
             = spec_status(spec.status)
           %td= raw(spec.style)
