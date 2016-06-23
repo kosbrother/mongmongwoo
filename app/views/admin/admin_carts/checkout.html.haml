@@ -55,7 +55,7 @@
             %th 商品數量
             %th 移除商品
         %tbody{id: "cart-#{cart.id}-items-list"}
-          - cart.admin_cart_items.each do |cart_item|
+          - cart.admin_cart_items.recent.each do |cart_item|
             %tr{id: "cart-item-#{cart_item.id}"}
               %td= cart_item.item_id
               %td= item_status(cart_item.item.status)
