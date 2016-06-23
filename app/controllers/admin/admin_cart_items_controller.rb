@@ -9,6 +9,7 @@ class Admin::AdminCartItemsController < AdminController
 
   def add
     @result = '以新增至購物車'
+    render 'notify'
   end
 
   def find_by_id
@@ -27,7 +28,11 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def update_quantity
-
+    cart_item = AdminCartItem.find(params[:id])
+    cart_item.item_quantity = params[:item_quantity]
+    @result = '數量已更新'
+    render status: 400 unless cart_item.save
+    render 'notify'
   end
 
   def destroy
