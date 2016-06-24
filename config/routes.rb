@@ -155,6 +155,7 @@ Rails.application.routes.draw do
 
     resources :messages, only: [:index, :new, :create, :show, :destroy]
     resources :promotions, only: [:index, :new, :create, :destroy]
+    resources :shop_infos, except: [:edit, :update]
   end
 
   # API for App
@@ -232,6 +233,7 @@ Rails.application.routes.draw do
         end
       end
       resources :oauth_sessions, only: [:create]
+      resources :shop_infos, only: [:index]
     end
   end
 end
