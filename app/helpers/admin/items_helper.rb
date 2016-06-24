@@ -46,14 +46,14 @@ module Admin::ItemsHelper
     image_tag(image_url, :class => "thumbnail")
   end
 
-  def spec_photo(spec)
+  def spec_photo(spec, photo_size=nil)
     if spec.style_pic.present?
       image_url = spec.style_pic.url
     else
       image_url = "http://placehold.it/150x150&text=No Pic"
     end
 
-    image_tag(image_url, :class => "thumbnail")
+    photo_size ? image_tag(image_url, size: photo_size, :class => "thumbnail") : image_tag(image_url, :class => "thumbnail")
   end
 
   def show_item_stock(amount)
