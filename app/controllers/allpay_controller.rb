@@ -10,5 +10,6 @@ class AllpayController < ActionController::Base
   def create_reply
     order = Order.find(params[:MerchantTradeNo].to_i)
     order.update_attributes(logistics_status_code: params[:RtnCode].to_i)
+    render status: 200, json: { data: "success" }
   end
 end
