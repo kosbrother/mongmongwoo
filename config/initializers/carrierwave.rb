@@ -36,11 +36,7 @@ CarrierWave.configure do |config|
 
         def store_dir
           "#{Rails.root}/spec/support/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-        end
-      else
-        def store_dir
-          "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-        end
+        end        
       end
     end
   end
