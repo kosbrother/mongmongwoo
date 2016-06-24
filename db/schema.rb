@@ -384,6 +384,18 @@ ActiveRecord::Schema.define(version: 20160624055038) do
 
   add_index "roads", ["store_type"], name: "index_roads_on_store_type", using: :btree
 
+  create_table "shipping_items", force: :cascade do |t|
+    t.integer "item_id",       limit: 4
+    t.integer "item_spec_id",  limit: 4
+    t.integer "admin_cart_id", limit: 4
+    t.integer "item_quantity", limit: 4
+    t.boolean "is_checked",              default: false
+  end
+
+  add_index "shipping_items", ["admin_cart_id"], name: "index_shipping_items_on_admin_cart_id", using: :btree
+  add_index "shipping_items", ["item_id"], name: "index_shipping_items_on_item_id", using: :btree
+  add_index "shipping_items", ["item_spec_id"], name: "index_shipping_items_on_item_spec_id", using: :btree
+
   create_table "shop_infos", force: :cascade do |t|
     t.string   "question",   limit: 255
     t.string   "answer",     limit: 255
