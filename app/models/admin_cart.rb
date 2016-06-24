@@ -1,5 +1,5 @@
 class AdminCart < ActiveRecord::Base
-  has_many :admin_cart_items
+  has_many :admin_cart_items, -> { order(id: :desc) }
   has_many :shipping_items
   belongs_to :taobao_supplier
 

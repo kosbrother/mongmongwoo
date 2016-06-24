@@ -56,15 +56,15 @@
             %th 商品數量
             %th 移除商品
         %tbody{id: "cart-#{cart.id}-items-list"}
-          - cart.admin_cart_items.recent.each do |cart_item|
+          - cart.admin_cart_items.each do |cart_item|
             %tr{id: "cart-item-#{cart_item.id}"}
               %td= cart_item.item_id
               %td= item_status(cart_item.item.status)
               %td= cart_item.item.name
-              %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-supplier-id': cart.taobao_supplier_id ,'data-cart-item': cart_item.id
+              %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
               %td= image_tag(cart_item.item_spec.style_pic.url)
               %td
                 = form_tag update_quantity_admin_admin_cart_item_path(cart_item), method: 'patch', remote: true do
                   = number_field_tag :item_quantity, cart_item.item_quantity , min: 1,id: "cart-item-#{cart_item.id}-quantity" , class: 'update-cart-item-quantity'
                   = submit_tag '修改數量'
-              %td= link_to '刪除', admin_admin_cart_item_path(cart_item, taobao_supplier_id: cart.taobao_supplier_id), method: 'delete', remote: true, class: 'btn btn-warning'
+              %td= link_to '刪除', admin_admin_cart_item_path(cart_item), method: 'delete', remote: true, class: 'btn btn-warning'
