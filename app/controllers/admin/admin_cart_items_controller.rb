@@ -1,5 +1,5 @@
 class Admin::AdminCartItemsController < AdminController
-  before_action :find_cart_item, only: [:update_spec, :destroy]
+  before_action :find_cart_item, only: [:update_spec, :update_quantity,:destroy]
   before_action :create_cart_item, only: [:create, :add]
 
   def create
@@ -13,9 +13,9 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def find_by_id
-    @item = Item.joins('LEFT JOIN taobao_suppliers ON taobao_suppliers.id = items.taobao_supplier_id').select('taobao_suppliers.name as supplier', :id, :status, :name, :taobao_supplier_id).find_by_id(params[:item_id])
+    @item = Item.select(:id, :status, :name, :taobao_supplier_id).find_by_id(params[:item_id])
     if @item
-      @item.supplier = '無' unless @item.supplier
+      @item.taobao_supplier ? @supplier_name = @item.taobao_supplier.name : @supplier_name = '無'
       @specs = @item.specs.select(:id, :style, :style_pic)
     else
       render js: "alert('找不到該商品');"
@@ -28,10 +28,9 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def update_quantity
-    cart_item = AdminCartItem.find(params[:id])
-    cart_item.item_quantity = params[:item_quantity]
+    @cart_item.item_quantity = params[:item_quantity]
     @result = '數量已更新'
-    render status: 400 unless cart_item.save
+    @cart_item.save
     render 'notify'
   end
 
@@ -52,7 +51,7 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def find_cart_item
-    @cart_item = current_supplier_cart(params['taobao_supplier_id']).admin_cart_items.find(params[:id])
+    @cart_item = AdminCartItem.find(params[:id])
   end
 
   def cart_item_params
