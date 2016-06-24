@@ -24,6 +24,7 @@ class Item < ActiveRecord::Base
   has_many :item_promotions
   has_many :promotions, through: :item_promotions
   has_one :stock
+  has_many :shipping_items
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
