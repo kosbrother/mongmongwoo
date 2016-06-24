@@ -68,7 +68,7 @@ Rails.application.routes.draw do
     post "/signin", to: "sessions#create"
     delete "/signout", to: "sessions#destroy"
     get "/checkout", to: "admin_carts#checkout", as: "checkout"
-    post "/submit_order", to: "admin_carts#submit", as: "submit_order"
+    post "/submit", to: "admin_carts#submit", as: "submit_order"
 
     resources :admin_cart_items, only: [:create, :destroy] do
       collection do
