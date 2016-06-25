@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623030151) do
+ActiveRecord::Schema.define(version: 20160624055038) do
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -56,13 +56,11 @@ ActiveRecord::Schema.define(version: 20160623030151) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.string   "slug",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "slug",       limit: 255
     t.string   "image",      limit: 255
   end
-
-  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_id",           limit: 255, null: false
@@ -363,12 +361,30 @@ ActiveRecord::Schema.define(version: 20160623030151) do
 
   add_index "roads", ["store_type"], name: "index_roads_on_store_type", using: :btree
 
-  create_table "shop_infos", force: :cascade do |t|
-    t.string   "question",   limit: 255
-    t.string   "answer",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "stock_specs", force: :cascade do |t|
+    t.integer  "stock_id",     limit: 4
+    t.string   "style",        limit: 255
+    t.integer  "style_amount", limit: 4
+    t.string   "style_pic",    limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
+
+  add_index "stock_specs", ["stock_id"], name: "index_stock_specs_on_stock_id", using: :btree
+
+  create_table "stocks", force: :cascade do |t|
+    t.string   "name",               limit: 255
+    t.decimal  "cost",                             precision: 10, scale: 2
+    t.integer  "price",              limit: 4
+    t.text     "description",        limit: 65535
+    t.string   "cover",              limit: 255
+    t.string   "url",                limit: 255
+    t.integer  "taobao_supplier_id", limit: 4
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+  end
+
+  add_index "stocks", ["taobao_supplier_id"], name: "index_stocks_on_taobao_supplier_id", using: :btree
 
   create_table "stores", force: :cascade do |t|
     t.integer  "county_id",  limit: 4

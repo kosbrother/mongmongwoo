@@ -68,6 +68,12 @@ Rails.application.routes.draw do
     post "/signin", to: "sessions#create"
     delete "/signout", to: "sessions#destroy"
 
+    resources :stocks, only: [:index] do
+      collection do
+        get "/:taobao_supplier_id/stock_lists", to: "stocks#stock_lists", as: "stock_lists"
+      end
+    end
+
     resources :items do
       collection do
         get "search"
