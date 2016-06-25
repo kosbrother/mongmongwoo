@@ -58,10 +58,10 @@ class Admin::OrdersController < AdminController
 
   def select_orders
     current_order = Order.find(params[:id])
-    @ready_to_combine_orders_collection = Order.enable_to_conbime.includes(:user, :info).search_by_phone_or_email(current_order.ship_phone, current_order.ship_email)
+    @combine_orders = Order.enable_to_conbime.includes(:user, :info).search_by_phone_or_email(current_order.ship_phone, current_order.ship_email)
   end
 
-  def combine_orders    
+  def combine_orders
     target_orders = Order.where(id: params[:selected_order_ids])
     target_infos = target_orders.map(&:info)
     target_items = target_orders.map(&:items).flatten
@@ -69,50 +69,48 @@ class Admin::OrdersController < AdminController
     combined_items_price = target_orders.map(&:items_price).inject(:+)
     combined_ship_fee = combined_items_price > 490 ? 0 : 60
     combined_total = combined_items_price + combined_ship_fee
-    combined_items = []
-    target_items.each do |item|
-      combined_items << item
-    end
+    # combined_items = []
+    # target_items.each do |item|
+    #   combined_items << item
+    # end
 
     errors = []
     ActiveRecord::Base.transaction do
       order = Order.new
-      order.uid = target_orders.map(&:uid)[0]
-      order.user_id = target_orders.map(&:user)[0].id
+      order.uid = target_orders[0].uid
+      order.user_id = target_orders[0].user_id
       order.items_price = combined_items_price
       order.ship_fee = combined_ship_fee
-      order.total = combined_items_price + combined_ship_fee
-      order.device_registration = target_orders.map(&:device_registration_id)[0]
+      order.total = combined_total
+      order.device_registration_id = target_orders[0].device_registration_id
       order.note = "訂單編號：#{target_orders.map(&:id).join('，')} 併單"
       errors << order.errors.messages unless order.save
 
       info = OrderInfo.new
       info.order_id = order.id
-      info.ship_name = target_infos.map(&:ship_name)[0]
-      info.ship_phone = target_infos.map(&:ship_phone)[0]
-      info.ship_store_code = target_infos.map(&:ship_store_code)[0]
-      info.ship_store_id = target_infos.map(&:ship_store_id)[0]
-      info.ship_store_name = target_infos.map(&:ship_store_name)[0]
-      info.ship_email = target_infos.map(&:ship_email)[0]
+      info.ship_name = target_infos[0].ship_name
+      info.ship_phone = target_infos[0].ship_phone
+      info.ship_store_code = target_infos[0].ship_store_code
+      info.ship_store_id = target_infos[0].ship_store_id
+      info.ship_store_name = target_infos[0].ship_store_name
+      info.ship_email = target_infos[0].ship_email
       errors << info.errors.messages unless info.save
 
-      unless combined_items.blank?
-        combined_items.each do |product|
-          item = order.items.new
-          item.item_name = product.item.name
-          item.source_item_id = product.source_item_id
-          item.item_spec_id = product.item_spec_id
-          item.item_style = product.item_spec.style
-          item.item_quantity = product.item_quantity
-          item.item_price = product.item.price
-          item.save
-          errors << item.errors.messages unless item.save
-        end
-      else
-        errors << ["沒有訂購商品的資料"] 
+      target_items.each do |product|
+        item = order.items.new
+        item.item_name = product.item.name
+        item.source_item_id = product.source_item_id
+        item.item_spec_id = product.item_spec_id
+        item.item_style = product.item_spec.style
+        item.item_quantity = product.item_quantity
+        item.item_price = product.item.price
+        item.save
+        errors << item.errors.messages unless item.save
       end
+
       raise ActiveRecord::Rollback if errors.present?
     end
+
     if errors.present?
       Rails.logger.error("error: #{errors}")
       flash.now["danger"] = "請檢查各訂單的明細資料"

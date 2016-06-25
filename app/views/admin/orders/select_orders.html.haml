@@ -21,7 +21,7 @@
             %th Email
             %th 訂單狀態
         %tbody
-          - @ready_to_combine_orders_collection.each do |order|
+          - @combine_orders.each do |order|
             %tr
               %td
                 = label_tag "請勾選"
