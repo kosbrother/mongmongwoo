@@ -1,0 +1,12 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 淘寶商家列表
+  .panel-body
+    .col-md-4
+      %ul.list-group
+        - @taobao_suppliers.each do |taobao|
+          %li.list-group-item
+            = link_to taobao.name, stock_lists_admin_stocks_path(taobao)
