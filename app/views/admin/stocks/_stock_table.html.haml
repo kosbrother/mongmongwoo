@@ -15,13 +15,13 @@
                 編號：
                 = stock.id
               %p
-                商品名稱：
+                名稱：
                 = stock.name
               %p
-                商品成本：
+                成本：
                 = round_decimal_number(stock.cost * 5)
               %p
-                商品價格：
+                價格：
                 = stock.price
         %td
           %ul.list-group
@@ -30,7 +30,7 @@
                 = image_tag(spec.style_pic, size: "120x120")
                 %ul.inline-display
                   %li
-                    名稱：
+                    ：
                     = spec.style
                   %li
                     數量：
