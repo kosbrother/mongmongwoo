@@ -361,6 +361,13 @@ ActiveRecord::Schema.define(version: 20160624055038) do
 
   add_index "roads", ["store_type"], name: "index_roads_on_store_type", using: :btree
 
+  create_table "shop_infos", force: :cascade do |t|
+    t.string   "question",   limit: 255
+    t.string   "answer",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "stock_specs", force: :cascade do |t|
     t.integer  "stock_id",     limit: 4
     t.string   "style",        limit: 255
