@@ -84,6 +84,7 @@
                           = hidden_field_tag :item_id, item.item.id
                           = hidden_field_tag :item_spec_id, item.item_spec_id
                           = hidden_field_tag :item_quantity, item.item_quantity
+                          = hidden_field_tag :taobao_supplier_id, item.item.taobao_supplier_id
                           = submit_tag '新增至購物車', class: "btn btn-primary "
             %table.table.table-bordered
               %tbody
