@@ -3,8 +3,14 @@ class Api::V3::OrdersController < ApiController
     errors = []
     ActiveRecord::Base.transaction do
       @order = Order.new
-      @order.uid = params[:uid]
-      @order.user_id =  User.find_by(uid: params[:uid]).id if User.find_by(uid: params[:uid])
+
+      if params[:email]
+        @order.user_id =  User.find_by(email: params[:email]).id  if User.find_by(email: params[:email])
+      elsif params[:uid]
+        @order.uid = params[:uid]
+        @order.user_id = User.find_by(uid: params[:uid]).id if User.find_by(uid: params[:uid])
+      end
+
       @order.items_price = params[:items_price]
       @order.ship_fee = params[:ship_fee]
       @order.total = params[:total]

@@ -25,7 +25,7 @@ class Order < ActiveRecord::Base
   delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, :is_blacklisted, to: :info
   delegate :orders, to: :user, prefix: true
 
-  validates_presence_of :uid, :user_id, :items_price, :ship_fee, :total
+  validates_presence_of :user_id, :items_price, :ship_fee, :total
 
   def self.search_by_phone_and_email(phone, email)
     self.joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
