@@ -370,28 +370,22 @@ ActiveRecord::Schema.define(version: 20160624055038) do
 
   create_table "stock_specs", force: :cascade do |t|
     t.integer  "stock_id",     limit: 4
-    t.string   "style",        limit: 255
-    t.integer  "style_amount", limit: 4
-    t.string   "style_pic",    limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "item_spec_id", limit: 4
+    t.integer  "amount",       limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
+  add_index "stock_specs", ["item_spec_id"], name: "index_stock_specs_on_item_spec_id", using: :btree
   add_index "stock_specs", ["stock_id"], name: "index_stock_specs_on_stock_id", using: :btree
 
   create_table "stocks", force: :cascade do |t|
-    t.string   "name",               limit: 255
-    t.decimal  "cost",                             precision: 10, scale: 2
-    t.integer  "price",              limit: 4
-    t.text     "description",        limit: 65535
-    t.string   "cover",              limit: 255
-    t.string   "url",                limit: 255
-    t.integer  "taobao_supplier_id", limit: 4
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
+    t.integer  "item_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
-  add_index "stocks", ["taobao_supplier_id"], name: "index_stocks_on_taobao_supplier_id", using: :btree
+  add_index "stocks", ["item_id"], name: "index_stocks_on_item_id", using: :btree
 
   create_table "stores", force: :cascade do |t|
     t.integer  "county_id",  limit: 4

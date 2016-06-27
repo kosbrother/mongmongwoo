@@ -9,7 +9,7 @@
         %td
           .media
             .media-left
-              = image_tag(stock.cover, size: "120x120")
+              = image_tag(stock.cover.url, size: "120x120")
             .media-body
               %h4.media-heading
                 編號：
@@ -27,12 +27,12 @@
           %ul.list-group
             - stock.stock_specs.each do |spec|
               %li.list-group-item
-                = image_tag(spec.style_pic, size: "120x120")
+                = image_tag(spec.style_pic.url, size: "120x120")
                 %ul.inline-display
                   %li
-                    ：
+                    樣式：
                     = spec.style
                   %li
                     數量：
                     %span
-                      = spec.style_amount
+                      = spec.amount
