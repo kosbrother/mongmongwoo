@@ -1,7 +1,7 @@
 %table.table.table-striped.table-bordered
   %thead
     %tr
-      %th{width: "40%"} 商品資訊
+      %th{width: "30%"} 商品資訊
       %th 樣式資訊
   %tbody
     - @stocks.each do |stock|
@@ -27,12 +27,14 @@
           %ul.list-group
             - stock.stock_specs.each do |spec|
               %li.list-group-item
-                = image_tag(spec.style_pic.url, size: "120x120")
                 %ul.inline-display
                   %li
-                    樣式：
+                    樣式名稱：
                     = spec.style
                   %li
-                    數量：
+                    現貨數量：
                     %span
-                      = spec.amount
+                      %mark= spec.amount
+                  %li
+                    運送中數量：
+                    %span
