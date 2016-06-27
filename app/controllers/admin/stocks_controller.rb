@@ -7,6 +7,6 @@ class Admin::StocksController < AdminController
 
   def stock_lists
     @taobao_supplier = TaobaoSupplier.find(params[:taobao_supplier_id])
-    @stocks = @taobao_supplier.stocks.includes(:stock_specs).recent
+    @stocks = Stock.includes(:item, :stock_specs, stock_specs: [:item_spec]).where(items: { taobao_supplier_id: @taobao_supplier.id }).recent
   end
 end
