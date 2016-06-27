@@ -61,6 +61,11 @@ class Api::V3::OrdersController < ApiController
     render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
   end
 
+  def by_user_email
+    user_orders =  Order.joins(:user).where('users.email = ?', params[:email])
+    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
+  end
+
   def by_email_phone
     user_orders = Order.joins(:info).where("ship_email = ? and ship_phone = ?", params[:email], params[:phone]).recent
     render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
