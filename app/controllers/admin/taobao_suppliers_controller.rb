@@ -43,9 +43,8 @@ class Admin::TaobaoSuppliersController < AdminController
 
   def items
     items = @taobao_supplier.items
-    item_list =  items.collect{|i| {id: i.id, name: i.name}}
-    first_item_specs = items.first.specs.collect{|s| {id: s.id, style: s.style}}
-
+    item_list =  items.select(:id, :name, :special_price, :price)
+    first_item_specs = items.first.specs.select(:id, :style)
     render json: {items: item_list, specs: first_item_specs}
   end
 

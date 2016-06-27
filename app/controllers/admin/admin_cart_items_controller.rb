@@ -41,20 +41,17 @@ class Admin::AdminCartItemsController < AdminController
   private
 
   def create_cart_item
-    @cart_item = AdminCartItem.find_by(item_id: params[:item_id], item_spec_id: params[:item_spec_id])
-    if @cart_item
+    supplier_cart_items = current_supplier_cart(params[:taobao_supplier_id]).admin_cart_items
+    @cart_item = supplier_cart_items.find_or_create_by(item_id: params[:item_id], item_spec_id: params[:item_spec_id])
+    if @cart_item.item_quantity
       @cart_item.item_quantity += params[:item_quantity].to_i
-      @cart_item.save
     else
-      @cart_item = AdminCartItem.create(cart_item_params)
+      @cart_item.item_quantity = params[:item_quantity].to_i
     end
+    @cart_item.save
   end
 
   def find_cart_item
     @cart_item = AdminCartItem.find(params[:id])
-  end
-
-  def cart_item_params
-    params.permit(:item_id, :item_spec_id, :item_quantity).merge({ admin_cart_id: current_supplier_cart( params['taobao_supplier_id']).id})
   end
 end
