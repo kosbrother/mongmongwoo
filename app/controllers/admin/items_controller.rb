@@ -80,7 +80,7 @@ class Admin::ItemsController < AdminController
   end
 
   def specs
-    list =  @specs.collect{|i| {id: i.id, style: i.style }}
+    list =  @specs.select(:id, :style)
     render json: list
   end
 
