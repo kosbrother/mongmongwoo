@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624055038) do
+ActiveRecord::Schema.define(version: 20160627133450) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -27,9 +27,10 @@ ActiveRecord::Schema.define(version: 20160624055038) do
   add_index "admin_cart_items", ["item_spec_id"], name: "index_admin_cart_items_on_item_spec_id", using: :btree
 
   create_table "admin_carts", force: :cascade do |t|
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "taobao_supplier_id", limit: 4
+    t.integer  "status",             limit: 4, default: 0
   end
 
   add_index "admin_carts", ["taobao_supplier_id"], name: "index_admin_carts_on_taobao_supplier_id", using: :btree
@@ -383,18 +384,6 @@ ActiveRecord::Schema.define(version: 20160624055038) do
   end
 
   add_index "roads", ["store_type"], name: "index_roads_on_store_type", using: :btree
-
-  create_table "shipping_items", force: :cascade do |t|
-    t.integer "item_id",       limit: 4
-    t.integer "item_spec_id",  limit: 4
-    t.integer "admin_cart_id", limit: 4
-    t.integer "item_quantity", limit: 4
-    t.boolean "is_checked",              default: false
-  end
-
-  add_index "shipping_items", ["admin_cart_id"], name: "index_shipping_items_on_admin_cart_id", using: :btree
-  add_index "shipping_items", ["item_id"], name: "index_shipping_items_on_item_id", using: :btree
-  add_index "shipping_items", ["item_spec_id"], name: "index_shipping_items_on_item_spec_id", using: :btree
 
   create_table "shop_infos", force: :cascade do |t|
     t.string   "question",   limit: 255
