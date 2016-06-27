@@ -69,10 +69,6 @@ class Admin::OrdersController < AdminController
     combined_items_price = target_orders.map(&:items_price).inject(:+)
     combined_ship_fee = combined_items_price > 490 ? 0 : 60
     combined_total = combined_items_price + combined_ship_fee
-    # combined_items = []
-    # target_items.each do |item|
-    #   combined_items << item
-    # end
 
     errors = []
     ActiveRecord::Base.transaction do
