@@ -22,6 +22,7 @@ class Item < ActiveRecord::Base
   has_many :favorited_by, through: :favorite_items, source: :user
   has_many :item_promotions
   has_many :promotions, through: :item_promotions
+  has_one :stock
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
