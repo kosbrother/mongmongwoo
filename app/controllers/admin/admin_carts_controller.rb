@@ -8,7 +8,7 @@ class Admin::AdminCartsController < AdminController
 
   def submit
     admin_cart = AdminCart.find(params[:admin_cart_id])
-    admin_cart.transfer_to_shipping_items
+    admin_cart.update_attribute(:status, AdminCart::STATUS[:shipping])
     session[:admin_cart_ids].delete(params[:admin_cart_id].to_i)
     redirect_to :back
   end
