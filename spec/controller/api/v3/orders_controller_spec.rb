@@ -20,24 +20,47 @@ describe Api::V3::OrdersController, type: :controller do
     let!(:product) { {id: item.id, name: item.name, spec_id: item.specs.first.id, style: item.specs.first.style, quantity: 1, price: item.price} }
     let!(:products) { [product] }
 
-    it "does create correct order" do
-      post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-           registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
-           ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-           ship_email: ship_email, products: products
-      order_id = ActiveSupport::JSON.decode(response.body)["data"]['id']
-      order = Order.find(order_id)
-      expect(order.uid).to eq(uid)
-      expect(order.items_price).to eq(items_price)
-      expect(order.ship_fee).to eq(ship_fee)
-      expect(order.total).to eq(total)
-      expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
-      expect(order.info.ship_name).to eq(ship_name)
-      expect(order.info.ship_phone).to eq(ship_phone)
-      expect(order.info.ship_store_code).to eq(ship_store_code)
-      expect(order.info.ship_email).to eq(ship_email)
-      expect(order.items.size).to eq(products.size)
-      expect(order.items[0].item_name).to eq(product[:name])
+    context 'when  uid is provided' do
+      it "does create correct order" do
+        post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+             ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+             ship_email: ship_email, products: products
+        order_id = JSON.parse(response.body)["data"]['id']
+        order = Order.find(order_id)
+        expect(order.uid).to eq(uid)
+        expect(order.items_price).to eq(items_price)
+        expect(order.ship_fee).to eq(ship_fee)
+        expect(order.total).to eq(total)
+        expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+        expect(order.info.ship_name).to eq(ship_name)
+        expect(order.info.ship_phone).to eq(ship_phone)
+        expect(order.info.ship_store_code).to eq(ship_store_code)
+        expect(order.info.ship_email).to eq(ship_email)
+        expect(order.items.size).to eq(products.size)
+        expect(order.items[0].item_name).to eq(product[:name])
+      end
+    end
+
+    context 'when  email is provided' do
+      it "does create correct order" do
+        post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
+             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+             ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+             ship_email: ship_email, products: products
+        order_id = JSON.parse(response.body)["data"]['id']
+        order = Order.find(order_id)
+        expect(order.items_price).to eq(items_price)
+        expect(order.ship_fee).to eq(ship_fee)
+        expect(order.total).to eq(total)
+        expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+        expect(order.info.ship_name).to eq(ship_name)
+        expect(order.info.ship_phone).to eq(ship_phone)
+        expect(order.info.ship_store_code).to eq(ship_store_code)
+        expect(order.info.ship_email).to eq(ship_email)
+        expect(order.items.size).to eq(products.size)
+        expect(order.items[0].item_name).to eq(product[:name])
+      end
     end
 
     it "return errors if missing order params" do
@@ -125,6 +148,26 @@ describe Api::V3::OrdersController, type: :controller do
         expect(result[0]['total']).to eq(orders[0].total)
         expect(result[0]['status']).to eq(orders[0].status)
         expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
+      end
+    end
+    describe "get #by_user_email" do
+      let!(:user) { FactoryGirl.create(:user) }
+      let!(:orders) { create_list(:order_with_items, 3, user_id: user.id, uid: user.uid) }
+      let!(:email) { user.email }
+      before :each do
+        get :by_user_email, email: email
+      end
+      context 'when user email is provided' do
+        it 'does generate correct order list' do
+          result = JSON.parse(response.body)["data"]
+          expect(result.size).to eq(orders.size)
+          expect(result[0]['id']).to eq(orders[0].id)
+          expect(result[0]['user_id']).to eq(orders[0].user_id)
+          expect(result[0]['uid']).to eq(orders[0].uid)
+          expect(result[0]['total']).to eq(orders[0].total)
+          expect(result[0]['status']).to eq(orders[0].status)
+          expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
+        end
       end
     end
   end

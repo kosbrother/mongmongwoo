@@ -3,8 +3,14 @@ class Api::V3::OrdersController < ApiController
     errors = []
     ActiveRecord::Base.transaction do
       @order = Order.new
-      @order.uid = params[:uid]
-      @order.user_id =  User.find_by(uid: params[:uid]).id if User.find_by(uid: params[:uid])
+
+      if params[:email]
+        @order.user_id =  User.find_by(email: params[:email]).id  if User.find_by(email: params[:email])
+      elsif params[:uid]
+        @order.uid = params[:uid]
+        @order.user_id = User.find_by(uid: params[:uid]).id if User.find_by(uid: params[:uid])
+      end
+
       @order.items_price = params[:items_price]
       @order.ship_fee = params[:ship_fee]
       @order.total = params[:total]
@@ -58,6 +64,11 @@ class Api::V3::OrdersController < ApiController
 
   def user_owned_orders
     user_orders = Order.includes(:user).where(uid: params[:uid]).recent.page(params[:page]).per_page(20)
+    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
+  end
+
+  def by_user_email
+    user_orders =  Order.joins(:user).where('users.email = ?', params[:email])
     render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
   end
 
