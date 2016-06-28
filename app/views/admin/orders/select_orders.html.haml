@@ -1,0 +1,34 @@
+.content-box-large.box-with-header
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li
+        = link_to "訂單列表", status_index_admin_orders_path
+      %li.active 合併訂單
+  .panel.panel-primary
+    .content-box-header.panel-heading
+      %h3.panel-title 選擇要合併的訂單
+    .panel-body
+      = form_tag combine_orders_admin_order_path
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th 勾選加入併單
+            %th 訂單編號
+            %th 訂購用戶
+            %th 聯絡電話
+            %th Email
+            %th 訂單狀態
+        %tbody
+          - @combine_orders.each do |order|
+            %tr
+              %td
+                = label_tag "請勾選"
+                = check_orders_to_combine(order)
+              %td= order.id
+              %td= order.user.user_name
+              %td= order.ship_phone
+              %td= order.ship_email
+              %td= order.status
+      = submit_tag '確認併單', class: "btn btn-success btn-lg", data: { confirm: "確認併單？" }

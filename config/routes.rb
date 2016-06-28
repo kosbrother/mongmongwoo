@@ -121,6 +121,8 @@ Rails.application.routes.draw do
 
       member do
         patch "update_status"
+        get "select_orders"
+        post "combine_orders"
       end
     end
 

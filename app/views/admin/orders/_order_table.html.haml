@@ -10,7 +10,7 @@
         %th 訂購用戶
         %th 訂購商品
         %th 總金額
-        %th 寄送滿意度問卷
+        %th 訂單操作
     %tbody
       - orders.each do |order|
         %tr
@@ -85,7 +85,10 @@
                 %tr
                   %td= order.note
           %td= order.total
-          %td= link_to_send_survey_email(order)
+          %td
+            = link_to_send_survey_email(order)
+            %hr
+            = link_to_combine_orders(order)
 .apple_pagination
   = will_paginate orders, :container => false
 %br/
