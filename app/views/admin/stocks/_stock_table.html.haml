@@ -1,7 +1,7 @@
 %table.table.table-striped.table-bordered
   %thead
     %tr
-      %th{width: "30%"} 商品資訊
+      %th{width: "40%"} 商品資訊
       %th 樣式資訊
   %tbody
     - @stocks.each do |stock|
@@ -17,6 +17,9 @@
               %p
                 名稱：
                 = stock.name
+              %p
+                狀態：
+                = item_status(stock.status)
               %p
                 成本：
                 = round_decimal_number(stock.cost * 5)
