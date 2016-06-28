@@ -160,6 +160,7 @@ describe Api::V3::OrdersController, type: :controller do
       context 'when user email is provided' do
         it 'does generate correct order list' do
           result = JSON.parse(response.body)["data"]
+          orders = Order.recent
           expect(result.size).to eq(orders.size)
           expect(result[0]['id']).to eq(orders[0].id)
           expect(result[0]['user_id']).to eq(orders[0].user_id)

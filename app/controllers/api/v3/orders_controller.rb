@@ -68,7 +68,7 @@ class Api::V3::OrdersController < ApiController
   end
 
   def by_user_email
-    user_orders =  Order.joins(:user).where('users.email = ?', params[:email])
+    user_orders =  Order.joins(:user).where('users.email = ?', params[:email]).recent
     render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
   end
 
