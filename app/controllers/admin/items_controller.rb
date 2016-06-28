@@ -80,8 +80,7 @@ class Admin::ItemsController < AdminController
   end
 
   def specs
-    list =  @specs.select(:id, :style)
-    render json: list
+    render json: @specs
   end
 
   private
