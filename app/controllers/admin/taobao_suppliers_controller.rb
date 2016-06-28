@@ -42,9 +42,8 @@ class Admin::TaobaoSuppliersController < AdminController
   end
 
   def items
-    items = @taobao_supplier.items
-    item_list =  items.select(:id, :name, :special_price, :price)
-    first_item_specs = items.first.specs.select(:id, :style)
+    item_list =  @taobao_supplier.items
+    first_item_specs = @taobao_supplier.items.first.specs
     render json: {items: item_list, specs: first_item_specs}
   end
 
