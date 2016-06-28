@@ -4,5 +4,5 @@ class Stock < ActiveRecord::Base
   belongs_to :item
   has_many :stock_specs
 
-  delegate :name, :price, :cost, :taobao_supplier_id, :cover, :url, to: :item
+  delegate :name, :price, :cost, :taobao_supplier_id, :cover, :url, :status, to: :item
 end
