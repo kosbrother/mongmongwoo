@@ -67,13 +67,26 @@ Rails.application.routes.draw do
     get "/signin", to: "sessions#new"
     post "/signin", to: "sessions#create"
     delete "/signout", to: "sessions#destroy"
+    get "/checkout", to: "admin_carts#checkout", as: "checkout"
+    post "/submit", to: "admin_carts#submit", as: "submit_order"
 
+    resources :admin_cart_items, only: [:create, :destroy] do
+      collection do
+        post "add"
+        post "find_by_id"
+      end
+      member do
+        patch "update_quantity"
+        patch "update_spec"
+      end
+    end
     resources :items do
       collection do
         get "search"
       end
 
       member do
+        get "specs"
         patch "on_shelf"
         patch "off_shelf"
       end
@@ -84,6 +97,7 @@ Rails.application.routes.draw do
         member do
           patch "on_shelf"
           patch "off_shelf"
+          get "style_pic"
         end
       end
     end
@@ -147,7 +161,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :taobao_suppliers, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :taobao_suppliers, only: [:index, :new, :create, :edit, :update, :destroy] do
+      member do
+        get "items"
+      end
+    end
 
     resources :mail_records, only: [] do
       collection do
