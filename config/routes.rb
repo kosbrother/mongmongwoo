@@ -73,7 +73,7 @@ Rails.application.routes.draw do
     resources :admin_cart_items, only: [:create, :destroy] do
       collection do
         post "add"
-        post "find_by_id"
+        post "get_by_id"
       end
       member do
         patch "update_quantity"
