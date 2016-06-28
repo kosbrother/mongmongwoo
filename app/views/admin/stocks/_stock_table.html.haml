@@ -1,0 +1,43 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{width: "40%"} 商品資訊
+      %th 樣式資訊
+  %tbody
+    - @stocks.each do |stock|
+      %tr
+        %td
+          .media
+            .media-left
+              = image_tag(stock.cover.url, size: "120x120")
+            .media-body
+              %h4.media-heading
+                編號：
+                = stock.id
+              %p
+                名稱：
+                = stock.name
+              %p
+                狀態：
+                = item_status(stock.status)
+              %p
+                成本：
+                = round_decimal_number(stock.cost * 5)
+              %p
+                價格：
+                = stock.price
+        %td
+          %ul.list-group
+            - stock.stock_specs.each do |spec|
+              %li.list-group-item
+                %ul.inline-display
+                  %li
+                    樣式名稱：
+                    = spec.style
+                  %li
+                    現貨數量：
+                    %span
+                      %mark= spec.amount
+                  %li
+                    運送中數量：
+                    %span
