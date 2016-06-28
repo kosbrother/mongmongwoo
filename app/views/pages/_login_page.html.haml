@@ -1,0 +1,14 @@
+.modal.login-modal.fade{"aria-labelledby" => "login-page", :role => "dialog", :tabindex => "-1", id: "login-page"}
+  .modal-dialog
+    .modal-content
+      .modal-header 登入萌萌屋
+      .modal-body
+        = link_to '使用Facebook快速登入', auth_path('facebook'), class: "btn btn-primary "
+        .divider
+        = form_tag create_by_mmw_path do
+          = text_field_tag :email, '', placeholder: '請輸入mail'
+          = password_field_tag :password, '', placeholder: '請輸入密碼'
+          = submit_tag '登入'
+      .modal-footer
+        = link_to '忘記密碼？', ''
+        = link_to '註冊新帳號', ''

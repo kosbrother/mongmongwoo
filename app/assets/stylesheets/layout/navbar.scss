@@ -34,6 +34,19 @@
   .nav-list {
     text-align: left;
     margin-top: 8px;
+    > .user{
+      display: inline-block;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-block;
+      padding: 0 15px;
+      margin: 15px 10px;
+    }
+    > .user:before {
+      content: $url-user;
+      vertical-align: -4px;
+      padding-right: 5px;
+    }
     > a {
       padding: 0 15px;
       margin: 15px 10px;
@@ -56,11 +69,6 @@
       }
       > .cart:before {
         content: $url-cart;
-        vertical-align: -4px;
-        padding-right: 5px;
-      }
-      > .user:before {
-        content: $url-user;
         vertical-align: -4px;
         padding-right: 5px;
       }
