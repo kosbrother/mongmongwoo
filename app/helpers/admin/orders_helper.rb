@@ -62,7 +62,7 @@ module Admin::OrdersHelper
   end
 
   def link_to_combine_orders(order)
-    if order.status == "新訂單" || order.status == "處理中"
+    if order.status == "訂單成立" || order.status == "處理中"
       link_to "合併其他訂單", select_orders_admin_order_path(order), class: "btn btn-default"
     end
   end
