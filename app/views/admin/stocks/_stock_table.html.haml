@@ -33,11 +33,13 @@
                 %ul.inline-display
                   %li
                     樣式名稱：
-                    = spec.style
+                    = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.item_spec.style_pic_url}", "placement": "right" }, class: "btn btn-default preview"
+                  %br
                   %li
                     現貨數量：
                     %span
                       %mark= spec.amount
+                  %br
                   %li
                     運送中數量：
                     %span
