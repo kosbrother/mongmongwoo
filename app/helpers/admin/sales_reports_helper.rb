@@ -13,10 +13,6 @@ module Admin::SalesReportsHelper
     return css_class
   end
 
-  def display_date(time)
-    time.strftime("%Y-%m-%d")
-  end
-
   def get_taobao_supplier_name(supplier_id)
     "查詢的商家：#{TaobaoSupplier.find(supplier_id).name}" if supplier_id
   end

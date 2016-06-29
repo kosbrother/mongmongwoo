@@ -1,4 +1,6 @@
 class StockSpec < ActiveRecord::Base
+  include AdminCartInformation
+  
   scope :recent, -> { order(id: :DESC) }
 
   belongs_to :stock

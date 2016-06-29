@@ -6,4 +6,31 @@ module Admin::AdminCartHelper
       '未登記淘寶商家'
     end
   end
+
+  def li_cart_status_link(status)
+    content_tag(:li, '' , class: eq_to_status?(status)) do
+      link_to AdminCart::STATUS.key(status), admin_confirm_invoices_path(status: status)
+    end
+  end
+
+  def eq_to_status?(status)
+    params[:status].to_i == status ? 'active' : ''
+  end
+
+  def link_to_confirm_button(cart)
+    if cart.status == "shipping"
+      link_to "確認收貨", confirm_admin_confirm_invoice_path(cart), method: :post, class: "btn btn-success btn-lg"
+    elsif cart.status == "stock"
+      content_tag(:span, "確認已收貨", class: "label label-default")
+    end
+  end
+
+  def show_status(cart_status)
+    case cart_status
+    when "shipping"
+      return "運送中"
+    when "stock"
+      return "已收貨"
+    end
+  end
 end
