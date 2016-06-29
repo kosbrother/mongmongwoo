@@ -7,7 +7,8 @@
           = link_to '', auth_path('facebook'), class: "btn fb-login"
         .divider
           .text 或以信箱登入
-        = form_tag create_by_mmw_path do
+        .error-message
+        = form_tag create_by_mmw_path, remote: true do
           .login-input
             .email
             = text_field_tag :email, '', placeholder: '請輸入email'

@@ -69,7 +69,9 @@ ready = function() {
     //Open register modal and Close login modal
     $('.register-btn, .forget-btn').on('click', function(){
         $('#login-page').modal('hide');
-    })
+    });
+
+
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);

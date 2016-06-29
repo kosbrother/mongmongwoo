@@ -7,10 +7,12 @@ class SessionsController < ApplicationController
       cart = current_cart
       cart.user = user
       cart.save
+
+      render js: 'window.location.reload();'
     else
-      flash[:danger] = '帳號密碼錯誤'
+      @message = '帳號密碼錯誤，請重新輸入'
+      render 'error'
     end
-    redirect_to root_path
   end
 
   def create_by_auth

@@ -4,7 +4,8 @@
       .modal-header 註冊
       .modal-body
         = image_tag('ic_Mong.png', class: 'logo')
-        = form_tag register_path do
+        .error-message
+        = form_tag register_path, remote: true do
           .login-input
             .email
             = text_field_tag :email, '', placeholder: '請輸入email'

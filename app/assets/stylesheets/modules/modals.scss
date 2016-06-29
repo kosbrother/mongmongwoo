@@ -1,5 +1,8 @@
 .login-modal{
   > .modal-body{
+    > .error-message{
+      color: red;
+    }
     font-size: 18px;
     text-align: center;
     > img{
