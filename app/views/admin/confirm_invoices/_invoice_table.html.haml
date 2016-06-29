@@ -1,0 +1,94 @@
+%br/
+/ .apple_pagination
+/   = will_paginate orders, :container => false
+.panel-body
+  %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+    %thead
+      %tr
+        %th 編號
+        %th 訂購日期與狀態
+        %th 淘寶商家
+        %th 訂購商品
+        %th 確認收貨
+    %tbody
+      - receipts.each do |receipt|
+        %tr
+          %td
+            = receipt.id
+            / %button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
+            /   = order.id
+            / = render(partial: "info_and_items_list", locals: { order: order })
+            / %br
+            / = render(partial: "edit_order", locals: { order: order })
+            / %br
+            / = create_allpay_index_button(order)
+          %td
+            = display_date receipt.created_at
+            %br
+            = receipt.status
+            / = order.created_on
+            / %br
+            / .dropdown{id: "dropdown-#{order.id}"}
+            /   %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+            /     %span{id: "current-#{order.id}-status"}= order.status
+            /     %span.caret
+            /   %ul.dropdown-menu.list-group
+            /     %li                  
+            /       = link_to_update_order_status("處理中", order)
+            /     %li
+            /       = link_to_update_order_status("配送中", order)
+            /     %li
+            /       = link_to_update_order_status("已到店", order)
+            /     %li
+            /       = link_to_update_order_status("完成取貨", order)
+            /     %li
+            /       = link_to_update_order_status("未取訂貨", order)
+            /     %li
+            /       = link_to_update_order_status("訂單變更", order)
+            /     %li
+            /       = link_to_update_order_status("訂單取消", order)
+            / %hr
+            / 物流狀態：
+            / %br
+            / %span{id: "logistis-#{order.id}"}= logistics_status(order)
+          %td
+            = receipt.taobao_supplier.name
+            / = blacklist_warning(order)
+            / %br
+            / = link_to order.info_user_name, admin_user_path(order.user)
+            / %br
+            / - statuses_count = order.user_orders.status_count
+            / 購買次數：#{order.user_orders.count}
+            / %br
+            / 完成取貨：#{statuses_count[Order.statuses["完成取貨"]]}
+            / %br
+            / 未取訂貨：#{statuses_count[Order.statuses["未取訂貨"]]}
+            / %br
+            / = render partial: "order_status_tooltip", locals:{ order: order, statuses_count: statuses_count }
+          %td
+            %table.table.table-bordered
+              %thead
+                %tr.active
+                  %th 編號
+                  %th 名稱
+                  %th 樣式
+                  %th 數量
+              %tbody
+                - receipt.admin_cart_items.each do |item|
+                  %tr
+                    %td
+                      = item.item.id
+                    %td
+                      = item.item.name
+                    %td
+                      = item.item_spec.style
+                    %td
+                      / = item.item_quantity
+                      = form_tag update_quantity_admin_admin_cart_item_path(item), method: 'patch', remote: true, class: "form-inline" do
+                        = number_field_tag :item_quantity, item.item_quantity , min: 1,id: "cart-item-#{item.id}-quantity" , class: 'form-control update-cart-item-quantity', style: "width: 25%;"
+                        = submit_tag '修改數量', class: "btn btn-default"
+          %td
+            = link_to "確認收貨", "#", class: "btn btn-success btn-lg"
+/ .apple_pagination
+/   = will_paginate orders, :container => false
+%br/

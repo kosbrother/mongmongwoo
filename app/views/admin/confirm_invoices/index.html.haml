@@ -1,0 +1,17 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 確認收貨單列表
+  .panel-body
+    .pull-right
+      = link_to "回到購物車", admin_checkout_path, class: "btn btn-default"
+    %ul.nav.nav-tabs
+      / = li_status_link(Order.statuses["訂單成立"])
+      / = li_status_link(Order.statuses["處理中"])
+      = li_cart_status_link(AdminCart::STATUS[:shipping])
+      = li_cart_status_link(AdminCart::STATUS[:stock])
+      / %li{class: "#{params[:status].to_i == AdminCart::STATUS[:shipping] ? 'active' : ''}"}
+      /   = link_to AdminCart::STATUS.key(AdminCart::STATUS[:shipping]), "#"
+    = render "invoice_table", invoice: @invoices
