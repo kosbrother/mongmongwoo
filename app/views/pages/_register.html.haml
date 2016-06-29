@@ -1,0 +1,10 @@
+.modal.login-modal.fade{"aria-labelledby" => "login-page", :role => "dialog", :tabindex => "-1", id: "register-page"}
+  .modal-dialog
+    .modal-content
+      .modal-header 註冊
+      .modal-body
+        = form_tag register_path do
+          = text_field_tag :user_name, '', placeholder: '請輸入使用者名稱'
+          = text_field_tag :email, '', placeholder: '請輸入mail'
+          = password_field_tag :password, '', placeholder: '請輸入密碼'
+          = submit_tag '註冊'

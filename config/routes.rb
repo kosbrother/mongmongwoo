@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post "/login" => "sessions#create_by_mmw", as: "create_by_mmw"
   get  "/signout" => "sessions#destroy", as: "signout"
 
-  post "/register" => "users#create", as: "create"
+  post "/register" => "users#create", as: "register"
   get "/forget" => "users#forget", as: "forget"
   post "/forget" => "users#sent_reset_email"
 
