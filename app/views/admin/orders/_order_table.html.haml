@@ -69,6 +69,7 @@
                   %th 名稱
                   %th 樣式
                   %th 數量
+                  %th 訂購
               %tbody
                 - if order.items
                   - order.items.each do |item|
@@ -78,6 +79,13 @@
                         = link_to item.item_name, admin_item_path(item.item)
                       %td= item.item_style
                       %td= item.item_quantity
+                      %td
+                        = form_tag add_admin_admin_cart_items_path, remote: true do
+                          = hidden_field_tag :item_id, item.item.id
+                          = hidden_field_tag :item_spec_id, item.item_spec_id
+                          = hidden_field_tag :item_quantity, item.item_quantity
+                          = hidden_field_tag :taobao_supplier_id, item.item.taobao_supplier_id
+                          = submit_tag '新增至購物車', class: "btn btn-primary "
             %table.table.table-bordered
               %tbody
                 %tr.active

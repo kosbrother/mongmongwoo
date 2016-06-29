@@ -1,0 +1,70 @@
+.checkout
+  .content-box-large
+    %h1 淘寶購物車
+    %h3 透過淘寶商家找尋商品
+    = form_tag admin_admin_cart_items_path do
+      = label_tag :taobao_supplier_id, '淘寶店家'
+      = select_tag :taobao_supplier_id,  options_for_select(@taobao_list.collect{ |t| [t.name, t.id] }), id: 'select-taobao'
+      = label_tag :item_id, '商品名稱'
+      = select_tag :item_id, options_for_select(@first_taobao_items.collect{ |i| ["#{i.id}-#{i.name}", i.id] }), id: 'item-list'
+      = label_tag :item_spec_id, '商品樣式'
+      = select_tag :item_spec_id, options_for_select(@first_item_specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }), id: 'spec-list'
+      = label_tag :item_quantity, '商品數量'
+      = number_field_tag :item_quantity, 1, min: 1, require: true
+      = submit_tag '加入購物車'
+    %h3 透過商品編號找尋商品
+    = form_tag   get_by_id_admin_admin_cart_items_path, remote: true do
+      = label_tag :item_id, '商品編號'
+      = number_field_tag :item_id, 31, min: Item.first.id, max: Item.last.id, require: true
+      = submit_tag '搜尋'
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th 淘寶店家
+          %th 商品編號
+          %th 商品狀態
+          %th 商品名稱
+          %th 樣式名稱
+          %th 樣式圖片
+          %th 商品數量
+          %th 新增商品
+      %tboady
+        %tr
+          = form_tag admin_admin_cart_items_path do
+            = hidden_field_tag :item_id, '', id: 'result-hidden-item-id'
+            = hidden_field_tag :taobao_supplier_id, '', id: 'result-hidden-supplier-id'
+            %th#result-supplier
+            %th#result-item-id
+            %th#result-item-status
+            %th#result-item-name
+            %th#result-spec-style= select_tag :item_spec_id, '', id: 'result-spec-id'
+            %th#result-spec-pic=image_tag ''
+            %th#result-quantity= number_field_tag :item_quantity, 1, min: 1, require: true
+            %th#result-submit= submit_tag '加入購物車'
+    %h1 現有購物車
+    - current_admin_carts.each do |cart|
+      %h3= render_supplier_name(cart)
+      = link_to '送出購物車', admin_submit_order_path(admin_cart_id: cart.id), class: 'btn btn-success', method: 'post'
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th 商品編號
+            %th 商品狀態
+            %th 商品名稱
+            %th 樣式名稱
+            %th 樣式圖片
+            %th 商品數量
+            %th 移除商品
+        %tbody{id: "cart-#{cart.id}-items-list"}
+          - cart.admin_cart_items.each do |cart_item|
+            %tr{id: "cart-item-#{cart_item.id}"}
+              %td= cart_item.item_id
+              %td= item_status(cart_item.item.status)
+              %td= cart_item.item.name
+              %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
+              %td= image_tag(cart_item.item_spec.style_pic.url)
+              %td
+                = form_tag update_quantity_admin_admin_cart_item_path(cart_item), method: 'patch', remote: true do
+                  = number_field_tag :item_quantity, cart_item.item_quantity , min: 1,id: "cart-item-#{cart_item.id}-quantity" , class: 'update-cart-item-quantity'
+                  = submit_tag '修改數量'
+              %td= link_to '刪除', admin_admin_cart_item_path(cart_item), method: 'delete', remote: true, class: 'btn btn-warning'

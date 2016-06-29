@@ -1,6 +1,6 @@
 class Admin::ItemsController < AdminController
   before_action :require_manager
-  before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf]
+  before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
 
   def index
     @item_page = @items = Item.priority.paginate(:page => params[:page])
@@ -77,6 +77,10 @@ class Admin::ItemsController < AdminController
 
   def search
     @search_results_page = @search_results = Item.search_by_name(params[:search_term]).paginate(:page => params[:page])
+  end
+
+  def specs
+    render json: @specs
   end
 
   private
