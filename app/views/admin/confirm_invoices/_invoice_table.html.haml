@@ -18,7 +18,7 @@
           %td
             = display_date receipt.created_at
             %br
-            = receipt.status
+            = show_status(receipt.status)
           %td
             = receipt.taobao_supplier.name
           %td
@@ -43,7 +43,7 @@
                         = number_field_tag :item_quantity, item.item_quantity , min: 1,id: "cart-item-#{item.id}-quantity" , class: 'form-control update-cart-item-quantity', style: "width: 25%;"
                         = submit_tag '修改數量', class: "btn btn-default"
           %td
-            = link_to "確認收貨", "#", class: "btn btn-success btn-lg"
+            = link_to_confirm_button(receipt)
 .apple_pagination
   = will_paginate invoices, :container => false
 %br/

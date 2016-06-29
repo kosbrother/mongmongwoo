@@ -69,4 +69,8 @@ module ApplicationHelper
     
     image_size ? image_tag(image_url, size: image_size) : image_tag(image_url)
   end
+
+  def display_date(time)
+    time.strftime("%Y-%m-%d")
+  end
 end

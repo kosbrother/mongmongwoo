@@ -81,7 +81,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :confirm_invoices, only: [:index]
+    resources :confirm_invoices, only: [:index] do
+      member do
+        post "confirm"
+      end
+    end
 
     resources :stocks, only: [:index] do
       collection do
