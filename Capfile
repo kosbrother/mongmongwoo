@@ -10,7 +10,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/migrations'
 require 'capistrano/sidekiq'
 require "whenever/capistrano"
-# require 'capistrano/sidekiq/monit'
+require 'capistrano/sidekiq/monit'
 
 # require 'capistrano/passenger'
 
