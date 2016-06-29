@@ -3,6 +3,6 @@ class Admin::ConfirmInvoicesController < AdminController
 
   def index
     params[:status] ||= AdminCart::STATUS[:shipping]
-    @invoices = AdminCart.includes(:taobao_supplier, admin_cart_items: [:item, :item_spec]).where(status: params[:status])
+    @invoices = AdminCart.includes(:taobao_supplier, admin_cart_items: [:item, :item_spec]).where(status: params[:status]).paginate(page: params[:page])
   end
 end
