@@ -1,0 +1,51 @@
+.login-input{
+  position: relative;
+  width: 95%;
+  margin: 10px auto;
+  border-radius: 3px;
+  border: solid 2px #ff8080;
+  > .email , .password{
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    left: 26px;
+    z-index: 5;
+    float: left;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: $url-mail-icon;
+  }
+  > .email{
+    top: 17px;
+    background-image: $url-mail-icon;
+  }
+  > .password{
+    top: 72px;
+    background-image: $url-lock-icon;
+  }
+  > input{
+    display: block;
+    width: 100%;
+    height: 55px;
+    border: none;
+    padding-left: 60px;
+    font-size: 18px;
+  }
+  > input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+  > hr{
+    margin: 0 auto;
+    width: 90%;
+    border-top: solid 1px #ff8080;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login-input {
+    > input{
+      font-size: 14px;
+    }
+  }
+}

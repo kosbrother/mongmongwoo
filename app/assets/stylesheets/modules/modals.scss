@@ -1,0 +1,42 @@
+.login-modal{
+  > .modal-body{
+    font-size: 18px;
+    text-align: center;
+    > img{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    > .submit-session{
+      > .fb-login{
+        width: 93%;
+        height: 60px;
+      }
+    }
+    .login-btn{
+      width: 95%;
+      height: 60px;
+      border-radius: 4px;
+      background-color: #ff8080;
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+      margin: 10px auto;
+      display: block;
+      line-height: 45px;
+    }
+  }
+  > .modal-footer{
+    > .forget-btn, .register-btn{
+      display: inline-block;
+      font-size: 16px;
+      color: #ff8080;
+      cursor: pointer;
+    }
+    > .forget-btn {
+      float: left;
+    }
+    > .register-btn{
+      float: right;
+    }
+  }
+}

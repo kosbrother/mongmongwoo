@@ -13,6 +13,11 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def sent_reset_email
+    user = User.find_by_email(params[:email])
+    user.sent_password_reset
+  end
+
   private
 
   def user_params

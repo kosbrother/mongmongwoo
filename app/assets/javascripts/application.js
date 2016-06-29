@@ -67,7 +67,7 @@ ready = function() {
     });
 
     //Open register modal and Close login modal
-    $('.register-btn').on('click', function(){
+    $('.register-btn, .forget-btn').on('click', function(){
         $('#login-page').modal('hide');
     })
 };
