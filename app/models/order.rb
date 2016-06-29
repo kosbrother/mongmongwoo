@@ -7,7 +7,7 @@ class Order < ActiveRecord::Base
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
   scope :status_count, -> { group(:status).size }
   scope :status, -> (status_param) { where(status: status_param) }
-  scope :enable_to_conbime, -> { where(status: [Order.statuses["訂單成立"], Order.statuses["處理中"]]) }
+  scope :enable_to_conbime, -> { where(status: [Order.statuses["新訂單"], Order.statuses["處理中"]]) }
 
   acts_as_paranoid
 
