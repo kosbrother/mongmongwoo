@@ -1,4 +1,6 @@
 class ItemSpec < ActiveRecord::Base
+  include AdminCartInformation
+  
   scope :recent, -> {order(id: :DESC)}
 
   enum status: { on_shelf: 0, off_shelf: 1 }
