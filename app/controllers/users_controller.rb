@@ -4,14 +4,15 @@ class UsersController < ApplicationController
     if user && user.password_digest
       @message = '信箱已被註冊，請重新輸入'
       render 'register_error'
-    else
-      if user
-        user.password = params[:password]
-      else
-        user = User.new(user_params)
-      end
+    elsif user
+      user.password = params[:password]
       user.save
-      update_user_id(user)
+      set_current_user_and_cart(user)
+      render js: 'window.location.reload();'
+    else
+      user = User.new(user_params)
+      user.save
+      set_current_user_and_cart(user)
       render js: 'window.location.reload();'
     end
   end
@@ -31,12 +32,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(:user_name, :email, :password)
-  end
-
-  def update_user_id(user)
-    session[:user_id] = user.id
-    cart = current_cart
-    cart.user = user
-    cart.save
   end
 end

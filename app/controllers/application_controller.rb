@@ -54,4 +54,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_current_user_and_cart(user)
+    session[:user_id] = user.id
+    current_cart.user = user
+    current_cart.save
+  end
 end

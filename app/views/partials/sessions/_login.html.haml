@@ -8,7 +8,7 @@
         .divider
           .text 或以信箱登入
         .error-message
-        = form_tag create_by_mmw_path, remote: true do
+        = form_tag login_by_mmw_path, remote: true do
           .login-input
             .email
             = text_field_tag :email, '', placeholder: '請輸入email'

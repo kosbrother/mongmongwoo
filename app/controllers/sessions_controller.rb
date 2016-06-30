@@ -1,12 +1,9 @@
 class SessionsController < ApplicationController
 
-  def create_by_mmw
+  def login_by_mmw
     user = User.find_by_email(params[:email])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      cart = current_cart
-      cart.user = user
-      cart.save
+    if user && user.password_digest && user.authenticate(params[:password])
+      set_current_user_and_cart(user)
 
       render js: 'window.location.reload();'
     else
@@ -15,22 +12,18 @@ class SessionsController < ApplicationController
     end
   end
 
-  def create_by_auth
+  def login_by_auth
     auth = request.env["omniauth.auth"].extra.raw_info
     user = User.find_or_create_from_omniauth(auth)
-    session[:user_id] = user.id
-    cart = current_cart
-    cart.user = user
-    cart.save
+    set_current_user_and_cart(user)
 
     redirect_to root_path
   end
 
   def destroy
     session[:user_id] = nil
-    cart = current_cart
-    cart.user_id = User::ANONYMOUS
-    cart.save
+    current_cart.user_id = User::ANONYMOUS
+    current_cart.save
 
     redirect_to root_path
   end
