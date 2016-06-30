@@ -1,4 +1,7 @@
 class AdminCart < ActiveRecord::Base
+  scope :current_status, -> (status) { includes(:taobao_supplier, admin_cart_items: [:item, :item_spec]).where(status: status) }
+  scope :recent, -> { order(id: :desc) }
+
   has_many :admin_cart_items, -> { order(id: :desc) }
   has_many :shipping_items
   belongs_to :taobao_supplier

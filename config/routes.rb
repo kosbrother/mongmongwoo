@@ -81,6 +81,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :confirm_invoices, only: [:index] do
+      member do
+        post "confirm"
+      end
+    end
+
     resources :stocks, only: [:index] do
       collection do
         get "/:taobao_supplier_id/stock_lists", to: "stocks#stock_lists", as: "stock_lists"
