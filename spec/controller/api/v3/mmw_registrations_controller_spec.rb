@@ -4,11 +4,8 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
   let!(:password) { Faker::Internet.password }
   describe 'post #create' do
 
-    before :each do
-      post :create, email: email, password: password
-    end
-
     it 'should create new user' do
+      post :create, email: email, password: password
       user = User.find_by(email: email)
       message = JSON.parse(response.body)['data']
       expect(user).to be_present
@@ -16,10 +13,38 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
       expect(response.content_type).to eq 'application/json'
       expect(message).not_to be_nil
     end
+    describe 'when user with same email exist' do
+      context 'when exist user password was empty' do
+        let!(:user) { FactoryGirl.create(:user, email: email)  }
+        it 'does create new user' do
+          post :create, email: email, password: password
+          user = User.find_by(email: email)
+          message = JSON.parse(response.body)['data']
+          expect(user).to be_present
+          expect(user.password_digest).not_to be_nil
+          expect(response.status).to eq(200)
+          expect(response.content_type).to eq 'application/json'
+          expect(message).not_to be_nil
+        end
+      end
+
+      context 'when exist user password is not empty' do
+        let!(:user) { FactoryGirl.create(:user, email: email, password: '12345') }
+        it 'does not create new user and return status 400' do
+          post :create, email: email, password: password
+          message = JSON.parse(response.body)['error']
+          expect(User.all.size).to eq(1)
+          expect(response.status).to eq(400)
+          expect(response.content_type).to eq 'application/json'
+          expect(message).not_to be_nil
+        end
+      end
+    end
 
     context 'when email is empty' do
       let!(:email) { '' }
       it 'does not create new user and return status 400' do
+        post :create, email: email, password: password
         message = JSON.parse(response.body)['error']
         expect(User.all.size).to eq(0)
         expect(response.status).to eq(400)

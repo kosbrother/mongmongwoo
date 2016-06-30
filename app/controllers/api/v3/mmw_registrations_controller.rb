@@ -1,18 +1,20 @@
 class Api::V3::MmwRegistrationsController < ApiController
   def create
-    user = User.new(email: params[:email])
-    user.password = params[:password]
-    if user.save
-      render status: 200, json: {data: "success"}
+    if params[:email].blank?
+      render  status: 400, json: {error: {message: 'email is empty'}}
+    elsif User.where.not(password_digest: nil).where.not(password_digest: '').find_by_email(params[:email])
+      render  status: 400, json: {error: {message: 'email is already taken'}}
     else
-      Rails.logger.error("error: #{user.errors.messages}")
-      render status: 400, json: {error: {message: user.errors.messages.to_s}}
+      user = User.find_or_initialize_by(email: params[:email])
+      user.password = params[:password]
+      user.save
+      render status: 200, json: {data: "success"}
     end
   end
 
   def login
     user = User.find_by(email: params[:email])
-    if user.nil?
+    if user.nil? || user.password_digest.nil?
       render status: 400, json: {error: {message: 'can not find user'}}
     elsif  user.authenticate(params[:password])
       render status: 200, json: {data: "success"}
