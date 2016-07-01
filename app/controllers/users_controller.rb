@@ -8,12 +8,12 @@ class UsersController < ApplicationController
       user.password = params[:password]
       user.save
       set_current_user_and_cart(user)
-      render js: 'window.location.reload();'
+      render 'partials/js/reload'
     else
       user = User.new(user_params)
       user.save
       set_current_user_and_cart(user)
-      render js: 'window.location.reload();'
+      render 'partials/js/reload'
     end
   end
 

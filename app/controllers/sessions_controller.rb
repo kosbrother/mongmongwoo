@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     if user && user.password_digest && user.authenticate(params[:password])
       set_current_user_and_cart(user)
 
-      render js: 'window.location.reload();'
+      render 'partials/js/reload'
     else
       @message = '帳號密碼錯誤，請重新輸入'
       render 'error'
