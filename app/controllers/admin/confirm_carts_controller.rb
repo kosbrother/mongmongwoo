@@ -1,16 +1,16 @@
-class Admin::ConfirmInvoicesController < AdminController
+class Admin::ConfirmCartsController < AdminController
   before_action :require_manager
 
   def index
     params[:status] ||= AdminCart::STATUS[:shipping]
-    @invoices = AdminCart.current_status(params[:status]).recent.paginate(page: params[:page])
+    @carts = AdminCart.current_status(params[:status]).recent.paginate(page: params[:page])
   end
 
   def confirm
-    shipping_invoice = AdminCart.current_status(AdminCart::STATUS[:shipping]).find(params[:id])
-    invoice_items = shipping_invoice.admin_cart_items
+    shipping_cart = AdminCart.current_status(AdminCart::STATUS[:shipping]).find(params[:id])
+    cart_items = shipping_cart.admin_cart_items
 
-    invoice_items.each do |cart_item|
+    cart_items.each do |cart_item|
       stock = Stock.find_by(item_id: cart_item.item_id)
       stock_spec = StockSpec.find_by(item_spec_id: cart_item.item_spec_id)
 
@@ -34,8 +34,8 @@ class Admin::ConfirmInvoicesController < AdminController
       end
     end
 
-    shipping_invoice.update_attribute(:status, AdminCart::STATUS[:stock])
+    shipping_cart.update_attribute(:status, AdminCart::STATUS[:stock])
 
-    redirect_to admin_confirm_invoices_path(status: AdminCart::STATUS[:stock])
+    redirect_to admin_confirm_carts_path(status: AdminCart::STATUS[:stock])
   end
 end

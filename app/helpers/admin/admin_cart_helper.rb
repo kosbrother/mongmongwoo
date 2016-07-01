@@ -9,7 +9,7 @@ module Admin::AdminCartHelper
 
   def li_cart_status_link(status)
     content_tag(:li, '' , class: eq_to_status?(status)) do
-      link_to admin_confirm_invoices_path(status: status) do
+      link_to admin_confirm_carts_path(status: status) do
         show_status(AdminCart::STATUS.key(status).to_s)
       end
     end
@@ -21,7 +21,7 @@ module Admin::AdminCartHelper
 
   def link_to_confirm_button(cart)
     if cart.status == "shipping"
-      link_to "確認收貨", confirm_admin_confirm_invoice_path(cart), method: :post, class: "btn btn-success btn-lg"
+      link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, class: "btn btn-success btn-lg"
     elsif cart.status == "stock"
       content_tag(:span, "確認已收貨", class: "label label-default")
     end

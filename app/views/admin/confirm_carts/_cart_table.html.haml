@@ -1,6 +1,6 @@
 %br/
 .apple_pagination
-  = will_paginate invoices, :container => false
+  = will_paginate carts, :container => false
 .panel-body
   %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
     %thead
@@ -11,16 +11,16 @@
         %th 訂購商品
         %th 確認收貨
     %tbody
-      - invoices.each do |receipt|
+      - carts.each do |cart|
         %tr
           %td
-            = receipt.id
+            = cart.id
           %td
-            = display_date receipt.created_at
+            = display_date cart.created_at
             %br
-            = show_status(receipt.status)
+            = show_status(cart.status)
           %td
-            = receipt.taobao_supplier.name
+            = cart.taobao_supplier.name
           %td
             %table.table.table-bordered
               %thead
@@ -30,7 +30,7 @@
                   %th 樣式
                   %th 數量
               %tbody
-                - receipt.admin_cart_items.each do |item|
+                - cart.admin_cart_items.each do |item|
                   %tr
                     %td
                       = item.item.id
@@ -43,7 +43,7 @@
                         = number_field_tag :item_quantity, item.item_quantity , min: 1,id: "cart-item-#{item.id}-quantity" , class: 'form-control update-cart-item-quantity', style: "width: 25%;"
                         = submit_tag '修改數量', class: "btn btn-default"
           %td
-            = link_to_confirm_button(receipt)
+            = link_to_confirm_button(cart)
 .apple_pagination
-  = will_paginate invoices, :container => false
+  = will_paginate carts, :container => false
 %br/
