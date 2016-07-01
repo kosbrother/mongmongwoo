@@ -77,4 +77,7 @@ module ApplicationHelper
   def display_date_and_time(time)
     time.strftime("%Y-%m-%d %H:%M:%S")
   end
+  def show_username_or_email
+    current_user.user_name ? current_user.user_name : current_user.email
+  end
 end

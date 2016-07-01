@@ -39,7 +39,7 @@
           %li.nav-list#user-nav
             .dropdown#user
               .list.user.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                = current_user.user_name
+                = show_username_or_email
                 %span.caret
               %ul.dropdown-menu
                 %li.list
