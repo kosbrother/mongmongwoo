@@ -6,7 +6,7 @@ class Api::V3::MmwRegistrationsController < ApiController
       render status: 200, json: {data: "success"}
     else
       Rails.logger.error("error: #{user.errors.messages}")
-      render status: 400, json: {error: {message: user.errors.messages}}
+      render status: 400, json: {error: {message: user.errors.messages.to_s}}
     end
   end
 

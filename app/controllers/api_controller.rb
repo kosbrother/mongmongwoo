@@ -28,7 +28,7 @@ class ApiController < ActionController::Base
       }
       error_info[:trace] = e.backtrace[0,10] if Rails.env.development?
       Rails.logger.error("error: #{error_info}")
-      render status: 500, json: {error: {message: error_info}}
+      render status: 500, json: {error: {message: error_info.to_s}}
     else
       raise e
     end
