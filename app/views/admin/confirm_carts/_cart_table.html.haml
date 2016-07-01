@@ -25,10 +25,10 @@
             %table.table.table-bordered
               %thead
                 %tr.active
-                  %th 編號
-                  %th 名稱
-                  %th 樣式
-                  %th 數量
+                  %th 商品編號
+                  %th 商品名稱
+                  %th 商品樣式
+                  %th 商品數量
               %tbody
                 - cart.admin_cart_items.each do |item|
                   %tr
@@ -37,7 +37,7 @@
                     %td
                       = item.item.name
                     %td
-                      = link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default btn-lg preview"
+                      = link_to "#{item.item_spec.id} - #{item.item_spec.style}", "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default btn-lg preview"
                     %td
                       = form_tag update_quantity_admin_admin_cart_item_path(item), method: 'patch', remote: true, class: "form-inline" do
                         = number_field_tag :item_quantity, item.item_quantity , min: 1,id: "cart-item-#{item.id}-quantity" , class: 'form-control update-cart-item-quantity', style: "width: 25%;"
