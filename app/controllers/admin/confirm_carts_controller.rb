@@ -3,11 +3,11 @@ class Admin::ConfirmCartsController < AdminController
 
   def index
     params[:status] ||= AdminCart::STATUS[:shipping]
-    @carts = AdminCart.current_status(params[:status]).recent.paginate(page: params[:page])
+    @carts = AdminCart.status(params[:status]).recent.paginate(page: params[:page])
   end
 
   def confirm
-    shipping_cart = AdminCart.current_status(AdminCart::STATUS[:shipping]).find(params[:id])
+    shipping_cart = AdminCart.status(AdminCart::STATUS[:shipping]).find(params[:id])
     cart_items = shipping_cart.admin_cart_items
 
     set_cart_items_to_stock(cart_items)

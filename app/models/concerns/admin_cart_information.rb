@@ -16,9 +16,9 @@ module AdminCartInformation
 
   def get_shipping_item
     if self.class == ItemSpec
-      AdminCartItem.in_shipping_cart.find_by(item_spec_id: self.id)
+      AdminCartItem.shipping_status.find_by(item_spec_id: self.id)
     elsif self.class == StockSpec
-      AdminCartItem.in_shipping_cart.find_by(item_spec_id: self.item_spec_id)
+      AdminCartItem.shipping_status.find_by(item_spec_id: self.item_spec_id)
     end    
   end
 end

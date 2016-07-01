@@ -1,5 +1,5 @@
 class AdminCartItem < ActiveRecord::Base
-  scope :in_shipping_cart, -> { joins(:admin_cart).where(admin_carts: { status: AdminCart::STATUS[:shipping] }) }
+  scope :shipping_status, -> { joins(:admin_cart).where(admin_carts: { status: AdminCart::STATUS[:shipping] }) }
 
   belongs_to :admin_cart
   belongs_to :item
