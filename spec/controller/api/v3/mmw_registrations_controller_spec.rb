@@ -52,6 +52,18 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
         expect(message).not_to be_nil
       end
     end
+
+    context 'when email format is wrong' do
+      let!(:email) { '12345678' }
+      it 'does not create new user and return status 400' do
+        post :create, email: email, password: password
+        message = JSON.parse(response.body)['error']
+        expect(User.all.size).to eq(0)
+        expect(response.status).to eq(400)
+        expect(response.content_type).to eq 'application/json'
+        expect(message).not_to be_nil
+      end
+    end
   end
 
   describe 'post #login' do
