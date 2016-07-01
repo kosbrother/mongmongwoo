@@ -8,14 +8,12 @@ module Admin::AdminCartHelper
   end
 
   def li_cart_status_link(status)
-    content_tag(:li, '' , class: eq_to_status?(status)) do
-      link_to admin_confirm_carts_path(status: status) do
-        show_status(AdminCart::STATUS.key(status).to_s)
-      end
+    content_tag(:li, '' , class: set_class_to_active(status)) do
+      link_to t(AdminCart::STATUS.key(status)), admin_confirm_carts_path(status: status)
     end
   end
 
-  def eq_to_status?(status)
+  def set_class_to_active(status)
     params[:status].to_i == status ? 'active' : ''
   end
 
@@ -24,15 +22,6 @@ module Admin::AdminCartHelper
       link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, class: "btn btn-success btn-lg"
     elsif cart.status == "stock"
       content_tag(:span, "確認已收貨", class: "label label-default")
-    end
-  end
-
-  def show_status(cart_status)
-    case cart_status
-    when "shipping"
-      return "運送中"
-    when "stock"
-      return "已入庫存"
     end
   end
 end

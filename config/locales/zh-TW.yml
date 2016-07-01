@@ -3,3 +3,5 @@ zh-TW:
   off_shelf: "已下架"
   will_paginate:
     page_gap: "......"
+  shipping: "運送中"
+  stock: "已入庫存"
