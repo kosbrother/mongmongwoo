@@ -21,7 +21,11 @@ RSpec.describe Api::V3::ItemsController, type: :controller do
         expect(data[0]['price']).to eq(Category.find(category.id).items.on_shelf[0].price)
         expect(data[0]['slug']).to eq(Category.find(category.id).items.on_shelf[0].slug)
         expect(data[0]['cover']['url']).to eq(Category.find(category.id).items.on_shelf[0].cover_url)
-        expect(data[0]['specs']).to match_array(JSON.parse(Category.find(category.id).items.on_shelf.to_json(include: { specs: { only: [:id, :style, :style_pic] } }))[0]['specs'])
+
+        datas = Category.find(category.id).items.on_shelf.as_json(include: { on_shelf_specs: { only: [:id, :style, :style_pic] } })
+        datas.each{|data| data["specs"] = data["on_shelf_specs"]}
+
+        expect(data[0]['specs']).to match_array(JSON.parse(datas.to_json)[0]['specs'])
       end
     end
     context "with sort param" do
@@ -82,7 +86,7 @@ RSpec.describe Api::V3::ItemsController, type: :controller do
       expect(data['status']).to eq(item.status)
       expect(data['slug']).to eq(item.slug)
       expect(data['photos']).to match_array(JSON.parse(item.photos.as_json(only: [:image]).to_json))
-      expect(data['specs']).to match_array(JSON.parse(item.specs.as_json(only: [:id, :style, :style_pic]).to_json))
+      expect(data['specs']).to match_array(JSON.parse(item.specs.on_shelf.as_json(only: [:id, :style, :style_pic]).to_json))
     end
   end
 end
