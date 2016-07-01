@@ -9,7 +9,9 @@ module Admin::AdminCartHelper
 
   def li_cart_status_link(status)
     content_tag(:li, '' , class: eq_to_status?(status)) do
-      link_to AdminCart::STATUS.key(status), admin_confirm_invoices_path(status: status)
+      link_to admin_confirm_invoices_path(status: status) do
+        show_status(AdminCart::STATUS.key(status).to_s)
+      end
     end
   end
 
@@ -30,7 +32,7 @@ module Admin::AdminCartHelper
     when "shipping"
       return "運送中"
     when "stock"
-      return "已收貨"
+      return "已入庫存"
     end
   end
 end
