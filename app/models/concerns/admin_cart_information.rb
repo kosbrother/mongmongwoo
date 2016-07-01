@@ -2,23 +2,20 @@ module AdminCartInformation
   extend ActiveSupport::Concern
 
   def shipping_item_quantity
-    shipping_item = get_shipping_item
+    shipping_items = get_shipping_items
 
-    if shipping_item
-      quantity = shipping_item.item_quantity
-      quantity
-    else
-      "無運送中商品"
+    if shipping_items
+      quantity = shipping_items.map(&:item_quantity).inject(:+) || 0
     end
   end
 
   private
 
-  def get_shipping_item
+  def get_shipping_items
     if self.class == ItemSpec
-      AdminCartItem.shipping_status.find_by(item_spec_id: self.id)
+      AdminCartItem.shipping_status.where(item_spec_id: self.id)
     elsif self.class == StockSpec
-      AdminCartItem.shipping_status.find_by(item_spec_id: self.item_spec_id)
+      AdminCartItem.shipping_status.where(item_spec_id: self.item_spec_id)
     end    
   end
 end
