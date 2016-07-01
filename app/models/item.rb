@@ -16,6 +16,7 @@ class Item < ActiveRecord::Base
   has_many :item_categories
   has_many :categories, through: :item_categories
   has_many :specs, class_name: "ItemSpec", dependent: :destroy
+  has_many :on_shelf_specs, ->{ where(status: ItemSpec.statuses["on_shelf"]) }, class_name: "ItemSpec"
   has_many :notifications, dependent: :destroy
   belongs_to :taobao_supplier
   has_many :favorite_items
