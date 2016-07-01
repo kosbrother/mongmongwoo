@@ -15,7 +15,7 @@ class Api::V3::OauthSessionsController < ApiController
     end
     if errors.present?
       Rails.logger.error("error: #{errors}")
-      render status: 400, json: {error: {message: errors}}
+      render status: 400, json: {error: {message: errors.to_s}}
     else
       render status: 200, json: {data: "success"}
     end
