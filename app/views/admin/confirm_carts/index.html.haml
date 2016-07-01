@@ -10,4 +10,4 @@
     %ul.nav.nav-tabs
       = li_cart_status_link(AdminCart::STATUS[:shipping])
       = li_cart_status_link(AdminCart::STATUS[:stock])
-    = render "invoice_table", invoices: @invoices
+    = render "cart_table", carts: @carts

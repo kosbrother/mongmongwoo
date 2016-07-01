@@ -81,7 +81,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :confirm_invoices, only: [:index] do
+    resources :confirm_carts, only: [:index] do
       member do
         post "confirm"
       end
