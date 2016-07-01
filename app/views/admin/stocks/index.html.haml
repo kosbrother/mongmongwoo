@@ -3,10 +3,17 @@
     %ol.breadcrumb
       %li
         = link_to "萌萌屋", admin_root_path
-      %li.active 淘寶商家列表
+      %li.active 選擇淘寶商家
   .panel-body
-    .col-md-4
-      %ul.list-group
+    %table.table.table-bordered
+      %thead
+        %tr.active
+          %th 淘寶商家名稱
+          %th 已有庫存的商品編號
+      %tbody
         - @taobao_suppliers.each do |taobao|
-          %li.list-group-item
-            = link_to taobao.name, stock_lists_admin_stocks_path(taobao)
+          %tr
+            %td
+              = link_to taobao.name, stock_lists_admin_stocks_path(taobao)
+            %td
+              = taobao.items.item_id_in_stock
