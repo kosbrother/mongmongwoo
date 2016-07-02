@@ -7,11 +7,13 @@ class Order < ActiveRecord::Base
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
   scope :status_count, -> { group(:status).size }
   scope :status, -> (status_param) { where(status: status_param) }
-  scope :enable_to_conbime, -> { where(status: [Order.statuses["新訂單"], Order.statuses["處理中"]]) }
+  scope :enable_to_conbime, -> { where(status: [Order.statuses["新訂單"], Order.statuses["處理中"], Order.statuses["訂單變更"]]) }
 
   acts_as_paranoid
 
   enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7}
+
+  COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
 
   belongs_to :user
   has_many :items, class_name: "OrderItem", dependent: :destroy
