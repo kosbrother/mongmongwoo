@@ -7,6 +7,23 @@ GIT
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
 
+GIT
+  remote: git://github.com/elasticsearch/elasticsearch-rails.git
+  revision: 15761247f3e99654bda946a178e50b5365414b59
+  specs:
+    elasticsearch-model (0.1.9)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-persistence (0.1.9)
+      activemodel (> 3)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      elasticsearch-model (>= 0.1)
+      hashie
+      virtus
+    elasticsearch-rails (0.1.9)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -135,6 +152,14 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
+    elasticsearch (1.0.18)
+      elasticsearch-api (= 1.0.18)
+      elasticsearch-transport (= 1.0.18)
+    elasticsearch-api (1.0.18)
+      multi_json
+    elasticsearch-transport (1.0.18)
+      faraday
+      multi_json
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -587,6 +612,9 @@ DEPENDENCIES
   ckeditor
   coffee-rails (~> 4.1.0)
   database_cleaner
+  elasticsearch-model!
+  elasticsearch-persistence!
+  elasticsearch-rails!
   factory_girl_rails
   faker
   figaro
