@@ -43,7 +43,7 @@
             %th#result-submit= submit_tag '加入購物車'
     %h1 現有購物車
     - current_admin_carts.each do |cart|
-      %h3= render_supplier_name(cart)
+      %h3= cart.taobao_supplier_name
       = link_to '送出購物車', admin_submit_order_path(admin_cart_id: cart.id), class: 'btn btn-success', method: 'post'
       %table.table.table-striped.table-bordered
         %thead
