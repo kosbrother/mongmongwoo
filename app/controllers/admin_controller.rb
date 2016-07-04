@@ -25,7 +25,7 @@ class AdminController < ActionController::Base
   end
 
   def current_supplier_cart(supplier_id)
-    supplier_cart = current_admin_carts.find_by(taobao_supplier_id: supplier_id)
+    supplier_cart = current_admin_carts.find_by(taobao_supplier_id: supplier_id.blank? ? nil : supplier_id)
     supplier_cart = create_supplier_cart(supplier_id) unless supplier_cart
     supplier_cart
   end
