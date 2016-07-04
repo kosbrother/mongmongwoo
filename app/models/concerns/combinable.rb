@@ -15,7 +15,7 @@ module Combinable
 
     def self.create_combined_order(orders)
       combined_items_price = orders.map(&:items_price).inject(:+)
-      combined_ship_fee = combined_items_price > 490 ? 0 : 60
+      combined_ship_fee = combined_items_price > Cart::FREE_SHIPPING_PRICE ? 0 : Cart::SHIP_FEE
       combined_total = combined_items_price + combined_ship_fee
       login_user_order = orders.where.not(user_id: User::ANONYMOUS).first
       order = Order.new
