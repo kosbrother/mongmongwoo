@@ -7,7 +7,7 @@ class Stock < ActiveRecord::Base
 
   delegate :name, :price, :taobao_supplier_id, :cover, :url, :status, to: :item
 
-  def change_ntd_cost
+  def ntd_cost
     if item.cost
       (self.item.cost * Item::CNY_RATING).round(2)
     else
