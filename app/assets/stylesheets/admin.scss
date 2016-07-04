@@ -53,3 +53,24 @@ div.item-cover-words-intro, div.notification-intro {
 .category-all-items .panel-body .btn-group{
   margin-bottom: 15px;
 }
+
+/*庫存列表頁*/
+.inline-display {
+  display: inline-block;
+  list-style: none;
+  padding-left: 10px;
+}
+.checkout{
+  .table{
+    margin-top: 20px;
+  }
+  #item_quantity{
+    width: 50px;
+  }
+  .update-cart-item-quantity{
+    width: 50px;
+  }
+  #item_id{
+    width: 80px;
+  }
+}

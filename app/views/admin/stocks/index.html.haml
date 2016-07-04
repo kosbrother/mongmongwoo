@@ -1,0 +1,25 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 選擇淘寶商家
+  .panel-body
+    %table.table.table-bordered
+      %thead
+        %tr.active
+          %th 淘寶商家名稱
+          %th 已有庫存的商品編號
+      %tbody
+        %tr
+          %td
+            = link_to "未登記淘寶商家", anoymous_supplier_stocks_admin_stocks_path
+          %td
+            = @item_ids_in_stock_without_supplier
+
+        - @taobao_suppliers.each do |taobao|
+          %tr
+            %td
+              = link_to taobao.name, stock_lists_admin_stocks_path(taobao)
+            %td
+              = taobao.item_ids_in_stock

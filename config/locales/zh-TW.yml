@@ -10,3 +10,5 @@ zh-TW:
         wrong_email_format: "信箱格式錯誤，請重新輸入"
         no_user: "抱歉，找不到此用戶"
         wrong_password: "密碼錯誤"
+  shipping: "運送中"
+  stock: "已入庫存"

@@ -1,0 +1,11 @@
+$('#result-supplier').text('#{  @supplier_name }');
+$('#result-hidden-item-id').val('#{ @item.id }');
+$('#result-hidden-supplier-id').val('#{ @item.taobao_supplier_id }');
+$('#result-item-id').text('#{ @item.id }');
+$('#result-item-status').text('#{ item_status(@item.status) }');
+$('#result-item-name').text('#{ @item.name }');
+$('#result-spec-style > select > option').remove();
+var spec_list = $('#result-spec-style > select');
+JSON.parse('#{ @specs.to_json.html_safe }').forEach(function(spec){spec_list.append($("<option/>", {value: spec.id, text: spec.id + '-' + spec.style}))});
+$('#result-spec-id').data('item-id', '#{ @item.id }')
+$('#result-spec-pic > img').attr({'src': '#{@specs[0].style_pic.url}' })

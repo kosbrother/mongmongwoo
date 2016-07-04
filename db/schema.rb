@@ -11,7 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623030151) do
+ActiveRecord::Schema.define(version: 20160627133450) do
+
+  create_table "admin_cart_items", force: :cascade do |t|
+    t.integer  "admin_cart_id", limit: 4
+    t.integer  "item_id",       limit: 4
+    t.integer  "item_spec_id",  limit: 4
+    t.integer  "item_quantity", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "admin_cart_items", ["admin_cart_id"], name: "index_admin_cart_items_on_admin_cart_id", using: :btree
+  add_index "admin_cart_items", ["item_id"], name: "index_admin_cart_items_on_item_id", using: :btree
+  add_index "admin_cart_items", ["item_spec_id"], name: "index_admin_cart_items_on_item_spec_id", using: :btree
+
+  create_table "admin_carts", force: :cascade do |t|
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "taobao_supplier_id", limit: 4
+    t.integer  "status",             limit: 4, default: 0
+  end
+
+  add_index "admin_carts", ["taobao_supplier_id"], name: "index_admin_carts_on_taobao_supplier_id", using: :btree
 
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
@@ -56,13 +78,11 @@ ActiveRecord::Schema.define(version: 20160623030151) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.string   "slug",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "slug",       limit: 255
     t.string   "image",      limit: 255
   end
-
-  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_id",           limit: 255, null: false
@@ -369,6 +389,25 @@ ActiveRecord::Schema.define(version: 20160623030151) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "stock_specs", force: :cascade do |t|
+    t.integer  "stock_id",     limit: 4
+    t.integer  "item_spec_id", limit: 4
+    t.integer  "amount",       limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "stock_specs", ["item_spec_id"], name: "index_stock_specs_on_item_spec_id", using: :btree
+  add_index "stock_specs", ["stock_id"], name: "index_stock_specs_on_stock_id", using: :btree
+
+  create_table "stocks", force: :cascade do |t|
+    t.integer  "item_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "stocks", ["item_id"], name: "index_stocks_on_item_id", using: :btree
 
   create_table "stores", force: :cascade do |t|
     t.integer  "county_id",  limit: 4

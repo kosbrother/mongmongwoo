@@ -5,6 +5,8 @@
   %dd= raw(spec.style)
   %dt 樣式狀態
   %dd= spec_status(spec.status)
-  %dt 樣式庫存
-  %dd= spec.style_amount
+  %dt 現貨數量
+  %dd= stock_amount(spec)
+  %dt 運送中數量
+  %dd= spec.shipping_item_quantity
   %hr/

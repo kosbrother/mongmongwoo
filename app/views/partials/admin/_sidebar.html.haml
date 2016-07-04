@@ -5,6 +5,19 @@
       = link_to admin_root_path do
         %i.glyphicon.glyphicon-home
         管理首頁
+    %li.submenu
+      %a{:href => "#"}
+        %i.fa.fa-inbox
+        庫存管理
+        %span.caret.pull-right
+      / Sub menu
+      %ul
+        %li
+          = link_to "選擇淘寶商家", admin_stocks_path
+        %li
+          = link_to "確認收貨", admin_confirm_carts_path
+        %li
+          = link_to "新增到購物車", admin_checkout_path
     %li
       = link_to new_admin_item_path do
         %i.glyphicon.glyphicon-plus

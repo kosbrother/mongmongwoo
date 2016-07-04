@@ -51,6 +51,15 @@ ready = function() {
       }
     });
   });
+
+  // custom popover to display item spec image
+  $('.preview').popover({
+    'trigger':'hover',
+    'html':true,
+    'content':function(){
+      return "<img src='"+$(this).data('imageUrl')+"'>";
+    }
+  });
 };
 
 $(document).ready(ready);

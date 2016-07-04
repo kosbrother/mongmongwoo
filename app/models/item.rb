@@ -8,6 +8,8 @@ class Item < ActiveRecord::Base
   enum sort_params: { price_desc: "price desc", price_asc: "price asc", popular: "item_categories.position ASC", date: "items.created_at desc" }
   enum status: { on_shelf: 0, off_shelf: 1 }
 
+  CNY_RATING = 5
+
   acts_as_paranoid
 
   self.per_page = 15
@@ -23,6 +25,8 @@ class Item < ActiveRecord::Base
   has_many :favorited_by, through: :favorite_items, source: :user
   has_many :item_promotions
   has_many :promotions, through: :item_promotions
+  has_one :stock
+  has_many :shipping_items
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
