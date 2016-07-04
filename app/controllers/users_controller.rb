@@ -2,16 +2,16 @@ class UsersController < ApplicationController
   def create
     user = User.find_or_initialize_by(email: params[:email])
     if params[:email].blank?
-      @message = '信箱不可為空白'
+      @message = t('controller.error.message.empty_email')
       render 'register_error'
     elsif params[:password].blank?
-      @message = '密碼不可為空白'
+      @message = t('controller.error.message.empty_password')
       render 'register_error'
     elsif user && user.password_digest
-      @message = '信箱已被註冊，請重新輸入'
+      @message = t('controller.error.message.email_taken')
       render 'register_error'
     elsif user.invalid?
-      @message = '信箱格式錯誤，請重新輸入'
+      @message =  t('controller.error.message.wrong_email_format')
       render 'register_error'
     else
       user.password = params[:password]
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       user.sent_password_reset
       render 'sent_reset_email'
     else
-      @message = '找不到此信箱，請重新輸入'
+      @message = t('controller.error.message.no_user')
       render 'forget_error'
     end
   end

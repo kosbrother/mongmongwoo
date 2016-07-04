@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
       render 'partials/js/reload'
     else
-      @message = '帳號密碼錯誤，請重新輸入'
+      @message = t('controller.error.message.wrong_email_or_password')
       render 'error'
     end
   end
