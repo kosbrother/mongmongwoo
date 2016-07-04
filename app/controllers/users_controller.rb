@@ -1,19 +1,18 @@
 class UsersController < ApplicationController
   def create
-    user = User.find_by_email(params[:email])
-    if user && user.password_digest
+    user = User.find_or_initialize_by(email: params[:email])
+    if user.password_digest
       @message = '信箱已被註冊，請重新輸入'
       render 'register_error'
-    elsif user
-      user.password = params[:password]
-      user.save
-      set_current_user_and_cart(user)
-      render 'partials/js/reload'
     else
-      user = User.new(user_params)
-      user.save
-      set_current_user_and_cart(user)
-      render 'partials/js/reload'
+      user.password = params[:password]
+      if user.save
+        set_current_user_and_cart(user)
+        render 'partials/js/reload'
+      else
+        @message = '信箱格式錯誤，請重新輸入'
+        render 'register_error'
+      end
     end
   end
 
