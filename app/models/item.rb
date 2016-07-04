@@ -8,6 +8,8 @@ class Item < ActiveRecord::Base
   enum sort_params: { price_desc: "price desc", price_asc: "price asc", popular: "item_categories.position ASC", date: "items.created_at desc" }
   enum status: { on_shelf: 0, off_shelf: 1 }
 
+  CNY_RATING = 5
+
   acts_as_paranoid
 
   self.per_page = 15

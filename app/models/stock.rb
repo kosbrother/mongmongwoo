@@ -7,9 +7,9 @@ class Stock < ActiveRecord::Base
 
   delegate :name, :price, :taobao_supplier_id, :cover, :url, :status, to: :item
 
-  def cost
+  def change_ntd_cost
     if item.cost
-      (self.item.cost * 5).round(2)
+      (self.item.cost * Item::CNY_RATING).round(2)
     else
       "尚未建立資料"
     end
