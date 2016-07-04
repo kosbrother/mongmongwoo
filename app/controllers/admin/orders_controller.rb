@@ -62,17 +62,7 @@ class Admin::OrdersController < AdminController
   end
 
   def combine_orders
-    combine_orders = Order.where(id: params[:selected_order_ids])
-
-    ActiveRecord::Base.transaction do
-      order = Order.set_order(combine_orders)
-      combine_info = combine_orders.find_by(user_id: order.user_id).info
-      combine_items = combine_orders.map(&:items).flatten
-      order.set_order_info(combine_info)
-      order.set_order_items(combine_items)
-    end
-    
-    combine_orders.each { |order| order.update_column(:status, Order.statuses["訂單取消"]) }
+    Order.combine_orders(params[:selected_order_ids])
     flash[:notice] = "併單已完成"
     redirect_to status_index_admin_orders_path
   end
