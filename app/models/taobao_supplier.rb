@@ -1,4 +1,5 @@
 class TaobaoSupplier < ActiveRecord::Base
+
   scope :recent, -> { order(id: :DESC) }
 
   has_many :items
