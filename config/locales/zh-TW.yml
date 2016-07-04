@@ -3,3 +3,10 @@ zh-TW:
   off_shelf: "已下架"
   will_paginate:
     page_gap: "......"
+  controller:
+    error:
+      message:
+        email_taken: "此信箱已被註冊，請重新輸入"
+        wrong_email_format: "信箱格式錯誤，請重新輸入"
+        no_user: "抱歉，找不到此用戶"
+        wrong_password: "密碼錯誤"
