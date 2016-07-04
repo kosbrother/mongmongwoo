@@ -90,6 +90,7 @@ Rails.application.routes.draw do
     resources :stocks, only: [:index] do
       collection do
         get "/:taobao_supplier_id/stock_lists", to: "stocks#stock_lists", as: "stock_lists"
+        get "anoymous_supplier_stocks"
       end
     end
 
