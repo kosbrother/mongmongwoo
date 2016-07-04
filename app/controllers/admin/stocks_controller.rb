@@ -3,7 +3,7 @@ class Admin::StocksController < AdminController
 
   def index
     @taobao_suppliers = TaobaoSupplier.recent
-    @item_ids_in_stock_without_supplier = Stock.taobao_supplier_stocks(nil).map(&:id).join("，")
+    @item_ids_in_stock_without_supplier = Stock.taobao_supplier_stocks(nil).map(&:item_id).join("，")
   end
 
   def stock_lists
