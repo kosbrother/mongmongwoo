@@ -3,10 +3,7 @@ module AdminCartInformation
 
   def shipping_item_quantity
     shipping_items = get_shipping_items
-
-    if shipping_items
-      quantity = shipping_items.map(&:item_quantity).inject(:+) || 0
-    end
+    quantity = shipping_items.map(&:item_quantity).inject(:+) || 0
   end
 
   private
