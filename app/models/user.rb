@@ -7,8 +7,10 @@ class User < ActiveRecord::Base
 
   has_secure_password validations: false
 
-  validates :email, :presence => true,
-            :uniqueness => true
+  validates :email, presence: true,
+            uniqueness: true,
+            format: { with: /\A([\w+-].?)+@[a-z\d-]+(.[a-z]+)*.[a-z]+\z/i }
+
   has_many :orders, dependent: :destroy
   has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
   has_many :favorite_items
