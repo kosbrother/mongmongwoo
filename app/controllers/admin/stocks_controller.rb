@@ -3,15 +3,15 @@ class Admin::StocksController < AdminController
 
   def index
     @taobao_suppliers = TaobaoSupplier.recent
-    @item_ids_in_stock_without_supplier = Stock.taobao_supplier_stocks(nil).map(&:item_id).join("，")
+    @item_ids_in_stock_without_supplier = Stock.by_taobao_supplier(nil).map(&:item_id).join("，")
   end
 
   def stock_lists
     @taobao_supplier = TaobaoSupplier.find(params[:taobao_supplier_id])
-    @stocks = Stock.taobao_supplier_stocks(@taobao_supplier.id)
+    @stocks = Stock.by_taobao_supplier(@taobao_supplier.id)
   end
 
   def anoymous_supplier_stocks
-    @anoymous_supplier_stocks = Stock.taobao_supplier_stocks(nil)
+    @anoymous_supplier_stocks = Stock.by_taobao_supplier(nil)
   end
 end
