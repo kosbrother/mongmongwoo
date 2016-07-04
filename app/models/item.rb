@@ -4,7 +4,6 @@ class Item < ActiveRecord::Base
   scope :priority, -> { order("item_categories.position ASC") }
   scope :latest, ->(num){ order(created_at: :asc).limit(num) }
   scope :on_shelf, ->{ where(status: 0) }
-  scope :item_id_in_stock, -> { joins(:stock).map(&:id).join("，") }
 
   enum sort_params: { price_desc: "price desc", price_asc: "price asc", popular: "item_categories.position ASC", date: "items.created_at desc" }
   enum status: { on_shelf: 0, off_shelf: 1 }

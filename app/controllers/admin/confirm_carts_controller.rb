@@ -9,11 +9,8 @@ class Admin::ConfirmCartsController < AdminController
   def confirm
     shipping_cart = AdminCart.status(AdminCart::STATUS[:shipping]).find(params[:id])
     cart_items = shipping_cart.admin_cart_items
-
     set_cart_items_to_stock(cart_items)
-
     shipping_cart.update_attribute(:status, AdminCart::STATUS[:stock])
-
     redirect_to admin_confirm_carts_path(status: AdminCart::STATUS[:stock])
   end
 

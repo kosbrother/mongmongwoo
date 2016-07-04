@@ -5,4 +5,8 @@ class TaobaoSupplier < ActiveRecord::Base
   has_many :stocks
 
   delegate :count, to: :items
+
+  def item_ids_in_stock
+    items.joins(:stock).map(&:id).join("，")
+  end
 end
