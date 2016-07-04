@@ -7,7 +7,7 @@ class AdminCart < ActiveRecord::Base
   belongs_to :taobao_supplier
 
   enum status: {'cart': 0, 'shipping': 1, 'stock': 2}
-
+  
   STATUS = { cart: 0, shipping: 1, stock: 2 }
 
   def set_to_shipping
@@ -21,6 +21,31 @@ class AdminCart < ActiveRecord::Base
       self.taobao_supplier.name
     else
       '未登記淘寶商家'
+    end
+  end
+
+  def confirm_cart_items_to_stocks
+    ActiveRecord::Base.transaction do
+      cart_items = self.admin_cart_items
+      save_cart_item_to_stock(cart_items)
+      self.update_attribute(:status, AdminCart::STATUS[:stock])
+    end
+  end
+
+  private
+
+  def save_cart_item_to_stock(cart_items)
+    cart_items.each do |cart_item|
+      stock = Stock.find_or_create_by(item_id: cart_item.item_id)
+      stock_spec = stock.stock_specs.find_or_create_by(item_spec_id: cart_item.item_spec_id)
+
+      if stock_spec.amount.present?
+        stock_spec.amount += cart_item.item_quantity
+      else
+        stock_spec.amount = cart_item.item_quantity
+      end
+
+      stock_spec.save
     end
   end
 end
