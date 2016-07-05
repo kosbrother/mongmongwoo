@@ -1,4 +1,10 @@
+require 'elasticsearch/model'
+
 class Item < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  index_name [Rails.env, self.base_class.to_s.pluralize.underscore].join('_')
+
   scope :recent, -> { order(id: :DESC) }
   scope :update_time, -> { order(updated_at: :DESC) }
   scope :priority, -> { order("item_categories.position ASC") }
@@ -73,7 +79,15 @@ class Item < ActiveRecord::Base
 
   def as_json(options = { })
     h = super(options)
-    h[:final_price] = final_price
+    h[:final_price] = final_price if final_price
     h
+  end
+
+  def as_indexed_json(options={})
+    {
+        id: id,
+        name: name,
+        description: description
+    }
   end
 end

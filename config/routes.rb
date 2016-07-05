@@ -241,6 +241,7 @@ Rails.application.routes.draw do
     end
 
     namespace :v3 do
+      get '/search_items/:term', to: "search#search_items"
       resources :counties, only: [:index] do
         resources :towns, only: [:index] do
           resources :roads, only: [:index] do
