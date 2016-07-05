@@ -101,3 +101,12 @@
       %ul
         %li
           = link_to "優惠列表", admin_promotions_path
+    %li.submenu
+      %a{:href => "#"}
+        %i.fa.fa-building
+        超商門市管理
+        %span.caret.pull-right
+      / Sub menu
+      %ul
+        %li
+          = link_to "查看門市資料", search_store_admin_stores_path
