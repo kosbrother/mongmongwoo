@@ -19,7 +19,7 @@ RSpec.describe Api::V3::SearchController, type: :controller do
         expect(result.count).to eq(1)
         expect(result.first['id']).to eq(item.id)
         expect(result.first['name']).to eq(item.name)
-        expect(result.first['description']).to eq(item.description)
+        expect(result.first['cover']['url']).to eq(item.cover.url)
       end
     end
     context 'when  search term is included in item description' do
@@ -31,7 +31,7 @@ RSpec.describe Api::V3::SearchController, type: :controller do
         expect(result.count).to eq(1)
         expect(result.first['id']).to eq(item.id)
         expect(result.first['name']).to eq(item.name)
-        expect(result.first['description']).to eq(item.description)
+        expect(result.first['cover']['url']).to eq(item.cover.url)
       end
     end
   end

@@ -1,9 +1,15 @@
-require 'elasticsearch/model'
-
 class Item < ActiveRecord::Base
   include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
   index_name [Rails.env, self.base_class.to_s.pluralize.underscore].join('_')
+
+  mapping do
+    indexes :name, type: 'string'
+    indexes :description, type: 'string'
+  end
+
+  after_create :index_document
+  after_update :update_document
+  after_destroy :delete_document
 
   scope :recent, -> { order(id: :DESC) }
   scope :update_time, -> { order(updated_at: :DESC) }
@@ -79,15 +85,27 @@ class Item < ActiveRecord::Base
 
   def as_json(options = { })
     h = super(options)
-    h[:final_price] = final_price if final_price
+    h[:final_price] = final_price
     h
   end
 
   def as_indexed_json(options={})
-    {
-        id: id,
-        name: name,
-        description: description
-    }
+   {"name" => name, "description" => description }
+  end
+
+  def index_document
+    __elasticsearch__.index_document
+  end
+
+  def update_document
+    __elasticsearch__.update_document
+  end
+
+  def delete_document
+    __elasticsearch__.delete_document
+  end
+
+  def self.search_for_name_and_description(term)
+    search(query: { multi_match: {query: term, fields: [ "name^3", "description" ]}})
   end
 end
