@@ -5,6 +5,8 @@
         = link_to "萌萌屋", admin_root_path
       %li.active 搜尋超商門市
   .panel-body
+    .pull-right
+      = link_to "新增門市", new_admin_store_path, class: "btn btn-success"
     %h2 超商門市列表
     %p.lead 輸入店號或名稱查詢
     = form_tag search_store_admin_stores_path, { class: "form-inline", method: :get } do

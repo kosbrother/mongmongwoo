@@ -6,6 +6,25 @@ class Admin::StoresController < AdminController
     @search_stores = Store.seven_stores.search_by_store_code_or_name(params[:store_code], params[:store_name])
   end
 
+  def new
+    @counties = County.seven_stores
+    @towns = @counties.includes(:towns)[0].towns
+    @roads = @towns.includes(:roads)[0].roads
+    @store = Store.new
+  end
+
+  def create
+    @store = Store.new(store_params)
+
+    if @store.save
+      flash[:notice] = "成功新增門市"
+      redirect_to search_store_admin_stores_path
+    else
+      flash.now[:danger] = "請確認資料正確"
+      render :new
+    end
+  end
+
   def edit
   end
 
@@ -32,6 +51,6 @@ class Admin::StoresController < AdminController
   end
 
   def store_params
-    params.require(:store).permit(:store_code)
+    params.require(:store).permit(:store_code, :name, :address, :phone, :lat, :lng, :store_type, :road_id, :town_id, :county_id)
   end
 end
