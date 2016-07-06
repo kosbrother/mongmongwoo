@@ -13,7 +13,7 @@
         .form-group
           = f.label :store_code, "門市店號", class: "col-sm-2 control-label"
           .col-sm-6
-            = f.text_field :store_code, class: "form-control"
+            = f.text_field :store_code, class: "form-control", required: true
         .form-group
           .col-sm-offset-2.col-sm-6
             = f.submit "確認送出", class: "btn btn-primary"

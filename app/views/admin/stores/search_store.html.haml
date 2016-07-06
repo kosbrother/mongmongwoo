@@ -18,4 +18,4 @@
         = search_field_tag :store_name, params[:store_name], class: "form-control", placeholder: "門市名稱"
       = button_tag "搜尋門市", class: "btn btn-info"
     %hr
-    = render partial: "store_table", locals: { stores: @search_stores }
+    = render partial: "store_table"

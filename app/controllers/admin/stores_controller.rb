@@ -8,8 +8,8 @@ class Admin::StoresController < AdminController
 
   def new
     @counties = County.seven_stores
-    @towns = @counties.includes(:towns)[0].towns
-    @roads = @towns.includes(:roads)[0].roads
+    @towns = @counties.first.towns
+    @roads = @towns.first.roads
     @store = Store.new
   end
 
@@ -25,15 +25,12 @@ class Admin::StoresController < AdminController
     end
   end
 
-  def edit
-  end
-
   def update
     if @store.update(store_params)
       flash[:notice] = "門市店號已更新"
       redirect_to search_store_admin_stores_path
     else
-      flash.now[:danger] = "請確認資料正確"
+      flash.now[:danger] = "店號不能重複或空白"
       render :edit
     end
   end
