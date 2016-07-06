@@ -15,14 +15,9 @@ class Admin::StoresController < AdminController
 
   def create
     @store = Store.new(store_params)
-
-    if @store.save
-      flash[:notice] = "成功新增門市"
-      redirect_to search_store_admin_stores_path
-    else
-      flash.now[:danger] = "請確認資料正確"
-      render :new
-    end
+    @store.save
+    flash[:notice] = "成功新增門市"
+    redirect_to search_store_admin_stores_path
   end
 
   def update
