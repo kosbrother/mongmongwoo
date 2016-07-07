@@ -1,7 +1,8 @@
 class Api::V3::UsersController < ApiController
   def create
-    user = User.find_or_initialize_by(uid: params[:uid])
-    user.email = params[:email]
+    user = User.find_or_initialize_by(email: params[:email])
+    user.uid = params[:uid]
+    user.password = User::FAKE_PASSWORD if  user.password_digest.nil?
     user.user_name = params[:user_name]
     user.gender = params[:gender]
     if user.save

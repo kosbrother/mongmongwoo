@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  has_secure_password validations: false
+  has_secure_password
 
   validates :email, presence: true,
             uniqueness: true,
@@ -22,16 +22,42 @@ class User < ActiveRecord::Base
   self.per_page = 20
 
   ANONYMOUS = 31
+  FAKE_PASSWORD = '1234'
+
+  def self.fake_mail(uid)
+    "#{uid}@mmwooo.fake.com"
+  end
+
+  def self.register(email, password)
+    user = find_or_initialize_by(email: email, is_mmw_registered: false)
+    user.password = password
+    user.is_mmw_registered = true
+    if user.save
+      {result: true, user: user}
+    else
+      {result: false, message: user.errors.messages.values.flatten}
+    end
+  end
 
   def self.find_or_create_from_omniauth(auth)
-      where(uid: auth.id).first_or_initialize.tap do |user|
-        user.uid = auth.id
-        user.user_name = auth.name
-        user.gender = auth.gender
-        auth.email = "#{auth.uid}@mmwooo.fake.com" if auth.email.blank?
-        user.email = auth.email
-        user.save
-      end
+    errors = []
+    info = auth.extra.raw_info
+    ActiveRecord::Base.transaction do
+      info.email = User.fake_mail(auth.uid) if info.email.blank?
+      user = find_or_initialize_by(email: info.email)
+      user.password = User::FAKE_PASSWORD if  user.password_digest.nil?
+      user.user_name = info.name
+      errors << user.errors.messages unless user.save
+
+      login = Login.find_or_initialize_by(provider: auth.provider, uid: auth.uid)
+      login.user_id = user.id
+      login.user_name = info.name
+      login.gender = info.gender
+      errors << login.errors.messages unless login.save
+      raise ActiveRecord::Rollback if errors.present?
+
+      return user
+    end
   end
 
   def sent_password_reset

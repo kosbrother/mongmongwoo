@@ -78,11 +78,13 @@ ActiveRecord::Schema.define(version: 20160705120525) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
+    t.string   "slug",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "slug",       limit: 255
     t.string   "image",      limit: 255
   end
+
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_id",           limit: 255, null: false
@@ -456,6 +458,7 @@ ActiveRecord::Schema.define(version: 20160705120525) do
     t.string   "password_digest",        limit: 255
     t.string   "password_reset_token",   limit: 255
     t.datetime "password_reset_sent_at"
+    t.boolean  "is_mmw_registered",                  default: false
   end
 
   add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree

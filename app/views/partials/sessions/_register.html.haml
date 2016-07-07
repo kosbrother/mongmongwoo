@@ -1,0 +1,15 @@
+.modal.fade{"aria-labelledby" => "register-page", :role => "dialog", :tabindex => "-1", id: "register-page"}
+  .modal-dialog
+    .modal-content.login-modal
+      .modal-header 註冊
+      .modal-body
+        = image_tag('ic_Mong.png', class: 'logo')
+        .error-message
+        = form_tag register_path, remote: true do
+          .login-input
+            .email
+            = text_field_tag :email, '', placeholder: '請輸入email'
+            %hr>
+            .password
+            = password_field_tag :password, '', placeholder: '請輸入密碼'
+          = submit_tag '註冊新帳號', class: 'btn login-btn'

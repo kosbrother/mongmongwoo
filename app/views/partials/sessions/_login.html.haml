@@ -1,0 +1,21 @@
+.modal.fade{"aria-labelledby" => "login-page", :role => "dialog", :tabindex => "-1", id: "login-page"}
+  .modal-dialog
+    .modal-content.login-modal
+      .modal-header 登入萌萌屋
+      .modal-body
+        .submit-session
+          = link_to '', auth_path('facebook'), class: "btn fb-login"
+        .divider
+          .text 或以信箱登入
+        .error-message
+        = form_tag login_by_mmw_path, remote: true do
+          .login-input
+            .email
+            = text_field_tag :email, '', placeholder: '請輸入email'
+            %hr>
+            .password
+            = password_field_tag :password, '', placeholder: '請輸入密碼'
+          = submit_tag '登入', class: 'btn login-btn'
+      .modal-footer
+        .forget-btn{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#forget-page"} 忘記密碼？
+        .register-btn{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#register-page"} 註冊新帳號

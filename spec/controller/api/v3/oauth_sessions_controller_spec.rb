@@ -21,7 +21,6 @@ RSpec.describe Api::V3::OauthSessionsController, type: :controller do
       end
     end
 
-
     context 'when user and login exist' do
       let!(:user) { FactoryGirl.create(:user) }
       let!(:login) { FactoryGirl.create(:login, :facebook, user_id: user.id) }

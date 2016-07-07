@@ -1,0 +1,4 @@
+$('#register-page .error-message p').remove();
+- @message.each do |message|
+  :plain
+    $('#register-page .error-message').append('<p>#{message}</p>');

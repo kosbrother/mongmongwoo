@@ -1,21 +1,31 @@
 class SessionsController < ApplicationController
 
-  def create
-    auth = request.env["omniauth.auth"].extra.raw_info
+  def login_by_mmw
+    user = User.find_by(email: params[:email], is_mmw_registered: true)
+    if user && user.authenticate(params[:password])
+      set_current_user_and_cart(user)
+      render 'partials/js/reload'
+    elsif user.nil?
+      @message = t('controller.error.message.no_user.')
+      render 'error'
+    else
+      @message = t('controller.error.message.wrong_password')
+      render 'error'
+    end
+  end
+
+  def login_by_auth
+    auth = request.env["omniauth.auth"]
     user = User.find_or_create_from_omniauth(auth)
-    session[:user_id] = user.id
-    cart = current_cart
-    cart.user = user
-    cart.save
+    set_current_user_and_cart(user) if user
 
     redirect_to root_path
   end
 
   def destroy
     session[:user_id] = nil
-    cart = current_cart
-    cart.user_id = User::ANONYMOUS
-    cart.save
+    current_cart.user_id = User::ANONYMOUS
+    current_cart.save
 
     redirect_to root_path
   end

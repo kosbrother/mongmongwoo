@@ -65,6 +65,13 @@ ready = function() {
     $('#user-nav').mouseleave(function(){
         $('#user').removeClass('open');
     });
+
+    //Open register modal and Close login modal
+    $('.register-btn, .forget-btn').on('click', function(){
+        $('#login-page').modal('hide');
+    });
+
+
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);

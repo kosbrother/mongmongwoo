@@ -30,13 +30,16 @@
               = render_counter
         - if current_user.nil?
           %li.nav-list
-            = link_to auth_path("facebook") do
-              .list.user 登入/註冊
+            .user{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#login-page"} 登入/註冊
+            = render 'partials/sessions/login'
+            = render 'partials/sessions/register'
+            = render 'partials/sessions/forget'
+            = render 'partials/sessions/sent_success'
         -else
           %li.nav-list#user-nav
             .dropdown#user
               .list.user.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                = current_user.user_name
+                = show_username_or_email
                 %span.caret
               %ul.dropdown-menu
                 %li.list

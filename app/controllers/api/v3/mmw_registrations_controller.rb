@@ -1,21 +1,17 @@
 class Api::V3::MmwRegistrationsController < ApiController
   def create
-    if User.where.not(password_digest: nil).find_by(email: params[:email])
-      render  status: 400, json: {error: {message: t('controller.error.message.email_taken') }}
+    register = User.register(params[:email], params[:password])
+    if register[:result]
+      render status: 200, json: {data: "success"}
     else
-      user = User.find_or_initialize_by(email: params[:email])
-      user.password = params[:password]
-      if user.save
-        render status: 200, json: {data: "success"}
-      else
-        render status: 400, json: {error: {message: t('controller.error.message.wrong_email_format') }}
-      end
+      message = register[:message].join(' ')
+      render status: 400, json: {error: {message: message}}
     end
   end
 
   def login
     user = User.find_by(email: params[:email])
-    if user.nil? || user.password_digest.nil?
+    if user.nil? || user.is_mmw_registered == false
       render status: 400, json: {error: {message: t('controller.error.message.no_user')}}
     elsif  user.authenticate(params[:password])
       render status: 200, json: {data: "success"}
@@ -25,7 +21,7 @@ class Api::V3::MmwRegistrationsController < ApiController
   end
 
   def forget
-    user = User.find_by_email(params[:email])
+    user = User.find_by(email: params[:email], is_mmw_registered: true)
     if user
       user.sent_password_reset
       render status: 200, json: {data: "success"}

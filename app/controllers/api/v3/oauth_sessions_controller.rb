@@ -3,6 +3,8 @@ class Api::V3::OauthSessionsController < ApiController
     errors = []
     ActiveRecord::Base.transaction do
       user = User.find_or_initialize_by(email: params[:email])
+      user.password = User::FAKE_PASSWORD if  user.password_digest.nil?
+      user.user_name = params[:user_name]
       errors << user.errors.messages unless user.save
 
       login = Login.find_or_initialize_by(provider: params[:provider], uid: params[:uid])

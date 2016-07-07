@@ -1,0 +1,12 @@
+.modal.fade{"aria-labelledby" => "forget-page", :role => "dialog", :tabindex => "-1", id: "forget-page"}
+  .modal-dialog
+    .modal-content.login-modal
+      .modal-header 重設密碼
+      .modal-body
+        請輸入您的註冊信箱
+        .error-message
+        = form_tag forget_path, remote: true do
+          .login-input
+            .email
+            = text_field_tag :email, '', placeholder: '請輸入email'
+          = submit_tag '送出', class: 'btn l  ogin-btn'
