@@ -1,5 +1,5 @@
 class Admin::StoresController < AdminController
-  before_action :require_manager
+  before_action :require_manager, except: [:get_store]
   before_action :find_store, only: [:edit, :update, :destroy]
 
   def index
@@ -38,6 +38,11 @@ class Admin::StoresController < AdminController
     @store.destroy
     flash[:warning] = "門市已下架"
     redirect_to admin_stores_path
+  end
+
+  def get_store
+    store = Store.seven_stores.select(:id, :store_code, :name).find_by(store_code: params[:store_code])
+    render status: 200, json: {data: store}
   end
 
   private
