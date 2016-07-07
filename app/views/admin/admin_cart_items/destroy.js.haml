@@ -1,1 +1,4 @@
 $('#cart-item-#{params[:id]}').remove();
+- if @cart.destroyed?
+  :plain
+    $('#cart-#{@cart.id}').remove();

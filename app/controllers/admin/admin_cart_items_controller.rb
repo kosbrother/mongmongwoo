@@ -36,8 +36,14 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def destroy
+    @cart = @cart_item.admin_cart
     @cart_item.destroy
+    if @cart.admin_cart_items.blank?
+      @cart.destroy
+      session[:admin_cart_ids].delete(@cart.id)
+    end
   end
+
 
   private
 
