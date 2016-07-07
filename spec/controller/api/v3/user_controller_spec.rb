@@ -23,6 +23,7 @@ RSpec.describe Api::V3::UsersController, :type => :controller do
     context "when give a exist user" do
       let!(:user) { FactoryGirl.create(:user) }
       let!(:uid) { user.uid }
+      let!(:uid) { user.email }
       it "does not create new user" do
         expect(User.where(uid: user.uid).size).to eq(1)
       end

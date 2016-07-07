@@ -1,21 +1,23 @@
 class SessionsController < ApplicationController
 
   def login_by_mmw
-    user = User.find_by_email(params[:email])
-    if user && user.password_digest && user.authenticate(params[:password])
+    user = User.find_by(email: params[:email], is_mmw_registered: true)
+    if user && user.authenticate(params[:password])
       set_current_user_and_cart(user)
-
       render 'partials/js/reload'
+    elsif user.nil?
+      @message = t('controller.error.message.no_user.')
+      render 'error'
     else
-      @message = t('controller.error.message.wrong_email_or_password')
+      @message = t('controller.error.message.wrong_password')
       render 'error'
     end
   end
 
   def login_by_auth
-    auth = request.env["omniauth.auth"].extra.raw_info
+    auth = request.env["omniauth.auth"]
     user = User.find_or_create_from_omniauth(auth)
-    set_current_user_and_cart(user)
+    set_current_user_and_cart(user) if user
 
     redirect_to root_path
   end
