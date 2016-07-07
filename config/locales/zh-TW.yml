@@ -8,8 +8,6 @@ zh-TW:
   controller:
     error:
       message:
-        email_taken: "此信箱已被註冊，請重新輸入"
-        wrong_email_format: "信箱格式錯誤，請重新輸入"
         no_user: "抱歉，找不到此用戶"
         wrong_password: "密碼錯誤"
   shipping: "運送中"
@@ -21,3 +19,14 @@ zh-TW:
     term:
       name: '可愛'
       description: '日韓'
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "信箱不可為空白"
+              invalid: "信箱格式錯誤，請重新輸入"
+              taken: "此信箱已被註冊，請重新輸入"
+            password:
+              blank: "密碼不可為空白"

@@ -13,30 +13,30 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
       expect(response.content_type).to eq('application/json')
       expect(message).to eq("success")
     end
+
     context 'when user with same email exist' do
-      context 'when exist user password was empty' do
-        let!(:user) { FactoryGirl.create(:user, email: email)  }
-        it 'does create new user' do
+      context 'when user is not registered' do
+        let!(:user) { FactoryGirl.create(:user, email: email)}
+        it 'does register the exist user' do
           post :create, email: email, password: password
           user = User.find_by(email: email)
           message = JSON.parse(response.body)['data']
-          expect(user).to be_present
-          expect(user.password_digest).not_to be_nil
+          expect(user.is_mmw_registered).to be_truthy
           expect(response.status).to eq(200)
           expect(response.content_type).to eq('application/json')
           expect(message).to eq("success")
         end
       end
 
-      context 'when exist user password is not empty' do
-        let!(:user) { FactoryGirl.create(:user, email: email, password: '12345') }
+      context 'when user is registered' do
+        let!(:user) { FactoryGirl.create(:user, email: email, is_mmw_registered: true) }
         it 'does not create new user and return status 400' do
           post :create, email: email, password: password
           message = JSON.parse(response.body)['error']['message']
           expect(User.count).to eq(1)
           expect(response.status).to eq(400)
           expect(response.content_type).to eq('application/json')
-          expect(message).to eq(I18n.t('controller.error.message.email_taken'))
+          expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.email.taken'))
         end
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
         expect(User.count).to eq(0)
         expect(response.status).to eq(400)
         expect(response.content_type).to eq('application/json')
-        expect(message).to eq(I18n.t('controller.error.message.wrong_email_format'))
+        expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.email.blank') + ' ' + I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
       end
     end
 
@@ -61,13 +61,25 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
         expect(User.count).to eq(0)
         expect(response.status).to eq(400)
         expect(response.content_type).to eq('application/json')
-        expect(message).to eq(I18n.t('controller.error.message.wrong_email_format'))
+        expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
+      end
+    end
+
+    context 'when password is empty' do
+      let!(:password) { '' }
+      it 'does not create new user and return status 400' do
+        post :create, email: email, password: password
+        message = JSON.parse(response.body)['error']['message']
+        expect(User.count).to eq(0)
+        expect(response.status).to eq(400)
+        expect(response.content_type).to eq('application/json')
+        expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.password.blank'))
       end
     end
   end
 
   describe 'post #login' do
-    let!(:user) { FactoryGirl.create(:user, email: email, password: password) }
+    let!(:user) { FactoryGirl.create(:user, email: email, password: password, is_mmw_registered: true) }
 
     context 'when password is correct' do
       it 'does find the user and pass the correct password' do
@@ -98,10 +110,21 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
         expect(message).to eq(I18n.t('controller.error.message.no_user'))
       end
     end
+
+    context 'when user with same email exist but is not registered' do
+      let!(:user) { FactoryGirl.create(:user, email: email, password: password, is_mmw_registered: false) }
+      it 'does not pass login' do
+        post :login, email: 'test@test.com', password: '1234'
+        message = JSON.parse(response.body)['error']['message']
+        expect(response.status).to eq(400)
+        expect(response.content_type).to eq('application/json')
+        expect(message).to eq(I18n.t('controller.error.message.no_user'))
+      end
+    end
   end
 
   describe 'post #forget' do
-    let!(:user) { FactoryGirl.create(:user, email: email, password: password) }
+    let!(:user) { FactoryGirl.create(:user, email: email, password: password, is_mmw_registered: true) }
 
     context 'when user provide exist email' do
       it 'does find the user and create password reset token' do
