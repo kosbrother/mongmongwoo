@@ -32,6 +32,9 @@
                   %td
                     = link_to "#{spec.item_spec.id} - #{spec.style}", "#", rel: "popover", data: { "image-url": "#{spec.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
                   %td
-                    = spec.amount
+                    = form_for [:admin, spec], remote: true, method: :patch, html: { class: "form-inline" } do |f|
+                      .form-group
+                        = f.number_field :amount, min: "0", class: "form-control", id: "#{spec.id}-stock_spec"
+                      = f.submit "修改數量", class: "btn btn-warning"
                   %td
                     = spec.shipping_item_quantity
