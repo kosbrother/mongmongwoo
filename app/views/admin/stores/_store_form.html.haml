@@ -1,0 +1,43 @@
+= form_for [:admin, @store], html: { class: "form-horizontal" } do |f|
+  .form-group
+    = f.hidden_field :store_type, value: 4
+  .form-group
+    = f.label :county_id, "選擇縣市", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.select :county_id, options_for_select(@counties.collect{|c| [c.name, c.id]}), {}, class: "form-control", id: "select-county"
+  .form-group
+    = f.label :town_id, "選擇鄉鎮", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.select :town_id, options_for_select(@towns.collect{|t| [t.name, t.id]}), {}, class: "form-control", id: "town-list"
+  .form-group
+    = f.label :road_id, "選擇路名", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.select :road_id, options_for_select(@roads.collect{|r| [r.name, r.id]}), {}, class: "form-control", id: "road-list"
+  .form-group
+    = f.label :store_code, "門市店號", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.text_field :store_code, class: "form-control", required: true
+  .form-group
+    = f.label :name, "門市名稱", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.text_field :name, class: "form-control", required: true
+  .form-group
+    = f.label :address, "門市地址", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.text_field :address, class: "form-control", required: true
+  .form-group
+    = f.label :phone, "門市電話", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.text_field :phone, class: "form-control", required: true
+  .form-group
+    = f.label :lat, "門市緯度", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.number_field :lat, class: "form-control", step: "0.01", required: true
+  .form-group
+    = f.label :lng, "門市經度", class: "col-sm-2 control-label"
+    .col-sm-6
+      = f.number_field :lng, class: "form-control", step: "0.01", required: true
+  .form-group
+    .col-sm-offset-2.col-sm-6
+      = f.submit "確認送出", class: "btn btn-primary"
+      = link_to "取消離開", admin_stores_path, class: "btn btn-warning"

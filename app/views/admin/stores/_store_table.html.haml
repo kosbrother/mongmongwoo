@@ -1,0 +1,21 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th 門市編號
+      %th 門市名稱
+      %th 門市店號
+      %th 門市地址
+      %th 門市電話
+      %th 操作選項
+  %tboady
+    - @stores.each do |store|
+      %tr
+        %td= store.id
+        %td= store.name
+        %td= store.store_code
+        %td= store.address
+        %td= store.phone
+        %td
+          = link_to "編輯門市資料", edit_admin_store_path(store), class: "btn btn-primary"
+          %hr
+          = link_to "下架門市", admin_store_path(store), class: "btn btn-danger", method: :delete, data: { confirm: "確定下架？" }

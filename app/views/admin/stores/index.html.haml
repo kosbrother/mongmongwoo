@@ -1,0 +1,21 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 搜尋超商門市
+  .panel-body
+    .pull-right
+      = link_to "新增門市", new_admin_store_path, class: "btn btn-success"
+    %h2 超商門市列表
+    %p.lead 輸入店號或名稱查詢
+    = form_tag admin_stores_path, { class: "form-inline", method: :get } do
+      .form-group
+        = label_tag :store_code, "門市店號", class: "sr-only"
+        = search_field_tag :store_code, params[:store_code], class: "form-control", placeholder: "門市店號"
+      .form-group
+        = label_tag :store_name, "門市名稱", class: "sr-only"
+        = search_field_tag :store_name, params[:store_name], class: "form-control", placeholder: "門市名稱"
+      = button_tag "搜尋門市", class: "btn btn-info"
+    %hr
+    = render partial: "store_table"

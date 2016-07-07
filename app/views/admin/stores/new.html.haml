@@ -1,0 +1,11 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li
+        = link_to "超商門市列表", admin_stores_path
+      %li.active 新增超商門市
+  .panel-body
+    %h3 新增超商門市
+    = render "store_form"
