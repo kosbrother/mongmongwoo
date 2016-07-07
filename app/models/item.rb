@@ -105,7 +105,7 @@ class Item < ActiveRecord::Base
     __elasticsearch__.delete_document
   end
 
-  def self.search_for_name_and_description(term)
-    search(query: { multi_match: {query: term, fields: [ "name^3", "description" ]}})
+  def self.search_name_and_description(query)
+    search(query: { multi_match: {query: query, fields: [ "name^3", "description" ]}})
   end
 end
