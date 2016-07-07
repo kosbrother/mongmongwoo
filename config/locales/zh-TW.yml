@@ -10,8 +10,6 @@ zh-TW:
       message:
         no_user: "抱歉，找不到此用戶"
         wrong_password: "密碼錯誤"
-  shipping: "運送中"
-  stock: "已入庫存"
   factory:
     item:
       name: '可愛電力公司手機擦'
