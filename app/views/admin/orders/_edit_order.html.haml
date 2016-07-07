@@ -24,12 +24,12 @@
               = info_f.text_field :ship_phone, class: 'form-control'
             .form-group
               = info_f.label :ship_store_code, "門市店號"
-              = info_f.text_field :ship_store_code, class: 'form-control', id: 'ship_store_code'
+              = info_f.text_field :ship_store_code, class: 'form-control ship-store-code'
             .form-group
               = info_f.label :ship_store_name, "門市名稱"
-              = info_f.text_field :ship_store_name, class: 'form-control', id: 'ship_store_name'
+              = info_f.text_field :ship_store_name, class: 'form-control ship-store-name'
             .form-group
               = info_f.label :ship_store_id, "門市編號", class: 'sr-only'
-              = info_f.hidden_field :ship_store_id, class: 'form-control', id: 'ship_store_id'
+              = info_f.hidden_field :ship_store_id, class: 'form-control ship-store-id'
           %button.btn.btn-primary{type: "submit"}  送出變更
           %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 取消
