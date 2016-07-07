@@ -4,7 +4,7 @@
       %li
         = link_to "萌萌屋", admin_root_path
       %li
-        = link_to "搜尋超商門市", search_store_admin_stores_path
+        = link_to "搜尋超商門市", admin_stores_path
       %li.active 編輯超商門市店號
   .panel-body
     %h2 編輯 #{@store.name}店號
@@ -17,4 +17,4 @@
         .form-group
           .col-sm-offset-2.col-sm-6
             = f.submit "確認送出", class: "btn btn-primary"
-            = link_to "取消離開", search_store_admin_stores_path, class: "btn btn-warning"
+            = link_to "取消離開", admin_stores_path, class: "btn btn-warning"

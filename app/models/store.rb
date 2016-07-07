@@ -4,7 +4,7 @@ class Store < ActiveRecord::Base
 
   scope :select_api_fields, -> { select(:id, :store_code, :name, :address, :phone, :lat, :lng) }
   scope :seven_stores, -> { where("store_type = ?", Store::SEVEN_STORE_TYPE) }
-  scope :search_by_store_code_or_name, -> (store_code, store_name) { where('store_code = ? OR name = ?', store_code, store_name) }
+  scope :by_store_code_or_name, -> (store_code, store_name) { where('store_code = ? OR name = ?', store_code, store_name) }
 
   belongs_to :county
   belongs_to :town

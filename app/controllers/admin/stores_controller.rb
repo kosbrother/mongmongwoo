@@ -2,8 +2,8 @@ class Admin::StoresController < AdminController
   before_action :require_manager
   before_action :find_store, only: [:edit, :update, :destroy]
 
-  def search_store
-    @search_stores = Store.seven_stores.search_by_store_code_or_name(params[:store_code], params[:store_name])
+  def index
+    @stores = Store.seven_stores.by_store_code_or_name(params[:store_code], params[:store_name])
   end
 
   def new
@@ -15,15 +15,19 @@ class Admin::StoresController < AdminController
 
   def create
     @store = Store.new(store_params)
-    @store.save
-    flash[:notice] = "成功新增門市"
-    redirect_to search_store_admin_stores_path
+    if @store.save
+      flash[:notice] = "成功新增門市"
+      redirect_to admin_stores_path
+    else
+      flash.now[:danger] = "店號不能重複"
+      render :new
+    end
   end
 
   def update
     if @store.update(store_params)
       flash[:notice] = "門市店號已更新"
-      redirect_to search_store_admin_stores_path
+      redirect_to admin_stores_path
     else
       flash.now[:danger] = "店號不能重複或空白"
       render :edit
@@ -33,7 +37,7 @@ class Admin::StoresController < AdminController
   def destroy
     @store.destroy
     flash[:warning] = "門市已下架"
-    redirect_to search_store_admin_stores_path
+    redirect_to admin_stores_path
   end
 
   private

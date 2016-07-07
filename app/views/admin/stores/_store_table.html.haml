@@ -8,7 +8,7 @@
       %th 門市電話
       %th 操作選項
   %tboady
-    - @search_stores.each do |store|
+    - @stores.each do |store|
       %tr
         %td= store.id
         %td= store.name

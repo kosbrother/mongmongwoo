@@ -70,11 +70,7 @@ Rails.application.routes.draw do
     get "/checkout", to: "admin_carts#checkout", as: "checkout"
     post "/submit", to: "admin_carts#submit", as: "submit_order"
 
-    resources :stores, only: [:new, :create, :edit, :update, :destroy] do
-      collection do
-        get "search_store"
-      end
-    end
+    resources :stores, only: [:index, :new, :create, :edit, :update, :destroy]
 
     resources :admin_cart_items, only: [:create, :destroy] do
       collection do

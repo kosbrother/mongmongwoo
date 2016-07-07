@@ -4,9 +4,8 @@
       %li
         = link_to "萌萌屋", admin_root_path
       %li
-        = link_to "搜尋超商門市", search_store_admin_stores_path
+        = link_to "超商門市列表", admin_stores_path
       %li.active 新增超商門市
   .panel-body
     %h3 新增超商門市
-    = form_for [:admin, @store], html: { class: "form-horizontal" } do |f|
-      = render partial: "store_form", locals: { f: f }
+    = render "store_form"
