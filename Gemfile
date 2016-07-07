@@ -34,6 +34,8 @@ gem "figaro"
 gem 'sidekiq'
 gem "gretel"
 gem 'omniauth-facebook'
+gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 
 # cronjob
 gem 'whenever', :require => false

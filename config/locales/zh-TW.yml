@@ -12,3 +12,10 @@ zh-TW:
         wrong_password: "密碼錯誤"
   shipping: "運送中"
   stock: "已入庫存"
+  factory:
+    item:
+      name: '可愛電力公司手機擦'
+      description: '老是覺得螢幕都是髒髒的指紋很礙眼嗎？日韓正夯的螢幕擦～～送人禮物首選！'
+    term:
+      name: '可愛'
+      description: '日韓'
