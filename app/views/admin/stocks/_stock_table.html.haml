@@ -2,7 +2,7 @@
   %thead
     %tr
       %th{width: "40%"} 商品資訊
-      %th 樣式資訊
+      %th{width: "60%"} 樣式資訊
   %tbody
     - stocks.each do |stock|
       %tr
@@ -11,8 +11,10 @@
             .media-left
               = image_tag(stock.cover.url, size: "120x120")
             .media-body
-              %h4.media-heading 收貨商品編號：#{stock.id}
-              %p 商品編號與名稱：#{stock.item_id} - #{stock.name}
+              %h4.media-heading 商品編號：#{stock.item_id}
+              %p
+                商品名稱：
+                = link_to stock.name, admin_item_path(stock.item), target: "_blank"
               %p 狀態：#{item_status(stock.status)}
               %p 成本：#{stock.ntd_cost}
               %p 價格：#{stock.price}
@@ -20,21 +22,18 @@
           %table.table.table-bordered
             %thead
               %tr.active
-                %th 收貨庫存編號
-                %th 樣式編號與名稱
-                %th 現貨數量
-                %th 運送中數量
+                %th{width: "40%"} 樣式名稱
+                %th{width: "30%"} 現貨數量
+                %th{width: "30%"} 運送中數量
             %tbody
               - stock.stock_specs.each do |spec|
                 %tr
                   %td
-                    = spec.id
-                  %td
-                    = link_to "#{spec.item_spec.id} - #{spec.style}", "#", rel: "popover", data: { "image-url": "#{spec.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+                    = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
                   %td
                     = form_for [:admin, spec], remote: true, method: :patch, html: { class: "form-inline" } do |f|
                       .form-group
                         = f.number_field :amount, min: "0", class: "form-control", id: "#{spec.id}-stock_spec"
-                      = f.submit "修改數量", class: "btn btn-warning"
+                      = f.submit "更新", class: "btn btn-warning"
                   %td
                     = spec.shipping_item_quantity
