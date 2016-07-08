@@ -6,7 +6,7 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} ×
-        %h4#myModalLabel.modal-title 編輯訂單
+        %h4.modal-title 編輯訂單
       .modal-body
         = form_for [:admin, order], method: :patch, :html => {"data-target": "#edit-order-#{order.id}"}, remote: true, class: "edit-order" do |f|
           .form-group
