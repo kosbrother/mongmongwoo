@@ -31,5 +31,5 @@
             .form-group
               = info_f.label :ship_store_id, "門市編號", class: 'sr-only'
               = info_f.hidden_field :ship_store_id, class: 'form-control ship-store-id', id: "store-id-#{order.id}"
-          %button.btn.btn-primary{type: "submit"}  送出變更
+          %button.btn.btn-primary{id: "submit-#{order.id}", type: "submit"}  送出變更
           %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 取消

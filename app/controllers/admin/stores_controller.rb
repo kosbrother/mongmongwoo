@@ -43,16 +43,16 @@ class Admin::StoresController < AdminController
   def get_store
     store = Store.seven_stores.select(:id, :store_code, :name).find_by(store_code: params[:store_code])
     if store
-      render status: 200, json: {data: store}
+      render status: 200, json: { data: store }
     else
-      render status: 400, json: {data: "門市店號錯誤"}
+      render status: 400, json: { error: { message: "門市店號錯誤" } }
     end
   end
 
   private
 
   def find_store
-    @store = Store.find(params[:id]) 
+    @store = Store.find(params[:id])
   end
 
   def store_params
