@@ -4,6 +4,5 @@ class Admin::StockSpecsController < AdminController
   def update
     @stock_spec = StockSpec.find(params[:id])
     @stock_spec.update(params.require(:stock_spec).permit(:amount))
-    respond_to :js
   end
 end
