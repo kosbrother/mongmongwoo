@@ -11,13 +11,16 @@
             .media-left
               = image_tag(stock.cover.url, size: "120x120")
             .media-body
-              %h4.media-heading 商品編號：#{stock.item_id}
-              %p
-                商品名稱：
-                = link_to stock.name, admin_item_path(stock.item), target: "_blank"
-              %p 狀態：#{item_status(stock.status)}
-              %p 成本：#{stock.ntd_cost}
-              %p 價格：#{stock.price}
+              商品編號：#{stock.item_id}
+              %br
+              商品名稱：
+              = link_to stock.name, admin_item_path(stock.item), target: "_blank"
+              %br
+              狀態：#{item_status(stock.status)}
+              %br
+              成本：#{stock.ntd_cost}
+              %br
+              價格：#{stock.price}
         %td
           %table.table.table-bordered
             %thead
