@@ -5,6 +5,7 @@ class Admin::AdminCartsController < AdminController
     @taobao_list = TaobaoSupplier.all
     @first_taobao_items = @taobao_list.includes(:items)[0].items
     @first_item_specs = @first_taobao_items[0].specs
+    @searched_item = Item.find(params[:item_id]) if params[:item_id]
   end
 
   def submit

@@ -4,9 +4,8 @@ class Admin::AdminCartItemsController < AdminController
   before_action :create_cart_item, only: [:create, :add]
 
   def create
-    redirect_to :back
+    redirect_to admin_checkout_path(item_id: params[:item_id])
   end
-
 
   def add
     @result = '已新增至購物車'
@@ -43,7 +42,6 @@ class Admin::AdminCartItemsController < AdminController
       session[:admin_cart_ids].delete(@cart.id)
     end
   end
-
 
   private
 

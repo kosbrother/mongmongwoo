@@ -1,0 +1,22 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th 淘寶店家
+      %th 商品編號
+      %th 商品名稱
+      %th 樣式名稱
+      %th 樣式圖片
+      %th 商品數量
+      %th 新增商品
+  %tboady
+    %tr
+      = form_tag admin_admin_cart_items_path do
+        = hidden_field_tag :item_id, item ? item.id : '', id: 'result-hidden-item-id'
+        = hidden_field_tag :taobao_supplier_id, item ? item.taobao_supplier_id : '', id: 'result-hidden-supplier-id'
+        %th#result-supplier= supplier_name(item)
+        %th#result-item-id= item ? item.id : ''
+        %th#result-item-name= item ? item.name : ''
+        %th#result-spec-style= select_tag :item_spec_id, item ? options_for_select(item.specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }) : '', id: 'result-spec-id'
+        %th#result-spec-pic=image_tag item ? item.specs[0].style_pic.url : ''
+        %th#result-quantity= number_field_tag :item_quantity, 1, min: 1, require: true
+        %th#result-submit= submit_tag '加入購物車'
