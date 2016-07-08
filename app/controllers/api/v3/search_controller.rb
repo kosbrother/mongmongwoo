@@ -12,4 +12,9 @@ class  Api::V3::SearchController < ApiController
     names = Item.all.select(:name)
     render status: 200, json: {data: names.collect(&:name)}
   end
+
+  def hot_keywords
+    keywords = ["杯","韓國","耳環"]
+    render status: 200, json: {data: keywords}
+  end
 end

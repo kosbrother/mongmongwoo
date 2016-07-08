@@ -51,4 +51,14 @@ RSpec.describe Api::V3::SearchController, type: :controller do
       expect(data[0]).to eq(items.first.name)
     end
   end
+
+  describe 'get #hot_keywords' do
+    it 'does show all hot keywords' do
+      get :hot_keywords
+      data = JSON.parse(response.body)['data']
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq('application/json')
+      expect(data).to match_array(["杯","韓國","耳環"])
+    end
+  end
 end
