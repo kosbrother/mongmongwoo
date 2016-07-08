@@ -7,4 +7,9 @@ class  Api::V3::SearchController < ApiController
 
     render status: 200, json:  {data: datas}
   end
+
+  def item_names
+    names = Item.all.select(:name)
+    render status: 200, json: {data: names.collect(&:name)}
+  end
 end
