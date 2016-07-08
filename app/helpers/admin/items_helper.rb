@@ -86,11 +86,19 @@ module Admin::ItemsHelper
     link_to item.supplier_name, item.supplier_url, target: "_blank" rescue "沒有商家資料"
   end
 
-  def stock_amount(spec)
-    if spec.stock_spec
-      spec.stock_spec.amount
+  def stock_amount(item)
+    if item.item_spec && item.item_spec.stock_spec
+      item.item_spec.stock_spec.amount
     else
-      "資料待更新"
+      "無資料"
+    end
+  end
+
+  def shipping_amount(item)
+    if item.item_spec && item.item_spec.stock_spec
+      item.item_spec.shipping_item_quantity
+    else
+      "無資料"
     end
   end
 end

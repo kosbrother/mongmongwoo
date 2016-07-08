@@ -46,10 +46,25 @@ div.item-cover-words-intro, div.notification-intro {
 }
 
 /*訂單列表*/
+.items-table{
+  > thead > tr {
+    > .x-small{
+      width: 10%;
+    }
+    >.small{
+      width: 15%;
+    }
+    >.mid{
+      width: 20%;
+    }
+    >.large{
+      width: 30%;
+    }
+  }
+}
  .edit-order-btn:hover{
    background-color: #8FCEDD;
  }
-
  .order-status-btn{
    display: block;
    margin: 5px auto;
