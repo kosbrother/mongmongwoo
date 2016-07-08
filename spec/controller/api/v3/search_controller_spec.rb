@@ -42,12 +42,13 @@ RSpec.describe Api::V3::SearchController, type: :controller do
 
   describe 'get #item_names' do
     let!(:items) {FactoryGirl.create_list(:item, 10)}
+    let!(:off_shelf_items) {FactoryGirl.create_list(:item, 5, status: Item.statuses["off_shelf"])}
     it 'does show all the items name list' do
       get :item_names
       data = JSON.parse(response.body)['data']
       expect(response.status).to eq(200)
       expect(response.content_type).to eq('application/json')
-      expect(data.count).to eq(10)
+      expect(data.count).to eq(Item.on_shelf.size)
       expect(data[0]).to eq(items.first.name)
     end
   end
