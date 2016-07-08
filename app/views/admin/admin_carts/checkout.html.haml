@@ -27,7 +27,6 @@
           %thead
             %tr
               %th 商品編號
-              %th 商品狀態
               %th 商品名稱
               %th 樣式名稱
               %th 樣式圖片
@@ -37,7 +36,6 @@
             - cart.admin_cart_items.each do |cart_item|
               %tr{id: "cart-item-#{cart_item.id}"}
                 %td= cart_item.item_id
-                %td= item_status(cart_item.item.status)
                 %td= cart_item.item.name
                 %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
                 %td= image_tag(cart_item.item_spec.style_pic.url)
