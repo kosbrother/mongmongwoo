@@ -98,6 +98,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :stock_specs, only: [:update]
+
     resources :items do
       collection do
         get "search"
