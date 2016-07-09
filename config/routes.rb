@@ -74,7 +74,7 @@ Rails.application.routes.draw do
 
     resources :stores, only: [:index, :new, :create, :edit, :update, :destroy] do
       collection do
-        get "get_store"
+        get "get_store_options"
       end
     end
 
@@ -150,7 +150,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show, :update] do
+    resources :orders, only: [:index, :show, :edit, :update] do
       collection do
         get "exporting_files"
         get "status_index"

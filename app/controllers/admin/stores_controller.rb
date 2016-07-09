@@ -1,5 +1,5 @@
 class Admin::StoresController < AdminController
-  before_action :require_manager, except: [:get_store]
+  before_action :require_manager, except: [:get_store_options]
   before_action :find_store, only: [:edit, :update, :destroy]
 
   def index
@@ -40,12 +40,12 @@ class Admin::StoresController < AdminController
     redirect_to admin_stores_path
   end
 
-  def get_store
-    store = Store.seven_stores.select(:id, :store_code, :name).find_by(store_code: params[:store_code])
-    if store
-      render status: 200, json: { data: store }
+  def get_store_options
+    options = Store.seven_stores.where("store_code LIKE :store_code", store_code: "%#{params[:store_code]}%").pluck(:store_code, :name).collect { |s| s.join("：") }
+    if options.any?
+      render status: 200, json: { data: options }
     else
-      render status: 400, json: { error: { message: "門市店號錯誤" } }
+      render status: 200, json: { data: { message: "找不到此門市店號" } }
     end
   end
 
