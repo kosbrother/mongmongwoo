@@ -23,18 +23,12 @@ class Admin::OrdersController < AdminController
 
   def update
     if @order.update(order_params)
-      # @result = "訂單變更完成"
       flash[:notice] = "訂單編號：#{@order.id}變更完成"
       redirect_to status_index_admin_orders_path
     else
-      # @result = "訂單變更失敗"
       flash.now[:danger] = "請確認資料是否正確"
       render :edit
     end
-
-    # respond_to do |format|
-    #   format.js
-    # end
   end
 
   def update_status
@@ -82,6 +76,6 @@ class Admin::OrdersController < AdminController
   end
 
   def order_params
-    params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id, :ship_store_code, :ship_store_id, :ship_store_name])
+    params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id, :ship_store_code])
   end
 end

@@ -45,7 +45,7 @@ class Admin::StoresController < AdminController
     if options.any?
       render status: 200, json: { data: options }
     else
-      render status: 200, json: { data: { message: "找不到此門市店號" } }
+      render status: 400, json: { error: { message: "找不到此門市店號" } }
     end
   end
 
