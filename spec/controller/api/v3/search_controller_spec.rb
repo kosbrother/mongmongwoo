@@ -1,14 +1,12 @@
 require 'spec_helper'
 RSpec.describe Api::V3::SearchController, type: :controller do
   describe "get #search_items" do
-    let!(:item) { FactoryGirl.create(:item, name: I18n.t('factory.item.name'), description: I18n.t('factory.item.description'))}
+    let!(:item) { FactoryGirl.create(:item, name: I18n.t('factory.item.name'), description: I18n.t('factory.item.description'),status: Item.statuses["on_shelf"])}
+    let!(:off_shelf_item) { FactoryGirl.create(:item, name: I18n.t('factory.item.name'), description: I18n.t('factory.item.description'),status: Item.statuses["off_shelf"])}
     before :each do
-      Item.__elasticsearch__.create_index! index: Item.index_name
       Item.import
+      Item.all.each{|i| i.save}
       sleep 1
-    end
-    after :each do
-      Item.__elasticsearch__.client.indices.delete index: Item.index_name
     end
     context 'when  search term is included in item name' do
       it "does find the item", :elasticsearch do

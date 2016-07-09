@@ -94,11 +94,12 @@ class Item < ActiveRecord::Base
   end
 
   def index_document
-    __elasticsearch__.index_document
+    __elasticsearch__.index_document if status == "on_shelf"
   end
 
   def update_document
-    __elasticsearch__.update_document
+    __elasticsearch__.update_document if status == "on_shelf"
+    __elasticsearch__.delete_document if status == "off_shelf"
   end
 
   def delete_document
