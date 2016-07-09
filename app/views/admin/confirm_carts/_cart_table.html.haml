@@ -42,6 +42,12 @@
                       = form_tag update_quantity_admin_admin_cart_item_path(item), method: 'patch', remote: true, class: "form-inline" do
                         = number_field_tag :item_quantity, item.item_quantity , min: 1,id: "cart-item-#{item.id}-quantity" , class: 'form-control update-cart-item-quantity', style: "width: 25%;"
                         = submit_tag '修改數量', class: "btn btn-default"
+            %table.table.table-bordered
+              %tbody
+                %tr.active
+                  %th 備註
+                %tr
+                  %td= cart.note
           %td
             = link_to_confirm_button(cart)
 .apple_pagination
