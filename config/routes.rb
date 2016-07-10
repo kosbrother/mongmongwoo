@@ -71,7 +71,7 @@ Rails.application.routes.draw do
     delete "/signout", to: "sessions#destroy"
     get "/checkout", to: "admin_carts#checkout", as: "checkout"
     post "/submit", to: "admin_carts#submit", as: "submit_order"
-    patch "/admin_carts/:id/note", to: "admin_carts#note", as: "cart_note"
+    patch "/admin_carts/:id", to: "admin_carts#note", as: "cart_note"
 
     resources :stores, only: [:index, :new, :create, :edit, :update, :destroy] do
       collection do

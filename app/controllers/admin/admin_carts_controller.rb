@@ -18,4 +18,9 @@ class Admin::AdminCartsController < AdminController
     end
     redirect_to :back
   end
+
+  def note
+    @cart = AdminCart.find(params[:id])
+    @cart.update(note: params[:note])
+  end
 end
