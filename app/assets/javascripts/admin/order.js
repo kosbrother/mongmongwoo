@@ -21,7 +21,7 @@ get_store = function() {
           error: function(xhr, textStatus, errorThrown){
             var message = xhr.responseJSON.error.message
             $('#submit-' + order_id).attr('disabled', true);
-            alert(message);
+            swal({ title: message, confirmButtonText: "請檢查門市店號" });
           }
         });
       }
