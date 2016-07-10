@@ -1,20 +1,36 @@
-%h1 訂單編號：#{@order.id}
-= form_for [:admin, @order], :html => {"data-target": "#edit-order-#{@order.id}"}, class: "edit-order" do |f|
-  .form-group
-    = f.label :total, "總金額"
-    = f.text_field :total, class: 'form-control'
-  .form-group
-    = f.label :note, "訂單備註"
-    = f.text_area :note, class: 'form-control', rows: 5
-  = f.fields_for :info do |info_f|
-    .form-group
-      = info_f.label :ship_email, "Email"
-      = info_f.email_field :ship_email, class: 'form-control'
-    .form-group
-      = info_f.label :ship_phone, "聯絡電話"
-      = info_f.text_field :ship_phone, class: 'form-control'
-    .form-group
-      = info_f.label :ship_store_code, "門市店號"
-      = info_f.text_field :ship_store_code, class: 'form-control ship-store-code', id: "store-code-#{@order.id}", data: {order_id: @order.id}
-  = f.submit "送出變更", class: "btn btn-primary", id: "submit-#{@order.id}"
-  = link_to "取消", status_index_admin_orders_path, class: "btn btn-default"
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li
+        = link_to "訂單列表", status_index_admin_orders_path
+      %li.active 編輯訂單
+  .panel-body
+    %h2 編輯中的訂單編號：#{@order.id}
+    = form_for [:admin, @order], html: {class: "form-horizontal well edit-order"} do |f|
+      .form-group
+        = f.label :total, "總金額", class: "col-sm-2 control-label"
+        .col-sm-6
+          = f.text_field :total, class: 'form-control', required: true
+      .form-group
+        = f.label :note, "訂單備註", class: "col-sm-2 control-label"
+        .col-sm-6
+          = f.text_area :note, class: 'form-control', rows: 5
+      = f.fields_for :info do |info_f|
+        .form-group
+          = info_f.label :ship_email, "Email", class: "col-sm-2 control-label"
+          .col-sm-6
+            = info_f.email_field :ship_email, class: 'form-control', required: true
+        .form-group
+          = info_f.label :ship_phone, "聯絡電話", class: "col-sm-2 control-label"
+          .col-sm-6
+            = info_f.text_field :ship_phone, class: 'form-control', required: true
+        .form-group
+          = info_f.label :ship_store_code, "門市店號", class: "col-sm-2 control-label"
+          .col-sm-6
+            = info_f.text_field :ship_store_code, class: 'form-control ship-store-code', id: "store-code-#{@order.id}", data: {order_id: @order.id}, required: true
+      .form-group
+        .col-sm-offset-2.col-sm-6
+          = f.submit "送出變更", class: "btn btn-primary", id: "submit-#{@order.id}"
+          = link_to "取消", status_index_admin_orders_path, class: "btn btn-default"
