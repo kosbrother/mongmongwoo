@@ -16,9 +16,11 @@ get_store = function() {
           data: {store_code: store_code},
           success: function(data){
             response(data.data);
+            $('#submit-' + order_id).attr('disabled', false);
           },
           error: function(xhr, textStatus, errorThrown){
             var message = xhr.responseJSON.error.message
+            $('#submit-' + order_id).attr('disabled', true);
             alert(message);
           }
         });
