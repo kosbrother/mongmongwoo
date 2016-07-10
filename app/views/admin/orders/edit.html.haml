@@ -27,7 +27,7 @@
           .col-sm-6
             = info_f.text_field :ship_phone, class: 'form-control', required: true
         .form-group
-          = info_f.label :ship_store_code, "門市店號", class: "col-sm-2 control-label"
+          = info_f.label :ship_store_code, "門市店號與名稱", class: "col-sm-2 control-label"
           .col-sm-6
             = info_f.text_field :ship_store_code, class: 'form-control ship-store-code', id: "store-code-#{@order.id}", data: {order_id: @order.id}, required: true
       .form-group
