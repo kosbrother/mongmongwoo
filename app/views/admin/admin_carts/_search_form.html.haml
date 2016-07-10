@@ -16,7 +16,7 @@
         %th#result-supplier= supplier_name(item)
         %th#result-item-id= item ? item.id : ''
         %th#result-item-name= item ? item.name : ''
-        %th#result-spec-style= select_tag :item_spec_id, item ? options_for_select(item.specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }) : '', id: 'result-spec-id'
+        %th#result-spec-style= select_tag :item_spec_id, item ? options_for_select(item.specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }) : '', id: 'result-spec-id', 'data-item-id': item.id
         %th#result-spec-pic=image_tag item ? item.specs[0].style_pic.url : ''
         %th#result-quantity= number_field_tag :item_quantity, 1, min: 1, require: true
         %th#result-submit= submit_tag '加入購物車'

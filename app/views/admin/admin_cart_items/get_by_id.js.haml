@@ -8,6 +8,6 @@ $('#result-spec-style > select > option').remove();
 var spec_list = $('#result-spec-style > select');
 - @specs.each do  |s|
   :plain
-    spec_list.append($("<option/>", {value: '#{s.id}', text: '#{s.id.to_s + '-' + "#{ j(@specs[0].style)}" }'}))
+    spec_list.append($("<option/>", {value: '#{s.id}', text: '#{s.id.to_s + '-' + "#{ j(s.style)}" }'}))
 $('#result-spec-id').data('item-id', '#{ @item.id }');
 $('#result-spec-pic > img').attr({'src': '#{@specs[0].style_pic.url}' });
