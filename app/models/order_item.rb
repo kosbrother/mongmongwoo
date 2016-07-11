@@ -26,4 +26,12 @@ class OrderItem < ActiveRecord::Base
   def get_taobao_supplier_name
     item.supplier_name rescue "沒有商家資料"
   end
+
+  def stock_amount
+    self.item_spec && self.item_spec.stock_spec ? self.item_spec.stock_spec.amount : "無資料"
+  end
+
+  def shipping_amount
+    self.item_spec ? self.item_spec.shipping_item_quantity : 0
+  end
 end

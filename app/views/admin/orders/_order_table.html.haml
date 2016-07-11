@@ -80,8 +80,8 @@
                       %td= link_to item.item_name, admin_item_path(item.item)
                       %td= item.item_style
                       %td= item.item_quantity
-                      %td= stock_amount(item)
-                      %td= shipping_amount(item)
+                      %td= item.stock_amount
+                      %td= item.shipping_amount
                       %td
                         = form_tag add_admin_admin_cart_items_path, remote: true do
                           = hidden_field_tag :item_id, item.item.id
