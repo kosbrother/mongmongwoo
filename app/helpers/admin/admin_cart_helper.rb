@@ -24,4 +24,20 @@ module Admin::AdminCartHelper
       ''
     end
   end
+
+  def admin_cart_item_quantity(cart_item)
+    if cart_item.admin_cart.status == "shipping"
+      render "update_quantity", item: cart_item
+    elsif cart_item.admin_cart.status == "stock"
+      cart_item.item_quantity
+    end
+  end
+
+  def admin_cart_note(admin_cart)
+    if admin_cart.status == "shipping"
+      render "update_note", cart: admin_cart
+    elsif admin_cart.status == "stock"
+      admin_cart.note
+    end
+  end
 end
