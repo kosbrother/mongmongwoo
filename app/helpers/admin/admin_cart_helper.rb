@@ -29,7 +29,10 @@ module Admin::AdminCartHelper
     if cart_item.admin_cart.status == "shipping"
       render "update_quantity", item: cart_item
     elsif cart_item.admin_cart.status == "stock"
-      cart_item.item_quantity
+      content_tag :div do
+        content_tag(:p, "現貨數：#{cart_item.stock_item_quantity}") +
+        content_tag(:p, "運送中：#{cart_item.shipping_item_quantity}")
+      end
     end
   end
 
