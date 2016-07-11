@@ -6,6 +6,7 @@
 //= require jquery-ui/position
 //= require jquery-ui/sortable
 //= require jquery-ui/mouse
+//= require jquery-ui/autocomplete
 //= require jquery_ujs
 //= require jquery-fileupload/basic
 //= require bootstrap

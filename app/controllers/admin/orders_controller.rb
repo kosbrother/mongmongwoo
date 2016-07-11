@@ -12,6 +12,10 @@ class Admin::OrdersController < AdminController
     @orders = Order.includes(:user, info: :store, items: :item).status(params[:status]).recent.paginate(page: params[:page])    
   end
 
+  def edit
+    @order = Order.includes(:info).find(params[:id])
+  end
+
   def show
     @info = @order.info
     @items = @order.items
@@ -19,13 +23,11 @@ class Admin::OrdersController < AdminController
 
   def update
     if @order.update(order_params)
-      @result = "訂單變更完成"
+      flash[:notice] = "訂單編號：#{@order.id}變更完成"
+      redirect_to status_index_admin_orders_path(status: Order.statuses[@order.status])
     else
-      @result = "訂單變更失敗"
-    end
-
-    respond_to do |format|
-      format.js
+      flash.now[:danger] = "請確認資料是否正確"
+      render :edit
     end
   end
 
@@ -74,6 +76,6 @@ class Admin::OrdersController < AdminController
   end
 
   def order_params
-    params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id])
+    params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id, :ship_store_code])
   end
 end

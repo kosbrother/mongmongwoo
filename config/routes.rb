@@ -72,7 +72,11 @@ Rails.application.routes.draw do
     get "/checkout", to: "admin_carts#checkout", as: "checkout"
     post "/submit", to: "admin_carts#submit", as: "submit_order"
 
-    resources :stores, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :stores, only: [:index, :new, :create, :edit, :update, :destroy] do
+      collection do
+        get "get_store_options"
+      end
+    end
 
     resources :admin_cart_items, only: [:create, :destroy] do
       collection do
@@ -146,7 +150,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show, :update] do
+    resources :orders, only: [:index, :show, :edit, :update] do
       collection do
         get "exporting_files"
         get "status_index"

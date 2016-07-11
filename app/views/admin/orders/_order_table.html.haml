@@ -19,7 +19,7 @@
               = order.id
             = render(partial: "info_and_items_list", locals: { order: order })
             %br
-            = render(partial: "edit_order", locals: { order: order })
+            = link_to "編輯訂單", edit_admin_order_path(order), class: "btn btn-default btn-sm"
             %br
             = create_allpay_index_button(order)
           %td
