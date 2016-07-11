@@ -86,7 +86,31 @@ div.item-cover-words-intro, div.notification-intro {
   max-width: 120px;
   font-size: 1em;
 }
-
+.stocks-table{
+  > thead > tr {
+    >.small-field{
+      width: 10%;
+    }
+    >.spec-field{
+      width: 25%;
+    }
+    >.quantity-field{
+      width: 30%;
+    }
+    >.name-field{
+      width: 35%;
+    }
+    >.wide-name-field{
+      width: 40%;
+    }
+    >.information-field{
+      width: 60%;
+    }
+    >.wrapper-field{
+      width: 70%;
+    }
+  }
+}
 //For table
 .table{
   > thead > tr {
