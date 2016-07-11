@@ -13,16 +13,15 @@
     %tbody
       - orders.each do |order|
         %tr
-          %td
-            %button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
+          %td.item-id-cell
+            .button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
               = order.id
             = render(partial: "info_and_items_list", locals: { order: order })
             %br
             = link_to "編輯訂單", edit_admin_order_path(order), class: "btn btn-default btn-sm"
-            %br
-            = create_allpay_index_button(order)
-            %div= link_to_send_survey_email(order)
-            %div= link_to_combine_orders(order)
+            .button= create_allpay_index_button(order)
+            .button= link_to_send_survey_email(order)
+            .button= link_to_combine_orders(order)
           %td
             = order.created_on
             %br

@@ -62,6 +62,11 @@ div.item-cover-words-intro, div.notification-intro {
     }
   }
 }
+.item-id-cell{
+  > .button{
+    margin: 10px 0;
+  }
+}
  .edit-order-btn:hover{
    background-color: #8FCEDD;
  }
