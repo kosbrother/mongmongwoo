@@ -40,4 +40,4 @@
                         = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
                       = f.submit "更新", class: "btn btn-warning"
                   %td
-                    = spec.shipping_item_quantity
+                    = spec.shipping_item_quantity(spec.item_spec_id)
