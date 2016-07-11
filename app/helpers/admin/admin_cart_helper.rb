@@ -43,4 +43,13 @@ module Admin::AdminCartHelper
       admin_cart.note
     end
   end
+
+  def admin_cart_date(admin_cart)
+    if admin_cart.status == "shipping"
+      content_tag(:p, "訂購日期：#{admin_cart.ordered_on}")
+    elsif admin_cart.status == "stock"
+      content_tag(:p, "訂購日期：#{admin_cart.ordered_on}") +
+      content_tag(:p, "收貨日期：#{admin_cart.confirmed_on}")
+    end
+  end
 end

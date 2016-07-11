@@ -6,7 +6,7 @@
     %thead
       %tr
         %th 編號
-        %th{style: "width: 10%"} 訂購日期與狀態
+        %th{style: "width: 10%"} 日期與狀態
         %th 淘寶商家
         %th{style: "width: 70%"} 訂購商品
         %th 確認收貨
@@ -16,8 +16,7 @@
           %td
             = cart.id
           %td
-            = display_date(cart.updated_at)
-            %br
+            = admin_cart_date(cart)
             = t(cart.status)
           %td
             = cart.taobao_supplier_name

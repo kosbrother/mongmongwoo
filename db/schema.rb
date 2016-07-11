@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709013607) do
+ActiveRecord::Schema.define(version: 20160711075928) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20160709013607) do
     t.integer  "taobao_supplier_id", limit: 4
     t.integer  "status",             limit: 4,   default: 0
     t.string   "note",               limit: 255
+    t.date     "ordered_on"
+    t.date     "confirmed_on"
   end
 
   add_index "admin_carts", ["taobao_supplier_id"], name: "index_admin_carts_on_taobao_supplier_id", using: :btree
