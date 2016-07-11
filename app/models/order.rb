@@ -68,11 +68,13 @@ class Order < ActiveRecord::Base
     include_info[:id] = info.id
     include_info[:ship_name] = info.ship_name
     include_info[:ship_phone] = info.ship_phone
+    include_info[:ship_email] = info.ship_email
     include_info[:ship_store_code] = info.ship_store_code
     include_info[:ship_store_id] = info.ship_store_id
     include_info[:ship_store_name] = info.ship_store_name
+    include_info[:ship_store_address] = info.store.address
+    include_info[:ship_store_phone] = info.store.phone
     result_order[:info] = include_info
-
     # 商品明細
     include_items = []
     items.each do |item|
@@ -81,6 +83,7 @@ class Order < ActiveRecord::Base
       item_hash[:style] = item.item_style
       item_hash[:quantity] = item.item_quantity
       item_hash[:price] = item.item_price
+      item_hash[:style_pic] = item.item_spec.style_pic_url
       include_items << item_hash
     end
     result_order[:items] = include_items
