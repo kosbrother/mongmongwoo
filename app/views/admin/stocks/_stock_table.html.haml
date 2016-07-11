@@ -1,8 +1,8 @@
-%table.table.table-striped.table-bordered.stocks-table
+%table.table.table-striped.table-bordered
   %thead
     %tr
-      %th.wide-name-field 商品資訊
-      %th.information-field 樣式資訊
+      %th.small-mid 商品資訊
+      %th.large-mid 樣式資訊
   %tbody
     - stocks.each do |stock|
       %tr
@@ -22,12 +22,12 @@
               %br
               價格：#{stock.price}
         %td
-          %table.table.table-bordered.stocks-table
+          %table.table.table-bordered
             %thead
               %tr.active
-                %th.wide-name-field 樣式名稱
-                %th.quantity-field 現貨數量
-                %th.quantity-field 運送中數量
+                %th.small-mid 樣式名稱
+                %th.large-small 現貨數量
+                %th.large-small 運送中數量
             %tbody
               - stock.stock_specs.each do |spec|
                 %tr

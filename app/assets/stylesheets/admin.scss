@@ -87,35 +87,27 @@ div.item-cover-words-intro, div.notification-intro {
   max-width: 120px;
   font-size: 1em;
 }
-.stocks-table{
+.table{
   > thead > tr {
-    >.id-field{
-      min-width: 55px;
-      max-width: 67px;
-    }
-    >.small-button-field{
-      min-width: 71px;
-      max-width: 90px;
-    }
-    >.small-field{
+    > .x-small{
       width: 10%;
     }
-    >.spec-field{
-      width: 25%;
+    > .mid-small{
+      width: 15%;
     }
-    >.quantity-field{
+    > .small{
+      width: 20%;
+    }
+    > .large-small{
       width: 30%;
     }
-    >.name-field{
-      width: 35%;
-    }
-    >.wide-name-field{
+    > .small-mid{
       width: 40%;
     }
-    >.information-field{
+    > .large-mid{
       width: 60%;
     }
-    >.wrapper-field{
+    > .small-large{
       width: 70%;
     }
   }

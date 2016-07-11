@@ -1,3 +1,3 @@
 = form_tag update_quantity_admin_admin_cart_item_path(item), method: 'patch', remote: true, class: "form-inline" do
-  = number_field_tag :item_quantity, item.item_quantity , min: 1,id: "cart-item-#{item.id}-quantity" , class: 'form-amount form-control update-cart-item-quantity', style: "width: 25%;"
+  = number_field_tag :item_quantity, item.item_quantity , min: 1,id: "cart-item-#{item.id}-quantity" , class: 'form-amount form-control update-cart-item-quantity'
   = submit_tag '更新', class: "btn btn-default"
