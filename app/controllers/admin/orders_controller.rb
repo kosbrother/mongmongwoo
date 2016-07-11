@@ -22,10 +22,9 @@ class Admin::OrdersController < AdminController
   end
 
   def update
-    set_order_info_attributes
     if @order.update(order_params)
       flash[:notice] = "訂單編號：#{@order.id}變更完成"
-      redirect_to status_index_admin_orders_path
+      redirect_to status_index_admin_orders_path(status: Order.statuses[@order.status])
     else
       flash.now[:danger] = "請確認資料是否正確"
       render :edit
@@ -78,11 +77,5 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id, :ship_store_code])
-  end
-
-  def set_order_info_attributes
-    store = Store.find_by(store_code: params[:order][:info_attributes][:ship_store_code])
-    @order.info.ship_store_id = store.id
-    @order.info.ship_store_name = store.name
   end
 end
