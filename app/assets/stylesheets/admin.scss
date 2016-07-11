@@ -88,6 +88,14 @@ div.item-cover-words-intro, div.notification-intro {
 }
 .stocks-table{
   > thead > tr {
+    >.id-field{
+      min-width: 55px;
+      max-width: 67px;
+    }
+    >.small-button-field{
+      min-width: 71px;
+      max-width: 90px;
+    }
     >.small-field{
       width: 10%;
     }

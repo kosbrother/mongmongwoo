@@ -13,7 +13,7 @@ module Admin::AdminCartHelper
     if cart.status == "shipping"
       link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, class: "btn btn-success"
     elsif cart.status == "stock"
-      content_tag(:span, "確認已收貨", class: "label label-default")
+      content_tag(:span, "已收貨", class: "label label-default")
     end
   end
 

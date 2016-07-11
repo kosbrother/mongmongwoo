@@ -5,11 +5,11 @@
   %table.table.table-striped.table-bordered.stocks-table
     %thead
       %tr
-        %th 編號
+        %th.id-field 編號
         %th.small-field 日期與狀態
-        %th 淘寶商家
+        %th.small-field 淘寶商家
         %th.wrapper-field 訂購商品
-        %th 確認收貨
+        %th.small-button-field 收貨
     %tbody
       - carts.each do |cart|
         %tr
@@ -24,7 +24,7 @@
             %table.table.table-bordered.stocks-table
               %thead
                 %tr.active
-                  %th.small-field 商品編號
+                  %th.id-field 商品編號
                   %th.name-field 商品名稱
                   %th.spec-field 商品樣式
                   %th.quantity-field 商品數量
