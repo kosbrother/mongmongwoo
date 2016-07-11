@@ -5,7 +5,6 @@ module OrderConcern
     after_update :notify_user_if_arrive_store
     after_update :set_blacklisted_if_not_pickup
     after_update :update_order_status_if_goods_arrive_store_or_pickup
-    before_update :update_ship_store_id_and_name
   end
 
   def notify_user_if_arrive_store
@@ -28,14 +27,6 @@ module OrderConcern
       notification_to_notify_pickup
     elsif logistics_status_code == Logistics_Status.key("買家已到店取貨")
       self.update_columns(status: Order.statuses["完成取貨"])
-    end
-  end
-
-  def update_ship_store_id_and_name
-    if info.ship_store_code_changed?
-      store = Store.find_by(store_code: info.ship_store_code)
-      self.info.ship_store_id = store.id
-      self.info.ship_store_name = store.name
     end
   end
 

@@ -29,6 +29,7 @@ get_store = function() {
     form.submit(function(){
       var store_code = self.val().split(/：/)[0];
       self.val(store_code);
+      $('#submit-' + order_id).attr('disabled', true);
     });
   });
 };
