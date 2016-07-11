@@ -75,12 +75,12 @@
               %tbody
                 - if order.items
                   - order.items.each do |item|
-                    %tr.success
+                    %tr.success{class: "item-spec-id-#{item.item_spec_id}"}
                       %td= item.item.id
                       %td= link_to item.item_name, admin_item_path(item.item)
                       %td= item.item_style
                       %td= item.item_quantity
-                      %td= item.stock_amount
+                      %td.stock-amount= item.stock_amount
                       %td= item.shipping_amount
                       %td
                         = form_tag add_admin_admin_cart_items_path, remote: true do

@@ -39,10 +39,6 @@ class Admin::OrdersController < AdminController
       Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"
     end
-
-    respond_to do |format|
-      format.js
-    end
   end
 
   def exporting_files

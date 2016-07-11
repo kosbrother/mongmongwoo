@@ -1,4 +1,6 @@
 class Order < ActiveRecord::Base
+  after_update :update_stock_amount, if: :status_changed_to_shipping?
+
   include OrderConcern
   include Combinable
   
@@ -102,5 +104,21 @@ class Order < ActiveRecord::Base
 
   def user_status_count(order_status)
     user_orders.where(status: order_status).count
+  end
+
+  def update_stock_amount
+    self.items.each do |item|
+      stock_spec = StockSpec.find_by(item_spec_id: item.item_spec_id)
+      if stock_spec
+        stock_spec.amount -= item.item_quantity
+        stock_spec.save
+      end
+    end
+  end
+
+  private
+
+  def status_changed_to_shipping?
+    self.status_changed? && self.status == '配送中'
   end
 end
