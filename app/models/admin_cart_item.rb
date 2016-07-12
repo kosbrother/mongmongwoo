@@ -7,6 +7,8 @@ class AdminCartItem < ActiveRecord::Base
   belongs_to :admin_cart
   belongs_to :item
   belongs_to :item_spec
+  
+  validates_presence_of :admin_cart_id, :item_id, :item_spec_id, :item_quantity
 
   def spec_id
     item_spec_id
