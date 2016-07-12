@@ -19,7 +19,7 @@ module Admin::AdminCartHelper
 
   def supplier_name(item)
     if item
-      item.taobao_supplier ? @searched_item.taobao_supplier.name : '無'
+      item.taobao_supplier ? item.taobao_supplier.name : '無'
     else
       ''
     end
