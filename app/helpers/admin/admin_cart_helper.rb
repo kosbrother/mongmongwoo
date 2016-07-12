@@ -16,4 +16,12 @@ module Admin::AdminCartHelper
       content_tag(:span, "確認已收貨", class: "label label-default")
     end
   end
+
+  def supplier_name(item)
+    if item
+      item.taobao_supplier ? @searched_item.taobao_supplier.name : '無'
+    else
+      ''
+    end
+  end
 end

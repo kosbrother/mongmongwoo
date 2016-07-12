@@ -9,7 +9,7 @@ class Admin::OrdersController < AdminController
 
   def status_index
     params[:status] ||= 0
-    @orders = Order.includes(:user, info: :store, items: :item).status(params[:status]).recent.paginate(page: params[:page])    
+    @orders = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).status(params[:status]).recent.paginate(page: params[:page])
   end
 
   def edit
@@ -38,10 +38,6 @@ class Admin::OrdersController < AdminController
     else
       Rails.logger.error("error: #{@order.errors.messages}")
       flash[:alert] = "請仔細確認訂單的實際處理進度"
-    end
-
-    respond_to do |format|
-      format.js
     end
   end
 

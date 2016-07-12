@@ -10,18 +10,18 @@
         %th 訂購用戶
         %th 訂購商品
         %th 總金額
-        %th 訂單操作
     %tbody
       - orders.each do |order|
         %tr
-          %td
-            %button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
+          %td.item-id-cell
+            .button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
               = order.id
             = render(partial: "info_and_items_list", locals: { order: order })
             %br
             = link_to "編輯訂單", edit_admin_order_path(order), class: "btn btn-default btn-sm"
-            %br
-            = create_allpay_index_button(order)
+            .button= create_allpay_index_button(order)
+            .button= link_to_send_survey_email(order)
+            .button= link_to_combine_orders(order)
           %td
             = order.created_on
             %br
@@ -30,7 +30,7 @@
                 %span{id: "current-#{order.id}-status"}= order.status
                 %span.caret
               %ul.dropdown-menu.list-group
-                %li                  
+                %li
                   = link_to_update_order_status("處理中", order)
                 %li
                   = link_to_update_order_status("配送中", order)
@@ -65,20 +65,23 @@
             %table.table.table-bordered
               %thead
                 %tr.active
-                  %th 編號
-                  %th 名稱
-                  %th 樣式
-                  %th 數量
-                  %th 訂購
+                  %th.x-small 編號
+                  %th.large-small  名稱
+                  %th.mid-small 樣式
+                  %th.x-small 數量
+                  %th.mid-small 現貨數
+                  %th.mid-small 運送中
+                  %th.mid-small 訂購
               %tbody
                 - if order.items
                   - order.items.each do |item|
-                    %tr.success
+                    %tr.success{class: "item-spec-id-#{item.item_spec_id}"}
                       %td= item.item.id
-                      %td
-                        = link_to item.item_name, admin_item_path(item.item)
+                      %td= link_to item.item_name, admin_item_path(item.item)
                       %td= item.item_style
                       %td= item.item_quantity
+                      %td.stock-amount= item.stock_amount
+                      %td= item.shipping_amount
                       %td
                         = form_tag add_admin_admin_cart_items_path, remote: true do
                           = hidden_field_tag :item_id, item.item.id
@@ -93,10 +96,6 @@
                 %tr
                   %td= order.note
           %td= order.total
-          %td
-            = link_to_send_survey_email(order)
-            %hr
-            = link_to_combine_orders(order)
 .apple_pagination
   = will_paginate orders, :container => false
 %br/

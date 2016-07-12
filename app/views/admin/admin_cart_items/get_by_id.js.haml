@@ -6,6 +6,8 @@ $('#result-item-status').text('#{ item_status(@item.status) }');
 $('#result-item-name').text('#{ @item.name }');
 $('#result-spec-style > select > option').remove();
 var spec_list = $('#result-spec-style > select');
-JSON.parse('#{ @specs.to_json.html_safe }').forEach(function(spec){spec_list.append($("<option/>", {value: spec.id, text: spec.id + '-' + spec.style}))});
-$('#result-spec-id').data('item-id', '#{ @item.id }')
-$('#result-spec-pic > img').attr({'src': '#{@specs[0].style_pic.url}' })
+- @specs.each do  |s|
+  :plain
+    spec_list.append($("<option/>", {value: '#{s.id}', text: '#{s.id.to_s + '-' + "#{ j(s.style)}" }'}))
+$('#result-spec-id').data('item-id', '#{ @item.id }');
+$('#result-spec-pic > img').attr({'src': '#{@specs[0].style_pic.url}' });
