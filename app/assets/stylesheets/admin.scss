@@ -83,10 +83,35 @@ div.item-cover-words-intro, div.notification-intro {
   }
 }
 .form-amount {
+  min-width: 90px;
   max-width: 120px;
   font-size: 1em;
 }
-
+.table{
+  > thead > tr {
+    > .x-small{
+      width: 10%;
+    }
+    > .mid-small{
+      width: 15%;
+    }
+    > .small{
+      width: 20%;
+    }
+    > .large-small{
+      width: 30%;
+    }
+    > .small-mid{
+      width: 40%;
+    }
+    > .large-mid{
+      width: 60%;
+    }
+    > .small-large{
+      width: 70%;
+    }
+  }
+}
 //For table
 .table{
   > thead > tr {

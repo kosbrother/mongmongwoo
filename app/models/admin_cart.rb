@@ -12,7 +12,7 @@ class AdminCart < ActiveRecord::Base
 
   def set_to_shipping
     if self.admin_cart_items.any?
-      self.update_attribute(:status, AdminCart::STATUS[:shipping])
+      self.update_attributes(status:AdminCart::STATUS[:shipping], ordered_on: Time.now)
     end
   end
 
@@ -27,7 +27,7 @@ class AdminCart < ActiveRecord::Base
   def confirm_cart_items_to_stocks
     ActiveRecord::Base.transaction do
       save_cart_item_to_stock
-      self.update_attribute(:status, AdminCart::STATUS[:stock])
+      self.update_attributes(status: AdminCart::STATUS[:stock], confirmed_on: Time.now)
     end
   end
 

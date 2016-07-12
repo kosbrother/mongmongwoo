@@ -1,8 +1,8 @@
 %table.table.table-striped.table-bordered
   %thead
     %tr
-      %th{width: "40%"} 商品資訊
-      %th{width: "60%"} 樣式資訊
+      %th.small-mid 商品資訊
+      %th.large-mid 樣式資訊
   %tbody
     - stocks.each do |stock|
       %tr
@@ -25,9 +25,9 @@
           %table.table.table-bordered
             %thead
               %tr.active
-                %th{width: "40%"} 樣式名稱
-                %th{width: "30%"} 現貨數量
-                %th{width: "30%"} 運送中數量
+                %th.small-mid 樣式名稱
+                %th.large-small 現貨數量
+                %th.large-small 運送中數量
             %tbody
               - stock.stock_specs.each do |spec|
                 %tr
@@ -40,4 +40,4 @@
                         = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
                       = f.submit "更新", class: "btn btn-warning"
                   %td
-                    = spec.shipping_item_quantity
+                    = spec.shipping_item_quantity(spec.item_spec_id)

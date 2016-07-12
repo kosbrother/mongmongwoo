@@ -11,9 +11,9 @@ module Admin::AdminCartHelper
 
   def link_to_confirm_button(cart)
     if cart.status == "shipping"
-      link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, class: "btn btn-success btn-lg"
+      link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, class: "btn btn-success"
     elsif cart.status == "stock"
-      content_tag(:span, "確認已收貨", class: "label label-default")
+      content_tag(:span, "已收貨", class: "label label-default")
     end
   end
 
@@ -22,6 +22,34 @@ module Admin::AdminCartHelper
       item.taobao_supplier ? @searched_item.taobao_supplier.name : '無'
     else
       ''
+    end
+  end
+
+  def admin_cart_item_quantity(cart_item)
+    if cart_item.admin_cart.status == "shipping"
+      render "update_quantity", item: cart_item
+    elsif cart_item.admin_cart.status == "stock"
+      content_tag :div do
+        content_tag(:p, "現貨數：#{cart_item.stock_item_quantity(cart_item.item_spec_id)}") +
+        content_tag(:p, "運送中：#{cart_item.shipping_item_quantity(cart_item.item_spec_id)}")
+      end
+    end
+  end
+
+  def admin_cart_note(admin_cart)
+    if admin_cart.status == "shipping"
+      render "update_note", cart: admin_cart
+    elsif admin_cart.status == "stock"
+      admin_cart.note
+    end
+  end
+
+  def admin_cart_date(admin_cart)
+    if admin_cart.status == "shipping"
+      content_tag(:p, "訂購日期：#{admin_cart.ordered_on}")
+    elsif admin_cart.status == "stock"
+      content_tag(:p, "訂購日期：#{admin_cart.ordered_on}") +
+      content_tag(:p, "收貨日期：#{admin_cart.confirmed_on}")
     end
   end
 end
