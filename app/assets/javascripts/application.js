@@ -71,6 +71,11 @@ ready = function() {
         $('#login-page').modal('hide');
     });
 
+    //slide toggle for shop info list
+    $('.shop-infos > .dropdown-list > .question').on('click', function(){
+        $(this).next('.answer').slideToggle('fast');
+        $(this).children('.glyphicon').toggleClass('glyphicon-menu-up').toggleClass('glyphicon-menu-down');
+    });
 
 };
 $(document).ready(ready);

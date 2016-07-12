@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post "/login" => "sessions#login_by_mmw", as: "login_by_mmw"
   post "/register" => "users#create", as: "register"
   post "/forget" => "users#sent_reset_email"
+  get '/shop_infos' => "pages#shop_infos"
 
   resources :categories, only: [:show] do
     resources :items, only: [:show]

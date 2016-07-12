@@ -26,3 +26,8 @@ crumb :favorites do
   link "我的收藏", favorite_items_path
   parent :root
 end
+
+crumb :shop_infos do
+  link "購物明細", shop_infos_path
+  parent :root
+end

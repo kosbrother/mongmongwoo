@@ -1,32 +1,41 @@
 .footer{
-  margin-top: 100px;
-  height: 100px;
+  margin-top: 120px;
   background-color: $footer-background-color;
+  text-align: center;
   .section{
+    vertical-align: middle;
+    height: 100px;
     position: relative;
     top: 1px;
     margin: 0 5px;
     color: #fff;
     display: inline-block;
-    vertical-align: middle;
-    > .list{
-      text-decoration: none;
-      display: inline-block;
-      > a{
-        color: #fff;
-      }
+    font-size: 16px;
+    > p, a{
+      font-size: 14px;
+      color: #fff;
     }
-    > .icon{
-      margin: 10px 10PX 10PX 0;
+    > p{
+      margin-top: 10px;
     }
-    > .about{
-      max-width: 450px;
+  }
+  .about{
+    width: 45%;
+    text-align: left;
+  }
+  .info, .contact{
+    width: 13%;
+    > p{
+      margin-top: 24px;
     }
+  }
+  .contact > p > .icon{
+    margin: 0 5px;
   }
   .divider{
     height: 85px;
     vertical-align: -30px;
-    border: solid 1px #ffffff;
+    border: dashed 1px #ffffff;
     display: inline-block;
     position: relative;
     top: 8px;
@@ -34,14 +43,30 @@
 }
 
 @media screen and (max-width: 768px){
-
   .footer{
     .section{
-      > .about{
-        max-width: 170px;
+      font-size: $mobile-regular-font-size;
+      vertical-align: top;
+      height: 50px;
+      > p, a{
+        font-size: 10px;
+      }
+      > p{
+        margin-top: 5px;
       }
     }
+    .about{
+      width: 48%;
+      text-align: left;
+    }
+    .info, .contact{
+      width: 18%;
+      > p{
+        margin-top: 15px;
+      }
+    }
+    .contact > p > .icon{
+      margin: 0px;
+    }
   }
-
-
-  }
+}

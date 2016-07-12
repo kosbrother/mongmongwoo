@@ -1,0 +1,30 @@
+.dropdown-list{
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: solid 1px #dcdcdc;
+  > .list{
+    cursor: pointer;
+    padding: 20px 30px;
+    > .glyphicon{
+      float: right;
+      position: relative;
+      top: 5px;
+    }
+  }
+  > .question{
+    font-size: 18px;
+    border: solid 1px #dcdcdc;
+  }
+  > .answer{
+    font-size: 16px;
+    display: none;
+  }
+}
+@media screen and (max-width: 768px){
+  .dropdown-list{
+    > .list{
+      padding: 10px;
+      font-size:  $mobile-regular-font-size;
+    }
+  }
+}
