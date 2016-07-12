@@ -10,7 +10,7 @@
       %th 新增商品
   %tboady
     %tr
-      = form_tag admin_admin_cart_items_path do
+      = form_tag admin_admin_cart_items_path, class: "search-add-item" do
         = hidden_field_tag :item_id, item ? item.id : '', id: 'result-hidden-item-id'
         = hidden_field_tag :taobao_supplier_id, item ? item.taobao_supplier_id : '', id: 'result-hidden-supplier-id'
         %th#result-supplier= supplier_name(item)

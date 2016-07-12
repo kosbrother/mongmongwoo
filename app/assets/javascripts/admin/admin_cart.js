@@ -92,6 +92,20 @@ cart = function() {
             }
         })
     });
+    //Empty cart item can not submit
+    $('.search-add-item').submit(function(){
+        var supplier = $('#result-supplier').text();
+        var item_id = $('#result-item-id').text();
+        var item_name = $('#result-item-name').text();
+        if (supplier === "" || item_id === "" || item_name === "") {
+            swal({
+                title: "請先選擇商品",
+                timer: 800,
+                showConfirmButton: false
+            });
+            return false;
+        };
+    });
 };
 
 $(document).ready(cart);

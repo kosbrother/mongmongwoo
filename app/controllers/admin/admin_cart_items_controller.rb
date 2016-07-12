@@ -4,12 +4,11 @@ class Admin::AdminCartItemsController < AdminController
   before_action :create_cart_item, only: [:create, :add]
 
   def create
-    if params[:item_id].present?
-      flash[:notice] = "已新增至購物車"
-      redirect_to admin_checkout_path(item_id: params[:item_id])
-    else
-      flash[:danger] = "請確認是否選取正確商品"
+    if params[:item_id].blank?
       redirect_to admin_checkout_path
+    else
+      flash[:notice] = "#{@cart_item.item.name}已新增至購物車"
+      redirect_to admin_checkout_path(item_id: params[:item_id])
     end
   end
 
