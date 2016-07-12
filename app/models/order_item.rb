@@ -28,10 +28,10 @@ class OrderItem < ActiveRecord::Base
   end
 
   def stock_amount
-    self.item_spec && self.item_spec.stock_spec ? self.item_spec.stock_spec.amount : "無資料"
+    self.item_spec && self.item_spec.stock_spec(item_spec_id) ? self.item_spec.stock_spec.amount : "無資料"
   end
 
   def shipping_amount
-    self.item_spec ? self.item_spec.shipping_item_quantity : 0
+    self.item_spec ? self.item_spec.shipping_item_quantity(item_spec_id)  : 0
   end
 end
