@@ -83,7 +83,7 @@ class Order < ActiveRecord::Base
       item_hash[:style] = item.item_style
       item_hash[:quantity] = item.item_quantity
       item_hash[:price] = item.item_price
-      item_hash[:style_pic] = item.item_spec.style_pic_url
+      item_hash[:style_pic] = item.item_spec ? item.item_spec.style_pic_url : nil
       include_items << item_hash
     end
     result_order[:items] = include_items
