@@ -4,6 +4,7 @@ class Admin::AdminCartItemsController < AdminController
   before_action :create_cart_item, only: [:create, :add]
 
   def create
+    flash[:notice] = "#{@cart_item.item.name}已新增至購物車"
     redirect_to admin_checkout_path(item_id: params[:item_id])
   end
 
@@ -13,7 +14,7 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def get_by_id
-    @item = Item.select(:id, :status, :name, :taobao_supplier_id).find_by_id(params[:item_id])
+    @item = Item.includes(:specs).select(:id, :status, :name, :taobao_supplier_id).find_by_id(params[:item_id])
     if @item
       @item.taobao_supplier ? @supplier_name = @item.taobao_supplier.name : @supplier_name = '無'
       @specs = @item.specs.select(:id, :style, :style_pic)
@@ -48,6 +49,7 @@ class Admin::AdminCartItemsController < AdminController
   def create_cart_item
     supplier_cart_items = current_supplier_cart(params[:taobao_supplier_id]).admin_cart_items
     @cart_item = supplier_cart_items.find_or_create_by(item_id: params[:item_id], item_spec_id: params[:item_spec_id])
+
     if @cart_item.item_quantity
       @cart_item.item_quantity += params[:item_quantity].to_i
     else
