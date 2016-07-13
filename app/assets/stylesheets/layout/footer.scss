@@ -28,6 +28,10 @@
   }
   .contact > p > .icon{
     margin: 0 5px;
+    > img{
+      width: 25px;
+      height: 25px;
+    }
   }
   .divider{
     height: 85px;
@@ -62,6 +66,10 @@
     }
     .contact > p > .icon{
       margin: 0px;
+      > img{
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 }
