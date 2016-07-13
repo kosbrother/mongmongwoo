@@ -11,4 +11,7 @@ class Store < ActiveRecord::Base
   belongs_to :road
 
   validates_uniqueness_of :store_code
+
+  geocoded_by :address, :latitude => :lat, :longitude => :lng
+  after_validation :geocode
 end
