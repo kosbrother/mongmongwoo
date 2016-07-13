@@ -1,0 +1,10 @@
+- breadcrumb :shop_infos
+.shop-infos
+  .icon-header.-pencil 購物說明
+  .dropdown-list
+    - @shop_infos.each do |info|
+      .list.question
+        = info.question
+        %i.glyphicon.glyphicon-menu-down
+      .list.answer
+        = simple_format(info.answer)
