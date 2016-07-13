@@ -1,6 +1,5 @@
 module AdminCartInformation
   extend ActiveSupport::Concern
-  class NoSpecIdDefinedError < StandardError; end
 
   def shipping_item_quantity
     items = AdminCartItem.shipping_status.where(item_spec_id: spec_id)
@@ -13,6 +12,6 @@ module AdminCartInformation
   end
 
   def spec_id
-    raise AdminCartInformation::NoSpecIdDefinedError
+    raise NotImplementedError
   end
 end
