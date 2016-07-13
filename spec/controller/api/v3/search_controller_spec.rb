@@ -57,7 +57,7 @@ RSpec.describe Api::V3::SearchController, type: :controller do
       data = JSON.parse(response.body)['data']
       expect(response.status).to eq(200)
       expect(response.content_type).to eq('application/json')
-      expect(data).to match_array(["杯","韓國","耳環"])
+      expect(data).to match_array(["雨鞋套","水杯水瓶","貼紙","韓版","便利貼","賀卡","筆袋","錢包","斜肩背包","髮圈","衛生棉包","收納袋","飾品","襪子","紋身貼"])
     end
   end
 end

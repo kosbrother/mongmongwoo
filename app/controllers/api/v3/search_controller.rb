@@ -14,7 +14,7 @@ class  Api::V3::SearchController < ApiController
   end
 
   def hot_keywords
-    keywords = ["杯","韓國","耳環"]
+    keywords = ["雨鞋套","水杯水瓶","貼紙","韓版","便利貼","賀卡","筆袋","錢包","斜肩背包","髮圈","衛生棉包","收納袋","飾品","襪子","紋身貼"]
     render status: 200, json: {data: keywords}
   end
 end
