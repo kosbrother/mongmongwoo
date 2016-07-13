@@ -67,6 +67,10 @@
         color: #fff;
         margin-bottom: 5px;
       }
+      > .-forbidden{
+        background-color: #b1b1b1;
+        cursor: not-allowed;
+      }
       > .-wishlist{
         display: inline-block;
         text-align: center;
