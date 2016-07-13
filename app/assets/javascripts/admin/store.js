@@ -2,9 +2,8 @@ var store;
 store = function() {
   //Ajax select County show towns and roads
   $('#select-county').change(function() {
-    var county_id = $(this).val(),
-        town_list = $('#town-list'),
-        road_list = $('#road-list');
+    var county_id = $(this).val();
+    var town_list = $('#town-list');
     $.ajax({
       url: '/api/v3/counties/' + county_id + '/towns',
       type: 'GET',
@@ -18,47 +17,30 @@ store = function() {
             text: town.name
           }))
         });
-        $.ajax({
-          url: '/api/v3/counties/' + county_id + '/towns/' + first_town.id + '/roads',
-          type: 'GET',
-          success: function(data) {
-            $('#road-list option').remove();
-            data["data"].forEach(function(road) {
-              road_list.append($("<option/>", {
-                value: road.id,
-                text: road.name
-              }))
-            });
-          }
-        })
       },
       error: function() {
         alert('錯誤發生');
       }
     })
   });
-  
-  //Ajax select Town show roads
-  $('#town-list').change(function() {
-    var county_id = $('#select-county').val(),
-        town_id = $(this).val(),
-        road_list = $('#road-list');
-    $.ajax({
-      url: '/api/v3/counties/' + county_id + '/towns/' + town_id + '/roads',
-      type: 'GET',
-      success: function(data) {
-        $('#road-list option').remove();
-        data["data"].forEach(function(road) {
-          road_list.append($("<option/>", {
-            value: road.id,
-            text: road.name
-          }))
+
+  $('#road-list').on('focus', function() {
+    var self = $(this);
+    var town_id = $('#town-list').val();
+    self.autocomplete({
+      delay: 800,
+      minLength: 2,
+      source: function (request, response) {
+        var road_name = self.val();
+        $.ajax({
+          url: '/admin/roads?town_id=' + town_id + '&road_name=' + road_name,
+          type: "GET",
+          success: function(data) {
+            response(data.data);
+          }
         });
-      },
-      error: function() {
-        alert('錯誤發生');
       }
-    })
+    });
   });
 };
 
