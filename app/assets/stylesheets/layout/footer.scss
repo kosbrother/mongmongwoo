@@ -7,7 +7,7 @@
     height: 100px;
     position: relative;
     top: 1px;
-    margin: 0 5px;
+    margin: 20px 5px 0 5px;
     color: #fff;
     display: inline-block;
     font-size: 16px;
@@ -25,9 +25,6 @@
   }
   .info, .contact{
     width: 13%;
-    > p{
-      margin-top: 24px;
-    }
   }
   .contact > p > .icon{
     margin: 0 5px;
@@ -48,6 +45,7 @@
       font-size: $mobile-regular-font-size;
       vertical-align: top;
       height: 50px;
+      margin-top: 5px;
       > p, a{
         font-size: 10px;
       }
@@ -61,9 +59,6 @@
     }
     .info, .contact{
       width: 18%;
-      > p{
-        margin-top: 15px;
-      }
     }
     .contact > p > .icon{
       margin: 0px;
