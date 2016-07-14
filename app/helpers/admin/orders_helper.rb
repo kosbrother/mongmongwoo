@@ -66,12 +66,4 @@ module Admin::OrdersHelper
       link_to "合併其他訂單", select_orders_admin_order_path(order), class: "btn btn-default"
     end
   end
-
-  def store_address(order)
-    order.ship_address ? order.ship_address : order.info.store_address
-  end
-
-  def store_phone(order)
-    order.info.store ? order.info.store.phone : order.info.store_phone
-  end
 end

@@ -9,13 +9,11 @@ class OrderInfo < ActiveRecord::Base
   after_update :set_store_if_store_code_changed
 
   def store_address
-    store = find_store
-    store.address
+    ship_address ? ship_address : find_store.address
   end
 
   def store_phone
-    store = find_store
-    store.phone
+    store ? store.phone : find_store.phone
   end
 
   private
