@@ -74,7 +74,11 @@ Rails.application.routes.draw do
     post "/submit", to: "admin_carts#submit", as: "submit_order"
     patch "/admin_carts/:id", to: "admin_carts#note", as: "cart_note"
 
-    resources :roads, only: [:index]
+    resources :roads, only: [] do
+      collection do
+        get "get_road_options"
+      end
+    end
 
     resources :stores, only: [:index, :new, :create, :edit, :update, :destroy] do
       collection do

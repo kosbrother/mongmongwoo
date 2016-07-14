@@ -33,7 +33,7 @@ store = function() {
       source: function (request, response) {
         var road_name = self.val();
         $.ajax({
-          url: '/admin/roads?town_id=' + town_id + '&road_name=' + road_name,
+          url: '/admin/roads/get_road_options?town_id=' + town_id + '&road_name=' + road_name,
           type: "GET",
           success: function(data) {
             response(data.data);
