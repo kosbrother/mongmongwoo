@@ -23,6 +23,10 @@ class OrderItem < ActiveRecord::Base
   validates_presence_of :source_item_id, allow_blank: true
   validates_presence_of :item_name, :item_spec_id, :item_style, :item_quantity, :item_price
 
+  def subtotal
+    item_quantity * item_price
+  end
+
   def get_taobao_supplier_name
     item.supplier_name rescue "沒有商家資料"
   end

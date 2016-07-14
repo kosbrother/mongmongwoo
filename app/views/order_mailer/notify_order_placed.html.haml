@@ -1,54 +1,72 @@
-.row
-  .col-md-12
-    %table{:align => "center"}
+.order-placed
+  .mail-img
+    = image_tag('mailer/img_order.png')
+  .text-block
+    %p
+      親愛的
+      %span.emphasize #{@order.get_user_name}
+      ：
+    %p
+      您的訂單已經成立，商品將於
+      %span.strong "10個工作天"
+      內寄送至指定門市。詳細資訊與購物內容可於萌萌屋App
+      %span.strong 「我的訂單」
+      裡查詢。若有任何問題，請聯繫萌萌屋客服。
+    %p
+      萌萌屋期待您的再次光臨！
+  .pink-divider
+  .icon-header.-pencil 訂單明細
+  .order-id 訂單編號：#{@order.id}
+  .order-list
+    %table
+      %thead
+        %tr
+          %td.cell.photo 產品照片
+          %td.cell.item-name 產品名稱
+          %td.cell.spec 產品樣式
+          %td.cell.unit-price 產品單價
+          %td.cell.quantity 產品數量
+          %td.cell.subtotal 小計
       %tbody
+        - @order_items.each do |item|
+          %tr
+            %td.cell= image_tag(item.item_spec.style_pic.url, class: 'spec-pic')
+            %td.cell= item.item_name
+            %td.cell= item.item_style
+            %td.cell= price_with_unit(item.item_price)
+            %td.cell= item.item_quantity
+            %td.cell= price_with_unit(item.subtotal)
+        %tr.divider
+          %td
+          %td
+          %td
+          %td
+          %td.cell 商品總額
+          %td.cell= price_with_unit(@order.total)
         %tr
           %td
-            %h2 萌萌屋感謝您！
-            %p 親愛的萌友，
-            %p 您的訂單已經成立，商品將於10個工作天內寄送至指定門市。
-            %p 詳細資訊與購物內容可於萌萌屋App「我的訂單」裡查詢。         
-        %tr
           %td
-            %h3.red 您的訂單編號是：#{@order.id}
-            %h3.blue 以下是您這次訂購的商品：
-            %table{:border=>"1"}
-              %thead
-                %tr
-                  %th.left 商品明細
-                  %th 單價
-                  %th 數量
-                  %th 小記
-              %tbody
-                - @order_items.each do |order_item|
-                  %tr
-                    %td.left
-                      = order_item.item_name
-                    %td.right
-                      = order_item.item_price
-                    %td.right
-                      = order_item.item_quantity
-                    %td.right
-                      = order_item.item_quantity * order_item.item_price
-            %br
-            %table
-              %tr
-                運費 
-                = @order.ship_fee
-                %hr                
-              %tr
-                總計 
-                = @order.total
-                
-        %tr
           %td
-            %p 若有任何問題，請聯繫我們客服。
-            %p 萌萌屋期待您的再次光臨！
-            %p 聯絡客服
-            %p 
-              %span
-                = link_to "Line@ 客服", "http://line.me/ti/p/%40kya5456n"
-              %br
-              %br
-              %span
-                = link_to "FB 粉絲頁", "https://www.facebook.com/kingofgametw/"
+          %td
+          %td.cell 運費
+          %td.cell= price_with_unit(@order.ship_fee)
+        %tr.divider
+          %td
+          %td
+          %td
+          %td
+          %td.cell 總計
+          %td.cell.total= price_with_unit(@order.total + @order.ship_fee)
+  .order-info
+    .group
+      .icon-header.-pencil 訂購人資料
+      .info-block
+        .info 姓名：#{@order_info.ship_name}
+        .info 電話：#{@order_info.ship_phone}
+        .info 連絡信箱：#{@order_info.ship_email}
+    .group
+      .icon-header.-mark 7-11取貨門市資訊
+      .info-block
+        .info 門市名稱： #{@order_info.ship_store_name}
+        .info 地址： #{@order_info.store.address}
+        .info 門市電話： #{@order_info.store.phone}

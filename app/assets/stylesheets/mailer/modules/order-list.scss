@@ -1,0 +1,71 @@
+.order-list{
+  > table{
+    background-color: #ffffff;
+    border-radius: 2px;
+    border: solid 1px #dcdcdc;
+    margin: 0 auto;
+    width: 830px;
+    > thead > tr{
+      > .photo{
+        width: 11.8%;
+      }
+      > .spec, .unit-price, .quantity, .subtotal{
+        width: 13.1%;
+      }
+      > .item-name{
+        width: 38%
+      }
+    }
+    > tbody {
+      color: #4a4a4a;
+      > tr{
+        .cell{
+          padding: 10px;
+        }
+        .spec-pic{
+          width: 56px;
+          height: 56px;
+          border: solid 1px #979797;
+        }
+      }
+      > .divider {
+        > td {
+          border-top: solid 1px #dcdcdc;
+        }
+        > .total{
+          font-size: 16px;
+          color: #ff001f;
+        }
+      }
+    }
+    > thead, tbody {
+      .cell{
+        padding: 20px 10px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.order-id{
+  font-size: 20px;
+  color: #ff001f;
+}
+
+.order-info{
+  > .group{
+    float: left;
+    > .info-block{
+      padding: 20px;
+      width: 356px;
+      height: 90px;
+      border-radius: 4px;
+      background-color: #ffffff;
+      border: solid 1px #dcdcdc;
+      > .info{
+        font-size: 16px;
+        line-height: 1.9;
+      }
+    }
+  }
+}
