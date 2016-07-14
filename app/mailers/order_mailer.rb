@@ -1,8 +1,9 @@
 class OrderMailer < ApplicationMailer
+  helper PriceHelper
+
   def notify_order_placed(order)
-    @order       = order
-    @user        = order.user
-    @order_items = @order.items
+    @order = order
+    @order_items = @order.items.includes(:item_spec)
     @order_info  = @order.info
     Rails.logger.warn("mail to : #{@order_info.ship_email}")
     mail(to: @order_info.ship_email , subject: "[萌萌屋] 感謝您完成本次的選購")
