@@ -5,6 +5,14 @@ module ItemHelper
     link_to '加入收藏',  favorite_favorite_item_path(item, type: type ), id: 'add-favorite', class: "add -wishlist #{class_name} ", remote: true
   end
 
+  def render_add_to_cart_btn(item)
+    if item.status == "on_shelf"
+      submit_tag "加入購物車", class: "add", onClick: analytic_event("product", "add_to_cart", item.name)
+    else
+      submit_tag "商品已下架", class: "add -forbidden", disabled: "disabled"
+    end
+  end
+
   def category_checkbox(cb,f)
     if cb.object.id == 10 || cb.object.id == 11
       if f.object.new_record?
