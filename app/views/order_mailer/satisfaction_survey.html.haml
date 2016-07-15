@@ -1,27 +1,22 @@
 .satisfaction_survey
-  %table.text-block{align: "center"}
-    %tbody
-      %tr
-        %td{style: "color: #000"}
-          .mail-img
-            = image_tag('mailer/img_questionnaire.png')
-          %h3
-            親愛的
-            %span.emphasize=@order_info.ship_name
-            ：
-          %p
-            感謝您在萌萌屋購物，同時也恭喜您成為我們滿意度調查的對象。
-            %br
-            透過滿意度的調查，我們希望能帶給更多人愉快的購物經驗。
-            %br
-            請您利用數分鐘的時間，為我們填寫以下連結的問券。
-            %br
-            在您下次購物時, 我們會隨機
-            %span.red-oblique 贈送
-            價值60元的禮品作為謝禮喔 ^^
-            %br
-            萌萌屋感謝您
-      %tr
-        %td{style: "color: #000"}
-          %p
-            = link_to "問卷連結", "https://docs.google.com/forms/d/1BU888U6aA8vxuBZ6jbwaCIG02nUmD103GgGry_7LE4I/viewform?c=0&w=1", { target: "_blank", class: "green-button"}
+  .mail-img
+    = image_tag('mailer/img_questionnaire.png')
+  .text-block
+    %h3
+      親愛的
+      %span.emphasize=@order_info.ship_name
+      ：
+    %p
+      感謝您在萌萌屋購物，同時也恭喜您成為我們滿意度調查的對象。
+      %br
+      透過滿意度的調查，我們希望能帶給更多人愉快的購物經驗。
+      %br
+      請您利用數分鐘的時間，為我們填寫以下連結的問券。
+      %br
+      在您下次購物時, 我們會隨機
+      %span.red-oblique 贈送
+      價值60元的禮品作為謝禮喔 ^^
+      %br
+      萌萌屋感謝您
+    %p
+      = link_to "問卷連結", "https://docs.google.com/forms/d/1BU888U6aA8vxuBZ6jbwaCIG02nUmD103GgGry_7LE4I/viewform?c=0&w=1", { target: "_blank", class: "green-button"}
