@@ -1,0 +1,26 @@
+.order-placed{
+  > .mail-img{
+    margin: 0 auto;
+    width: 50%;
+  }
+  .icon-header{
+    margin: 20px 55px;
+    display: inline-block;
+  }
+  .order-id{
+    float: right;
+    margin: 20px 57px;
+    display: inline-block;
+  }
+  .group:first-of-type{
+    margin-right: 30px;
+  }
+  .order-info{
+    width: 830px;
+    height: 240px;
+    margin: 0 auto;
+    .icon-header{
+      margin: 20px 0;
+    }
+  }
+}

@@ -49,6 +49,9 @@ class Order < ActiveRecord::Base
     info.ship_phone
   end
 
+  def get_user_name
+    user_id == User::ANONYMOUS || info_user_name.nil? ? '顧客' : info_user_name
+  end
 
   def generate_result_order
     # 訂單資料
