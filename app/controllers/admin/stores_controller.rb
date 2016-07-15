@@ -16,7 +16,7 @@ class Admin::StoresController < AdminController
   def create
     @store = Store.new(store_params)
     town = Town.find(params[:store][:town_id])
-    road = town.roads.find_or_create_by(name: params[:road_name])
+    road = town.roads.find_or_create_by(name: params[:road_name], store_type: 4)
     @store.road = road
     if @store.save
       flash[:notice] = "成功新增門市"
