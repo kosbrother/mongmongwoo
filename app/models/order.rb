@@ -73,8 +73,8 @@ class Order < ActiveRecord::Base
     include_info[:ship_store_code] = info.ship_store_code
     include_info[:ship_store_id] = info.ship_store_id
     include_info[:ship_store_name] = info.ship_store_name
-    include_info[:ship_store_address] = info.store_address || nil
-    include_info[:ship_store_phone] = info.store_phone || nil
+    include_info[:ship_store_address] = info.store_address
+    include_info[:ship_store_phone] = info.store_phone
     result_order[:info] = include_info
 
     include_items = []

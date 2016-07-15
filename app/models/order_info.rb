@@ -9,7 +9,7 @@ class OrderInfo < ActiveRecord::Base
   after_update :set_store_if_store_code_changed
 
   def store_address
-    ship_address ? ship_address : find_store.address
+    store ? store.address : find_store.address
   end
 
   def store_phone

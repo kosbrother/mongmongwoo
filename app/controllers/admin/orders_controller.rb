@@ -4,12 +4,12 @@ class Admin::OrdersController < AdminController
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
-    @orders = Order.includes(:user, :info, items: :item).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user, info: :store, items: :item).recent.paginate(page: params[:page])
   end
 
   def status_index
     params[:status] ||= 0
-    @orders = Order.includes(:user, :info, items: [:item, item_spec: :stock_spec]).status(params[:status]).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).status(params[:status]).recent.paginate(page: params[:page])
   end
 
   def edit
