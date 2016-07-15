@@ -24,7 +24,7 @@ class Admin::OrdersController < AdminController
   def update
     if @order.update(order_params)
       flash[:notice] = "訂單編號：#{@order.id}變更完成"
-      redirect_to status_index_admin_orders_path(status: Order.statuses[@order.status])
+      redirect_to status_index_admin_orders_path(status: Order.statuses[@order.status], anchor: "order-id-#{@order.id}")
     else
       flash.now[:danger] = "請確認資料是否正確"
       render :edit
