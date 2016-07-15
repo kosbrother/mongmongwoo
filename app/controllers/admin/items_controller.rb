@@ -92,7 +92,7 @@ class Admin::ItemsController < AdminController
   def find_item
     @item = Item.find(params[:id])
     @photos = @item.photos
-    @specs = @item.specs.includes(:stock_spec)
+    @specs = @item.specs.order(status: :ASC).includes(:stock_spec)
   end
 
   def get_item_sales
