@@ -12,7 +12,7 @@
         %th 總金額
     %tbody
       - orders.each do |order|
-        %tr
+        %tr{id: "order-id-#{order.id}"}
           %td.item-id-cell
             .button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
               = order.id
