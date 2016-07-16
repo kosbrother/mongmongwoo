@@ -37,6 +37,7 @@ gem 'omniauth-facebook'
 gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'geocoder'
+
 # cronjob
 gem 'whenever', :require => false
 
