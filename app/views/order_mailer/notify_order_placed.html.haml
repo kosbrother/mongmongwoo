@@ -1,6 +1,6 @@
 .order-placed
   .mail-img
-    = image_tag('mailer/img_order.png')
+    = email_image_tag('mailer/img_order.png')
   .text-block
     %p
       親愛的
@@ -30,7 +30,7 @@
       %tbody
         - @order_items.each do |item|
           %tr
-            %td.cell= image_tag(item.item_spec.style_pic.url, class: 'spec-pic')
+            %td.cell= email_spec_image_tag(item.item_spec, class: 'spec-pic')
             %td.cell= item.item_name
             %td.cell= item.item_style
             %td.cell= price_with_unit(item.item_price)
@@ -59,13 +59,13 @@
           %td.cell.total= price_with_unit(@order.total + @order.ship_fee)
   .order-info
     .group
-      .icon-header.-pencil 訂購人資料
+      .icon-header{style: "background-image: url(#{email_scss_image_tag('icons/pencil.png')})"} 訂購人資料
       .info-block
         .info 姓名：#{@order_info.ship_name}
         .info 電話：#{@order_info.ship_phone}
         .info 連絡信箱：#{@order_info.ship_email}
     .group
-      .icon-header.-mark 7-11取貨門市資訊
+      .icon-header{style: "background-image: url(#{email_scss_image_tag('icons/ic_711.png')})"} 7-11取貨門市資訊
       .info-block
         .info 門市名稱： #{@order_info.ship_store_name}
         .info 地址： #{@order_info.store.address}
