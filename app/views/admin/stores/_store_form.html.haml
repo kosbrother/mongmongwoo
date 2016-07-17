@@ -4,11 +4,11 @@
   .form-group
     = f.label :county_id, "選擇縣市", class: "col-sm-2 control-label"
     .col-sm-6
-      = f.select :county_id, options_for_select(@counties.collect{|c| [c.name, c.id]}), {}, class: "form-control", id: "select-county"
+      = f.select :county_id, options_for_select(County.seven_stores.collect{|c| [c.name, c.id]}), {}, class: "form-control", id: "select-county"
   .form-group
     = f.label :town_id, "選擇鄉鎮", class: "col-sm-2 control-label"
     .col-sm-6
-      = f.select :town_id, options_for_select(@towns.collect{|t| [t.name, t.id]}), {}, class: "form-control", id: "town-list"
+      = f.select :town_id, options_for_select(County.seven_stores.first.towns.collect{|t| [t.name, t.id]}), {}, class: "form-control", id: "town-list"
   .form-group
     = label_tag "road_name", "門市路名", class: "col-sm-2 control-label"
     .col-sm-6

@@ -7,9 +7,6 @@ class Admin::StoresController < AdminController
   end
 
   def new
-    @counties = County.seven_stores
-    @towns = @counties.first.towns
-    @roads = @towns.first.roads
     @store = Store.new
   end
 
@@ -22,8 +19,8 @@ class Admin::StoresController < AdminController
       flash[:notice] = "成功新增門市"
       redirect_to admin_stores_path
     else
-      flash[:danger] = "店號不能重複"
-      redirect_to new_admin_store_path
+      flash.now[:danger] = "店號不能重複"
+      render :new
     end
   end
 
