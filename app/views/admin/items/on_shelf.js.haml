@@ -1,14 +1,14 @@
 $("#status-#{@item.id}").html("上架中")
-- if @item.specs.include?("on_shelf")
+- if @item.all_specs_off_shelf?
   $(function(){
   new PNotify({
-  title: '已將此商品上架'
+  title: '已將此商品上架',
+  text: '請將下架的樣式也一併上架'
   });
   });
 - else
   $(function(){
   new PNotify({
-  title: '已將此商品上架',
-  text: '請將下架的樣式也一併上架'
+  title: '已將此商品上架'
   });
   });
