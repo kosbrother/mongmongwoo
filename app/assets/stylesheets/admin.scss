@@ -46,6 +46,10 @@ div.item-cover-words-intro, div.notification-intro {
 }
 
 /*訂單列表*/
+.order-table{
+  margin-top: 10px;
+}
+
 .item-id-cell{
   > .button{
     margin: 10px 0;
@@ -110,6 +114,9 @@ div.item-cover-words-intro, div.notification-intro {
     }
     > .small-large{
       width: 70%;
+    }
+    .text-right{
+      text-align: right;
     }
   }
 }
