@@ -51,7 +51,11 @@ class Admin::OrdersController < AdminController
   end
 
   def search
-    @search_results = Order.includes(:user, info: :store, items: :item).search_by_phone_or_email(params[:ship_phone_data], params[:ship_email_data]).paginate(:page => params[:page])
+    if params[:order_id]
+      @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).where(id: params[:order_id]).paginate(:page => params[:page])
+    else
+      @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_phone_or_email(params[:ship_phone_data], params[:ship_email_data]).paginate(:page => params[:page])
+    end
   end
 
   def select_orders
