@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
 
   self.per_page = 50
 
-  delegate :ship_store_code, :ship_store_name, :ship_phone, :ship_name, :ship_email, :is_blacklisted, :store_address, to: :info
+  delegate :ship_store_code, :ship_store_name, :ship_phone, :ship_name, :ship_email, :is_blacklisted, :store_address, :address, to: :info
   delegate :orders, to: :user, prefix: true
 
   validates_presence_of :user_id, :items_price, :ship_fee, :total
@@ -73,8 +73,8 @@ class Order < ActiveRecord::Base
     include_info[:ship_store_code] = info.ship_store_code
     include_info[:ship_store_id] = info.ship_store_id
     include_info[:ship_store_name] = info.ship_store_name
-    include_info[:ship_store_address] = info.store_address
-    include_info[:ship_store_phone] = info.store_phone
+    include_info[:ship_store_address] = info.address
+    include_info[:ship_store_phone] = info.phone
     result_order[:info] = include_info
 
     include_items = []

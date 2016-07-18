@@ -4,16 +4,14 @@ class OrderInfo < ActiveRecord::Base
   belongs_to :order
   belongs_to :store, :foreign_key => "ship_store_id"
 
+  delegate :address, :phone, to: :store
+
   validates_presence_of :ship_name, :ship_phone, :ship_store_code, :ship_store_id, :ship_store_name, :ship_email
 
   after_update :set_store_if_store_code_changed
 
-  def store_address
-    store ? store.address : find_store.address
-  end
-
-  def store_phone
-    store ? store.phone : find_store.phone
+  def store
+    super || find_store
   end
 
   private
