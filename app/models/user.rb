@@ -68,4 +68,8 @@ class User < ActiveRecord::Base
     end
     UserMailer.delay.password_reset(self)
   end
+
+  def user_name
+    self[:user_name] || self[:email]
+  end
 end
