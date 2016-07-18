@@ -1,6 +1,6 @@
 .footer
   .up-footer
-    .head 聯繫客服
+    .head{style: "background-image: url(#{email_scss_image_tag('icons/star.png')})"} 聯繫客服
     %p
       購物遇到問題嗎？歡迎透過
       %span.strong「LINE線上客服」
@@ -10,16 +10,16 @@
     %p 客服服務時間：星期一～星期五 10:00~21:00
     %p
       = link_to "http://line.me/ti/p/%40kya5456n", target: '_blank', class: 'icon' do
-        = image_tag('icons/line.png')
+        = email_image_tag('icons/line.png')
       = link_to  "https://www.facebook.com/kingofgametw/", target: '_blank', class: 'icon' do
-        = image_tag('icons/fb.png')
+        = email_image_tag('icons/fb.png')
   .down-footer
     .logo-block
       = link_to "https://www.mmwooo.com/" do
-        = image_tag('icons/logo_s.png', class: 'logo')
+        = email_image_tag('icons/logo_s.png', class: 'logo')
         .name 萌萌屋
     .about
       %p萌萌屋走在青年流行的前線, 為年輕人們提供一個快樂購物的管道, 想知道最近流行些什麼, 有什麼可愛的東東, 來萌萌屋就對了!
     .app-icon
       = link_to "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW" do
-        = image_tag('icons/google_play.png', class: 'icon')
+        = email_image_tag('icons/google_play.png', class: 'icon')

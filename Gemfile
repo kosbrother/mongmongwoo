@@ -44,6 +44,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'babosa'
 gem 'meta-tags'
 gem 'sitemap_generator'
+gem 'roadie-rails', '~> 1.0'
 
 group :development do
   gem "better_errors"
