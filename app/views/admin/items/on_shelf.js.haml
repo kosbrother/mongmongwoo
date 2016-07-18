@@ -1,6 +1,16 @@
 $("#status-#{@item.id}").html("上架中")
-$(function(){
-new PNotify({
-title: '已將此商品上架'
-});
-});
+- if @item.all_specs_off_shelf?
+  :plain
+    $(function(){
+      new PNotify({
+        title: '已將此商品上架',
+        text: '請將下架的樣式也一併上架'
+      });
+    });
+- else
+  :plain
+    $(function(){
+      new PNotify({
+        title: '已將此商品上架'
+      });
+    });

@@ -109,4 +109,9 @@ class Item < ActiveRecord::Base
   def self.search_name_and_description(query)
     search(query: { multi_match: {query: query, fields: [ "name^3", "description" ]}})
   end
+
+  def all_specs_off_shelf?
+    count = self.specs.on_shelf.count
+    count == 0 ? true : false
+  end
 end

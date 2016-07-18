@@ -2,6 +2,7 @@ class ItemSpec < ActiveRecord::Base
   include AdminCartInformation
   
   scope :recent, -> {order(id: :DESC)}
+  scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}
 
   enum status: { on_shelf: 0, off_shelf: 1 }
 
