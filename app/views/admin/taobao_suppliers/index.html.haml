@@ -23,8 +23,7 @@
               %td
                 = supplier.id
               %td
-                = link_to supplier.url, target: "_blank" do
-                  = supplier.name
+                = link_to supplier.name, admin_taobao_supplier_path(supplier)
               %td
                 = render partial: "supplier_items_list", locals: { supplier: supplier }
               %td
@@ -33,6 +32,7 @@
                     按此選擇
                     %span.caret
                   %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
+                    %li= link_to "淘寶網站", supplier.url, target: "_blank"
                     %li= link_to "編輯", edit_admin_taobao_supplier_path(supplier)
                     %li= link_to "刪除", admin_taobao_supplier_path(supplier), method: :delete, data: { confirm: "確定刪除？", disable_with: "刪除中..." }
       .apple_pagination
