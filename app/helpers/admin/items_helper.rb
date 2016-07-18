@@ -85,4 +85,14 @@ module Admin::ItemsHelper
   def link_to_supplier(item)
     link_to item.supplier_name, item.supplier_url, target: "_blank" rescue "沒有商家資料"
   end
+
+  def li_item_status_link(taobao_supplier, status)
+    content_tag(:li, '' , class: active(status)) do
+      link_to t(Item.statuses.key(status)), admin_taobao_supplier_path(taobao_supplier, status: status)
+    end
+  end
+
+  def active(status)
+    params[:status].to_i == status ? 'active' : ''
+  end
 end

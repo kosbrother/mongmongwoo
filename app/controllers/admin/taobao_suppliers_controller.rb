@@ -1,6 +1,6 @@
 class Admin::TaobaoSuppliersController < AdminController
   before_action :require_manager
-  before_action :find_taobao_supplier, only: [:edit, :update, :destroy, :items]
+  before_action :find_taobao_supplier, only: [:edit, :update, :destroy, :items, :show]
 
   def index
     @taobao_suppliers = TaobaoSupplier.includes(:items).paginate(page: params[:page])
@@ -20,9 +20,6 @@ class Admin::TaobaoSuppliersController < AdminController
       flash[:danger] = "請檢察輸入的資料是否正確"
       render :new
     end
-  end
-
-  def edit
   end
 
   def update
@@ -45,6 +42,11 @@ class Admin::TaobaoSuppliersController < AdminController
     item_list =  @taobao_supplier.items
     first_item_specs = @taobao_supplier.items.first.specs
     render json: {items: item_list, specs: first_item_specs}
+  end
+
+  def show
+    params[:status] ||= 0
+    @items = @taobao_supplier.items.where(status: params[:status]).paginate(page: params[:page])
   end
 
   private

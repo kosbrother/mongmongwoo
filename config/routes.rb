@@ -193,7 +193,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :taobao_suppliers, only: [:index, :new, :create, :edit, :update, :destroy] do
+    resources :taobao_suppliers, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
       member do
         get "items"
       end
