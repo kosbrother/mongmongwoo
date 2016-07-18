@@ -111,7 +111,7 @@ class Item < ActiveRecord::Base
   end
 
   def all_specs_off_shelf?
-    specs_statuses = self.specs.map(&:status)
-    !(specs_statuses.include?("on_shelf")) ? true : false
+    count = self.specs.on_shelf.count
+    count == 0 ? true : false
   end
 end
