@@ -4,7 +4,7 @@ class Admin::OrdersController < AdminController
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
-    @orders = Order.includes(:user, info: :store, items: :item).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).recent.paginate(page: params[:page])
   end
 
   def status_index
@@ -51,11 +51,8 @@ class Admin::OrdersController < AdminController
   end
 
   def search
-    if params[:order_id]
-      @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).where(id: params[:order_id]).paginate(:page => params[:page])
-    else
-      @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_phone_or_email(params[:ship_phone_data], params[:ship_email_data]).paginate(:page => params[:page])
-    end
+    @search_term = search_params
+    @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_search_terms(@search_term).paginate(:page => params[:page])
   end
 
   def select_orders
@@ -77,5 +74,9 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id, :ship_store_code])
+  end
+
+  def search_params
+    params.fetch(:search_term, {}).permit!
   end
 end

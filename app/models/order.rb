@@ -1,9 +1,26 @@
 class Order < ActiveRecord::Base
-  after_update :update_stock_amount, if: :status_changed_to_shipping?
-
   include OrderConcern
   include Combinable
-  
+
+  COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
+
+  enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7}
+
+  validates_presence_of :user_id, :items_price, :ship_fee, :total
+
+  after_update :update_stock_amount, if: :status_changed_to_shipping?
+
+  belongs_to :user
+  has_many :items, class_name: "OrderItem", dependent: :destroy
+  has_one :info, class_name: "OrderInfo", dependent: :destroy, autosave: true
+  belongs_to :device_registration
+  has_many :mail_records, as: :recordable
+
+  accepts_nested_attributes_for :info
+
+  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, :is_blacklisted, to: :info
+  delegate :orders, to: :user, prefix: true
+
   scope :recent, -> { order(id: :DESC) }
   scope :count_status, ->(status) { where(status: status).count }
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
@@ -14,27 +31,23 @@ class Order < ActiveRecord::Base
 
   acts_as_paranoid
 
-  enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7}
-
-  COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
-
-  belongs_to :user
-  has_many :items, class_name: "OrderItem", dependent: :destroy
-  has_one :info, class_name: "OrderInfo", dependent: :destroy, autosave: true
-  belongs_to :device_registration
-  has_many :mail_records, as: :recordable
-
-  accepts_nested_attributes_for :info
-
   self.per_page = 50
 
-  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, :is_blacklisted, to: :info
-  delegate :orders, to: :user, prefix: true
-
-  validates_presence_of :user_id, :items_price, :ship_fee, :total
+  def self.search_by_search_terms(search_term={})
+    joins(:info).where('ship_phone = ? OR ship_email = ? OR orders.id = ?', search_term[:ship_phone], search_term[:ship_email], search_term[:order_id]).recent
+  end
 
   def self.search_by_phone_or_email(phone, email)
-    self.joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
+    joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
+  end
+
+  def self.to_csv(options={})
+    CSV.generate(options) do |csv|
+      csv << ["配送類別", "訂單類別", "取件人姓名", "取件人手機", "取件人電子郵件", "取件門市", "訂單金額"]
+      all.each do |order|
+        csv << ["K", "1", order.info_user_name, order.info_user_phone, "user@example.com", order.info_store_code, order.total]
+      end
+    end
   end
 
   def survey_mail
@@ -89,20 +102,11 @@ class Order < ActiveRecord::Base
     end
     result_order[:items] = include_items
 
-    return result_order
+    result_order
   end
 
   def created_at_for_api
-    self.created_at.strftime("%Y-%m-%d")
-  end
-
-  def self.to_csv(options={})
-    CSV.generate(options) do |csv|
-      csv << ["配送類別", "訂單類別", "取件人姓名", "取件人手機", "取件人電子郵件", "取件門市", "訂單金額"]
-      all.each do |order|
-        csv << ["K", "1", order.info_user_name, order.info_user_phone, "user@example.com", order.info_store_code, order.total]
-      end
-    end
+    created_at.strftime("%Y-%m-%d")
   end
 
   def user_status_count(order_status)
@@ -110,7 +114,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_stock_amount
-    self.items.each do |item|
+    items.each do |item|
       stock_spec = StockSpec.find_by(item_spec_id: item.item_spec_id)
       if stock_spec
         stock_spec.amount -= item.item_quantity
@@ -122,6 +126,6 @@ class Order < ActiveRecord::Base
   private
 
   def status_changed_to_shipping?
-    self.status_changed? && self.status == '配送中'
+    status_changed? && status == '配送中'
   end
 end
