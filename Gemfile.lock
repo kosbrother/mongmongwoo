@@ -319,6 +319,7 @@ GEM
     gcm (0.1.1)
       httparty
       json
+    geocoder (1.3.7)
     git-version-bump (0.15.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -622,6 +623,7 @@ DEPENDENCIES
   font-awesome-rails
   friendly_id (~> 5.1.0)
   gcm
+  geocoder
   gretel
   guard-livereload (~> 2.5)
   guard-rspec

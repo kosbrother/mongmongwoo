@@ -54,7 +54,6 @@ class Order < ActiveRecord::Base
   end
 
   def generate_result_order
-    # 訂單資料
     result_order = {}
     result_order[:id] = id
     result_order[:uid] = uid
@@ -66,7 +65,6 @@ class Order < ActiveRecord::Base
     result_order[:total] = total
     result_order[:note] = note
 
-    # 收件明細
     include_info = {}
     include_info[:id] = info.id
     include_info[:ship_name] = info.ship_name
@@ -75,10 +73,10 @@ class Order < ActiveRecord::Base
     include_info[:ship_store_code] = info.ship_store_code
     include_info[:ship_store_id] = info.ship_store_id
     include_info[:ship_store_name] = info.ship_store_name
-    include_info[:ship_store_address] = info.store ? info.store.address : nil
-    include_info[:ship_store_phone] = info.store ? info.store.phone : nil
+    include_info[:ship_store_address] = info.address
+    include_info[:ship_store_phone] = info.phone
     result_order[:info] = include_info
-    # 商品明細
+
     include_items = []
     items.each do |item|
       item_hash = {}
@@ -91,7 +89,6 @@ class Order < ActiveRecord::Base
     end
     result_order[:items] = include_items
 
-    # 完整資料
     return result_order
   end
 

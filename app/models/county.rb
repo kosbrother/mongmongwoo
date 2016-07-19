@@ -4,4 +4,6 @@ class County < ActiveRecord::Base
 
   has_many :towns
   has_many :stores
+
+  TAIPEI_CITY_ID = 21
 end

@@ -1,20 +1,21 @@
 class Admin::StoresController < AdminController
   before_action :require_manager, except: [:get_store_options]
   before_action :find_store, only: [:edit, :update, :destroy]
+  before_action :find_county_and_town_options, only: [:new, :create]
 
   def index
     @stores = Store.seven_stores.by_store_code_or_name(params[:store_code], params[:store_name])
   end
 
   def new
-    @counties = County.seven_stores
-    @towns = @counties.first.towns
-    @roads = @towns.first.roads
     @store = Store.new
   end
 
   def create
     @store = Store.new(store_params)
+    town = Town.find(params[:store][:town_id])
+    road = town.roads.find_or_create_by(name: params[:road_name])
+    @store.road = road
     if @store.save
       flash[:notice] = "成功新增門市"
       redirect_to admin_stores_path
@@ -56,6 +57,11 @@ class Admin::StoresController < AdminController
   end
 
   def store_params
-    params.require(:store).permit(:store_code, :name, :address, :phone, :lat, :lng, :store_type, :road_id, :town_id, :county_id)
+    params.require(:store).permit(:store_code, :name, :address, :phone, :store_type, :town_id, :county_id)
+  end
+
+  def find_county_and_town_options
+    @counties = County.seven_stores.pluck(:name, :id)
+    @towns = Town.where(county_id: County::TAIPEI_CITY_ID).pluck(:name, :id)
   end
 end
