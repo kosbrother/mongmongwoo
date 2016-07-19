@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
     user.password = password
     user.is_mmw_registered = true
     if user.save
-      UserMailer.delay.registered(user)
+      UserMailer.delay.notify_user_registered(user)
       {result: true, user: user}
     else
       {result: false, message: user.errors.messages.values.flatten}
