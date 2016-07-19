@@ -89,6 +89,17 @@ class Item < ActiveRecord::Base
     h
   end
 
+  def self.search_name_and_description(query)
+    search(query: { multi_match: {query: query, fields: [ "name^3", "description" ]}})
+  end
+
+  def all_specs_off_shelf?
+    count = self.specs.on_shelf.count
+    count == 0 ? true : false
+  end
+
+  private
+
   def as_indexed_json(options={})
    {"name" => name, "description" => description }
   end
@@ -98,20 +109,15 @@ class Item < ActiveRecord::Base
   end
 
   def update_document
-    __elasticsearch__.update_document if status == "on_shelf"
-    __elasticsearch__.delete_document if status == "off_shelf"
+    __elasticsearch__.update_document if status == "on_shelf" && document_exist?
+    __elasticsearch__.delete_document if status == "off_shelf" && document_exist?
   end
 
   def delete_document
-    __elasticsearch__.delete_document
+    __elasticsearch__.delete_document if document_exist?
   end
 
-  def self.search_name_and_description(query)
-    search(query: { multi_match: {query: query, fields: [ "name^3", "description" ]}})
-  end
-
-  def all_specs_off_shelf?
-    count = self.specs.on_shelf.count
-    count == 0 ? true : false
+  def document_exist?
+    __elasticsearch__.client.exists({"index": Item.index_name, "type": "item", "id": id})
   end
 end
