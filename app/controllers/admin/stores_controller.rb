@@ -1,6 +1,7 @@
 class Admin::StoresController < AdminController
   before_action :require_manager, except: [:get_store_options]
   before_action :find_store, only: [:edit, :update, :destroy]
+  before_action :find_county_and_town_options, only: [:new, :create]
 
   def index
     @stores = Store.seven_stores.by_store_code_or_name(params[:store_code], params[:store_name])
@@ -57,5 +58,10 @@ class Admin::StoresController < AdminController
 
   def store_params
     params.require(:store).permit(:store_code, :name, :address, :phone, :store_type, :town_id, :county_id)
+  end
+
+  def find_county_and_town_options
+    @counties = County.seven_stores.pluck(:name, :id)
+    @towns = Town.where(county_id: County::TAIPEI_CITY_ID).pluck(:name, :id)
   end
 end
