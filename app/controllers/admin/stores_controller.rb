@@ -1,14 +1,13 @@
 class Admin::StoresController < AdminController
   before_action :require_manager, except: [:get_store_options]
   before_action :find_store, only: [:edit, :update, :destroy]
-  before_action :find_county_and_town_options, only: [:new, :create]
 
   def index
     @stores = Store.seven_stores.by_store_code_or_name(params[:store_code], params[:store_name])
   end
 
   def new
-    @store = Store.new
+    @store = Store.new(county_id: County::TAIPEI_CITY_ID)
   end
 
   def create
