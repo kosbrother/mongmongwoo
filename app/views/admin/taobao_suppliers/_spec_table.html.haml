@@ -1,9 +1,10 @@
 %table.table.table-bordered
   %thead
     %tr.active
-      %th.small-mid 樣式名稱
-      %th.large-small 現貨數量
-      %th.large-small 運送中數量
+      %th.large-small 樣式名稱
+      %th.x-small 現貨數量
+      %th.x-small 運送中數量
+      %th.x-small 建議庫存量
   %tbody
     - specs.each do |spec|
       %tr
@@ -13,3 +14,5 @@
           = spec.stock_item_quantity
         %td
           = spec.shipping_item_quantity
+        %td
+          = ItemSpec::RECOMMEND_STOCK
