@@ -1,0 +1,22 @@
+.registered
+  .mail-img
+    = email_image_tag('mailer/img_register.png')
+  .text-block
+    %h3 親愛的萌友您好：
+    %p
+      感謝您註冊成為萌萌屋會員！
+      %br
+      以下是您網站註冊的電子信箱：
+      #{link_to @user.email, "#", class: "ii"}
+    %p
+      事不宜遲，開始在萌萌屋選購您的萌萌商品吧！
+      %br
+      萌萌屋購物網址：
+      #{link_to "按此前往購物", "https://www.mmwooo.com", class: "strong"}
+      %br
+      萌萌屋APP下載網址：
+      #{link_to "按此前往下載", "https://goo.gl/ELdPj7", class: "strong"}
+    %p
+      此信件為系統自動傳送，請勿直接回覆。
+      %br
+      若您有任何問題請聯繫客服中心，謝謝！
