@@ -6,6 +6,7 @@
     %tr
       %th.x-small 編號
       %th.small-mid 商品名稱
+      %th.large-mid 商品樣式
   %tbody
     - items.each do |item|
       %tr
@@ -13,6 +14,8 @@
           = item.id
         %td
           = link_to item.name, admin_item_path(item), target: "_blank"
+        %td
+          = render "spec_table", specs: item.specs
 .apple_pagination
   = will_paginate items, :container => false
 %br/
