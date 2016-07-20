@@ -4,9 +4,6 @@
       = search_field_tag 'search_term[ship_phone]', '', class: "form-control", placeholder: "輸入手機號碼"
     .form-group
       = search_field_tag 'search_term[ship_email]', '', class: "form-control", placeholder: "輸入Email"
-    = button_tag "搜尋訂單", class: "btn btn-info"
-.search-order
-  = form_tag search_admin_orders_path, { class: "form-inline", method: :get } do
     .form-group
       = search_field_tag 'search_term[order_id]', '', class: "form-control", placeholder: "輸入訂單編號"
     = button_tag "搜尋訂單", class: "btn btn-info"

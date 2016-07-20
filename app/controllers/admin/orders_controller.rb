@@ -77,6 +77,6 @@ class Admin::OrdersController < AdminController
   end
 
   def search_params
-    params.fetch(:search_term, {}).permit!
+    params.fetch(:search_term, {}).permit(:order_id, :ship_email, :ship_phone)
   end
 end

@@ -33,8 +33,8 @@ class Order < ActiveRecord::Base
 
   self.per_page = 50
 
-  def self.search_by_search_terms(search_term={})
-    joins(:info).where('ship_phone = ? OR ship_email = ? OR orders.id = ?', search_term[:ship_phone], search_term[:ship_email], search_term[:order_id]).recent
+  def self.search_by_search_terms(search_term)
+    joins(:info).where('ship_phone = :ship_phone OR ship_email = :ship_email OR orders.id = :order_id', search_term).recent
   end
 
   def self.search_by_phone_or_email(phone, email)
