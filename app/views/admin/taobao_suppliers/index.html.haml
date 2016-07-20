@@ -25,7 +25,7 @@
               %td
                 = supplier.id
               %td
-                = link_to supplier.name, admin_taobao_supplier_path(supplier)
+                = link_to supplier.name, admin_taobao_supplier_path(supplier, status: 0)
               %td
                 = render partial: "supplier_items_list", locals: { supplier: supplier }
               %td

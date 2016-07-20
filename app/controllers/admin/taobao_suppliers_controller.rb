@@ -45,7 +45,6 @@ class Admin::TaobaoSuppliersController < AdminController
   end
 
   def show
-    params[:status] ||= 0
     @items = @taobao_supplier.items.includes(:specs).where(status: params[:status]).paginate(page: params[:page], per_page: 100)
   end
 

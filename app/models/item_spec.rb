@@ -19,4 +19,9 @@ class ItemSpec < ActiveRecord::Base
   def spec_id
     id
   end
+
+  def cart_default_quantity
+    quantity = ItemSpec::RECOMMEND_STOCK - stock_item_quantity - shipping_item_quantity
+    quantity > 0 ? quantity : 0
+  end
 end
