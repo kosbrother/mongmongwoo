@@ -1,16 +1,14 @@
 class User < ActiveRecord::Base
-  scope :recent, -> { order(id: :DESC) }
+  ANONYMOUS = 31
+  FAKE_PASSWORD = '1234'
 
   enum status: { disable: 0, enable: 1 }
-
-  acts_as_paranoid
-
-  has_secure_password
 
   validates :email, presence: true,
             uniqueness: true,
             format: { with: /\A([\w+-].?)+@[a-z\d-]+(.[a-z]+)*.[a-z]+\z/i }
 
+  has_secure_password
   has_many :orders, dependent: :destroy
   has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
   has_many :favorite_items
@@ -19,10 +17,9 @@ class User < ActiveRecord::Base
   has_many :messages, through: :message_records
   has_many :logins
 
+  scope :recent, -> { order(id: :DESC) }
+  acts_as_paranoid
   self.per_page = 20
-
-  ANONYMOUS = 31
-  FAKE_PASSWORD = '1234'
 
   def self.fake_mail(uid)
     "#{uid}@mmwooo.fake.com"
