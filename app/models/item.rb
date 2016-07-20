@@ -7,25 +7,17 @@ class Item < ActiveRecord::Base
     indexes :description, type: 'string'
   end
 
-  after_create :index_document
-  after_update :update_document
-  after_destroy :delete_document
-
-  scope :recent, -> { order(id: :DESC) }
-  scope :update_time, -> { order(updated_at: :DESC) }
-  scope :priority, -> { order("item_categories.position ASC") }
-  scope :latest, ->(num){ order(created_at: :asc).limit(num) }
-  scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
-  scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }
+  CNY_RATING = 5
 
   enum sort_params: { price_desc: "price desc", price_asc: "price asc", popular: "item_categories.position ASC", date: "items.created_at desc" }
   enum status: { on_shelf: 0, off_shelf: 1 }
 
-  CNY_RATING = 5
+  validates_presence_of :name, :price, :description
+  validates_numericality_of :price, only_integer: true, greater_than: 0
 
-  acts_as_paranoid
-
-  self.per_page = 15
+  after_create :index_document
+  after_update :update_document
+  after_destroy :delete_document
 
   has_many :photos, dependent: :destroy
   has_many :item_categories
@@ -43,8 +35,16 @@ class Item < ActiveRecord::Base
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
-  validates_presence_of :name, :price, :description
-  validates_numericality_of :price, only_integer: true, greater_than: 0
+  scope :recent, -> { order(id: :DESC) }
+  scope :update_time, -> { order(updated_at: :DESC) }
+  scope :priority, -> { order("item_categories.position ASC") }
+  scope :latest, ->(num){ order(created_at: :asc).limit(num) }
+  scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
+  scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }
+
+  acts_as_paranoid
+
+  self.per_page = 15
 
   mount_uploader :cover, ItemCoverUploader
 
