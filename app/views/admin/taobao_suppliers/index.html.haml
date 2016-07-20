@@ -16,6 +16,8 @@
             %th 編號
             %th 商家名稱
             %th 商家商品列表
+            %th 上架商品數
+            %th 下架商品數
             %th 操作選項
         %tbody
           - @taobao_suppliers.each do |supplier|
@@ -23,16 +25,20 @@
               %td
                 = supplier.id
               %td
-                = link_to supplier.url, target: "_blank" do
-                  = supplier.name
+                = link_to supplier.name, admin_taobao_supplier_path(supplier, status: 0)
               %td
                 = render partial: "supplier_items_list", locals: { supplier: supplier }
+              %td
+                = supplier.on_shelf.count
+              %td
+                = supplier.off_shelf.count
               %td
                 .dropdown
                   %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
                     按此選擇
                     %span.caret
                   %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
+                    %li= link_to "淘寶網站", supplier.url, target: "_blank"
                     %li= link_to "編輯", edit_admin_taobao_supplier_path(supplier)
                     %li= link_to "刪除", admin_taobao_supplier_path(supplier), method: :delete, data: { confirm: "確定刪除？", disable_with: "刪除中..." }
       .apple_pagination

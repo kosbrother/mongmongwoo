@@ -1,0 +1,15 @@
+.row
+  .col-md-12
+    .content-box-large.box-with-header
+      .breadcrumb-topbar
+        %ol.breadcrumb
+          %li
+            = link_to "萌萌屋", admin_root_path
+          %li
+            = link_to "淘寶商家列表", admin_taobao_suppliers_path
+          %li.active
+            #{@taobao_supplier.name}的進貨商品列表
+        %ul.nav.nav-tabs
+          = li_item_status_link(@taobao_supplier, Item.statuses["on_shelf"])
+          = li_item_status_link(@taobao_supplier, Item.statuses["off_shelf"])
+        = render "item_table", items: @items
