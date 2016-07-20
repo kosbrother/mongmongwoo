@@ -42,6 +42,7 @@ class Item < ActiveRecord::Base
   scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
   scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }
   scope :with_sold_items_sales_report, -> { joins(:order_items).select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id").order('subtotal DESC') }
+  scope :with_all_items_sales_report, -> { joins("LEFT JOIN `order_items` ON order_items.source_item_id = items.id").select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id") }
 
   acts_as_paranoid
 

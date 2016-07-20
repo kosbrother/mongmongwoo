@@ -6,6 +6,13 @@ class Admin::SalesReportsController < AdminController
     @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_report.where('order_items.created_at': @date_range)
   end
 
+  def export_item_sales_result
+    @sales_result =  Item.with_all_items_sales_report
+    respond_to   do |format|
+      format.xlsx
+    end
+  end
+
   def item_revenue_result
     @item_revenue = get_item_revenue(params)
   end

@@ -190,6 +190,7 @@ Rails.application.routes.draw do
         get "cost_statistics_index"
         post "/cost_statistics_index", to: "sales_reports#cost_statistics_create"
         get "sales_income_result"
+        get "export_item_sales_result"
       end
     end
 
