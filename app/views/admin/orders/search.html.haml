@@ -7,6 +7,7 @@
       %br
       .search_term_field.panel.panel-primary
         .panel-body
-          %p 查詢的手機號碼：#{params[:ship_phone_data]}
-          %p 查詢的Email：#{params[:ship_email_data]}
+          %p 查詢的訂單編號：#{@search_term[:order_id]}
+          %p 查詢的手機號碼：#{@search_term[:ship_phone]}
+          %p 查詢的Email：#{@search_term[:ship_email]}
       = render "order_table", orders: @search_results
