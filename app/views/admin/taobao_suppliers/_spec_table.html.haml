@@ -22,5 +22,5 @@
             = hidden_field_tag :item_id, spec.item_id
             = hidden_field_tag :item_spec_id, spec.id
             = hidden_field_tag :taobao_supplier_id, spec.item.taobao_supplier_id
-            = number_field_tag :item_quantity, spec.cart_default_quantity, min: 0, max: 99, class: "form-amount"
+            = number_field_tag :item_quantity, spec.add_to_cart_quantity, min: 0, max: 99, class: "form-amount"
             = submit_tag '新增至購物車', class: "btn btn-primary"
