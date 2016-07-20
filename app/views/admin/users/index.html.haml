@@ -3,10 +3,6 @@
     .content-box-header.panel-heading
       .panel-title 用戶列表
     .content-box-large.box-with-header
-      .apple_pagination
-        = will_paginate @user_page, :container => false
-      %br/
+      = render "search_form"
+      %hr
       = render "user_table"
-      .apple_pagination
-        = will_paginate @user_page, :container => false
-      %br/

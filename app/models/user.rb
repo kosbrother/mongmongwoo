@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
   acts_as_paranoid
   self.per_page = 20
 
+  def self.search_by_search_terms(search_terms)
+    joins(orders: :info).where('ship_phone = :ship_phone OR user_name = :user_name', search_terms).recent
+  end
+
   def self.fake_mail(uid)
     "#{uid}@mmwooo.fake.com"
   end
