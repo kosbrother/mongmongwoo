@@ -2,7 +2,7 @@ class TaobaoSupplier < ActiveRecord::Base
   has_many :items
   has_many :stocks
 
-  delegate :count, to: :items
+  delegate :count, :on_shelf, :off_shelf, to: :items
 
   scope :recent, -> { order(id: :DESC) }
 

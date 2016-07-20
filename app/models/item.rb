@@ -15,7 +15,8 @@ class Item < ActiveRecord::Base
   scope :update_time, -> { order(updated_at: :DESC) }
   scope :priority, -> { order("item_categories.position ASC") }
   scope :latest, ->(num){ order(created_at: :asc).limit(num) }
-  scope :on_shelf, ->{ where(status: 0) }
+  scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
+  scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }
 
   enum sort_params: { price_desc: "price desc", price_asc: "price asc", popular: "item_categories.position ASC", date: "items.created_at desc" }
   enum status: { on_shelf: 0, off_shelf: 1 }
