@@ -14,10 +14,12 @@
             %tr.active
               %th 商品編號
               %th 商品名稱
+              %th 商品狀態
           %tbody
             - supplier.items.each do |item|
               %tr
                 %td= item.id
                 %td= link_to item.name, admin_item_path(item), target: "_blank"
+                %td= t(item.status)
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
