@@ -1,0 +1,29 @@
+.content-box-large
+  .category-all-items
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li
+          = link_to "官方訊息列表", admin_messages_path
+        %li.active 個人訊息列表
+    .pull-right
+      = link_to "新增訊息", my_new_message_admin_messages_path(user_id: @user), { class: "btn btn-primary" }
+    %h2 #{@user.user_name}的訊息列表
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th 訊息編號
+          %th 訊息標題
+          %th 訊息內容
+          %th 操作
+      %tboady
+        - @messages.each do |message|
+          %tr
+            %td
+              = message.id
+            %td
+              = message.title
+            %td
+              = message.content
+            %td

@@ -10,6 +10,6 @@ class Message < ActiveRecord::Base
   validates_presence_of :title, :content
 
   def self.message_type_lists
-    self.message_types.to_a
+    message_types.to_a
   end
 end

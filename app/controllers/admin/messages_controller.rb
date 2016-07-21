@@ -11,7 +11,7 @@ class Admin::MessagesController < AdminController
 
   def create
     @message = Message.new(message_params)
-    
+
     if @message.save
       flash[:notice] = "成功新增訊息"
       redirect_to admin_messages_path
@@ -30,6 +30,16 @@ class Admin::MessagesController < AdminController
     @message.destroy
     flash[:warning] = "訊息已刪除"
     redirect_to admin_messages_path
+  end
+
+  def my_messages
+    @user = User.find(params[:user_id])
+    @messages = @user.messages
+  end
+
+  def my_new_message
+    @user = User.find(params[:user_id])
+    @message = @user.messages.new
   end
 
   private
