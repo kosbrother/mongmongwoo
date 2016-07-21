@@ -19,7 +19,7 @@ class OrderItem < ActiveRecord::Base
 
   def self.requested_amount(item_spec_id)
     status_types = [Order.statuses['新訂單'], Order.statuses['處理中'], Order.statuses['訂單變更']]
-    item_spec_id ? joins(:order).where(item_spec_id: item_spec_id, orders: { status: status_types }).sum(:item_quantity) : "無資料"
+    item_spec_id ? joins(:order).where(item_spec_id: item_spec_id, orders: { status: status_types }).sum(:item_quantity) : 0
   end
 
   def subtotal
@@ -31,10 +31,10 @@ class OrderItem < ActiveRecord::Base
   end
 
   def stock_amount
-    item_spec && item_spec.stock_spec ? item_spec.stock_spec.amount : "無資料"
+    item_spec && item_spec.stock_spec ? item_spec.stock_spec.amount : 0
   end
 
   def shipping_amount
-    item_spec ? item_spec.shipping_item_quantity : "無資料"
+    item_spec ? item_spec.shipping_item_quantity : 0
   end
 end

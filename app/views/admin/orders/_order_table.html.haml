@@ -81,7 +81,7 @@
                     %td= item.item_quantity
                     %td.stock-amount= item.stock_amount
                     %td= item.shipping_amount
-                    %td= OrderItem.requested_amount(item.item_spec_id)
+                    %td= spec_requested_number(item)
                     %td
                       = form_tag add_admin_admin_cart_items_path, remote: true do
                         = hidden_field_tag :item_id, item.item.id
