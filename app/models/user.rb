@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   ANONYMOUS = 31
-  FAKE_PASSWORD = '1234'
+  FAKE_PASSWORD = SecureRandom.urlsafe_base64
 
   enum status: { disable: 0, enable: 1 }
 
