@@ -34,7 +34,7 @@ class Admin::MessagesController < AdminController
   end
 
   def my_messages
-    @messages = @user.messages
+    @messages = Message.personal_and_official(@user)
   end
 
   def my_new_message

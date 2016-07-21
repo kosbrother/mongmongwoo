@@ -10,13 +10,14 @@
     .pull-right
       = link_to "新增訊息", my_new_message_admin_messages_path(user_id: @user), { class: "btn btn-primary" }
     %h2 #{@user.user_name}的訊息列表
+    %br
     %table.table.table-striped.table-bordered
       %thead
         %tr
           %th 訊息編號
           %th 訊息標題
           %th 訊息內容
-          %th 操作
+          %th 公布時間
       %tboady
         - @messages.each do |message|
           %tr
@@ -27,3 +28,4 @@
             %td
               = message.content
             %td
+              = display_date_and_time(message.created_at)
