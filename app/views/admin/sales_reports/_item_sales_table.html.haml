@@ -1,0 +1,31 @@
+- if @sales_result[0].nil?
+  %br
+  %p.lead 資料不存在
+- else
+  %thead
+    %tr
+      %th 商品名稱
+      %th 編號
+      %th 商品分類
+      %th 淘寶商家
+      %th 上架日期
+      %th 累計銷售數量
+      %th 累計銷售金額
+      %th 成本
+      %th 上架/下架
+      %th 樣式數
+      %th 最後下單日期
+  %tbody
+    - @sales_result.each do |item|
+      %tr
+        %td= link_to item.name, admin_item_path(item), target: "_blank"
+        %td= item.id
+        %td= item.categories_name_except_all_and_new
+        %td= link_to_supplier(item)
+        %td= display_date(item.created_at)
+        %td= item.sales_amount
+        %td= item.subtotal
+        %td= item.cost
+        %td= t(item.status)
+        %td= item.specs.count
+        %td= display_date(item.order_items.last.created_at)

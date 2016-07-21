@@ -46,6 +46,9 @@ gem 'babosa'
 gem 'meta-tags'
 gem 'sitemap_generator'
 gem 'roadie-rails', '~> 1.0'
+gem 'rubyzip', '= 1.0.0'
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
 
 group :development do
   gem "better_errors"

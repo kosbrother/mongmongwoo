@@ -30,8 +30,8 @@ class Item < ActiveRecord::Base
   has_many :favorited_by, through: :favorite_items, source: :user
   has_many :item_promotions
   has_many :promotions, through: :item_promotions
+  has_many :order_items, foreign_key: :source_item_id
   has_one :stock
-  has_many :shipping_items
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
@@ -41,6 +41,8 @@ class Item < ActiveRecord::Base
   scope :latest, ->(num){ order(created_at: :asc).limit(num) }
   scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
   scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }
+  scope :with_sold_items_sales_result, -> { joins(:order_items).select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id").order('subtotal DESC') }
+  scope :with_all_items_sales_result, -> { joins("LEFT JOIN `order_items` ON order_items.source_item_id = items.id").select('items.*, COALESCE(SUM(order_items.item_quantity), 0)as sales_amount, COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) as subtotal').group("items.id") }
 
   acts_as_paranoid
 
@@ -97,6 +99,18 @@ class Item < ActiveRecord::Base
   def all_specs_off_shelf?
     count = self.specs.on_shelf.count
     count == 0 ? true : false
+  end
+
+  def taobao_supplier_name
+    taobao_supplier.present? ? taobao_supplier.name : '未登記'
+  end
+
+  def categories_name_except_all_and_new
+    categories.where('categories.id > 11').pluck(:name).join(',')
+  end
+
+  def last_order_date
+    order_items.last.created_at.strftime("%Y-%m-%d") if order_items.any?
   end
 
   private
