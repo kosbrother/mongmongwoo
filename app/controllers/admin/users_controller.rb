@@ -62,7 +62,7 @@ class Admin::UsersController < AdminController
 
   def search
     @search_term = search_params
-    @users = User.includes(orders: :info).search_by_search_terms(@search_term).paginate(page: params[:page])
+    @users = User.search_by_search_terms(@search_term).paginate(page: params[:page])
   end
 
   private
