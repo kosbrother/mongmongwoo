@@ -11,4 +11,5 @@
       .panel-title
         %h3 新增個人訊息
     .panel-body
-      = render "message_form"
+      = form_for [:admin, @message], url: {action: "create_my_message"}, html: { class: "form-horizontal" } do |f|
+        = render "message_form", f: f
