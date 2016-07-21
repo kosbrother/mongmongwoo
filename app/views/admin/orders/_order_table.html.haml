@@ -69,6 +69,7 @@
                 %th.x-small 數量
                 %th.mid-small 現貨數
                 %th.mid-small 運送中
+                %th.mid-small 需求量
                 %th.mid-small 訂購
             %tbody
               - if order.items
@@ -80,6 +81,7 @@
                     %td= item.item_quantity
                     %td.stock-amount= item.stock_amount
                     %td= item.shipping_amount
+                    %td= OrderItem.requested_amount(item.item_spec_id)
                     %td
                       = form_tag add_admin_admin_cart_items_path, remote: true do
                         = hidden_field_tag :item_id, item.item.id
@@ -88,7 +90,7 @@
                         = hidden_field_tag :taobao_supplier_id, item.item.taobao_supplier_id
                         = submit_tag '新增至購物車', class: "btn btn-primary "
                 %tr
-                  %td.text-right{colspan: 7} 總金額 #{order.total}
+                  %td.text-right{colspan: 8} 總金額 #{order.total}
           %table.table.table-bordered
             %tbody
               %tr.active
