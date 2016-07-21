@@ -18,8 +18,15 @@
           %td= user.user_name
           %td= user.gender
           %td
-            %ul.list-unstyled
-              %li= link_to "查看", admin_user_path(user)
+            .dropdown
+              %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                按此選擇
+                %span.caret
+              %ul.dropdown-menu.list-group
+                %li
+                  = link_to "個人訊息", my_messages_admin_messages_path(user)
+                %li
+                  = link_to "查看使用者", admin_user_path(user)
 .apple_pagination
   = will_paginate users, :container => false
 %br/

@@ -47,7 +47,7 @@
           物流狀態：
           %br
           %span{id: "logistis-#{order.id}"}= logistics_status(order)
-        %td
+        %td.user-id-cell
           = blacklist_warning(order)
           %br
           = link_to order.info_user_name, admin_user_path(order.user)
@@ -60,6 +60,7 @@
           未取訂貨：#{statuses_count[Order.statuses["未取訂貨"]]}
           %br
           = render partial: "order_status_tooltip", locals:{ order: order, statuses_count: statuses_count }
+          .button= link_to "個人訊息", my_messages_admin_messages_path(order.user), class: "btn btn-default"
         %td
           %table.table.table-bordered
             %thead
