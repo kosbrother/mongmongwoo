@@ -68,6 +68,6 @@ class Admin::UsersController < AdminController
   private
 
   def search_params
-    params.require(:user_search_term).permit(:ship_phone, :user_name)
+    params.require(:user_search_term).permit(:ship_phone, :user_name, :email)
   end
 end

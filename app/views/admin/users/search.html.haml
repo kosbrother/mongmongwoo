@@ -13,5 +13,6 @@
       .search_term_field.panel.panel-primary
         .panel-body
           %p 查詢的手機號碼：#{@search_term[:ship_phone]}
+          %p 查詢的Email：#{@search_term[:email]}
           %p 查詢的使用者名稱：#{@search_term[:user_name]}
       = render "user_table", users: @users

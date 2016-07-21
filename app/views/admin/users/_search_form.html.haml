@@ -3,5 +3,7 @@
     .form-group
       = search_field_tag 'user_search_term[ship_phone]', '', class: "form-control", placeholder: "輸入手機號碼"
     .form-group
+      = search_field_tag 'user_search_term[email]', '', class: "form-control", placeholder: "輸入Email"
+    .form-group
       = search_field_tag 'user_search_term[user_name]', '', class: "form-control", placeholder: "輸入使用者名稱"
     = button_tag "搜尋使用者", class: "btn btn-info"
