@@ -42,7 +42,7 @@
           %td
           %td
           %td.cell 商品總額
-          %td.cell= price_with_unit(@order.total)
+          %td.cell= price_with_unit(@order.items_price)
         %tr
           %td
           %td
@@ -56,7 +56,7 @@
           %td
           %td
           %td.cell 總計
-          %td.cell.total= price_with_unit(@order.total + @order.ship_fee)
+          %td.cell.total= price_with_unit(@order.total)
   .order-info
     .group
       .icon-header{style: "background-image: url(#{email_scss_image_tag('icons/pencil.png')})"} 訂購人資料
