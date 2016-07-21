@@ -26,19 +26,19 @@
         %table.table.table-striped.table-bordered
           %thead
             %tr
-              %th 商品編號
-              %th 商品名稱
-              %th 樣式名稱
-              %th 樣式圖片
-              %th 商品數量
-              %th 移除商品
+              %th.x-small 商品編號
+              %th.large-small 商品名稱
+              %th.small 樣式名稱
+              %th.mid-small 樣式圖片
+              %th.mid-small 商品數量
+              %th.x-small 移除商品
           %tbody{id: "cart-#{cart.id}-items-list"}
             - cart.admin_cart_items.each do |cart_item|
               %tr{id: "cart-item-#{cart_item.id}"}
                 %td= cart_item.item_id
                 %td= cart_item.item.name
                 %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
-                %td= image_tag(cart_item.item_spec.style_pic.url)
+                %td= image_tag(cart_item.item_spec.style_pic.url, class: "cart-spec-pic")
                 %td
                   = form_tag update_quantity_admin_admin_cart_item_path(cart_item), method: 'patch', remote: true do
                     = number_field_tag :item_quantity, cart_item.item_quantity , min: 1,id: "cart-item-#{cart_item.id}-quantity" , class: 'update-cart-item-quantity'

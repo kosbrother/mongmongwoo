@@ -1,13 +1,13 @@
 %table.table.table-striped.table-bordered
   %thead
     %tr
-      %th 淘寶店家
-      %th 商品編號
-      %th 商品名稱
-      %th 樣式名稱
-      %th 樣式圖片
-      %th 商品數量
-      %th 新增商品
+      %th.x-small 淘寶店家
+      %th.x-small 商品編號
+      %th.small 商品名稱
+      %th.small 樣式名稱
+      %th.mid-small 樣式圖片
+      %th.mid-small 商品數量
+      %th.x-small 新增商品
   %tboady
     %tr
       = form_tag admin_admin_cart_items_path, class: "search-add-item" do
@@ -17,6 +17,6 @@
         %th#result-item-id= item ? item.id : ''
         %th#result-item-name= item ? item.name : ''
         %th#result-spec-style= select_tag :item_spec_id, item ? options_for_select(item.specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }) : '', id: 'result-spec-id', 'data-item-id': item ? item.id : ''
-        %th#result-spec-pic=image_tag item ? item.specs[0].style_pic.url : ''
+        %th#result-spec-pic=image_tag item ? item.specs[0].style_pic.url : '', class: "cart-spec-pic"
         %th#result-quantity= number_field_tag :item_quantity, 1, min: 1, require: true
         %th#result-submit= submit_tag '加入購物車'
