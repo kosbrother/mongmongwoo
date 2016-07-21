@@ -2,15 +2,14 @@ class Admin::SalesReportsController < AdminController
   before_action :require_manager
 
   def item_sales_result
-    @date_range =  params[:start_date] .. params[:end_date]
-    @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_report.where('order_items.created_at': @date_range)
+    params[:start_date] ||=  Date.today.prev_day(7)
+    params[:end_date] ||=  Date.today
+    date_range =  params[:start_date] .. params[:end_date]
+    @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_result.where('order_items.created_at': date_range)
   end
 
   def export_item_sales_result
-    @sales_result =  Item.with_all_items_sales_report
-    respond_to   do |format|
-      format.xlsx
-    end
+    @sales_result =  Item.with_all_items_sales_result
   end
 
   def item_revenue_result

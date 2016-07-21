@@ -41,8 +41,8 @@ class Item < ActiveRecord::Base
   scope :latest, ->(num){ order(created_at: :asc).limit(num) }
   scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
   scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }
-  scope :with_sold_items_sales_report, -> { joins(:order_items).select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id").order('subtotal DESC') }
-  scope :with_all_items_sales_report, -> { joins("LEFT JOIN `order_items` ON order_items.source_item_id = items.id").select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id") }
+  scope :with_sold_items_sales_result, -> { joins(:order_items).select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id").order('subtotal DESC') }
+  scope :with_all_items_sales_result, -> { joins("LEFT JOIN `order_items` ON order_items.source_item_id = items.id").select('items.*, COALESCE(SUM(order_items.item_quantity), 0)as sales_amount, COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) as subtotal').group("items.id") }
 
   acts_as_paranoid
 
@@ -102,11 +102,7 @@ class Item < ActiveRecord::Base
   end
 
   def taobao_supplier_name
-    if self.taobao_supplier.present?
-      self.taobao_supplier.name
-    else
-      '未登記'
-    end
+    taobao_supplier.present? ? taobao_supplier.name : '未登記'
   end
 
   def categories_name_except_all_and_new
