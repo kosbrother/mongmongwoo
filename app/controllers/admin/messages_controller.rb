@@ -44,9 +44,9 @@ class Admin::MessagesController < AdminController
   def create_my_message
     @message = @user.messages.new(message_params)
 
-    if @message.save
+    if @message.save(validate: false)
       flash[:notice] = "成功新增個人訊息"
-      redirect_to my_messages_admin_messages_path(@user)
+      redirect_to my_messages_admin_messages_path(@user, device_registration_id: params[:device_registration_id])
     else
       flash.now[:danger] = "請檢查訊息內容是否有誤"
       render :my_new_message

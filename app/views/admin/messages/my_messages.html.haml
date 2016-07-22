@@ -8,7 +8,7 @@
           = link_to "官方訊息列表", admin_messages_path
         %li.active 個人訊息列表
     .pull-right
-      = link_to "新增訊息", my_new_message_admin_messages_path(user_id: @user), { class: "btn btn-primary" }
+      = link_to "新增訊息", my_new_message_admin_messages_path(user_id: @user, device_registration_id: params[:device_registration_id]), { class: "btn btn-primary" }
     %h2 #{@user.user_name}的訊息列表
     %br
     %table.table.table-striped.table-bordered

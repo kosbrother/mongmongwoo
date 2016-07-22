@@ -14,4 +14,5 @@
       = form_for [:admin, @message], url: {action: "create_my_message"}, html: { class: "form-horizontal" } do |f|
         .form-group
           = hidden_field_tag "message[user_ids][]", params[:user_id]
+          = hidden_field_tag "device_registration_id", params[:device_registration_id]
         = render "message_form", f: f
