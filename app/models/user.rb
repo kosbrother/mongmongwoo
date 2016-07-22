@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   self.per_page = 20
 
   def self.search_by_search_terms(search_terms)
-    joins(orders: :info).where('ship_phone = :ship_phone OR user_name = :user_name OR email = :email', search_terms).distinct.recent
+    joins('LEFT JOIN orders ON orders.user_id = users.id').joins('LEFT JOIN order_infos ON order_infos.order_id = orders.id').where('ship_phone = :ship_phone OR user_name = :user_name OR email = :email', search_terms).distinct.recent
   end
 
   def self.fake_mail(uid)
