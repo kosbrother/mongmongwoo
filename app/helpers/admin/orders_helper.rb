@@ -66,4 +66,10 @@ module Admin::OrdersHelper
       link_to "合併其他訂單", select_orders_admin_order_path(order), class: "btn btn-default"
     end
   end
+
+  def spec_requested_number(order_item)
+    stock_amount = order_item.stock_amount + order_item.shipping_amount
+    requested_amount = OrderItem.requested_amount(order_item.item_spec_id)
+    content_tag(:span, requested_amount, class: "#{ stock_amount < requested_amount ? 'warning' : '' }")
+  end
 end
