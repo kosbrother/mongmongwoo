@@ -22,6 +22,12 @@ class GcmNotifyService
     @gcm.send(registration_id, options)
   end
 
+  def send_message_notification(device_id, message)
+    registration_id = [device_id]
+    options = generate_options_for_send_message(message)
+    @gcm.send(registration_id, options)
+  end
+
   private
 
   def generate_options_for_item(notification)
@@ -47,6 +53,16 @@ class GcmNotifyService
         content_text: "#{order.ship_name} 您好，您訂購的商品已送達#{order.ship_store_name}門市，請於七日內完成取貨。若有任何問題，請聯繫萌萌屋客服。",
         order_id: "#{order.id}"
         },
+      collapse_key: "updated_score"
+    }
+  end
+
+  def generate_options_for_send_message(message)
+    result_options = {
+      data: {
+        content_title: message.title,
+        content_text: message.content
+      },
       collapse_key: "updated_score"
     }
   end

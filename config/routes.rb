@@ -217,6 +217,7 @@ Rails.application.routes.draw do
         get "/:user_id/my_messages", to: "messages#my_messages", as: "my_messages"
         get "/:user_id/my_messages/new", to: "messages#my_new_message", as: "my_new_message"
         post "/:user_id/my_messages", to: "messages#create_my_message"
+        post "/:user_id/my_messages/send_notify_message", to: "messages#send_notify_message", as: "send_notify_message"
       end
     end
     resources :promotions, only: [:index, :new, :create, :destroy]

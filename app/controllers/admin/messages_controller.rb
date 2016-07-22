@@ -53,6 +53,14 @@ class Admin::MessagesController < AdminController
     end
   end
 
+  def send_notify_message
+    device_id = DeviceRegistration.find(params[:device_registration_id]).registration_id
+    message = Message.find(params[:message_id])
+    GcmNotifyService.new.send_message_notification(device_id, message)
+    flash[:notice] = "已推播此訊息"
+    redirect_to :back
+  end
+
   private
 
   def message_params
