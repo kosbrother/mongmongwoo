@@ -12,21 +12,15 @@
       = link_to "商品樣式", admin_item_item_specs_path(@item), class: "btn btn-success btn-sm"
     .item-cover-words-intro
       .cover-intro.col-md-4
-        / <haml_loud> image_tag(@item.intro_cover) </haml_loud>
         = item_cover(@item.cover)
         .col-md-6
           %dl.dl-horizontal
             %dt 總銷售量 :
-            %dd= OrderItem.product_sales(@item.id).first.sum_item_quantity
+            %dd= @sales_volume
             %dt 月銷售量 :
             %dd= @sales_volume_monthly
             %dt 周銷售量 :
             %dd= @sales_volume_weekly
-        .col-md-6
-          %dl.dl-horizontal
-            - @item.specs.each do |spec|
-              %dt= "#{spec.style} :"
-              %dd= OrderItem.product_style_sales(@item.id,spec.id).first.sum_item_quantity
       .words-intro.col-md-5
         %dl.dl-horizontal
           %dt 商品編號
