@@ -4,7 +4,7 @@ module MessagesHelper
   end
 
   def notification_button(message)
-    if params[:device_registration_id]
+    if params[:device_registration_id].present?
       link_to "送出推播", send_notify_message_admin_messages_path(message_id: message.id, device_registration_id: params[:device_registration_id]), method: :post, class: "btn btn-default"
     else
       "找不到裝置ID"
