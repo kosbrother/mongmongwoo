@@ -11,7 +11,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'turbolinks'
+gem 'turbolinks', '= 2.5.3'
 gem 'bootstrap-sass'
 gem "font-awesome-rails"
 gem "paranoia", "~> 2.0" # 軟刪除
