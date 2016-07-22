@@ -1,8 +1,9 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "All Items Sales Report") do |sheet|
-  sheet.add_row [ '商品名稱', '商品編號', '商品分類', '淘寶商家', '上架日期', '累計銷售數量', '累計銷售金額', '成本', '上架/下架', '樣式數', '最後下單日期']
+  sheet.add_row [ '商品名稱', '商品編號', '商品分類', '淘寶商家', '上架日期', '累計銷售數量', '累計銷售金額', '成本', '上架/下架', '樣式數', '最後下單日期', '最後30天銷量', '最後30銷售額']
   @sales_result.each do |item|
+    sales = item.sales_within_30_days
     sheet.add_row [ item.name, item.id, item.categories_name_except_all_and_new, item.taobao_supplier_name, display_date(item.created_at),
-    item.sales_amount, item.subtotal, item.cost, t(item.status), item.specs.count, item.last_order_date]
+    item.sales_amount, item.subtotal, item.cost, t(item.status), item.specs.count, item.last_order_date, sales.m_sales_amount, sales.m_subtotal]
   end
 end
