@@ -1,12 +1,10 @@
 class Admin::UsersController < AdminController
   layout "admin"
   before_action :require_manager
-
-  # 針對import_usere關掉表單token驗證
   skip_before_action :verify_authenticity_token, only: [:import_user]
 
   def index
-    @user_page = @users = User.recent.paginate(:page => params[:page])
+    @users = User.recent.paginate(page: params[:page])
 
     respond_to do |format|
       format.html
@@ -60,5 +58,16 @@ class Admin::UsersController < AdminController
     rescue Exception => e
       render json: "Error"
     end
-  end  
+  end
+
+  def search
+    @search_term = search_params
+    @users = User.search_by_search_terms(@search_term).paginate(page: params[:page])
+  end
+
+  private
+
+  def search_params
+    params.require(:user_search_term).permit(:ship_phone, :user_name, :email)
+  end
 end

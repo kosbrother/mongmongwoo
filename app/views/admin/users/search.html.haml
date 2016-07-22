@@ -1,0 +1,18 @@
+.row
+  .col-md-12.panel-warning
+    .content-box-large.box-with-header
+      .breadcrumb-topbar
+        %ol.breadcrumb
+          %li
+            = link_to "萌萌屋", admin_root_path
+          %li
+            = link_to "用戶名稱列表", admin_users_path
+          %li.active 使用者查詢結果
+      = render "search_form"
+      %br
+      .search_term_field.panel.panel-primary
+        .panel-body
+          %p 查詢的手機號碼：#{@search_term[:ship_phone]}
+          %p 查詢的Email：#{@search_term[:email]}
+          %p 查詢的使用者名稱：#{@search_term[:user_name]}
+      = render "user_table", users: @users

@@ -143,8 +143,8 @@ Rails.application.routes.draw do
 
     resources :users, only: [:index, :show, :create, :update] do
       collection do
-        # 外界POST request
         post "import_user", to: "users#import_user"
+        get "search"
       end
     end
 
