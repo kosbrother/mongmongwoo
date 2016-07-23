@@ -16,16 +16,16 @@ module OrderConcern
 
   def set_blacklisted_if_not_pickup
     if status == "未取訂貨"
-      set_to_blacklist      
+      set_to_blacklist
     end
   end
 
   def update_order_status_if_goods_arrive_store_or_pickup
-    if logistics_status_code == Logistics_Status.key("門市配達")
+    if logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("門市配達")
       self.update_columns(status: Order.statuses["已到店"])
       email_to_notify_pickup
       notification_to_notify_pickup
-    elsif logistics_status_code == Logistics_Status.key("消費者成功取件")
+    elsif logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("消費者成功取件")
       self.update_columns(status: Order.statuses["完成取貨"])
     end
   end
