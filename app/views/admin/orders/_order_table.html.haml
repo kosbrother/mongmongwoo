@@ -60,7 +60,7 @@
           未取訂貨：#{statuses_count[Order.statuses["未取訂貨"]]}
           %br
           = render partial: "order_status_tooltip", locals:{ order: order, statuses_count: statuses_count }
-          .button= link_to "個人訊息", my_messages_admin_messages_path(order.user, device_registration_id: order.device_registration_id), class: "btn btn-default"
+          .button= link_to "個人訊息", admin_user_my_messages_path(order.user, device_registration_id: order.device_registration_id), class: "btn btn-default"
         %td
           %table.table.table-bordered
             %thead
