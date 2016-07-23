@@ -1,6 +1,5 @@
 class Admin::MessagesController < AdminController
   before_action :require_manager
-  before_action :find_user, only: [:my_messages, :my_new_message, :create_my_message]
 
   def index
     @messages = Message.official_messages.paginate(:page => params[:page])
@@ -33,41 +32,9 @@ class Admin::MessagesController < AdminController
     redirect_to admin_messages_path
   end
 
-  def my_messages
-    @messages = Message.personal_and_official(@user)
-  end
-
-  def my_new_message
-    @message = @user.messages.new
-  end
-
-  def create_my_message
-    @message = @user.messages.new(message_params)
-
-    if @message.save(validate: false)
-      flash[:notice] = "成功新增個人訊息"
-      redirect_to my_messages_admin_messages_path(@user, device_registration_id: params[:device_registration_id])
-    else
-      flash.now[:danger] = "請檢查訊息內容是否有誤"
-      render :my_new_message
-    end
-  end
-
-  def send_notify_message
-    device_id = DeviceRegistration.find(params[:device_registration_id]).registration_id
-    message = Message.find(params[:message_id])
-    GcmNotifyService.new.send_message_notification(device_id, message)
-    flash[:notice] = "已推播此訊息"
-    redirect_to :back
-  end
-
   private
 
   def message_params
     params.require(:message).permit(:title, :content, :message_type, user_ids: [])
-  end
-
-  def find_user
-    @user = User.find(params[:user_id])
   end
 end
