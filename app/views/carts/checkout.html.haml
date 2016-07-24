@@ -54,5 +54,10 @@
       - if current_user
         = link_to '下一步', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_2", "enter", "無")
       -else
-        = link_to '', auth_path("facebook"), class: 'btn fb-login', onClick: analytic_event("checkout_step_1", "click", "facebook_login")
-        = link_to '免註冊匿名購買', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_1", "click", "anonymous_purchase")
+        .group
+          .btn.login-btn{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#login-page"}
+            登入購買
+          .text*使用登入購買更方便您查詢及管理訂單
+        .group
+          = link_to '免註冊匿名購買', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_1", "click", "anonymous_purchase")
+          .text*適合一次性購買，無法管理訂單資料
