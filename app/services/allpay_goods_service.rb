@@ -25,6 +25,18 @@ class AllpayGoodsService
     end
   end
 
+  def create_barcode
+    encrypted_data
+    url = URI.parse("https://logistics.allpay.com.tw/helper/printTradeDocument")
+    resp, data = Net::HTTP.post_form(url, @fields.sort.to_h)
+    
+    if resp.body.start_with? '0'
+      return false
+    else
+      return resp.body
+    end
+  end
+
   def add_default_fields(params={})
     add_field("MerchantID", AllpayGoodsService.merchant_id)
     add_field 'MerchantTradeDate', Time.now
