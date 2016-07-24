@@ -37,6 +37,12 @@ module Admin::OrdersHelper
     end
   end
 
+  def link_to_allpay_barcode(order)
+    if order.allpay_transfer_id.present?
+      link_to "產生物流單", barcode_allpay_index_path(order), class: "btn btn-primary", target: "_blank"
+    end
+  end
+
   def link_to_send_survey_email(order)
     if order.status == "完成取貨" && order.survey_mail
      content_tag(:span, "已寄出", class: "label label-default")
