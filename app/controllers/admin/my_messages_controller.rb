@@ -14,7 +14,10 @@ class Admin::MyMessagesController < AdminController
     @message = @user.messages.new(message_params)
 
     if @message.save(validate: false)
-      flash[:notice] = "成功新增個人訊息"
+      device_id = DeviceRegistration.find(@user.device_id).registration_id
+      GcmNotifyService.new.send_message_notification(device_id, @message)
+      logger.info("Sending notification to device: #{device_id}")
+      flash[:notice] = "已成功推播新增的個人訊息"
       redirect_to admin_user_my_messages_path(@user)
     else
       flash[:danger] = "請確認訊息內容是否正確"

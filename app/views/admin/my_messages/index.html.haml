@@ -18,7 +18,6 @@
           %th 訊息標題
           %th 訊息內容
           %th 公布時間
-          %th 傳送推播
       %tboady
         - @messages.each do |message|
           %tr
@@ -30,5 +29,3 @@
               = message.content
             %td
               = display_date_and_time(message.created_at)
-            %td
-              = notification_button(message)
