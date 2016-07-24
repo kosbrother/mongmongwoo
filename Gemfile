@@ -34,6 +34,7 @@ gem "figaro"
 gem 'sidekiq'
 gem "gretel"
 gem 'omniauth-facebook'
+gem "omniauth-google-oauth2"
 gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'geocoder'
