@@ -12,6 +12,11 @@
         .name
           萌萌屋
     / Collect the nav links, forms, and other content for toggling
+    - if current_user.nil?
+      = render 'partials/sessions/login'
+      = render 'partials/sessions/register'
+      = render 'partials/sessions/forget'
+      = render 'partials/sessions/sent_success'
     #nav-bar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         %li.nav-list.visible-xs-block
@@ -31,10 +36,6 @@
         - if current_user.nil?
           %li.nav-list
             .user{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#login-page"} 登入/註冊
-            = render 'partials/sessions/login'
-            = render 'partials/sessions/register'
-            = render 'partials/sessions/forget'
-            = render 'partials/sessions/sent_success'
         -else
           %li.nav-list#user-nav
             .dropdown#user

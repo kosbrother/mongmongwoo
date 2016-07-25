@@ -4,6 +4,8 @@
       .modal-header 登入萌萌屋
       .modal-body
         .submit-session
+          = link_to '', auth_path('google'), class: "btn google-login"
+        .submit-session
           = link_to '', auth_path('facebook'), class: "btn fb-login"
         .divider
           .text 或以信箱登入
