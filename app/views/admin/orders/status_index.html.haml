@@ -5,6 +5,8 @@
     .content-box-large.box-with-header
       = render "search_form"
       %hr
+      = link_to '處理中訂單EXCEL', export_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-primary'
+      %hr
       %ul.nav.nav-tabs
         = li_status_link(Order.statuses["新訂單"])
         = li_status_link(Order.statuses["處理中"])

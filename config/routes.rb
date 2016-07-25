@@ -164,6 +164,7 @@ Rails.application.routes.draw do
         get "exporting_files"
         get "status_index"
         get "search"
+        get "export_order_list"
       end
 
       member do
