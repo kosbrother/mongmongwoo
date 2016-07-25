@@ -102,6 +102,10 @@ Rails.application.routes.draw do
       member do
         post "confirm"
       end
+
+      collection do
+        get "export_shipping_list"
+      end
     end
 
     resources :stocks, only: [:index] do

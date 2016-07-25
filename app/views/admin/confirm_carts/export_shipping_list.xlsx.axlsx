@@ -1,0 +1,15 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "運送中產品清單") do |sheet|
+  header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1")
+  content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4")
+  @shipping_list.each do |cart|
+    sheet.add_row ['購物車編號', '日期', '狀態', '淘寶商家']
+    sheet.add_row [cart.id, display_date(cart.created_at), t(cart.status), cart.taobao_supplier_name]
+    sheet.add_row ['商品編號', '商品名稱', '商品樣式', '商品數量'], style: header_highlight
+    cart.admin_cart_items.each do |item|
+      sheet.add_row [item.item_id, item.item.name, item.item_spec.style, item.item_quantity], style: content_highlight
+    end
+    sheet.add_row
+  end
+  sheet.column_widths 10, 30, 30, 10
+end
