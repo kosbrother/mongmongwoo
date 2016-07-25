@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
       set_current_user_and_cart(user)
       render 'partials/js/reload'
     elsif user.nil?
-      @message = t('controller.error.message.no_user.')
+      @message = t('controller.error.message.no_user')
       render 'error'
     else
       @message = t('controller.error.message.wrong_password')
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     user = User.find_or_create_from_omniauth(auth)
     set_current_user_and_cart(user) if user
 
-    redirect_to root_path
+    redirect_to request.env['omniauth.origin']
   end
 
   def destroy
