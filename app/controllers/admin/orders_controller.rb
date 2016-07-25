@@ -66,6 +66,10 @@ class Admin::OrdersController < AdminController
     redirect_to status_index_admin_orders_path
   end
 
+  def export_order_list
+    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).recent
+  end
+
   private
 
   def find_order
