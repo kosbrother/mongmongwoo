@@ -16,7 +16,7 @@
         %td
           = spec.shipping_item_quantity
         %td
-          = ItemSpec::RECOMMEND_STOCK
+          = spec.recommend_stock_num
         %td
           = form_tag add_admin_admin_cart_items_path, remote: true, html: { class: "form-inline" } do
             = hidden_field_tag :item_id, spec.item_id
