@@ -11,4 +11,8 @@ class Admin::ConfirmCartsController < AdminController
     @shipping_cart.confirm_cart_items_to_stocks
     @message = "#{@shipping_cart.taobao_supplier_name}的編號：#{@shipping_cart.id}訂單已確認收貨"
   end
+
+  def export_shipping_list
+    @shipping_list = AdminCart.status(AdminCart.statuses['shipping']).recent
+  end
 end

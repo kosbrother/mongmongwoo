@@ -6,6 +6,7 @@
       %li.active 確認收貨單列表
   .panel-body
     .pull-right
+      = link_to "運送中商品清單EXCEL", export_shipping_list_admin_confirm_carts_path(format: 'xlsx'), class: 'btn btn-primary'
       = link_to "回到購物車", admin_checkout_path, class: "btn btn-default"
     %ul.nav.nav-tabs
       = li_cart_status_link(AdminCart::STATUS[:shipping])
