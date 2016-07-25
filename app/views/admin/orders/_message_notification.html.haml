@@ -1,4 +1,4 @@
-%button.btn.btn-default.btn-sm{"data-target" => "#user-message-#{order.id}", "data-toggle" => "modal", :type => "button"}
+%button.btn.btn-default.btn-sm.message_notify{"data-target" => "#user-message-#{order.id}", "data-device-id" => "#{order.device_registration_id}", "data-user-id" => "#{order.user.id}", "data-toggle" => "modal", :type => "button"}
   新增個人訊息
 .modal.fade{"aria-labelledby" => "myModalLabel", :id => "user-message-#{order.id}", :role => "dialog", :tabindex => "-1"}
   .modal-dialog{:role => "document"}
