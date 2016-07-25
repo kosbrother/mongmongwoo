@@ -11,7 +11,7 @@ module Admin::AdminCartHelper
 
   def link_to_confirm_button(cart)
     if cart.status == "shipping"
-      link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, class: "btn btn-success"
+      link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, remote: :true, class: "btn btn-success"
     elsif cart.status == "stock"
       content_tag(:span, "已收貨", class: "label label-default")
     end

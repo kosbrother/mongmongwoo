@@ -12,7 +12,7 @@
         %th 收貨
     %tbody
       - carts.each do |cart|
-        %tr
+        %tr{id: "cart-#{cart.id}"}
           %td
             = cart.id
           %td

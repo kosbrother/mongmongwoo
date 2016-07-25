@@ -1,0 +1,6 @@
+:plain
+  var cart = $('#cart-#{@shipping_cart.id}');
+  cart.remove();
+  $(function(){
+    new PNotify({title: "#{j(@message)}"});
+  });
