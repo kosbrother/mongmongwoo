@@ -1,10 +1,11 @@
-= form_for [:admin, @message], url: admin_user_my_messages_path(user), html: { class: "form-horizontal" } do |f|
+= form_for [:admin, Message.new], url: admin_user_my_messages_path(user), html: { class: "form-horizontal" } do |f|
   .form-group
-    = hidden_field_tag "message[user_ids][]", params[:user_id]
+    = hidden_field_tag "message[user_ids][]", user.id
+    = hidden_field_tag "device_registration_id", user.device_id
   .form-group
     = f.label :message_type, "訊息類型", class: "col-sm-2 control-label"
     .col-sm-10
-      = f.select :message_type, Message.message_type_lists, { selected: "#{select_message_type}" }, class: "form-control", required: true
+      = f.select :message_type, Message.message_type_lists, { selected: "#{select_message_type(user)}" }, class: "form-control", required: true
   .form-group
     = f.label :title, "訊息標題", class: "col-sm-2 control-label"
     .col-sm-10
@@ -16,4 +17,3 @@
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit "確認送出", class: "btn btn-primary"
-      = link_to "取消離開", admin_user_my_messages_path(user), class: "btn btn-warning"

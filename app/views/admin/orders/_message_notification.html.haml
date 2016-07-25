@@ -1,0 +1,13 @@
+%button.btn.btn-default.btn-sm{"data-target" => "#user-message-#{order.id}", "data-toggle" => "modal", :type => "button"}
+  新增個人訊息
+.modal.fade{"aria-labelledby" => "myModalLabel", :id => "user-message-#{order.id}", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#myModalLabel.modal-title 新增個人訊息
+      .modal-body
+        = render "admin/my_messages/form", user: order.user
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

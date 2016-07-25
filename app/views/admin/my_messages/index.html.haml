@@ -8,7 +8,7 @@
           = link_to "使用者列表", admin_users_path
         %li.active 個人訊息列表
     .pull-right
-      = link_to "新增訊息", new_admin_user_my_message_path(@user), { class: "btn btn-primary" }
+      = render "new_message", user: @user
     %h2 #{@user.user_name}的訊息列表
     %br
     %table.table.table-striped.table-bordered
