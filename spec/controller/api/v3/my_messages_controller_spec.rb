@@ -5,7 +5,7 @@ RSpec.describe Api::V3::MyMessagesController, type: :controller do
     let!(:alice) { FactoryGirl.create(:user) }
     let!(:official_message) { FactoryGirl.create(:official_message) }
     let!(:personal_message) { FactoryGirl.create(:personal_message, users: [alice]) }
-    let(:user) { User.find(alice.id) }
+    let!(:user) { User.find(alice.id) }
 
     it "should contain correct message quantity" do
       get :index, user_id: user.id
@@ -24,7 +24,7 @@ RSpec.describe Api::V3::MyMessagesController, type: :controller do
     let!(:alice) { FactoryGirl.create(:user) }
     let!(:official_message) { FactoryGirl.create(:official_message) }
     let!(:personal_message) { FactoryGirl.create(:personal_message, users: [alice]) }
-    let(:user) { User.find(alice.id) }
+    let!(:user) { User.find(alice.id) }
 
     it "should contain correct official message data" do
       get :show, user_id: user.id, id: official_message.id
