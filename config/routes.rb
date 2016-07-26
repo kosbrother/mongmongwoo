@@ -277,7 +277,9 @@ Rails.application.routes.draw do
           end
         end
       end
-      resources :users, only: [:create]
+      resources :users, only: [:create] do
+        resources :my_messages, only: [:index, :show]
+      end
       resources :categories, only: [:index] do
         resources :items, only: [:index, :show]
       end
