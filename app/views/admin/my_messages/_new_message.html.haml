@@ -8,6 +8,6 @@
           %span{"aria-hidden" => "true"} ×
         %h4#myModalLabel.modal-title 新增個人訊息
       .modal-body
-        = render "form", user: user
+        = render "form", user: user, device_id: user.device_id
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

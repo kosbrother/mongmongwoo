@@ -7,7 +7,6 @@ class Admin::MyMessagesController < AdminController
   end
 
   def new
-    binding.pry
     @message = @user.messages.new
   end
 
