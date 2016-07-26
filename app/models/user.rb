@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
 
   def my_messages
-    Message.joins('LEFT JOIN message_records ON message_records.message_id = messages.id').where('message_type = :message_type OR message_records.user_id = :user_id', message_type: Message.message_types["萌萌屋官方訊息"], user_id: id).order(created_at: :ASC)
+    Message.joins('LEFT JOIN message_records ON message_records.message_id = messages.id').where('message_type = :message_type OR message_records.user_id = :user_id', message_type: Message.message_types["萌萌屋官方訊息"], user_id: id).order(created_at: :DESC)
   end
 
   def device_id
