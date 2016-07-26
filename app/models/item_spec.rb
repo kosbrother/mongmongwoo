@@ -10,6 +10,7 @@ class ItemSpec < ActiveRecord::Base
 
   scope :recent, -> {order(id: :DESC)}
   scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}
+  scope :with_stock_amount, -> {joins('LEFT JOIN stock_specs on item_specs.id = stock_specs.item_spec_id').select('SUM(stock_specs.amount) as stock_amount').group('item_specs.id')}
 
   acts_as_paranoid
   mount_uploader :style_pic, SpecPicUploader
@@ -21,5 +22,9 @@ class ItemSpec < ActiveRecord::Base
   def add_to_cart_quantity
     quantity = recommend_stock_num - stock_item_quantity - shipping_item_quantity
     quantity < 0 ? 0 : quantity
+  end
+
+  def stock_amount
+    stock_item_quantity
   end
 end
