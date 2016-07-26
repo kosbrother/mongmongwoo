@@ -26,4 +26,5 @@ end
 every 1.day, :at => '5:00 am' do
   rake "-s sitemap:refresh"
   rake 'specs:stock_recommend_num',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
+  rake 'specs:stock_recommend_email', :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
