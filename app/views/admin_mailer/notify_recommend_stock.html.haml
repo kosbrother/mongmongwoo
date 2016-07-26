@@ -1,0 +1,47 @@
+.order-placed
+  .icon-header.-pencil 存貨不足的商品樣式清單
+  .order-list
+    %table
+      %thead
+        %tr
+          %td.cell.quantity 商品編號
+          %td.cell.item-name 商品名稱
+          %td.cell.spec 商品樣式
+          %td.cell.spec 商品現貨數量
+          %td.cell.spec 商品推薦庫存
+      %tbody
+        - @stock_shortage_specs.each do |spec|
+          %tr
+            %td.cell
+              = spec.item_id
+            %td.cell
+              = spec.item.name
+            %td.cell
+              = spec.style
+            %td.cell
+              = spec.stock_amount
+            %td.cell
+              = spec.recommend_stock_num
+  .pink-divider
+  - if @recommend_off_shelf_spec.any?
+    .icon-header.-pencil 建議下架的商品樣式清單
+    .order-list
+      %table
+        %thead
+          %tr
+            %td.cell.quantity 商品編號
+            %td.cell.item-name 商品名稱
+            %td.cell.spec 商品樣式
+            %td.cell.spec 商品推薦庫存
+        %tbody
+          - @recommend_off_shelf_spec.each do |spec|
+            %tr
+              %td.cell
+                = spec.item_id
+              %td.cell
+                = spec.item.name
+              %td.cell
+                = spec.style
+              %td.cell
+                = spec.recommend_stock_num
+    .pink-divider

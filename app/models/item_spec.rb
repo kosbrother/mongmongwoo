@@ -19,6 +19,8 @@ class ItemSpec < ActiveRecord::Base
   scope :recent, -> {order(id: :DESC)}
   scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}
   scope :with_stock_amount, -> {joins('LEFT JOIN stock_specs on item_specs.id = stock_specs.item_spec_id').select('SUM(stock_specs.amount) as stock_amount').group('item_specs.id')}
+  scope :stock_shortage, -> {joins(:stock_spec).where('item_specs.recommend_stock_num > stock_specs.amount').select('item_specs.*, stock_specs.amount AS stock_amount').order(item_id: :ASC)}
+  scope :recommend_stock_empty, -> {where(recommend_stock_num: 0).order(item_id: :ASC)}
 
   acts_as_paranoid
   mount_uploader :style_pic, SpecPicUploader
