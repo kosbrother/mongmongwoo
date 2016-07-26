@@ -32,15 +32,6 @@ get_store = function() {
       $('#submit-' + order_id).attr('disabled', true);
     });
   });
-
-  $('.message_notify').on('click', function(){
-    var device_id = $(this).data('device-id');
-    var user_id = $(this).data('user-id');
-    var device_field = $('#device-' + user_id);
-    if (device_field.val() === "") {
-      device_field.val(device_id);
-    };
-  });
 };
 
 $(document).ready(get_store);
