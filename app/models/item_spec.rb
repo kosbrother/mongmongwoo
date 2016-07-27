@@ -28,16 +28,12 @@ class ItemSpec < ActiveRecord::Base
   end
 
   def add_to_cart_quantity
-    quantity = recommend_stock_num - stock_amount - shipping_amount
+    quantity = recommend_stock_num - stock_amount - shipping_item_quantity
     quantity < 0 ? 0 : quantity
   end
 
   def stock_amount
     stock_item_quantity
-  end
-
-  def shipping_amount
-    shipping_item_quantity
   end
 
   def item_shelf_position
