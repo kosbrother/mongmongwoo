@@ -8,13 +8,6 @@ class Admin::SalesReportsController < AdminController
     @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_result.where('order_items.created_at': date_range)
   end
 
-  def export_daily_reports
-    @recommend_stock = ItemSpec.includes(:stock_spec, item: :taobao_supplier, admin_cart_items: :admin_cart).order(item_id: :ASC)
-    @recommend_off_shelf = ItemSpec.includes(:stock_spec, item: :taobao_supplier).recommend_stock_empty
-    @daily_order_quantity = Order.daily_order_quantity
-    @daily_sales_income = OrderItem.daily_sales_income
-  end
-
   def export_item_sales_result
     @sales_result =  Item.with_all_items_sales_result
   end
