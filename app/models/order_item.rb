@@ -32,6 +32,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   def shipping_amount
-    item_spec ? item_spec.shipping_amount : 0
+    item_spec ? item_spec.shipping_item_quantity : 0
   end
 end
