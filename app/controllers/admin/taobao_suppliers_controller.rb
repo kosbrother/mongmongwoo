@@ -4,6 +4,9 @@ class Admin::TaobaoSuppliersController < AdminController
 
   def index
     @taobao_suppliers = TaobaoSupplier.includes(:items).paginate(page: params[:page])
+    items_count = Item.group(:status).count
+    @on_shelf_items_count = items_count[Item.statuses[:on_shelf]]
+    @off_shelf_items_count = items_count[Item.statuses[:off_shelf]]
   end
 
   def new

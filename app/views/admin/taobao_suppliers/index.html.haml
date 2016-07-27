@@ -9,7 +9,7 @@
             淘寶商家列表
       .pull-right
         = link_to "新增淘寶商家", new_admin_taobao_supplier_path, class: "btn btn-primary"
-      %h2 淘寶商家列表
+      %h2 淘寶商家列表（ 總上架數：#{@on_shelf_items_count}，總下架數：#{@off_shelf_items_count} ）
       %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
         %thead
           %tr
