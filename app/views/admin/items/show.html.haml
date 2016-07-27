@@ -26,6 +26,9 @@
           %dt 商品編號
           %dd
             = @item.id
+          %dt 貨架編號
+          %dd
+            = @item.shelf_position
           %dt 賣場連結
           %dd
             = link_to @item.url, target: "_blank" do

@@ -1,15 +1,15 @@
 %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
   %thead
     %tr
-      %th 商品編號
-      %th 商品排序
-      %th 商品狀態
-      %th 商品圖片
-      %th 商品名稱
-      %th 商品價格
-      %th 優惠價格
-      %th 淘寶價格
-      %th 操作選項
+      %th.xx-small 商品編號
+      %th.x-small 商品排序
+      %th.mid-small 商品狀態
+      %th.mid-small 商品圖片
+      %th.mid-small 商品名稱
+      %th.xx-small 商品價格
+      %th.xx-small 優惠價格
+      %th.xx-small 淘寶價格
+      %th.x-small 操作選項
   %tbody#items-sort-list{"data-sort-url" => sort_items_priority_admin_categories_path(category: @category)}
     - category_items.each do |item|
       %tr{:id => "item-#{item.id}"}
@@ -24,6 +24,7 @@
         %td{:id => "status-#{item.id}"}
           = link_to ( update_shelf_path(item) ), method: :patch, remote: true do
             = item_status(item.status)
+          %div= "貨架編號: #{item.shelf_position}"
         %td
           = link_to admin_item_path(item) do
             = item_icon(item.cover)
