@@ -41,6 +41,10 @@ class Order < ActiveRecord::Base
     joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
   end
 
+  def self.daily_order_quantity
+    created_at_within(Date.today.prev_day(1)..Date.today).select("COUNT(*) AS total_order_quantity")[0]["total_order_quantity"]
+  end
+
   def self.to_csv(options={})
     CSV.generate(options) do |csv|
       csv << ["配送類別", "訂單類別", "取件人姓名", "取件人手機", "取件人電子郵件", "取件門市", "訂單金額"]
