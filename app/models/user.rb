@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
 
   def my_messages
-    Message.user_messages(self)
+    Message.user_messages(id)
   end
 
   def device_id
