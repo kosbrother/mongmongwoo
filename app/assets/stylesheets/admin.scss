@@ -102,6 +102,9 @@ div.item-cover-words-intro, div.notification-intro {
 //For table
 .table{
   > thead > tr {
+    > .xx-small{
+      width: 5%;
+    }
     > .x-small{
       width: 10%;
     }
