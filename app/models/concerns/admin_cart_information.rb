@@ -7,8 +7,8 @@ module AdminCartInformation
   end
 
   def stock_item_quantity
-    stocks = StockSpec.where(item_spec_id: spec_id)
-    stocks.map(&:amount).inject(:+) || 0
+    stock = StockSpec.find_by(item_spec_id: spec_id)
+    stock ? stock.amount : 0
   end
 
   def spec_id
