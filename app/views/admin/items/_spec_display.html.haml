@@ -12,9 +12,9 @@
   %dt 運送中數量
   %dd= spec.shipping_amount
   %dt 銷售數量
-  %dd= OrderItem.product_style_sales(spec.item_id, spec.id).sum_item_quantity
+  %dd= spec.sales_quantity
   %dt 銷售比例
-  %dd= number_to_percentage((OrderItem.product_style_sales(spec.item_id, spec.id).sum_item_quantity.to_f / @sales_volume)*100, precision: 0)
+  %dd= number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
   %dt 訂購
   %dd
     = form_tag add_admin_admin_cart_items_path, remote: true do
