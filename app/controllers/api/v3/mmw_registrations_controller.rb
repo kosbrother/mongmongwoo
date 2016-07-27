@@ -2,7 +2,7 @@ class Api::V3::MmwRegistrationsController < ApiController
   def create
     register = User.register(params[:email], params[:password])
     if register[:result]
-      render status: 200, json: {data: "success"}
+      render status: 200, json: {data: {user_id: register[:user].id}}
     else
       message = register[:message].join(' ')
       render status: 400, json: {error: {message: message}}
@@ -14,7 +14,7 @@ class Api::V3::MmwRegistrationsController < ApiController
     if user.nil? || user.is_mmw_registered == false
       render status: 400, json: {error: {message: t('controller.error.message.no_user')}}
     elsif  user.authenticate(params[:password])
-      render status: 200, json: {data: "success"}
+      render status: 200, json: {data: {user_id: user.id}}
     else
       render status: 400, json: {error: {message: t('controller.error.message.wrong_password')}}
     end
