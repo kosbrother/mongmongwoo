@@ -1,9 +1,14 @@
 class ItemSpec < ActiveRecord::Base
   include AdminCartInformation
 
+  NEW_SPEC_RECOMMEND_STOCK_NUM = 1
+
   enum status: { on_shelf: 0, off_shelf: 1 }
 
   validates_numericality_of :style_amount, :only_integer => true, :greater_than_or_equal_to => 0, :allow_blank => true
+
+  after_update :update_recommend_stock_num
+  after_create :set_defult_recommend_stock_num
 
   belongs_to :item
   has_one :stock_spec
@@ -26,5 +31,15 @@ class ItemSpec < ActiveRecord::Base
 
   def stock_amount
     stock_item_quantity
+  end
+
+  private
+
+  def update_recommend_stock_num
+    update_column(:recommend_stock_num, 0) if (status_changed? && status == "off_shelf")
+  end
+
+  def set_defult_recommend_stock_num
+    update_column(:recommend_stock_num, ItemSpec::NEW_SPEC_RECOMMEND_STOCK_NUM)
   end
 end
