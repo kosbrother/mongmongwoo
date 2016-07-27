@@ -3,7 +3,7 @@ wb.add_worksheet(name: "推薦庫存清單") do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1")
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4")
   sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '現貨數量', '運送中數量', '需求量', '建議庫存量', '成本(RMB)', '售價(NTD)', '上架日期']
-  @recommend_stock.each do |spec|
+  recommend_stock.each do |spec|
     sheet.add_row [
       spec.item.taobao_supplier_name,
       spec.item.name,
@@ -26,7 +26,7 @@ wb.add_worksheet(name: "建議下架清單") do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1")
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4")
   sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '現貨數量', '過去10天銷量', '過去30天銷量', '成本(RMB)', '售價(NTD)', '上架日期']
-  @recommend_off_shelf.each do |spec|
+  recommend_off_shelf.each do |spec|
     sheet.add_row [
       spec.item.taobao_supplier_name,
       spec.item.name,
@@ -48,5 +48,5 @@ wb.add_worksheet(name: "昨日銷售量") do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1")
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4")
   sheet.add_row ['昨日總訂單數', '昨日總銷售額']
-  sheet.add_row [@daily_order_quantity, @daily_sales_income]
+  sheet.add_row [daily_order_quantity, daily_sales_income]
 end
