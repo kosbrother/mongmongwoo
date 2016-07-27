@@ -5,11 +5,4 @@ class Api::V3::MyMessagesController < ApiController
 
     render status: 200, json: { data: messages }
   end
-
-  def show
-    user = User.find(params[:user_id])
-    message = user.my_messages.select_api_fields.find(params[:id])
-
-    render status: 200, json: { data: message }
-  end
 end
