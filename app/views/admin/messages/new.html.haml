@@ -12,4 +12,4 @@
         %h3 新增訊息
     .panel-body
       = form_for [:admin, @message], html: { class: "form-horizontal" } do |f|
-        = render partial: "message_form", locals: { f: f }
+        = render "message_form", f: f

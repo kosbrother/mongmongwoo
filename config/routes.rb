@@ -151,6 +151,7 @@ Rails.application.routes.draw do
         post "import_user", to: "users#import_user"
         get "search"
       end
+      resources :my_messages, only: [:index, :new, :create]
     end
 
     get "users/show_uid/:uid", to: "users#show_uid", as: "uid_user"

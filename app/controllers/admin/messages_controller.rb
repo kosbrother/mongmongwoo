@@ -11,9 +11,9 @@ class Admin::MessagesController < AdminController
 
   def create
     @message = Message.new(message_params)
-    
+
     if @message.save
-      flash[:notice] = "成功新增訊息"
+      flash[:notice] = "成功新增官方訊息"
       redirect_to admin_messages_path
     else
       flash[:danger] = "請檢查訊息內容是否有誤"
