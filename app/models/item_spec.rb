@@ -15,6 +15,7 @@ class ItemSpec < ActiveRecord::Base
   belongs_to :item
   has_one :stock_spec
   has_many :order_items
+  has_many :admin_cart_items
 
   scope :recent, -> {order(id: :DESC)}
   scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}

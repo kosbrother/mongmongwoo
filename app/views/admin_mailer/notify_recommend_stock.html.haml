@@ -4,44 +4,98 @@
     %table
       %thead
         %tr
-          %td.cell.quantity 商品編號
-          %td.cell.item-name 商品名稱
+          %td.cell.spec 商家
+          %td.cell.spec 商品名稱
+          %td.cell.spec 商品上/下架
           %td.cell.spec 商品樣式
-          %td.cell.spec 商品現貨數量
-          %td.cell.spec 商品推薦庫存
+          %td.cell.spec 樣式上/下架
+          %td.cell.spec 現貨數量
+          %td.cell.spec 運送中數量
+          %td.cell.spec 需求量
+          %td.cell.spec 建議庫存量
+          %td.cell.spec 成本(RMB)
+          %td.cell.spec 售價(NTD)
+          %td.cell.spec 上架日期
       %tbody
-        - @stock_shortage_specs.each do |spec|
+        - @recommend_stock.each do |spec|
           %tr
             %td.cell
-              = spec.item_id
+              = spec.item.taobao_supplier_name
             %td.cell
               = spec.item.name
             %td.cell
+              = t(spec.item.status)
+            %td.cell
               = spec.style
+            %td.cell
+              = t(spec.status)
             %td.cell
               = spec.stock_amount
             %td.cell
+              = spec.shipping_item_quantity
+            %td.cell
+              = OrderItem.requested_amount(spec.id)
+            %td.cell
               = spec.recommend_stock_num
+            %td.cell
+              = spec.item.cost
+            %td.cell
+              = spec.item.price
+            %td.cell
+              = spec.created_at
   .pink-divider
-  - if @recommend_off_shelf_spec.any?
-    .icon-header.-pencil 建議下架的商品樣式清單
-    .order-list
-      %table
-        %thead
+  .icon-header.-pencil 建議下架的商品樣式清單
+  .order-list
+    %table
+      %thead
+        %tr
+          %td.cell.spec 商家
+          %td.cell.spec 商品名稱
+          %td.cell.spec 商品上/下架
+          %td.cell.spec 商品樣式
+          %td.cell.spec 樣式上/下架
+          %td.cell.spec 現貨數量
+          %td.cell.spec 過去10天銷量
+          %td.cell.spec 過去30天銷量
+          %td.cell.spec 成本(RMB)
+          %td.cell.spec 售價(NTD)
+          %td.cell.spec 上架日期
+      %tbody
+        - @recommend_off_shelf.each do |spec|
           %tr
-            %td.cell.quantity 商品編號
-            %td.cell.item-name 商品名稱
-            %td.cell.spec 商品樣式
-            %td.cell.spec 商品推薦庫存
-        %tbody
-          - @recommend_off_shelf_spec.each do |spec|
-            %tr
-              %td.cell
-                = spec.item_id
-              %td.cell
-                = spec.item.name
-              %td.cell
-                = spec.style
-              %td.cell
-                = spec.recommend_stock_num
-    .pink-divider
+            %td.cell
+              = spec.item.taobao_supplier_name
+            %td.cell
+              = spec.item.name
+            %td.cell
+              = t(spec.item.status)
+            %td.cell
+              = spec.style
+            %td.cell
+              = t(spec.status)
+            %td.cell
+              = spec.stock_amount
+            %td.cell
+              = spec.item.sales_within_10_days
+            %td.cell
+              = spec.item.sales_within_30_days
+            %td.cell
+              = spec.item.cost
+            %td.cell
+              = spec.item.price
+            %td.cell
+              = spec.created_at
+  .pink-divider
+  .icon-header.-pencil 昨日銷售量
+  .order-list
+    %table
+      %thead
+        %tr
+          %td.cell.spec 昨日總訂單數
+          %td.cell.spec 昨日總銷售額
+      %tbody
+        %tr
+          %td
+            = @daily_order_quantity
+          %td
+            = @daily_sales_income
