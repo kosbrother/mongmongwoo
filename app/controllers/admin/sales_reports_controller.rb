@@ -8,6 +8,13 @@ class Admin::SalesReportsController < AdminController
     @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_result.where('order_items.created_at': date_range)
   end
 
+  def export_daily_reports
+    @recommend_stock = ItemSpec.includes(:stock_spec, item: :taobao_supplier, admin_cart_items: :admin_cart).order(item_id: :ASC)
+    @recommend_off_shelf = ItemSpec.includes(:stock_spec, item: :taobao_supplier).recommend_stock_empty
+    @daily_order_quantity = Order.created_at_within(Date.today.prev_day(1)..Date.today).select("COUNT(*) AS total_order_quantity")[0]["total_order_quantity"]
+    @daily_sales_income = OrderItem.created_at_within(Date.today.prev_day(1)..Date.today).joins(:item).select("COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) AS total_sales_income ")[0]["total_sales_income"]
+  end
+
   def export_item_sales_result
     @sales_result =  Item.with_all_items_sales_result
   end

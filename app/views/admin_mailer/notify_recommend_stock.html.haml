@@ -42,7 +42,7 @@
             %td.cell
               = spec.item.price
             %td.cell
-              = spec.created_at
+              = display_date(spec.created_at)
   .pink-divider
   .icon-header.-pencil 建議下架的商品樣式清單
   .order-list
@@ -76,15 +76,15 @@
             %td.cell
               = spec.stock_amount
             %td.cell
-              = spec.item.sales_within_10_days
+              = spec.item.sales_within_10_days[:m_sales_amount]
             %td.cell
-              = spec.item.sales_within_30_days
+              = spec.item.sales_within_30_days[:m_sales_amount]
             %td.cell
               = spec.item.cost
             %td.cell
               = spec.item.price
             %td.cell
-              = spec.created_at
+              = display_date(spec.created_at)
   .pink-divider
   .icon-header.-pencil 昨日銷售量
   .order-list
@@ -95,7 +95,7 @@
           %td.cell.spec 昨日總銷售額
       %tbody
         %tr
-          %td
+          %td.cell
             = @daily_order_quantity
-          %td
+          %td.cell
             = @daily_sales_income
