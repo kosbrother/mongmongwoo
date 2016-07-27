@@ -8,9 +8,9 @@
   %dt 貨架編號
   %dd= spec.item_shelf_position
   %dt 現貨數量
-  %dd= spec.stock_item_quantity
+  %dd= spec.stock_amount
   %dt 運送中數量
-  %dd= spec.shipping_item_quantity
+  %dd= spec.shipping_amount
   %dt 銷售數量
   %dd= OrderItem.product_style_sales(spec.item_id, spec.id).sum_item_quantity
   %dt 銷售比例
