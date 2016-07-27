@@ -59,6 +59,6 @@ class ItemSpec < ActiveRecord::Base
   end
 
   def add_shelf_position
-    update_column(:shelf_position, ItemSpec::SHELF_POSITION[item.specs.size - 1])
+    update_column(:shelf_position, ItemSpec::SHELF_POSITION[item.specs.count - 1])
   end
 end
