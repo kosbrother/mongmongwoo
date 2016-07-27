@@ -14,6 +14,7 @@ class ItemSpec < ActiveRecord::Base
 
   belongs_to :item
   has_one :stock_spec
+  has_many :order_items
 
   scope :recent, -> {order(id: :DESC)}
   scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}
@@ -41,6 +42,10 @@ class ItemSpec < ActiveRecord::Base
 
   def item_shelf_position
     "#{item.shelf_position}-#{shelf_position}"
+  end
+
+  def sales_quantity
+    order_items.sum(:item_quantity)
   end
 
   private

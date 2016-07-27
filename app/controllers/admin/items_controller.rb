@@ -29,7 +29,9 @@ class Admin::ItemsController < AdminController
   end
 
   def show
-    get_item_sales
+    @sales_volume = @item.sales_quantity
+    @sales_volume_monthly = @item.sales_quantity_within_date(TimeSupport.time_until("month"))
+    @sales_volume_weekly = @item.sales_quantity_within_date(TimeSupport.time_until("week"))
   end
 
   def edit
@@ -93,11 +95,5 @@ class Admin::ItemsController < AdminController
     @item = Item.find(params[:id])
     @photos = @item.photos
     @specs = @item.specs.order(status: :ASC).includes(:stock_spec)
-  end
-
-  def get_item_sales
-    @sales_volume = OrderItem.product_sales(@item.id).sum_item_quantity
-    @sales_volume_monthly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("month")).sum_item_quantity
-    @sales_volume_weekly = OrderItem.product_sales_created_at(@item.id, TimeSupport.time_until("week")).sum_item_quantity
   end
 end
