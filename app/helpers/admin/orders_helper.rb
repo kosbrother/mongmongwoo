@@ -74,4 +74,10 @@ module Admin::OrdersHelper
     requested_amount = OrderItem.requested_amount(order_item.item_spec_id)
     content_tag(:span, requested_amount, class: "#{ stock_amount < requested_amount ? 'warning' : '' }")
   end
+
+  def link_to_restock(order)
+    if Order::RESTOCK_STATUS.include?(order.status)
+       link_to "重入庫存", "#", class: "btn btn-default"
+    end
+  end
 end
