@@ -129,6 +129,14 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def not_restock?
+    Order::RESTOCK_STATUS.include?(status) && !is_restock
+  end
+
+  def alreaddy_restock?
+    Order::RESTOCK_STATUS.include?(status) && is_restock
+  end
+
   private
 
   def status_changed_to_shipping?
