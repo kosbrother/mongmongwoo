@@ -41,12 +41,9 @@ class Order < ActiveRecord::Base
     joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
   end
 
-  def self.daily_order_quantity
-    created_at_within(Date.today.prev_day(1)..Date.today).count
-  end
-
-  def self.daily_sales_income
-    created_at_within(Date.today.prev_day(1)..Date.today).sum(:items_price)
+  def self.daily_order_quantity_and_income
+    result = created_at_within(Date.today.prev_day(1)..Date.today).select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income")[0]
+    [result["quantity"], result["income"]]
   end
 
   def self.to_csv(options={})
