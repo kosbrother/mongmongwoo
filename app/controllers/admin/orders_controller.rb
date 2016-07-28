@@ -70,6 +70,18 @@ class Admin::OrdersController < AdminController
     @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).recent
   end
 
+  def restock
+    order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
+    order.items do |goods|
+      item_spec = goods.item
+      stock_spec = item_spec.stock_spec
+      stock_spec.amount += goods.item_quantity
+      stock_spec.save
+    end
+    flash[:notice] = "訂單商品已退回庫存"
+    redirect_to :back
+  end
+
   private
 
   def find_order

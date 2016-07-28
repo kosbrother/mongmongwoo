@@ -77,7 +77,7 @@ module Admin::OrdersHelper
 
   def link_to_restock(order)
     if Order::RESTOCK_STATUS.include?(order.status)
-       link_to "重入庫存", "#", class: "btn btn-default"
+       link_to "重入庫存", restock_admin_order_path(order), method: :post, class: "btn btn-default"
     end
   end
 end
