@@ -10,6 +10,6 @@ class AdminMailer < ApplicationMailer
     attachments["export_daily_reports.xlsx"] = {mime_type: Mime::XLSX, content: xlsx}
     admin_emails = %w(stevenko@kosbrother.com ping.lin@kosbrother.com jason@kosbrother.com)
     Rails.logger.warn("mail to : #{admin_emails}")
-    mail(to: admin_emails, :subject => "[萌萌屋] 推薦庫存不足與推薦下架的樣式清單")
+    mail(to: admin_emails, :subject => "[萌萌屋] 推薦庫存不足與推薦下架的樣式清單") {|format| format.text {render plain: "附件內容：建議庫存，下架清單與昨日銷售"}}
   end
 end
