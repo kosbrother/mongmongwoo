@@ -17,8 +17,4 @@ namespace :specs do
       end
     end
   end
-
-  task :stock_recommend_email => :environment do
-    AdminMailer.delay.notify_recommend_stock
-  end
 end
