@@ -8,13 +8,9 @@ module Admin::OrdersHelper
   end
 
   def li_status_link(status)
-    content_tag(:li, '' , class: eq_to_status?(status)) do
+    content_tag(:li, '' , class: set_class_to_active(status)) do
       link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", status_index_admin_orders_path(status: status)
     end
-  end
-
-  def eq_to_status?(status)
-    params[:status].to_i == status ? 'active' : ''
   end
 
   def order_status(status_number)
