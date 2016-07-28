@@ -125,10 +125,6 @@ class Item < ActiveRecord::Base
     order_items.where(created_at: date).sum(:item_quantity)
   end
 
-  def sales_within_10_days
-    OrderItem.where(created_at: Date.today.prev_day(10)..Date.today).select('COALESCE(SUM(order_items.item_quantity), 0)as m_sales_amount, COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) as m_subtotal').find_by(source_item_id: id)
-  end
-
   private
 
   def as_indexed_json(options={})

@@ -19,10 +19,6 @@ class OrderItem < ActiveRecord::Base
     item_spec_id ? joins(:order).where(item_spec_id: item_spec_id, orders: { status: status_types }).sum(:item_quantity) : 0
   end
 
-  def self.daily_sales_income
-    created_at_within(Date.today.prev_day(1)..Date.today).joins(:item).select("COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) AS total_sales_income ")[0]["total_sales_income"]
-  end
-
   def subtotal
     item_quantity * item_price
   end

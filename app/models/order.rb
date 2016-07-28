@@ -42,7 +42,11 @@ class Order < ActiveRecord::Base
   end
 
   def self.daily_order_quantity
-    created_at_within(Date.today.prev_day(1)..Date.today).select("COUNT(*) AS total_order_quantity")[0]["total_order_quantity"]
+    created_at_within(Date.today.prev_day(1)..Date.today).count
+  end
+
+  def self.daily_sales_income
+    created_at_within(Date.today.prev_day(1)..Date.today).sum(:items_price)
   end
 
   def self.to_csv(options={})

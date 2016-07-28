@@ -34,8 +34,8 @@ wb.add_worksheet(name: "建議下架清單") do |sheet|
       spec.style,
       t(spec.status),
       spec.stock_amount,
-      spec.item.sales_within_10_days[:m_sales_amount],
-      spec.item.sales_within_30_days[:m_sales_amount],
+      spec.sales_amount_within_days(10),
+      spec.sales_amount_within_days(30),
       spec.item.cost,
       spec.item.price,
       display_date(spec.created_at)
