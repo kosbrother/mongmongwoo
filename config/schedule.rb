@@ -19,6 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
+set :environment, 'production'
+
 every 3.hours do
   rake 'items:item_position',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
@@ -26,5 +28,5 @@ end
 every 1.day, :at => '5:00 am' do
   rake "-s sitemap:refresh"
   rake 'specs:stock_recommend_num',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
-  rake 'specs:stock_recommend_email', :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
+  rake 'specs:stock_recommend_email', :environment => 'production', :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
