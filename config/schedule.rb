@@ -1,6 +1,6 @@
 require 'active_support/all'
 Time.zone = "Taipei"
-
+  
 every 3.hours do
   rake 'items:item_position',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
