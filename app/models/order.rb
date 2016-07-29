@@ -137,6 +137,12 @@ class Order < ActiveRecord::Base
     Order::RESTOCK_STATUS.include?(status) && is_return
   end
 
+  def restock_order_items
+    items.each do |item|
+      item.restock_amount
+    end
+  end
+
   private
 
   def status_changed_to_shipping?

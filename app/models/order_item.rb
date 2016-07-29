@@ -34,4 +34,11 @@ class OrderItem < ActiveRecord::Base
   def shipping_amount
     item_spec ? item_spec.shipping_item_quantity : 0
   end
+
+  def restock_amount
+    stock_spec = item_spec.stock_spec
+    stock_spec.amount += item_quantity
+    stock_spec.save
+    update_attribute(:is_return, true)
+  end
 end

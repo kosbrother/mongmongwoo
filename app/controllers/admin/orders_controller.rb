@@ -72,13 +72,7 @@ class Admin::OrdersController < AdminController
 
   def restock
     order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
-    order.items.each do |goods|
-      item_spec = goods.item_spec
-      stock_spec = item_spec.stock_spec
-      stock_spec.amount += goods.item_quantity
-      stock_spec.save
-      goods.update_attribute(:is_return, true)
-    end
+    order.restock_order_items
     order.update_attribute(:is_return, true)
     flash[:notice] = "訂單商品已退回庫存"
     redirect_to :back
