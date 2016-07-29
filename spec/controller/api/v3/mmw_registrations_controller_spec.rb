@@ -11,7 +11,7 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
       expect(user).to be_present
       expect(response.status).to eq(200)
       expect(response.content_type).to eq('application/json')
-      expect(message).to eq("success")
+      expect(message).to eq(user.id)
     end
 
     context 'when user with same email exist' do
@@ -24,7 +24,7 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
           expect(user.is_mmw_registered).to be_truthy
           expect(response.status).to eq(200)
           expect(response.content_type).to eq('application/json')
-          expect(message).to eq("success")
+          expect(message).to eq(user.id)
         end
       end
 
@@ -87,7 +87,7 @@ RSpec.describe Api::V3::MmwRegistrationsController, :type => :controller do
         message = JSON.parse(response.body)['data']
         expect(response.status).to eq(200)
         expect(response.content_type).to eq('application/json')
-        expect(message).to eq("success")
+        expect(message).to eq(user.id)
       end
     end
 
