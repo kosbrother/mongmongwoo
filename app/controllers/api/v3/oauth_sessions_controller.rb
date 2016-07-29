@@ -20,7 +20,7 @@ class Api::V3::OauthSessionsController < ApiController
       Rails.logger.error("error: #{errors}")
       render status: 400, json: {error: {message: errors.to_s}}
     else
-      render status: 200, json: {data: {user_id: user.id}}
+      render status: 200, json: {data: user.id}
     end
   end
 end
