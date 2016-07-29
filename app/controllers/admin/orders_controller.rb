@@ -77,9 +77,9 @@ class Admin::OrdersController < AdminController
       stock_spec = item_spec.stock_spec
       stock_spec.amount += goods.item_quantity
       stock_spec.save
-      goods.update_attribute(:is_restock, true)
+      goods.update_attribute(:is_return, true)
     end
-    order.update_attribute(:is_restock, true)
+    order.update_attribute(:is_return, true)
     flash[:notice] = "訂單商品已退回庫存"
     redirect_to :back
   end

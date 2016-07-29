@@ -130,11 +130,11 @@ class Order < ActiveRecord::Base
   end
 
   def not_restock?
-    Order::RESTOCK_STATUS.include?(status) && !is_restock
+    Order::RESTOCK_STATUS.include?(status) && !is_return
   end
 
   def alreaddy_restock?
-    Order::RESTOCK_STATUS.include?(status) && is_restock
+    Order::RESTOCK_STATUS.include?(status) && is_return
   end
 
   private
