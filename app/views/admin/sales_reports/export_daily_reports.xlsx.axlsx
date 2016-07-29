@@ -2,7 +2,7 @@ wb = xlsx_package.workbook
 wb.add_worksheet(name: "推薦庫存清單") do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1")
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4")
-  sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '現貨數量', '運送中數量', '需求量', '建議庫存量', '成本(RMB)', '售價(NTD)', '上架日期']
+  sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '現貨數量', '運送中數量', '需求量', '建議庫存量', '採購量', '成本(RMB)', '售價(NTD)', '上架日期']
   recommend_stock.each do |spec|
     sheet.add_row [
       spec.item.taobao_supplier_name,
@@ -12,8 +12,9 @@ wb.add_worksheet(name: "推薦庫存清單") do |sheet|
       t(spec.status),
       spec.stock_amount,
       spec.shipping_item_quantity,
-      OrderItem.requested_amount(spec.id),
+      spec.requested_quantity,
       spec.recommend_stock_num,
+      spec.purchase_quantity,
       spec.item.cost,
       spec.item.price,
       display_date(spec.created_at)

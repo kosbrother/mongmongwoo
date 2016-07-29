@@ -50,6 +50,15 @@ class ItemSpec < ActiveRecord::Base
     OrderItem.where(created_at: Date.today.prev_day(number)..Date.today).select('COALESCE(SUM(order_items.item_quantity), 0)as sales_amount').find_by(item_spec_id: id).sales_amount
   end
 
+  def requested_quantity
+    OrderItem.requested_amount(id)
+  end
+
+  def purchase_quantity
+    quantity = (recommend_stock_num + requested_quantity) - stock_amount - shipping_item_quantity
+    quantity < 0 ? 0 : quantity
+  end
+
   private
 
   def update_recommend_stock_num
