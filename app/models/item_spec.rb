@@ -15,10 +15,12 @@ class ItemSpec < ActiveRecord::Base
   belongs_to :item
   has_one :stock_spec
   has_many :order_items
+  has_many :admin_cart_items
 
   scope :recent, -> {order(id: :DESC)}
   scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}
   scope :with_stock_amount, -> {joins('LEFT JOIN stock_specs on item_specs.id = stock_specs.item_spec_id').select('SUM(stock_specs.amount) as stock_amount').group('item_specs.id')}
+  scope :recommend_stock_empty, -> {where(recommend_stock_num: 0).order(item_id: :ASC)}
 
   acts_as_paranoid
   mount_uploader :style_pic, SpecPicUploader
@@ -42,6 +44,19 @@ class ItemSpec < ActiveRecord::Base
 
   def sales_quantity
     order_items.sum(:item_quantity)
+  end
+
+  def sales_amount_within_days(number)
+    OrderItem.where(created_at: Date.today.prev_day(number)..Date.today).select('COALESCE(SUM(order_items.item_quantity), 0)as sales_amount').find_by(item_spec_id: id).sales_amount
+  end
+
+  def requested_quantity
+    OrderItem.requested_amount(id)
+  end
+
+  def purchase_quantity
+    quantity = (recommend_stock_num + requested_quantity) - stock_amount - shipping_item_quantity
+    quantity < 0 ? 0 : quantity
   end
 
   private
