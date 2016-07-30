@@ -133,7 +133,7 @@ class Order < ActiveRecord::Base
     Order::RESTOCK_STATUS.include?(status) && !is_return
   end
 
-  def alreaddy_restock?
+  def already_restock?
     Order::RESTOCK_STATUS.include?(status) && is_return
   end
 
