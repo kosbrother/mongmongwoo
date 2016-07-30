@@ -80,6 +80,6 @@ class User < ActiveRecord::Base
   end
 
   def device_id
-    User.joins('LEFT JOIN orders ON orders.user_id = users.id').select('users.id, orders.device_registration_id AS device_registration_id').find(id).device_registration_id
+    orders.last.device_registration_id
   end
 end

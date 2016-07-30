@@ -62,7 +62,7 @@ class GcmNotifyService
       data: {
         content_title: message.title,
         content_text: message.content,
-        message_type: message.message_type
+        m_type: message.message_type
       },
       collapse_key: "updated_score"
     }
