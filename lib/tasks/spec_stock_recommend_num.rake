@@ -9,7 +9,8 @@ namespace :specs do
         else
           specs_sales = []
           item.specs.on_shelf.each {|spec| specs_sales << spec.sales_quantity}
-          ratio = specs_sales.collect{|s| s/(specs_sales.sum.to_f)}
+          sum_specs_sales = specs_sales.sum == 0 ? 1 : specs_sales.sum.to_f
+          ratio = specs_sales.collect{|s| s/sum_specs_sales}
           stock_num = ratio.collect{|r| (r*m_sales_amount).ceil}
           item.specs.on_shelf.each_with_index do |s,i|
             if s.is_stop_recommend
