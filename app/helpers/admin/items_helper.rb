@@ -91,4 +91,12 @@ module Admin::ItemsHelper
       link_to t(Item.statuses.key(status)), admin_taobao_supplier_path(taobao_supplier, status: status)
     end
   end
+
+  def link_to_stop_recommend(item, spec)
+    if spec.is_stop_recommend
+      link_to '恢復供貨', start_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-success', method: :patch
+    else
+      link_to '停止供貨', stop_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-danger', method: :patch
+    end
+  end
 end

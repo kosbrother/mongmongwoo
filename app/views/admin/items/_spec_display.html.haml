@@ -15,6 +15,8 @@
   %dd= spec.sales_quantity
   %dt 銷售比例
   %dd= number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
+  %dt 售完停止供貨
+  %dd{id: "stop-recommend-spec-id-#{spec.id}"}= link_to_stop_recommend(item, spec)
   %dt 訂購
   %dd
     = form_tag add_admin_admin_cart_items_path, remote: true do

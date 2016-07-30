@@ -65,4 +65,4 @@
     .well
       %p.lead 樣式圖片
       %dl.dl-horizontal
-        = render partial: "spec_display", locals: { specs: @specs }
+        = render partial: "spec_display", locals: { item: @item, specs: @specs }

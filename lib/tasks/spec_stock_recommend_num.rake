@@ -11,7 +11,13 @@ namespace :specs do
           item.specs.on_shelf.each {|spec| specs_sales << spec.sales_quantity}
           ratio = specs_sales.collect{|s| s/(specs_sales.sum.to_f)}
           stock_num = ratio.collect{|r| (r*m_sales_amount).ceil}
-          item.specs.on_shelf.each_with_index{|s,i| s.update_attribute(:recommend_stock_num,stock_num[i])}
+          item.specs.on_shelf.each_with_index do |s,i|
+            if s.is_stop_recommend
+              s.update_attribute(:recommend_stock_num,0)
+            else
+              s.update_attribute(:recommend_stock_num,stock_num[i])
+            end
+          end
           item.specs.off_shelf.each{|s| s.update_attribute(:recommend_stock_num,0)}
         end
       end
