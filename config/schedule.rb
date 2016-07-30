@@ -12,7 +12,7 @@ end
 
 case @environment
 when 'production'
-  every 1.day, :at => Time.zone.parse('6:00 am').utc do
+  every 1.day, :at => Time.zone.parse('7:00 am').utc do
     runner "AdminMailer.delay.notify_recommend_stock", :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
   end
 end
