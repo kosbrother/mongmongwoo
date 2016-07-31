@@ -1,7 +1,16 @@
 $("#status-#{@item_spec.id}").html("已下架")
-:plain
-  $(function(){
-    new PNotify({
-      title: '已將此樣式下架'
+- if (@set_item_off_shelf) 
+  :plain
+    $(function(){
+      new PNotify({
+        title: '已將此樣式下架',
+        text: '因為該商品已無上架樣式，所以將商品下架，不然手機端會當機'
+      });
     });
-  });
+- else
+  :plain
+    $(function(){
+      new PNotify({
+        title: '已將此樣式下架'
+      });
+    });

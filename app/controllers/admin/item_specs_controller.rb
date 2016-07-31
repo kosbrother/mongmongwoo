@@ -84,19 +84,16 @@ class Admin::ItemSpecsController < AdminController
   end
 
   def on_shelf
-    @item_spec.update_column(:status, 0)
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @item_spec.update_column(:status, ItemSpec.statuses["on_shelf"])
+    item = @item_spec.item
+    @is_item_off_shelf = (item.status == "off_shelf")
   end
 
   def off_shelf
-    @item_spec.update_column(:status, 1)
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @item_spec.update_column(:status, ItemSpec.statuses["off_shelf"])
+    item = @item_spec.item
+    @set_item_off_shelf = (item.specs.on_shelf.size == 0 && (item.status == "on_shelf"))
+    item.update_column(:status, Item.statuses["off_shelf"]) if @set_item_off_shelf
   end
 
   private
