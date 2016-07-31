@@ -56,7 +56,6 @@ class ItemSpec < ActiveRecord::Base
 
   def purchase_quantity
     quantity = (recommend_stock_num + requested_quantity) - stock_amount - shipping_item_quantity
-    quantity < 0 ? 0 : quantity
   end
 
   private
