@@ -73,7 +73,6 @@ class Admin::OrdersController < AdminController
   def restock
     order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
     order.restock_order_items
-    order.update_attribute(:is_return, true)
     flash[:notice] = "訂單商品已退回庫存"
     redirect_to status_index_admin_orders_path(status: Order.statuses[order.status], anchor: "order-id-#{order.id}")
   end

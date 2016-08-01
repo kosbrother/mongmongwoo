@@ -130,17 +130,18 @@ class Order < ActiveRecord::Base
   end
 
   def not_restock?
-    Order::RESTOCK_STATUS.include?(status) && !is_return
+    !is_return
   end
 
   def already_restock?
-    Order::RESTOCK_STATUS.include?(status) && is_return
+    is_return
   end
 
   def restock_order_items
     items.each do |item|
       item.restock_amount
     end
+    update_attribute(:is_return, true)
   end
 
   private
