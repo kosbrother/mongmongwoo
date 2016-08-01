@@ -129,14 +129,6 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def not_restock?
-    !restock
-  end
-
-  def already_restock?
-    restock
-  end
-
   def restock_order_items
     items.each do |item|
       item.restock_amount

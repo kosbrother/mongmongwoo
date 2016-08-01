@@ -76,9 +76,9 @@ module Admin::OrdersHelper
   end
 
   def link_to_restock(order)
-    if Order::RESTOCK_STATUS.include?(order.status) && order.not_restock?
+    if Order::RESTOCK_STATUS.include?(order.status) && !(order.restock)
        link_to "重入庫存", restock_admin_order_path(order), method: :patch, class: "btn btn-default"
-    elsif order.already_restock?
+    elsif order.restock
        content_tag(:span, "已退回庫存", class: "label label-default")
     end
   end
