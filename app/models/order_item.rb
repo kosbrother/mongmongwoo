@@ -39,6 +39,6 @@ class OrderItem < ActiveRecord::Base
     stock_spec = item_spec.stock_spec
     stock_spec.amount += item_quantity
     stock_spec.save
-    update_attribute(:is_return, true)
+    update_attribute(:restock, true)
   end
 end
