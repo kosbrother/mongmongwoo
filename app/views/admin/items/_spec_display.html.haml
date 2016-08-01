@@ -1,4 +1,4 @@
-- @specs.each do |spec|
+- specs.each do |spec|
   %dt 樣式圖片
   %dd= spec_photo(spec, photo_size="150x150")
   %dt 樣式名稱
@@ -15,7 +15,7 @@
   %dd= spec.sales_quantity
   %dt 銷售比例
   %dd= number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
-  %dt 售完停止供貨
+  %dt 售完停止補貨
   %dd{id: "stop-recommend-spec-id-#{spec.id}"}= link_to_stop_recommend(item, spec)
   %dt 訂購
   %dd

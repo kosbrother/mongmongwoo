@@ -24,7 +24,7 @@ wb.add_worksheet(name: "推薦庫存清單") do |sheet|
 end
 
 wb.add_worksheet(name: "建議下架清單") do |sheet|
-  sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '現貨數量', '過去10天銷量', '過去30天銷量', '成本(RMB)', '售價(NTD)', '上架日期']
+  sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '停止建議補貨', '現貨數量', '過去10天銷量', '過去30天銷量', '成本(RMB)', '售價(NTD)', '上架日期']
   recommend_off_shelf.each do |spec|
     sheet.add_row [
       spec.item.taobao_supplier_name,
@@ -32,6 +32,7 @@ wb.add_worksheet(name: "建議下架清單") do |sheet|
       t(spec.item.status),
       spec.style,
       t(spec.status),
+      spec.is_stop_recommend,
       spec.stock_amount,
       spec.sales_amount_within_days(10),
       spec.sales_amount_within_days(30),
