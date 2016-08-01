@@ -21,22 +21,7 @@ class Admin::ItemSpecsController < AdminController
     render json: {style_pic: url}
   end
 
-
   def create
-    # 多圖上傳
-    # begin
-    #   create_spec_params[:images].each do |image|
-    #     @item.specs.create!(style_pic: image)
-    #   end
-    #   flash[:notice] = "樣式圖片上傳完成"
-    #   redirect_to admin_item_item_specs_path(@item)
-    # rescue Exception => e
-    #   flash.now[:alert] = "請確認上傳圖片是否正確"
-    # end
-
-    # 單張圖
-    # @item_spec = @item.specs.create!(spec_params)
-
     @item_spec = @item.specs.new(spec_params)
     
     respond_to do |format|
@@ -54,9 +39,6 @@ class Admin::ItemSpecsController < AdminController
         end        
       end
     end
-  end
-
-  def edit
   end
 
   def update
@@ -78,19 +60,19 @@ class Admin::ItemSpecsController < AdminController
   end
 
   def destroy
-    @item_spec.destroy!
+    @item_spec.destroy
     flash[:warning] = "樣式圖片已刪除"
     redirect_to admin_item_item_specs_path(@item)
   end
 
   def on_shelf
-    @item_spec.update_column(:status, ItemSpec.statuses["on_shelf"])
+    @item_spec.update(status: ItemSpec.statuses["on_shelf"])
     item = @item_spec.item
     @is_item_off_shelf = (item.status == "off_shelf")
   end
 
   def off_shelf
-    @item_spec.update_column(:status, ItemSpec.statuses["off_shelf"])
+    @item_spec.update(status: ItemSpec.statuses["off_shelf"])
     item = @item_spec.item
     @set_item_off_shelf = (item.specs.on_shelf.size == 0 && (item.status == "on_shelf"))
     item.update_column(:status, Item.statuses["off_shelf"]) if @set_item_off_shelf

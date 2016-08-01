@@ -272,6 +272,7 @@ Rails.application.routes.draw do
       get '/search_items', to: "search#search_items"
       get '/item_names', to: "search#item_names"
       get '/hot_keywords', to: "search#hot_keywords"
+
       resources :counties, only: [:index] do
         resources :towns, only: [:index] do
           resources :roads, only: [:index] do
@@ -279,12 +280,25 @@ Rails.application.routes.draw do
           end
         end
       end
+
       resources :users, only: [:create] do
         resources :my_messages, only: [:index]
+        resources :favorite_items, only: [:index, :create] do
+          collection do
+            delete 'items/:item_id' => 'favorite_items#destroy'
+          end
+        end
+        resources :wish_lists, only: [:index, :create] do
+          collection do
+            delete 'item_specs/:item_spec_id' => 'wish_lists#destroy'
+          end
+        end
       end
+
       resources :categories, only: [:index] do
         resources :items, only: [:index, :show]
       end
+
       resources :device_registrations, only: [:create]
       resources :orders, only: [:create, :show] do
         collection do
@@ -293,6 +307,7 @@ Rails.application.routes.draw do
           get "by_email_phone"
         end
       end
+
       resources :messages, only: [:index, :show]
       resources :mmw_registrations, only: [:create] do
         collection do
@@ -300,6 +315,7 @@ Rails.application.routes.draw do
           post "forget"
         end
       end
+
       resources :oauth_sessions, only: [:create]
       resources :shop_infos, only: [:index]
     end
