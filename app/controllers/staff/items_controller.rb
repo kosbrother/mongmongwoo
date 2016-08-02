@@ -2,14 +2,6 @@ class Staff::ItemsController < StaffController
   before_action :require_assistant
   before_action :find_item, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @item_page = @items = Item.priority.paginate(:page => params[:page])
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def new
     @item = Item.new
     @photo = @item.photos.new
@@ -25,12 +17,6 @@ class Staff::ItemsController < StaffController
       flash.now[:alert] = "請確認欄位資料"
       render :new
     end
-  end
-
-  def show
-  end
-
-  def edit
   end
 
   def update

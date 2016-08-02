@@ -49,7 +49,7 @@ Rails.application.routes.draw do
 
     resources :categories, only: [:show, :index]
 
-    resources :items do
+    resources :items, only: [:new, :create, :show, :edit, :update, :destroy] do
       resources :photos, except: [:show]
 
       resources :item_specs, except: [:show]

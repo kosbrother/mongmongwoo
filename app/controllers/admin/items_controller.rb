@@ -25,9 +25,6 @@ class Admin::ItemsController < AdminController
     @sales_volume_weekly = @item.sales_quantity_within_date(TimeSupport.time_until("week"))
   end
 
-  def edit
-  end
-
   def update
     if @item.update(item_params)
       flash[:notice] = "成功更新商品"
