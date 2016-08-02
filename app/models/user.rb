@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :devices, class_name: "DeviceRegistration", dependent: :destroy
   has_many :favorite_items
   has_many :favorites, through: :favorite_items, source: :item
+  has_many :wish_lists
   has_many :message_records, dependent: :destroy
   has_many :messages, through: :message_records
   has_many :logins

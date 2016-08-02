@@ -139,13 +139,18 @@ ActiveRecord::Schema.define(version: 20160729125028) do
   add_index "device_registrations", ["user_id"], name: "index_device_registrations_on_user_id", using: :btree
 
   create_table "favorite_items", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.integer  "item_id",    limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "user_id",       limit: 4
+    t.integer  "item_id",       limit: 4
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "favorite_type", limit: 4, default: 0
+    t.integer  "item_spec_id",  limit: 4
+    t.datetime "deleted_at"
   end
 
+  add_index "favorite_items", ["favorite_type"], name: "index_favorite_items_on_favorite_type", using: :btree
   add_index "favorite_items", ["item_id"], name: "index_favorite_items_on_item_id", using: :btree
+  add_index "favorite_items", ["item_spec_id"], name: "index_favorite_items_on_item_spec_id", using: :btree
   add_index "favorite_items", ["user_id"], name: "index_favorite_items_on_user_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|

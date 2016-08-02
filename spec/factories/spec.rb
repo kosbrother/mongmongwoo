@@ -9,3 +9,7 @@ FactoryGirl.define do
     style_pic { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'style_pic.png')) }
   end
 end
+
+FactoryGirl.define do
+  factory :stock_spec, class: StockSpec
+end
