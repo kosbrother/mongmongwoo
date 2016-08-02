@@ -172,6 +172,7 @@ Rails.application.routes.draw do
         get "status_index"
         get "search"
         get "export_order_list"
+        patch "update_to_placed"
       end
 
       member do
