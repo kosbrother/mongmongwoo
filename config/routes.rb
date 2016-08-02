@@ -134,6 +134,8 @@ Rails.application.routes.draw do
         member do
           patch "on_shelf"
           patch "off_shelf"
+          patch "stop_recommend"
+          patch "start_recommend"
           get "style_pic"
         end
       end

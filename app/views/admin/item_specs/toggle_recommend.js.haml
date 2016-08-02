@@ -1,0 +1,7 @@
+:plain
+  $('#stop-recommend-spec-id-#{@item_spec.id}').html('#{link_to_stop_recommend(@item, @item_spec)}')
+  $(function(){
+    new PNotify({
+      title: '#{@message}'
+    });
+  });

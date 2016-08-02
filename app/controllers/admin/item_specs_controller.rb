@@ -1,7 +1,7 @@
 class Admin::ItemSpecsController < AdminController
   before_action :require_manager
   before_action :find_item
-  before_action :find_spec, only: [:edit, :update, :destroy, :on_shelf, :off_shelf, :style_pic]
+  before_action :find_spec, only: [:edit, :update, :destroy, :on_shelf, :off_shelf, :style_pic, :stop_recommend, :start_recommend]
 
   def index
     @item_specs = @item.specs
@@ -94,6 +94,18 @@ class Admin::ItemSpecsController < AdminController
     item = @item_spec.item
     @set_item_off_shelf = (item.specs.on_shelf.size == 0 && (item.status == "on_shelf"))
     item.update_column(:status, Item.statuses["off_shelf"]) if @set_item_off_shelf
+  end
+
+  def stop_recommend
+    @item_spec.update(is_stop_recommend: true)
+    @message = '已將此產品設為停止建議補貨'
+    render 'toggle_recommend'
+  end
+
+  def start_recommend
+    @item_spec.update(is_stop_recommend: false)
+    @message = '已將此產品重新設為建議補貨'
+    render 'toggle_recommend'
   end
 
   private
