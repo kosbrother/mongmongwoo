@@ -24,4 +24,12 @@ namespace :specs do
       end
     end
   end
+
+  task :set_off_shelf_if_empty_and_stop_replenish  => :environment do
+    ItemSpec.where(status: ItemSpec.statuses["on_shelf"]).each do |s|
+      if s.is_stop_recommend and (s.stock_spec.nil? or s.stock_spec.amount == 0)
+        s.update_attribute(:status, ItemSpec.statuses["off_shelf"])
+      end
+    end
+  end
 end

@@ -8,6 +8,7 @@ end
 every 1.day, :at => Time.zone.parse('5:00 am').utc do
   rake "-s sitemap:refresh"
   rake 'specs:stock_recommend_num',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
+  rake 'specs:set_off_shelf_if_empty_and_stop_replenish',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
 
 case @environment
