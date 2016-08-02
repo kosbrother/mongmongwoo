@@ -10,7 +10,7 @@
       %th.large-mid 訂購商品
   %tbody
     - orders.each do |order|
-      %tr
+      %tr{id: "order-id-#{order.id}"}
         %td.item-id-cell
           .button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
             = order.id
@@ -21,6 +21,7 @@
           .button= link_to_send_survey_email(order)
           .button= link_to_combine_orders(order)
           .button= link_to_allpay_barcode(order)
+          .button= link_to_restock(order)
         %td
           = order.created_on
           %br
@@ -43,6 +44,8 @@
                 = link_to_update_order_status("訂單變更", order)
               %li
                 = link_to_update_order_status("訂單取消", order)
+              %li
+                = link_to_update_order_status("退貨", order)
           %hr
           物流狀態：
           %br

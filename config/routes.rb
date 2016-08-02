@@ -178,6 +178,7 @@ Rails.application.routes.draw do
         patch "update_status"
         get "select_orders"
         post "combine_orders"
+        patch "restock"
       end
     end
 

@@ -4,12 +4,12 @@ class Admin::OrdersController < AdminController
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
-    @orders = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).recent.paginate(page: params[:page])
   end
 
   def status_index
     params[:status] ||= 0
-    @orders = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).status(params[:status]).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).status(params[:status]).recent.paginate(page: params[:page])
   end
 
   def edit
@@ -68,6 +68,13 @@ class Admin::OrdersController < AdminController
 
   def export_order_list
     @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).recent
+  end
+
+  def restock
+    order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
+    order.restock_order_items
+    flash[:notice] = "訂單商品已退回庫存"
+    redirect_to status_index_admin_orders_path(status: Order.statuses[order.status], anchor: "order-id-#{order.id}")
   end
 
   private

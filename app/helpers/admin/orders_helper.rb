@@ -8,13 +8,9 @@ module Admin::OrdersHelper
   end
 
   def li_status_link(status)
-    content_tag(:li, '' , class: eq_to_status?(status)) do
+    content_tag(:li, '' , class: set_class_to_active(status)) do
       link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", status_index_admin_orders_path(status: status)
     end
-  end
-
-  def eq_to_status?(status)
-    params[:status].to_i == status ? 'active' : ''
   end
 
   def order_status(status_number)
@@ -77,5 +73,13 @@ module Admin::OrdersHelper
     stock_amount = order_item.stock_amount + order_item.shipping_amount
     requested_amount = OrderItem.requested_amount(order_item.item_spec_id)
     content_tag(:span, requested_amount, class: "#{ stock_amount < requested_amount ? 'warning' : '' }")
+  end
+
+  def link_to_restock(order)
+    if order.restock
+      content_tag(:span, "已退回庫存", class: "label label-default")
+    elsif Order::RESTOCK_STATUS.include?(order.status) && !(order.restock)
+      link_to "重入庫存", restock_admin_order_path(order), method: :patch, class: "btn btn-default"
+    end
   end
 end
