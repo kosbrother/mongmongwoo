@@ -9,7 +9,6 @@
   .pull-right
     = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-default btn-sm"
     = link_to "商品圖片", admin_item_photos_path(@item), class: "btn btn-primary btn-sm"
-    = link_to "商品樣式", admin_item_item_specs_path(@item), class: "btn btn-success btn-sm"
   .item-cover-words-intro
     .cover-intro.col-md-4
       = item_cover(@item.cover)
@@ -66,6 +65,19 @@
     %p.lead 樣式資訊
     %dl.dl-horizontal
       = render "spec_display", item: @item, specs: @specs
+    %p.lead 新增樣式
+    = form_for [:admin, @item, ItemSpec.new], html: { class: "form-horizontal well" } do |f|
+      .form-group
+        = f.label :style, "樣式名稱", class: "col-sm-2 control-label"
+        .col-sm-5
+          = f.text_field :style, class: "form-control", placeholder: "請輸入名稱"
+      .form-group
+        = f.label :style_pic, "樣式圖片", class: "col-sm-2 control-label"
+        .col-sm-5
+          = f.file_field :style_pic, multiple: true, name: "item_spec[style_pic]"
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = link_to "顯示所有新增樣式", admin_item_path(@item), class: "btn btn-warning"
   %br
   .well
     %p.lead 商品圖片
