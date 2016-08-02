@@ -52,7 +52,7 @@ class Staff::ItemsController < StaffController
   private
 
   def item_params
-    params.require(:item).permit(:name, :price, :special_price, :cover, :slug, :description, :url, :taobao_supplier_id, :cost, category_ids: [])
+    params.require(:item).permit(:name, :price, :special_price, :cover, :slug, :description, :url, :taobao_supplier_id, :cost, :real_name, category_ids: [])
   end
 
   def find_item
