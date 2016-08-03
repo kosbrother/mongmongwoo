@@ -46,24 +46,23 @@
         %td 優惠價格
         %td{colspan: "5"}
           = number_to_currency(@item.special_price, unit: "NT$ ")
+      %tr
+        %td 總銷售量
+        %td{colspan: "2"}
+          = @sales_volume
+        %td 月銷售量
+        %td{colspan: "2"}
+          = @sales_volume_monthly
+        %td 週銷售量
+        %td{colspan: "5"}
+          = @sales_volume_weekly
   %hr
   %h3 樣式資訊
+  %p.text-right
+    = link_to "新增樣式", new_admin_item_item_spec_path(@item), class: "btn btn-warning"
   .well
     %dl.dl-horizontal
       = render "spec_display", item: @item, specs: @specs
-    %p.lead 新增樣式
-    = form_for [:admin, @item, ItemSpec.new], html: { class: "form-horizontal well" } do |f|
-      .form-group
-        = f.label :style, "樣式名稱", class: "col-sm-2 control-label"
-        .col-sm-5
-          = f.text_field :style, class: "form-control", placeholder: "請輸入名稱"
-      .form-group
-        = f.label :style_pic, "樣式圖片", class: "col-sm-2 control-label"
-        .col-sm-5
-          = f.file_field :style_pic, multiple: true, name: "item_spec[style_pic]"
-      .form-group
-        .col-sm-offset-2.col-sm-10
-          = link_to "顯示所有新增樣式", admin_item_path(@item), class: "btn btn-warning"
   %br
   %h3 商品敘述
   .well
@@ -71,8 +70,8 @@
       = raw @item.description
   %br
   %h3 商品圖片
-  .pull-right
-    = link_to "商品圖片", admin_item_photos_path(@item), class: "btn btn-primary btn-sm"
+  %p.text-right
+    = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-primary"
   .well.row
     .col-md-6
       %p 封面圖片

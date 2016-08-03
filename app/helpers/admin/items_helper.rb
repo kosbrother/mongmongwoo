@@ -94,9 +94,9 @@ module Admin::ItemsHelper
 
   def link_to_stop_recommend(item, spec)
     if spec.is_stop_recommend
-      link_to '恢復[建議補貨]', start_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-success', method: :patch
+      link_to '否', start_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-success', method: :patch
     else
-      link_to '設為[停止建議補貨]', stop_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-danger', method: :patch
+      link_to '是', stop_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-danger', method: :patch
     end
   end
 end
