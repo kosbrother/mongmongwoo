@@ -6,7 +6,7 @@ class Cart < ActiveRecord::Base
 
   STEP = { checkout: 1, info: 2, confirm: 3}
   FREE_SHIPPING_PRICE = 490
-  SHIP_FEE = 60
+  SHIP_FEE = 90
 
 
 end
