@@ -1,10 +1,11 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "推薦庫存清單") do |sheet|
-  sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '現貨數量', '運送中數量', '需求量', '建議庫存量', '採購量', '成本(RMB)','總成本(RMB)', '售價(NTD)', '上架日期']
+  sheet.add_row ['商家', '商品編號', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '現貨數量', '運送中數量', '需求量', '建議庫存量', '採購量', '成本(RMB)','總成本(RMB)', '售價(NTD)', '商品上架日期', '樣式上架日期']
   recommend_stock.each do |spec|
     spec_total_cost = (spec.item.cost.present?) ? spec.item.cost * spec.purchase_quantity : 0
     sheet.add_row [
       spec.item.taobao_supplier_name,
+      spec.item_id,
       spec.item.name,
       t(spec.item.status),
       spec.style,
@@ -17,17 +18,18 @@ wb.add_worksheet(name: "推薦庫存清單") do |sheet|
       spec.item.cost,
       spec_total_cost,
       spec.item.price,
+      display_date(spec.item.created_at),
       display_date(spec.created_at)
     ]  
   end
-  sheet.column_widths 10, 30, 30, 10
 end
 
 wb.add_worksheet(name: "建議下架清單") do |sheet|
-  sheet.add_row ['商家', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '停止建議補貨', '現貨數量', '過去10天銷量', '過去30天銷量', '成本(RMB)', '售價(NTD)', '上架日期']
+  sheet.add_row ['商家', '商品編號', '商品名稱', '商品上/下架', '商品樣式', '樣式上/下架', '停止建議補貨', '現貨數量', '過去10天銷量', '過去30天銷量', '成本(RMB)', '售價(NTD)', '商品上架日期', '樣式上架日期']
   recommend_off_shelf.each do |spec|
     sheet.add_row [
       spec.item.taobao_supplier_name,
+      spec.item_id,
       spec.item.name,
       t(spec.item.status),
       spec.style,
@@ -38,10 +40,10 @@ wb.add_worksheet(name: "建議下架清單") do |sheet|
       spec.sales_amount_within_days(30),
       spec.item.cost,
       spec.item.price,
+      display_date(spec.item.created_at),
       display_date(spec.created_at)
     ]
   end
-  sheet.column_widths 10, 30, 30, 10
 end
 
 wb.add_worksheet(name: "昨日銷售量") do |sheet|
