@@ -14,7 +14,7 @@ class OrderItem < ActiveRecord::Base
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :total_income_and_cost, -> { joins(:item).select("COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) AS total_sales_income ", "COALESCE(SUM(order_items.item_quantity * items.cost), 0) AS total_cost_of_goods") }
 
-  def self.statuses_total_amount(item_spec_id, *statuses)
+  def self.statuses_total_amount(item_spec_id, statuses=[])
     item_spec_id ? joins(:order).where(item_spec_id: item_spec_id, orders: { status: statuses }).sum(:item_quantity) : 0
   end
 
@@ -42,6 +42,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   def able_to_pack?
-    (stock_amount - OrderItem.statuses_total_amount(item_spec_id, Order.statuses['處理中'], Order.statuses['訂單變更'])) >= item_quantity
+    (stock_amount - OrderItem.statuses_total_amount(item_spec_id, [Order.statuses['處理中'], Order.statuses['訂單變更']])) >= item_quantity
   end
 end
