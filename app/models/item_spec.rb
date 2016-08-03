@@ -8,7 +8,7 @@ class ItemSpec < ActiveRecord::Base
 
   validates_numericality_of :style_amount, :only_integer => true, :greater_than_or_equal_to => 0, :allow_blank => true
 
-  after_update :update_recommend_stock_num, :notify_wish_list
+  after_update :update_recommend_stock_num, :notify_wish_list, :update_item_status
   after_create :set_defult_recommend_stock_num, :add_shelf_position
 
   belongs_to :item
@@ -81,6 +81,12 @@ class ItemSpec < ActiveRecord::Base
       wish_lists.each do |w|
         UserNotifyService.new(w.user).notify_wish_list_user(w)
       end
+    end
+  end
+
+  def update_item_status
+    if status_change_to?("off_shelf") and (item.specs.on_shelf.size == 0)
+      item.update_attribute(:status, Item.statuses["off_shelf"])
     end
   end
 end
