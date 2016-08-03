@@ -71,7 +71,7 @@ module Admin::OrdersHelper
 
   def spec_requested_number(order_item)
     stock_amount = order_item.stock_amount + order_item.shipping_amount
-    requested_amount = OrderItem.requested_amount(order_item.item_spec_id)
+    requested_amount = OrderItem.statuses_total_amount(order_item.item_spec_id, [Order.statuses['新訂單'], Order.statuses['處理中'], Order.statuses['訂單變更']])
     content_tag(:span, requested_amount, class: "#{ stock_amount < requested_amount ? 'warning' : '' }")
   end
 

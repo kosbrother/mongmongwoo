@@ -136,6 +136,10 @@ class Order < ActiveRecord::Base
     update_attribute(:restock, true)
   end
 
+  def all_able_to_pack?
+    items.all? { |item| item.able_to_pack? }
+  end
+
   private
 
   def status_changed_to_shipping?
