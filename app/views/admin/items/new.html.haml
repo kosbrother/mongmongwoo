@@ -10,4 +10,5 @@
         .panel-title
           = item_title
       .panel-body
-        = render "form"
+        = form_for [:admin, @item], html: { class: "form-horizontal cancell-disabled-item-form" } do |f|
+          = render "form", f: f
