@@ -2,38 +2,38 @@
   %table.table.table-striped.table-bordered.order-table
     %thead
       %tr
+        %th 貨架編號
         %th 樣式名稱
         %th 樣式狀態
-        %th 是否補貨
         %th 銷售比例
-        %th 貨架編號
+        %th 月銷售量
         %th 建議庫存
         %th 現貨數量
         %th 運送中數量
-        %th 銷售數量
+        %th 是否補貨
         %th 訂購
     %tbody
       - specs.each do |spec|
         %tr
           %td
+            = spec.item_shelf_position
+          %td
             = raw(spec.style)
           %td{:id => "status-#{spec.id}"}
             = link_to (spec.on_shelf? ? off_shelf_admin_item_item_spec_path(@item, spec) : on_shelf_admin_item_item_spec_path(@item, spec)), method: :patch, remote: true do
               = spec_status(spec.status)
-          %td{id: "stop-recommend-spec-id-#{spec.id}"}
-            = link_to_stop_recommend(item, spec)
           %td
             = number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
           %td
-            = spec.item_shelf_position
+            = spec.sales_amount_within_days(30)
           %td
             = spec.recommend_stock_num
           %td
             = spec.stock_amount
           %td
             = spec.shipping_item_quantity
-          %td
-            = spec.sales_quantity
+          %td{id: "stop-recommend-spec-id-#{spec.id}"}
+            = link_to_stop_recommend(item, spec)
           %td
             = form_tag add_admin_admin_cart_items_path, remote: true do
               = hidden_field_tag :item_id, spec.item_id

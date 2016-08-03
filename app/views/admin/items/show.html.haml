@@ -6,84 +6,43 @@
       = link_to "分類列表", admin_categories_path
     %li.active
       = @item.name
-  %h3 商品資訊
-  %table.table.table-striped.table-bordered.order-table
-    %tbody
-      %tr
-        %td 商品名稱
-        %td{colspan: "5"}
-          = @item.name
-        %td 淘寶商品名稱
-        %td{colspan: "5"}
-          = @item.taobao_name
-        %td 商品狀態
-        %td{id: "status-#{@item.id}", colspan: "3"}
-          = link_to update_shelf_path(@item), method: :patch, remote: true do
-            = item_status(@item.status)
-        %td
-          = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-default"
-      %tr
-        %td 商家名稱
-        %td{colspan: "5"}
-          = link_to_supplier(@item)
-        %td 商品編號
-        %td{colspan: "2"}
-          = @item.id
-        %td 貨架編號
-        %td{colspan: "2"}
-          = @item.shelf_position
-        %td 賣場連結
-        %td{colspan: "4"}
-          = link_to @item.url, target: "_blank" do
-            按此前往淘寶商品
-      %tr
-        %td 淘寶價格
-        %td{colspan: "5"}
-          = number_to_currency(@item.cost, unit: "¥ ")
-        %td 商品價格
-        %td{colspan: "3"}
-          = number_to_currency(@item.price, unit: "NT$ ")
-        %td{colspan: "2"} 優惠價格
-        %td{colspan: "6"}
-          = number_to_currency(@item.special_price, unit: "NT$ ")
-      %tr
-        %td 總銷售量
-        %td{colspan: "5"}
-          = @sales_volume
-        %td 月銷售量
-        %td{colspan: "5"}
-          = @sales_volume_monthly
-        %td 週銷售量
-        %td{colspan: "5"}
-          = @sales_volume_weekly
+  .info-title
+    %P.lead.col-md-4 商品資訊
+    %P.pull-right.inline-display
+      = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-success"
+    %P.pull-right.inline-display{id: "status-#{@item.id}"}
+      = link_to item_status(@item.status), update_shelf_path(@item), method: :patch, remote: true, class: "btn btn-default"
+  = render "item_table", item: @item
   %hr
-  %h3 樣式資訊
-  %p.text-right
-    = link_to "新增樣式", new_admin_item_item_spec_path(@item), class: "btn btn-warning"
-  .well
+  .info-title
+    %P.lead.col-md-4 樣式資訊
+    %P.text-right
+      = link_to "新增樣式", new_admin_item_item_spec_path(@item), class: "btn btn-warning"
+  .well.custom-well
     %dl.dl-horizontal
       = render "spec_display", item: @item, specs: @specs
   %hr
-  %h3 樣式圖片
-  .well
+  .info-title
+    %P.lead.text-left 樣式圖片
+  .well.custom-well
     .row
       - @specs.each do |spec|
         .col-md-2
           %p= spec.style
           = spec_photo(spec, photo_size="150x150")
   %hr
-  %h3 商品敘述
-  .well
+  .info-title
+    %p.lead.text-left 商品敘述
+  .well.custom-well
     .item-description.text-center
       = raw @item.description
   %hr
-  %h3 商品圖片
-  %p.text-right
-    = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-primary"
-  .well.row
-    .col-md-6
-      %p 封面圖片
-      = item_cover(@item.cover)
-    .col-md-6
-      %p 展示圖片
-      = render "photo_display", item: @item, photos: @photos
+  .info-title
+    %p.lead.col-md-4 商品圖片
+    %p.text-right
+      = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-primary"
+  .well.row.custom-well
+    %p 封面圖片
+    = item_cover(@item.cover)
+    %p 展示圖片
+    = render "photo_display", item: @item, photos: @photos
