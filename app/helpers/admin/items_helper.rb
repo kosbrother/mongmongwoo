@@ -83,7 +83,7 @@ module Admin::ItemsHelper
   end
 
   def link_to_supplier(item)
-    link_to item.supplier_name, item.supplier_url, target: "_blank" rescue "沒有商家資料"
+    link_to item.supplier_name, admin_taobao_supplier_path(@item.taobao_supplier, status: Item.statuses[:on_shelf]), target: "_blank" rescue "沒有商家資料"
   end
 
   def li_item_status_link(taobao_supplier, status)
