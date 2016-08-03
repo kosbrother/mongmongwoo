@@ -2,15 +2,6 @@ class Admin::ItemsController < AdminController
   before_action :require_manager
   before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
 
-  def index
-    @item_page = @items = Item.priority.paginate(:page => params[:page])
-
-    respond_to do |format|
-      format.html
-      format.json { render :json => @items }
-    end
-  end
-
   def new
     @item = Item.new
     @photo = @item.photos.new
@@ -34,9 +25,6 @@ class Admin::ItemsController < AdminController
     @sales_volume_weekly = @item.sales_quantity_within_date(TimeSupport.time_until("week"))
   end
 
-  def edit
-  end
-
   def update
     if @item.update(item_params)
       flash[:notice] = "成功更新商品"
@@ -55,26 +43,10 @@ class Admin::ItemsController < AdminController
 
   def on_shelf
     @item.update_column(:status, 0)
-    respond_to do |format|
-      format.html do
-        flash[:notice] = "#{@item.name}已上架"
-        redirect_to :back
-      end
-
-      format.js
-    end
   end
 
   def off_shelf
     @item.update_column(:status, 1)
-    respond_to do |format|
-      format.html do
-        flash[:notice] = "#{@item.name}已下架"
-        redirect_to :back
-      end
-
-      format.js
-    end
   end
 
   def search
@@ -88,7 +60,7 @@ class Admin::ItemsController < AdminController
   private
 
   def item_params
-    params.require(:item).permit(:name, :price, :special_price, :cover, :slug, :description, :url, :taobao_supplier_id, :cost, :shelf_position,category_ids: [])
+    params.require(:item).permit(:name, :price, :special_price, :cover, :slug, :description, :url, :taobao_supplier_id, :cost, :shelf_position, :taobao_name, category_ids: [])
   end
 
   def find_item

@@ -39,6 +39,9 @@
           %dt 淘寶價格
           %dd
             = number_to_currency(@item.cost, unit: "¥ ")
+          %dt 淘寶商品名稱
+          %dd
+            = @item.taobao_name
           %dt 商品名稱
           %dd
             = @item.name

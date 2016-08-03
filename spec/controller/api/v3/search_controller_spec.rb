@@ -39,7 +39,7 @@ RSpec.describe Api::V3::SearchController, type: :controller do
   end
 
   describe 'get #item_names' do
-    let!(:items) {FactoryGirl.create_list(:item, 10)}
+    let!(:items) {FactoryGirl.create_list(:item, 10, status: Item.statuses["on_shelf"])}
     let!(:off_shelf_items) {FactoryGirl.create_list(:item, 5, status: Item.statuses["off_shelf"])}
     it 'does show all the items name list' do
       get :item_names
