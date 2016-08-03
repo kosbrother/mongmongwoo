@@ -6,7 +6,7 @@
       = render "search_form"
       %hr
       = link_to '處理中訂單EXCEL', export_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-primary'
-      = link_to '處理有現貨訂單', update_to_placed_admin_orders_path, class: 'btn btn-primary', method: :patch
+      = link_to '處理有現貨訂單', update_to_processing_admin_orders_path, class: 'btn btn-primary', method: :patch
       %hr
       %ul.nav.nav-tabs
         = li_status_link(Order.statuses["新訂單"])
