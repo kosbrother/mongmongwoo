@@ -7,7 +7,8 @@ class UserNotifyService
   end
 
   def notify_wish_list_user(wish_list)
-    user.messages.create(wish_list_message_params(wish_list.item.name, wish_list.item_spec.style))
+    message = user.messages.create(wish_list_message_params(wish_list.item.name, wish_list.item_spec.style))
+    GcmNotifyService.new.send_message_notification(user.device_id, message) if user.device_id
   end
 
   private
