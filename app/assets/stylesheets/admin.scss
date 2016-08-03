@@ -42,6 +42,12 @@ div.item-cover-words-intro, div.notification-intro {
   color: rgb(255, 34, 228);
 }
 
+.photo_section {
+  display: table;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /*商品排序拖曳按鈕*/
 #items-sort-list .handle {
   font-size: 12px;

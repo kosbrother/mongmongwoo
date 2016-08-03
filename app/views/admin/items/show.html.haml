@@ -42,7 +42,8 @@
     %p.text-right
       = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-primary"
   .well.row.custom-well
-    %p 封面圖片
-    = item_cover(@item.cover)
-    %p 展示圖片
-    = render "photo_display", item: @item, photos: @photos
+    .photo_section
+      %p 封面圖片
+      = item_cover(@item.cover)
+      %p 展示圖片
+      = render "photo_display", item: @item, photos: @photos
