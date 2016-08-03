@@ -17,14 +17,14 @@
         %td{colspan: "5"}
           = @item.taobao_name
         %td 商品狀態
-        %td{id: "status-#{@item.id}", colspan: "2"}
+        %td{id: "status-#{@item.id}", colspan: "3"}
           = link_to update_shelf_path(@item), method: :patch, remote: true do
             = item_status(@item.status)
         %td
           = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-default"
       %tr
         %td 商家名稱
-        %td{colspan: "2"}
+        %td{colspan: "5"}
           = link_to_supplier(@item)
         %td 商品編號
         %td{colspan: "2"}
@@ -33,25 +33,25 @@
         %td{colspan: "2"}
           = @item.shelf_position
         %td 賣場連結
-        %td{colspan: "2"}
+        %td{colspan: "4"}
           = link_to @item.url, target: "_blank" do
             按此前往淘寶商品
       %tr
         %td 淘寶價格
-        %td{colspan: "2"}
+        %td{colspan: "5"}
           = number_to_currency(@item.cost, unit: "¥ ")
         %td 商品價格
-        %td{colspan: "2"}
+        %td{colspan: "3"}
           = number_to_currency(@item.price, unit: "NT$ ")
-        %td 優惠價格
-        %td{colspan: "5"}
+        %td{colspan: "2"} 優惠價格
+        %td{colspan: "6"}
           = number_to_currency(@item.special_price, unit: "NT$ ")
       %tr
         %td 總銷售量
-        %td{colspan: "2"}
+        %td{colspan: "5"}
           = @sales_volume
         %td 月銷售量
-        %td{colspan: "2"}
+        %td{colspan: "5"}
           = @sales_volume_monthly
         %td 週銷售量
         %td{colspan: "5"}
