@@ -32,7 +32,7 @@ class Order < ActiveRecord::Base
 
   acts_as_paranoid
 
-  self.per_page = 50
+  self.per_page = 20
 
   def self.search_by_search_terms(search_term)
     joins(:info).where('ship_phone = :ship_phone OR ship_email = :ship_email OR orders.id = :order_id', search_term).recent
