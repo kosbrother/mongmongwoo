@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160802024307) do
+ActiveRecord::Schema.define(version: 20160803005014) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -224,7 +224,7 @@ ActiveRecord::Schema.define(version: 20160802024307) do
     t.decimal  "cost",                             precision: 10, scale: 2
     t.integer  "special_price",      limit: 4
     t.string   "shelf_position",     limit: 255
-    t.string   "real_name",          limit: 255
+    t.string   "taobao_name",        limit: 255
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
