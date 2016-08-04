@@ -3,19 +3,6 @@ class Admin::ItemSpecsController < AdminController
   before_action :find_item
   before_action :find_spec, only: [:edit, :update, :destroy, :on_shelf, :off_shelf, :style_pic, :stop_recommend, :start_recommend]
 
-  def index
-    @item_specs = @item.specs
-  end
-
-  def new
-    @item_spec = @item.specs.new
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
   def style_pic
     url = @item_spec.style_pic.url
     render json: {style_pic: url}
@@ -23,46 +10,7 @@ class Admin::ItemSpecsController < AdminController
 
   def create
     @item_spec = @item.specs.new(spec_params)
-    
-    respond_to do |format|
-      if  @item_spec.save!
-        format.html do
-          flash[:notice] = "成功新增樣式"
-          redirect_to admin_item_item_specs_path(@item)        
-        end
-
-        format.js
-      else
-        format.html do
-          flash[:alert] = "請確認所有欄位資料是否正確"
-          render :new
-        end        
-      end
-    end
-  end
-
-  def update
-    @item_spec.update!(update_spec_params)
-
-    respond_to do |format|
-      format.html do
-        if @item_spec.valid?
-          flash[:notice] = "編輯完成"
-          redirect_to admin_item_item_specs_path(@item)
-        else
-          flash.now[:alert] = "請確認編輯內容是否正確"
-          render :edit
-        end
-      end
-
-      format.js
-    end
-  end
-
-  def destroy
-    @item_spec.destroy
-    flash[:warning] = "樣式圖片已刪除"
-    redirect_to admin_item_item_specs_path(@item)
+    @item_spec.save
   end
 
   def on_shelf
@@ -98,14 +46,6 @@ class Admin::ItemSpecsController < AdminController
   end
 
   def spec_params
-    params.require(:item_spec).permit(:style, :style_pic, :style_amount)
-  end
-
-  def create_spec_params
-    params.require(:item_spec).permit(:style, :style_pic, :style_amount).merge!(images: params[:images])
-  end
-
-  def update_spec_params
     params.require(:item_spec).permit(:style, :style_pic, :style_amount)
   end
 end

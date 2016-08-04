@@ -1,71 +1,49 @@
-%div{:clas => "row"}
-  .content-box-large
-    %ol.breadcrumb
-      %li
-        %a{:href => admin_root_path} 萌萌屋
-      %li{:class => "#{"active" if current_page?(controller: "admin/categories", action: "index")}"}
-        %a{:href => admin_categories_path} 分類列表
-      %li{:class => "#{"active" if current_page?(controller: "admin/items", action: "show")}"}= @item.name
-    .pull-right
-      = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-default btn-sm"
-      = link_to "商品圖片", admin_item_photos_path(@item), class: "btn btn-primary btn-sm"
-      = link_to "商品樣式", admin_item_item_specs_path(@item), class: "btn btn-success btn-sm"
-    .item-cover-words-intro
-      .cover-intro.col-md-4
-        = item_cover(@item.cover)
-        .col-md-6
-          %dl.dl-horizontal
-            %dt 總銷售量 :
-            %dd= @sales_volume
-            %dt 月銷售量 :
-            %dd= @sales_volume_monthly
-            %dt 周銷售量 :
-            %dd= @sales_volume_weekly
-      .words-intro.col-md-5
-        %dl.dl-horizontal
-          %dt 商品編號
-          %dd
-            = @item.id
-          %dt 貨架編號
-          %dd
-            = @item.shelf_position
-          %dt 賣場連結
-          %dd
-            = link_to @item.url, target: "_blank" do
-              按此前往淘寶商品
-          %dt 商家名稱
-          %dd
-            = link_to_supplier(@item)
-          %dt 淘寶價格
-          %dd
-            = number_to_currency(@item.cost, unit: "¥ ")
-          %dt 淘寶商品名稱
-          %dd
-            = @item.taobao_name
-          %dt 商品名稱
-          %dd
-            = @item.name
-          %dt 商品狀態
-          %dd{:id => "status-#{@item.id}"}
-            = link_to ( update_shelf_path(@item) ), method: :patch, remote: true do
-              = item_status(@item.status)
-          %dt 商品價格
-          %dd
-            = number_to_currency(@item.price, unit: "NT$ ")
-          %dt 優惠價格
-          %dd
-            = number_to_currency(@item.special_price, unit: "NT$ ")
-          %dt 商品敘述
-          %dd
-            = raw @item.description
-    %br/
-    / 商品圖片
-    .well
-      %p.lead 商品圖片
-      = render partial: "photo_display", locals: { item: @item, photos: @photos }
-    %br/
-    / 樣式圖片
-    .well
-      %p.lead 樣式圖片
-      %dl.dl-horizontal
-        = render partial: "spec_display", locals: { item: @item, specs: @specs }
+.content-box-large
+  %ol.breadcrumb
+    %li
+      = link_to "萌萌屋", admin_root_path
+    %li
+      = link_to "分類列表", admin_categories_path
+    %li.active
+      = @item.name
+  .info-title
+    %p.lead.pull-left 商品資訊
+    %p.pull-right.inline-display
+      = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-default"
+    %p.pull-right.inline-display{id: "status-#{@item.id}"}
+      = link_to_update_item_status(@item)
+  = render "item_table", item: @item
+  %br
+  .info-title
+    %p.lead.pull-left 樣式資訊
+    %p.text-right
+      = link_to "新增樣式", new_admin_item_item_spec_path(@item), class: "btn btn-default"
+  .custom-well
+    %dl.dl-horizontal
+      = render "spec_display", item: @item, specs: @specs
+
+  .info-title
+    %p.lead.text-left 樣式圖片
+  .custom-well
+    .row
+      - @specs.each do |spec|
+        .col-md-2
+          %p= spec.style
+          = spec_photo(spec, photo_size="150x150")
+  %br
+  .info-title
+    %p.lead.text-left 商品敘述
+  .custom-well
+    .item-description.text-center
+      = raw @item.description
+  %br
+  .info-title
+    %p.lead.col-md-4 商品圖片
+    %p.text-right
+      = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-default"
+  .row.custom-well
+    .photo_section
+      %p 封面圖片
+      = item_cover(@item.cover)
+      %p 展示圖片
+      = render "photo_display", item: @item, photos: @photos

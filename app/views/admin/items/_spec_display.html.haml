@@ -1,28 +1,43 @@
-- specs.each do |spec|
-  %dt 樣式圖片
-  %dd= spec_photo(spec, photo_size="150x150")
-  %dt 樣式名稱
-  %dd= raw(spec.style)
-  %dt 樣式狀態
-  %dd= spec_status(spec.status)
-  %dt 貨架編號
-  %dd= spec.item_shelf_position
-  %dt 現貨數量
-  %dd= spec.stock_amount
-  %dt 運送中數量
-  %dd= spec.shipping_item_quantity
-  %dt 銷售數量
-  %dd= spec.sales_quantity
-  %dt 銷售比例
-  %dd= number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
-  %dt 售完停止補貨
-  %dd{id: "stop-recommend-spec-id-#{spec.id}"}= link_to_stop_recommend(item, spec)
-  %dt 訂購
-  %dd
-    = form_tag add_admin_admin_cart_items_path, remote: true do
-      = hidden_field_tag :item_id, spec.item_id
-      = hidden_field_tag :item_spec_id, spec.id
-      = hidden_field_tag :taobao_supplier_id, spec.item.taobao_supplier_id
-      = number_field_tag :item_quantity, 1, min: 1, max: 99
-      = submit_tag '新增至購物車', class: "btn btn-primary "
-  %hr/
+.row
+  %table.table.table-bordered.order-table
+    %thead
+      %tr
+        %th 貨架編號
+        %th 樣式名稱
+        %th 樣式狀態
+        %th 銷售比例
+        %th 月銷售量
+        %th 建議庫存
+        %th 現貨數量
+        %th 運送中數量
+        %th 是否補貨
+        %th 訂購
+    %tbody
+      - specs.each do |spec|
+        %tr
+          %td
+            = spec.item_shelf_position
+          %td
+            = raw(spec.style)
+          %td{:id => "status-#{spec.id}"}
+            = link_to (spec.on_shelf? ? off_shelf_admin_item_item_spec_path(@item, spec) : on_shelf_admin_item_item_spec_path(@item, spec)), method: :patch, remote: true, class: status_button_class(spec.status) do
+              = spec_status(spec.status)
+          %td
+            = number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
+          %td
+            = spec.sales_amount_within_days(30)
+          %td
+            = spec.recommend_stock_num
+          %td
+            = spec.stock_amount
+          %td
+            = spec.shipping_item_quantity
+          %td{id: "stop-recommend-spec-id-#{spec.id}"}
+            = link_to_stop_recommend(item, spec)
+          %td
+            = form_tag add_admin_admin_cart_items_path, remote: true do
+              = hidden_field_tag :item_id, spec.item_id
+              = hidden_field_tag :item_spec_id, spec.id
+              = hidden_field_tag :taobao_supplier_id, spec.item.taobao_supplier_id
+              = number_field_tag :item_quantity, 1, min: 1, max: 99
+              = submit_tag '訂購', class: "btn btn-primary btn-sm"

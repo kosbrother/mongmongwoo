@@ -1,4 +1,4 @@
-$("#status-#{@item_spec.id}").html("已上架")
+$("#status-#{@item_spec.id}").html('#{link_to_update_item_spec(@item_spec)}')
 - if @is_item_off_shelf
   :plain
     $(function(){

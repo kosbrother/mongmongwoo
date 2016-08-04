@@ -130,7 +130,7 @@ Rails.application.routes.draw do
 
       resources :photos, except: [:show]
 
-      resources :item_specs, except: [:show] do
+      resources :item_specs, only: [:new, :create] do
         member do
           patch "on_shelf"
           patch "off_shelf"

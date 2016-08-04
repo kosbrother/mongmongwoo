@@ -83,7 +83,7 @@ module Admin::ItemsHelper
   end
 
   def link_to_supplier(item)
-    link_to item.supplier_name, item.supplier_url, target: "_blank" rescue "沒有商家資料"
+    link_to item.supplier_name, admin_taobao_supplier_path(@item.taobao_supplier, status: Item.statuses[:on_shelf]), target: "_blank" rescue "沒有商家資料"
   end
 
   def li_item_status_link(taobao_supplier, status)
@@ -94,9 +94,25 @@ module Admin::ItemsHelper
 
   def link_to_stop_recommend(item, spec)
     if spec.is_stop_recommend
-      link_to '恢復[建議補貨]', start_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-success', method: :patch
+      link_to '否', start_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-danger', method: :patch
     else
-      link_to '設為[停止建議補貨]', stop_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-danger', method: :patch
+      link_to '是', stop_recommend_admin_item_item_spec_path(item, spec), remote: true, class: 'btn btn-success', method: :patch
     end
+  end
+
+  def link_to_update_item_status(item)
+    link_to item_status(item.status), update_shelf_path(item), method: :patch, remote: true, class: status_button_class(item.status)
+  end
+
+  def link_to_update_item_spec(item_spec)
+    if item_spec.status == "off_shelf"
+      link_to "已下架", on_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
+    else
+      link_to "上架中", off_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
+    end
+  end
+
+  def status_button_class(status)
+    (status == "on_shelf") ? "btn btn-success" : "btn btn-danger"
   end
 end

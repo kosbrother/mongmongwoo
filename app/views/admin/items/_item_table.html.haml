@@ -1,0 +1,47 @@
+%table.table.table-bordered.order-table
+  %tbody
+    %tr
+      %td.label-cell 商品編號
+      %td{colspan: "4"}
+        = item.id
+      %td.label-cell 貨架編號
+      %td{colspan: "2"}
+        = item.shelf_position
+      %td.label-cell 商品名稱
+      %td{colspan: "5"}
+        = item.name
+      %td.label-cell 商品價格
+      %td{colspan: "5"}
+        原始價格：
+        = number_to_currency(item.price, unit: "NT$ ")
+        %br
+        優惠價格：
+        = number_to_currency(item.special_price, unit: "NT$ ")
+    %tr
+      %td.label-cell 商家名稱
+      %td{colspan: "4"}
+        = link_to_supplier(item)
+      %td.label-cell 賣場連結
+      %td{colspan: "2"}
+        = link_to "淘寶網站", item.url, target: "_blank"
+      %td.label-cell 淘寶商品名稱
+      %td{colspan: "5"}
+        = item.taobao_name
+      %td.label-cell 淘寶價格
+      %td{colspan: "5"}
+        = number_to_currency(item.cost, unit: "¥ ")
+%p.lead.pull-left 商品銷量
+%table.table.table-bordered.order-table
+  %thead
+    %tr
+      %th 總銷售量
+      %th 月銷售量
+      %th 週銷售量
+  %tbody
+    %tr
+      %td
+        = @sales_volume
+      %td
+        = @sales_volume_monthly
+      %td
+        = @sales_volume_weekly
