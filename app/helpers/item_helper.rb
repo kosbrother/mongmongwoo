@@ -69,4 +69,8 @@ module ItemHelper
   def item_current_price(item)
     item.special_price ? price_with_unit(item.special_price) : price_with_unit(item.price)
   end
+
+  def render_stock_amount(stock_amount)
+     stock_amount > 10 ? '庫存充足' : stock_amount
+  end
 end

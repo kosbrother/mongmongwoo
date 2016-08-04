@@ -9,7 +9,7 @@
         = image_tag(@item.specs.on_shelf.first.style_pic.url, class: 'img-responsive')
       .icons
         - @item.specs.on_shelf.each_with_index do |spec, index|
-          = image_tag(spec.style_pic.url, class: index == 0 ? 'icon active' : 'icon', id: "spec-#{spec.id}", 'data-id': spec.id)
+          = image_tag(spec.style_pic.url, class: index == 0 ? 'icon active' : 'icon', id: "spec-#{spec.id}", 'data-id': spec.id, "data-stock": render_stock_amount(spec.stock_amount))
   .col-lg-6
     .order-box.row
       .name
@@ -25,6 +25,10 @@
           .header 樣式名稱
         .col-lg-9.col-xs-9
           = f.select :item_spec_id, @item.specs.on_shelf.collect { |spec| [spec.style, spec.id] }, {},  class: 'spec-select'
+        .col-lg-3.col-xs-3.no-padding
+          .header 樣式庫存
+        .col-lg-9.col-xs-9
+          = content_tag(:div, render_stock_amount(@item.specs.first.stock_amount), class: 'stock-amount')
         .col-lg-3.col-xs-3.no-padding
           .header 選擇商品數量
         .col-lg-9.col-xs-9
