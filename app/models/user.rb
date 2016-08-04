@@ -81,6 +81,6 @@ class User < ActiveRecord::Base
   end
 
   def device_id
-    orders.last.device_registration_id
+    orders.last.device_registration_id if orders.any?
   end
 end
