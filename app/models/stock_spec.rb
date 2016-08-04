@@ -1,6 +1,6 @@
 class StockSpec < ActiveRecord::Base
   include AdminCartInformation
-  
+
   after_update :sef_item_spec_off_shelf, if: :stock_empty_and_stop_replenish?
   after_update :set_item_spec_on_shelf, if: :item_spec_is_off_shelf?
 
