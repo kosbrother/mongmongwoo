@@ -145,6 +145,10 @@ class Order < ActiveRecord::Base
     items.all? { |item| item.able_to_pack? }
   end
 
+  def cancel_able?
+    status == "新訂單" || status == "處理中"
+  end
+
   private
 
   def status_changed_to_shipping?

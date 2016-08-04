@@ -32,6 +32,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :orders, only: [:index, :show] do
+    member do
+      patch "cancel"
+    end
+  end
   resources :orders, only: [:index, :show]
   resources :favorite_items, only: [:index] do
     member do
@@ -296,6 +301,11 @@ Rails.application.routes.draw do
           end
         end
         resources :shopping_points, only: [:index]
+        resources :orders do
+          member do
+            patch "cancel"
+          end
+        end
       end
 
       resources :categories, only: [:index] do
