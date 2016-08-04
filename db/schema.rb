@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803005014) do
+ActiveRecord::Schema.define(version: 20160803103451) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -407,6 +407,19 @@ ActiveRecord::Schema.define(version: 20160803005014) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "shopping_points", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.integer  "point_type",  limit: 4
+    t.integer  "amount",      limit: 4,   default: 0, null: false
+    t.date     "valid_until"
+    t.string   "note",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shopping_points", ["point_type"], name: "index_shopping_points_on_point_type", using: :btree
+  add_index "shopping_points", ["user_id"], name: "index_shopping_points_on_user_id", using: :btree
 
   create_table "stock_specs", force: :cascade do |t|
     t.integer  "stock_id",     limit: 4
