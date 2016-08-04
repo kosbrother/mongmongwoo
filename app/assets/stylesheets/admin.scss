@@ -43,13 +43,16 @@ div.item-cover-words-intro, div.notification-intro {
 }
 
 .photo_section {
-  display: table;
+  display: inline-table;;
   margin-right: auto;
   margin-left: auto;
 }
 
 .label-cell {
   font-weight: bold;
+}
+.title-font {
+  padding-left: 15px;
 }
 
 /*商品排序拖曳按鈕*/
