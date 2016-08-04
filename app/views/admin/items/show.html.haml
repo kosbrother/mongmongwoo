@@ -13,35 +13,35 @@
     %P.pull-right.inline-display{id: "status-#{@item.id}"}
       = link_to item_status(@item.status), update_shelf_path(@item), method: :patch, remote: true, class: "btn btn-default"
   = render "item_table", item: @item
-  %hr
+  %br
   .info-title
     %P.lead.col-md-4 樣式資訊
     %P.text-right
       = link_to "新增樣式", new_admin_item_item_spec_path(@item), class: "btn btn-warning"
-  .well.custom-well
+  .custom-well
     %dl.dl-horizontal
       = render "spec_display", item: @item, specs: @specs
-  %hr
+
   .info-title
     %P.lead.text-left 樣式圖片
-  .well.custom-well
+  .custom-well
     .row
       - @specs.each do |spec|
         .col-md-2
           %p= spec.style
           = spec_photo(spec, photo_size="150x150")
-  %hr
+  %br
   .info-title
     %p.lead.text-left 商品敘述
-  .well.custom-well
+  .custom-well
     .item-description.text-center
       = raw @item.description
-  %hr
+  %br
   .info-title
-    %p.lead.col-md-4 商品圖片
+    %p.lead.text-left 商品圖片
     %p.text-right
       = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-primary"
-  .well.row.custom-well
+  .row.custom-well
     .photo_section
       %p 封面圖片
       = item_cover(@item.cover)

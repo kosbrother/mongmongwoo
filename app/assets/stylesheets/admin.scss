@@ -48,6 +48,10 @@ div.item-cover-words-intro, div.notification-intro {
   margin-left: auto;
 }
 
+.label-cell {
+  font-weight: bold;
+}
+
 /*商品排序拖曳按鈕*/
 #items-sort-list .handle {
   font-size: 12px;
@@ -56,8 +60,10 @@ div.item-cover-words-intro, div.notification-intro {
 }
 
 .custom-well {
-  background-color: #fff;
-  border: 1px;
+  min-height: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 20px;
 }
 
 /*訂單列表*/

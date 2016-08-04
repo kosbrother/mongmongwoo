@@ -1,16 +1,16 @@
 %table.table.table-bordered.order-table
   %tbody
     %tr
-      %td 商品編號
+      %td.label-cell 商品編號
       %td{colspan: "4"}
         = item.id
-      %td 貨架編號
+      %td.label-cell 貨架編號
       %td{colspan: "2"}
         = item.shelf_position
-      %td 商品名稱
+      %td.label-cell 商品名稱
       %td{colspan: "5"}
         = item.name
-      %td 商品價格
+      %td.label-cell 商品價格
       %td{colspan: "5"}
         原始價格：
         = number_to_currency(item.price, unit: "NT$ ")
@@ -18,18 +18,19 @@
         優惠價格：
         = number_to_currency(item.special_price, unit: "NT$ ")
     %tr
-      %td 商家名稱
+      %td.label-cell 商家名稱
       %td{colspan: "4"}
         = link_to_supplier(item)
-      %td 賣場連結
+      %td.label-cell 賣場連結
       %td{colspan: "2"}
         = link_to "淘寶網站", item.url, target: "_blank"
-      %td 淘寶商品名稱
+      %td.label-cell 淘寶商品名稱
       %td{colspan: "5"}
         = item.taobao_name
-      %td 淘寶價格
+      %td.label-cell 淘寶價格
       %td{colspan: "5"}
         = number_to_currency(item.cost, unit: "¥ ")
+%p.lead.col-md-4 商品銷量
 %table.table.table-bordered.order-table
   %thead
     %tr
