@@ -1,4 +1,4 @@
-$("#status-#{@item.id}").html('#{link_to "上架中", update_shelf_path(@item), method: :patch, remote: true, class: "btn btn-default"}')
+$("#status-#{@item.id}").html('#{link_to_update_item_status(@item)}')
 - if @item.all_specs_off_shelf?
   :plain
     $(function(){

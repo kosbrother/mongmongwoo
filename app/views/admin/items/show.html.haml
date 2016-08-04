@@ -7,23 +7,23 @@
     %li.active
       = @item.name
   .info-title
-    %p.lead.col-md-4 商品資訊
+    %p.lead.pull-left 商品資訊
     %p.pull-right.inline-display
-      = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-success"
+      = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-default"
     %p.pull-right.inline-display{id: "status-#{@item.id}"}
-      = link_to item_status(@item.status), update_shelf_path(@item), method: :patch, remote: true, class: "btn btn-default"
+      = link_to_update_item_status(@item)
   = render "item_table", item: @item
   %br
   .info-title
-    %p.lead.col-md-4 樣式資訊
+    %p.lead.pull-left 樣式資訊
     %p.text-right
-      = link_to "新增樣式", new_admin_item_item_spec_path(@item), class: "btn btn-warning"
+      = link_to "新增樣式", new_admin_item_item_spec_path(@item), class: "btn btn-default"
   .custom-well
     %dl.dl-horizontal
       = render "spec_display", item: @item, specs: @specs
 
   .info-title
-    %p.lead.text-left.title-font 樣式圖片
+    %p.lead.text-left 樣式圖片
   .custom-well
     .row
       - @specs.each do |spec|
@@ -32,7 +32,7 @@
           = spec_photo(spec, photo_size="150x150")
   %br
   .info-title
-    %p.lead.text-left.title-font 商品敘述
+    %p.lead.text-left 商品敘述
   .custom-well
     .item-description.text-center
       = raw @item.description
@@ -40,7 +40,7 @@
   .info-title
     %p.lead.col-md-4 商品圖片
     %p.text-right
-      = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-primary"
+      = link_to "編輯商品圖片", admin_item_photos_path(@item), class: "btn btn-default"
   .row.custom-well
     .photo_section
       %p 封面圖片

@@ -20,7 +20,7 @@
           %td
             = raw(spec.style)
           %td{:id => "status-#{spec.id}"}
-            = link_to (spec.on_shelf? ? off_shelf_admin_item_item_spec_path(@item, spec) : on_shelf_admin_item_item_spec_path(@item, spec)), method: :patch, remote: true do
+            = link_to (spec.on_shelf? ? off_shelf_admin_item_item_spec_path(@item, spec) : on_shelf_admin_item_item_spec_path(@item, spec)), method: :patch, remote: true, class: status_button_class(spec.status) do
               = spec_status(spec.status)
           %td
             = number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
