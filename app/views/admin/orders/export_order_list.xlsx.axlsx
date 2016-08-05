@@ -1,5 +1,5 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: "處理中訂單列表") do |sheet|
+wb.add_worksheet(name: @sheet_name) do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1")
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4")
   bold_font = sheet.styles.add_style(:b => true)
