@@ -14,4 +14,8 @@ class TimeSupport
   def self.dynamic_time_until(earlier_titme, later_time)
     Range.new(earlier_titme, later_time)
   end
+
+  def self.within_days(number)
+    Date.today.prev_day(number).beginning_of_day..Date.today.end_of_day
+  end
 end
