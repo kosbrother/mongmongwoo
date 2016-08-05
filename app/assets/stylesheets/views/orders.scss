@@ -4,15 +4,47 @@
   }
   .cart-result{
     margin-bottom: 20px;
+    > .header{
+      font-size: 14px;
+      .order-status{
+        font-size: 17px;
+      }
+    }
     > .item-bar{
+       > .itemname, .spec, .price, .quantity, .subtotal{
+         line-height: 15px;
+         position: relative;
+         top: 25px;
+         height: 40px;
+       }
        .price, .subtotal{
-         padding-left:0px;
+         padding:0px;
        }
     }
     > .totalrow{
       > .number{
-        padding-left: 0px;
+        padding: 0px;
       }
+    }
+    .modal-body{
+      height: 150px;
+    }
+  }
+}
+@media screen and (max-width: 1199px) and (min-width: 769px) {
+  .orders {
+    .cart-result {
+      > .item-bar {
+        > .itemname, .spec, .price, .quantity, .subtotal {
+          line-height: 15px;
+          position: relative;
+          top: 0px;
+          height: 20px;
+        }
+      }
+    }
+    .input-block{
+      margin-bottom: 20px;
     }
   }
 }
@@ -20,7 +52,29 @@
 @media screen and (max-width: 768px) {
   .orders{
     .cart-result {
+      > .header{
+        font-size: 12px;
+        .order-status{
+          font-size: 12px;
+        }
+        .btn-success{
+          width: 50px;
+          font-size: 10px;
+          padding: 5px 0;
+          border-radius: 1.4px;
+          background-color: #47b286;
+        }
+      }
       > .item-bar{
+        > .itemname, .spec, .price, .quantity, .subtotal{
+          line-height: 15px;
+          position: relative;
+          top: 0px;
+          height: 20px;
+        }
+        > .subtotal{
+          padding-right: 10px;
+        }
         > .itemname{
           margin-left: 0px;
         }
@@ -32,6 +86,12 @@
         > .price{
           text-align: left;
           padding-left: 0;
+        }
+
+      }
+      .totalrow{
+        .number{
+          padding-right: 10px;
         }
       }
     }

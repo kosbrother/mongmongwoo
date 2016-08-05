@@ -1,0 +1,10 @@
+.modal.fade{:role => "dialog", :tabindex => "-1", id: "cancel-modal"}
+  .modal-dialog
+    .modal-content
+      .modal-body
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        是否確定要取消這次的訂單？
+      .modal-footer
+        %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 取消
+        =link_to '確定', cancel_order_path(order.id), class: 'btn btn-success btn-confirm', method: :patch

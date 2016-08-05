@@ -76,4 +76,16 @@ class Api::V3::OrdersController < ApiController
     user_orders = Order.joins(:info).where("ship_email = ? and ship_phone = ?", params[:email], params[:phone]).recent
     render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
   end
+
+  def cancel
+    user = User.find(params[:user_id])
+    order = user.orders.find(params[:id])
+
+    if order.cancel_able?
+      order.update(status: Order.statuses["訂單取消"])
+      render status: 200, json: {data: "success"}
+    else
+      render status: 400, json: {error: {message: t('controller.error.message.can_not_cancel_order')}}
+    end
+  end
 end

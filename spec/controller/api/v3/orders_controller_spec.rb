@@ -150,25 +150,68 @@ describe Api::V3::OrdersController, type: :controller do
         expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
       end
     end
-    describe "get #by_user_email" do
-      let!(:user) { FactoryGirl.create(:user) }
-      let!(:orders) { create_list(:order_with_items, 3, user_id: user.id, uid: user.uid) }
-      let!(:email) { user.email }
-      before :each do
-        get :by_user_email, email: email
+  end
+
+  describe "get #by_user_email" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:orders) { create_list(:order_with_items, 3, user_id: user.id, uid: user.uid) }
+    let!(:email) { user.email }
+    before :each do
+      get :by_user_email, email: email
+    end
+    context 'when user email is provided' do
+      it 'does generate correct order list' do
+        result = JSON.parse(response.body)["data"]
+        orders = Order.recent
+        expect(result.size).to eq(orders.size)
+        expect(result[0]['id']).to eq(orders[0].id)
+        expect(result[0]['user_id']).to eq(orders[0].user_id)
+        expect(result[0]['uid']).to eq(orders[0].uid)
+        expect(result[0]['total']).to eq(orders[0].total)
+        expect(result[0]['status']).to eq(orders[0].status)
+        expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
       end
-      context 'when user email is provided' do
-        it 'does generate correct order list' do
-          result = JSON.parse(response.body)["data"]
-          orders = Order.recent
-          expect(result.size).to eq(orders.size)
-          expect(result[0]['id']).to eq(orders[0].id)
-          expect(result[0]['user_id']).to eq(orders[0].user_id)
-          expect(result[0]['uid']).to eq(orders[0].uid)
-          expect(result[0]['total']).to eq(orders[0].total)
-          expect(result[0]['status']).to eq(orders[0].status)
-          expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
-        end
+    end
+  end
+
+  describe "patch #cancel" do
+    let!(:user) { FactoryGirl.create(:user) }
+    context "when order status is new" do
+      let!(:order) { FactoryGirl.create(:order_with_items, user_id: user.id, status: Order.statuses["新訂單"]) }
+
+      it "does update the user order to cancel" do
+        patch :cancel, user_id: user.id, id: order.id
+        result = JSON.parse(response.body)["data"]
+        order = user.orders.first
+
+        expect(result).to eq("success")
+        expect(order.status).to eq("訂單取消")
+      end
+    end
+
+    context "when order status is processing" do
+      let!(:order) { FactoryGirl.create(:order_with_items, user_id: user.id, status: Order.statuses["處理中"]) }
+
+      it "does update the user order to cancel" do
+        patch :cancel, user_id: user.id, id: order.id
+        result = JSON.parse(response.body)["data"]
+        order = user.orders.first
+
+        expect(result).to eq("success")
+        expect(order.status).to eq("訂單取消")
+      end
+    end
+
+    context "when order status is shipping" do
+      let!(:order) { FactoryGirl.create(:order_with_items, user_id: user.id, status: Order.statuses["配送中"]) }
+
+      it "does not update the user order to cancel" do
+        patch :cancel, user_id: user.id, id: order.id
+        message = JSON.parse(response.body)["error"]["message"]
+        order = user.orders.first
+
+        expect(message).to eq(I18n.t('controller.error.message.can_not_cancel_order'))
+        expect(order.status).to eq("配送中")
       end
     end
   end
