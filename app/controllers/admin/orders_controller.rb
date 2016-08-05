@@ -74,8 +74,7 @@ class Admin::OrdersController < AdminController
     order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
     order.restock_order_items
     flash[:notice] = "訂單商品已退回庫存"
-    back_url = request.referer + "#order-id-#{order.id}"
-    redirect_to back_url
+    redirect_to status_index_admin_orders_path(status: Order.statuses[order.status], anchor: "order-id-#{order.id}")
   end
 
   def update_to_processing
