@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :message_records, dependent: :destroy
   has_many :messages, through: :message_records
   has_many :logins
+  has_many :shopping_points
 
   scope :recent, -> { order(id: :DESC) }
   acts_as_paranoid

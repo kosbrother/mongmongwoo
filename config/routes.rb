@@ -295,6 +295,7 @@ Rails.application.routes.draw do
             delete 'item_specs/:item_spec_id' => 'wish_lists#destroy'
           end
         end
+        resources :shopping_points, only: [:index]
       end
 
       resources :categories, only: [:index] do
