@@ -71,31 +71,6 @@
       .cancel:hover{
         background-image: $url-cancel-btn;
       }
-      > .modal{
-        > .modal-dialog{
-          > .modal-content{
-            > .modal-body{
-              text-align: left;
-              font-size: 24px;
-            }
-            .btn-confirm{
-              width: 150px;
-              height: 50px;
-              font-size: 20px;
-              background-color: $modal-confirm-btn-color;
-              color: #fff;
-            }
-            .btn-close{
-              width: 150px;
-              height: 50px;
-              border: $modal-btn-border;
-              font-size: 20px;
-              color: $modal-confirm-btn-color;
-              background-color: transparent;
-            }
-          }
-        }
-      }
     }
   }
   > .totalrow{
@@ -104,6 +79,32 @@
     }
     #totalprice{
       color: #ff0000;
+    }
+  }
+  .modal{
+    > .modal-dialog{
+      > .modal-content{
+        > .modal-body{
+          text-align: left;
+          font-size: 24px;
+        }
+        .btn-confirm{
+          width: 150px;
+          height: 50px;
+          font-size: 20px;
+          background-color: $modal-confirm-btn-color;
+          color: #fff;
+          line-height: 37px;
+        }
+        .btn-close{
+          width: 150px;
+          height: 50px;
+          border: $modal-btn-border;
+          font-size: 20px;
+          color: $modal-confirm-btn-color;
+          background-color: transparent;
+        }
+      }
     }
   }
 }
