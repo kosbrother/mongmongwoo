@@ -50,7 +50,7 @@ class Admin::ItemsController < AdminController
   end
 
   def search
-    @search_results_page = @search_results = Item.search_by_name(params[:search_term]).paginate(:page => params[:page])
+    @search_results = Item.search_by_name_or_id(params[:search_term]).paginate(:page => params[:page])
   end
 
   def specs

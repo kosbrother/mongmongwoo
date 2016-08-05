@@ -10,10 +10,10 @@
             %i.glyphicon.glyphicon-cog
       .content-box-large.box-with-header
         .apple_pagination
-          = will_paginate @search_results_page, :container => false
+          = will_paginate @search_results, :container => false
         %br/
         .panel-body
-          %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+          %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
             %thead
               %tr
                 %th 商品編號
@@ -33,7 +33,7 @@
                   %td
                     = link_to item.name, admin_item_path(item)
                   %td{:id => "status-#{item.id}"}
-                    = link_to ( update_shelf_path(item) ), method: :patch, remote: true do
+                    = link_to update_shelf_path(item), method: :patch, remote: true do
                       = item_status(item.status)
                   %td
                     = item.price
@@ -41,4 +41,4 @@
                     = link_to item.url, target: "_blank" do
                       按此前往淘寶商品頁
         .apple_pagination
-          = will_paginate @search_results_page, :container => false
+          = will_paginate @search_results, :container => false
