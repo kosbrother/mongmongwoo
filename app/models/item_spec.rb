@@ -51,7 +51,7 @@ class ItemSpec < ActiveRecord::Base
   end
 
   def requested_quantity
-    OrderItem.requested_amount(id)
+    OrderItem.statuses_total_amount(id, Order::COMBINE_STATUS_CODE)
   end
 
   def purchase_quantity
