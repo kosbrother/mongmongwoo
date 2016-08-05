@@ -47,7 +47,7 @@ class ItemSpec < ActiveRecord::Base
   end
 
   def sales_amount_within_days(number)
-    OrderItem.where(created_at: Date.today.prev_day(number)..Date.today).select('COALESCE(SUM(order_items.item_quantity), 0)as sales_amount').find_by(item_spec_id: id).sales_amount
+    OrderItem.where(created_at: TimeSupport.within_days(number)).select('COALESCE(SUM(order_items.item_quantity), 0)as sales_amount').find_by(item_spec_id: id).sales_amount
   end
 
   def requested_quantity
