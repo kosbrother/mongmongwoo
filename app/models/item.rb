@@ -53,6 +53,18 @@ class Item < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
+  def self.search_by_name_or_id(search_term)
+    where("name LIKE :search_name OR id = :search_id", search_name: "%#{search_term}%", search_id: search_term).recent
+  end
+
+  def self.search_categories_new(category_id, num)
+    joins(:categories).select("`items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id").where(categories: {id: category_id}).order(created_at: :asc).limit(num)
+  end
+
+  def self.search_name_and_description(query)
+    search(query: { multi_match: {query: query, fields: [ "name^3", "description" ]}})
+  end
+
   def slug_candidates
     [:name]
   end
@@ -65,21 +77,12 @@ class Item < ActiveRecord::Base
     cover
   end
 
-  def self.search_by_name(search_term)
-    return [] if search_term.blank?
-    where("name LIKE ?", "%#{search_term}%").recent
-  end
-
   def category_position(category)
     item_category(category).position
   end
 
   def item_category(category)
     item_categories.where(category_id: category.id)[0]
-  end
-
-  def self.search_categories_new(category_id, num)
-    self.joins(:categories).select("`items`.*, `categories`.`name` as category_name, `categories`.`id` as category_id").where(categories: {id: category_id}).order(created_at: :asc).limit(num)
   end
 
   def final_price
@@ -92,13 +95,8 @@ class Item < ActiveRecord::Base
     h
   end
 
-  def self.search_name_and_description(query)
-    search(query: { multi_match: {query: query, fields: [ "name^3", "description" ]}})
-  end
-
   def all_specs_off_shelf?
-    count = self.specs.on_shelf.count
-    count == 0 ? true : false
+    specs.on_shelf.count == 0
   end
 
   def taobao_supplier_name
