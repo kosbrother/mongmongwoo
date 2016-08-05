@@ -29,11 +29,15 @@ class AllpayGoodsService
     encrypted_data
     url = URI.parse("https://logistics.allpay.com.tw/helper/printTradeDocument")
     resp, data = Net::HTTP.post_form(url, @fields.sort.to_h)
-    
+
     if resp.body.start_with? '0'
       return false
     else
-      return resp.body
+      tmp = resp.body.force_encoding('UTF-8')
+      doc = Nokogiri::HTML.fragment(tmp)
+      doc.css('button').remove
+
+      return doc.to_html.gsub(/&amp;nbsp/, '&nbsp;')
     end
   end
 
