@@ -133,8 +133,10 @@ class Order < ActiveRecord::Base
   end
 
   def restock_order_items
-    items.each do |item|
-      item.restock_amount
+    ActiveRecord::Base.transaction do
+      items.each do |item|
+        item.restock_amount
+      end
     end
     update_attribute(:restock, true)
   end
