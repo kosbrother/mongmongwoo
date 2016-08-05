@@ -42,6 +42,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   def able_to_pack?
-    (stock_amount - OrderItem.statuses_total_amount(item_spec_id, [Order.statuses['處理中'], Order.statuses['訂單變更']])) >= item_quantity
+    (stock_amount - OrderItem.statuses_total_amount(item_spec_id, Order::OCCUPY_STOCK_STATUS_CODE)) >= item_quantity
   end
 end
