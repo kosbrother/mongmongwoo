@@ -66,8 +66,18 @@ class Admin::OrdersController < AdminController
     redirect_to status_index_admin_orders_path
   end
 
-  def export_order_list
+  def export_processing_order_list
     @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).recent
+    @sheet_name = '處理中訂單清單'
+
+    render 'export_order_list'
+  end
+
+  def export_returned_order_list
+    @order_list = Order.includes(:user, :items).status(Order.statuses['退貨']).where(restock: false)
+    @sheet_name = '退貨訂單清單(尚未入庫)'
+
+    render 'export_order_list'
   end
 
   def restock

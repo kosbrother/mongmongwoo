@@ -5,7 +5,8 @@
     .content-box-large.box-with-header
       = render "search_form"
       %hr
-      = link_to '處理中訂單EXCEL', export_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-primary'
+      = link_to '處理中訂單EXCEL', export_processing_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-primary'
+      = link_to '退貨訂單EXCEL(尚未入庫)', export_returned_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-primary'
       = link_to '處理有現貨訂單', update_to_processing_admin_orders_path, class: 'btn btn-primary', method: :patch
       %hr
       %ul.nav.nav-tabs
