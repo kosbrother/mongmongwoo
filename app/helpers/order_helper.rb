@@ -1,12 +1,12 @@
 module OrderHelper
   def order_status(status)
-    case status
-    when "訂單變更"
-      content_tag(:span, status, class: 'order-status status-warning')
-    when "訂單取消" || "未取訂單" || "退貨"
-      content_tag(:span, status, class: 'order-status status-cancel')
+    if status == "訂單變更"
+      class_name = 'order-status status-warning'
+    elsif Order::FAIL_STATUS.include?(status)
+      class_name = 'order-status status-cancel'
     else
-      content_tag(:span, status, class: 'order-status status-success')
+      class_name = 'order-status status-success'
     end
+    content_tag(:span, status, class: class_name)
   end
 end
