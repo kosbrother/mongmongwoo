@@ -33,7 +33,8 @@ class AllpayGoodsService
     if resp.body.start_with? '0'
       return false
     else
-      doc = Nokogiri::HTML(resp.body)
+      tmp = resp.body.force_encoding('UTF-8')
+      doc = Nokogiri::HTML.fragment(tmp)
       doc.css('button').remove
 
       return doc.to_html.gsub(/&amp;nbsp/, '&nbsp;')
