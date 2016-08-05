@@ -3,13 +3,13 @@
   .icon-header.-pencil 訂單明細
   .cart-result
     .header.row
-      .col-lg-2.col-sm-2.col-xs-2.no-padding= display_date(@order.created_on)
+      .col-lg-2.col-sm-2.hidden-xs.no-padding= display_date(@order.created_on)
       .col-lg-2.col-sm-2.col-xs-4.no-padding= "訂單編號：#{@order.id}"
-      .col-lg-2.col-sm-3.col-xs-4.no-padding
+      .col-lg-2.col-sm-3.col-xs-5.no-padding
         %span 訂單狀態：
         = order_status(@order.status)
       -if @order.cancel_able?
-        .col-lg-2.col-lg-offset-4.col-sm-2.col-sm-offset-3.col-xs-2.no-padding= content_tag(:div, '取消訂單', class: 'btn btn-success', 'data-toggle': "modal", 'data-target': "#cancel-modal")
+        .col-lg-2.col-lg-offset-4.col-sm-2.col-sm-offset-3.col-xs-3.no-padding= content_tag(:div, '取消訂單', class: 'btn btn-success', 'data-toggle': "modal", 'data-target': "#cancel-modal")
         = render 'orders/cancel_modal', order: @order
   .cart-result
     .header.row.visible-lg-block
