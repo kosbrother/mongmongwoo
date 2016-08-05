@@ -424,9 +424,9 @@ ActiveRecord::Schema.define(version: 20160805123451) do
   create_table "stock_specs", force: :cascade do |t|
     t.integer  "stock_id",     limit: 4
     t.integer  "item_spec_id", limit: 4
-    t.integer  "amount",       limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "amount",       limit: 4, default: 0
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "stock_specs", ["item_spec_id"], name: "index_stock_specs_on_item_spec_id", using: :btree
