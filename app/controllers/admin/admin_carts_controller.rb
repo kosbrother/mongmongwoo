@@ -10,6 +10,7 @@ class Admin::AdminCartsController < AdminController
 
   def submit
     admin_cart = AdminCart.find(params[:admin_cart_id])
+    admin_cart.taobao_order_id = params[:taobao_order_id]
     if admin_cart.set_to_shipping
       session[:admin_cart_ids].delete(params[:admin_cart_id].to_i)
       flash[:success] = "#{admin_cart.taobao_supplier_name} 購物車已送出"

@@ -34,8 +34,10 @@ ActiveRecord::Schema.define(version: 20160806140957) do
     t.string   "note",               limit: 255
     t.date     "ordered_on"
     t.date     "confirmed_on"
+    t.string   "taobao_order_id",    limit: 255
   end
 
+  add_index "admin_carts", ["taobao_order_id"], name: "index_admin_carts_on_taobao_order_id", using: :btree
   add_index "admin_carts", ["taobao_supplier_id"], name: "index_admin_carts_on_taobao_supplier_id", using: :btree
 
   create_table "android_versions", force: :cascade do |t|
