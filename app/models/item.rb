@@ -134,8 +134,12 @@ class Item < ActiveRecord::Base
   end
 
   def update_document
-    __elasticsearch__.update_document if status == "on_shelf" && document_exist?
-    __elasticsearch__.delete_document if status == "off_shelf" && document_exist?
+    if status == "on_shelf"
+      __elasticsearch__.index_document if !document_exist?
+      __elasticsearch__.update_document if document_exist?
+    elsif status == "off_shelf"
+      __elasticsearch__.delete_document if document_exist?
+    end
   end
 
   def delete_document
