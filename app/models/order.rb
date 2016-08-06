@@ -11,6 +11,7 @@ class Order < ActiveRecord::Base
   FAIL_STATUS = ["訂單取消", "未取訂單", "退貨"]
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
+  RESTOCK_BOOLEAN_HASH = {"未重入庫存" => 0, "已重入庫存" => 1}
 
   validates_presence_of :user_id, :items_price, :ship_fee, :total
 

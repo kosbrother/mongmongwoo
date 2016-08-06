@@ -13,6 +13,14 @@ module Admin::OrdersHelper
     end
   end
 
+  def li_restock_status_link(status, restock_status)
+    if Order::RESTOCK_STATUS.any?{|s| Order.statuses[s] == status.to_i}
+      content_tag(:li, class: restock_status == params[:restock_status] ? 'active' : '' ) do
+        link_to restock_status, restock_status_index_admin_orders_path(status: status, restock_status: restock_status)
+      end
+    end
+  end
+
   def order_status(status_number)
     Order.statuses.key(status_number)
   end
