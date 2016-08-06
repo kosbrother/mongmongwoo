@@ -36,14 +36,8 @@ class AdminCart < ActiveRecord::Base
   def save_cart_item_to_stock
     self.admin_cart_items.each do |cart_item|
       stock = Stock.find_or_create_by(item_id: cart_item.item_id)
-      stock_spec = stock.stock_specs.find_or_create_by(item_spec_id: cart_item.item_spec_id)
-
-      if stock_spec.amount.present?
-        stock_spec.amount += cart_item.item_quantity
-      else
-        stock_spec.amount = cart_item.item_quantity
-      end
-
+      stock_spec = stock.stock_specs.find_or_initialize_by(item_spec_id: cart_item.item_spec_id)
+      stock_spec.amount += cart_item.item_quantity
       stock_spec.save
     end
   end
