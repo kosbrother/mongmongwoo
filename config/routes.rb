@@ -155,8 +155,9 @@ Rails.application.routes.draw do
 
     resources :users, only: [:index, :show, :create, :update] do
       collection do
-        post "import_user", to: "users#import_user"
+        post "import_user"
         get "search"
+        get "export_user_list"
       end
       resources :my_messages, only: [:index, :new, :create]
     end
