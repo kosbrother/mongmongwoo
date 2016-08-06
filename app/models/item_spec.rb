@@ -87,6 +87,8 @@ class ItemSpec < ActiveRecord::Base
   def update_item_status
     if status_change_to?("off_shelf") and (item.specs.on_shelf.size == 0)
       item.update_attribute(:status, Item.statuses["off_shelf"])
+    elsif status_change_to?("on_shelf") and (item.status == "off_shelf")
+      item.update_attribute(:status, Item.statuses["on_shelf"])
     end
   end
 end

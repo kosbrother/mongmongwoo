@@ -1,6 +1,7 @@
 class StockSpec < ActiveRecord::Base
   include AdminCartInformation
 
+  before_update :detect_amount_before_change
   after_update :set_item_spec_status
 
   scope :recent, -> { order(id: :DESC) }
@@ -28,8 +29,12 @@ class StockSpec < ActiveRecord::Base
     item_spec.update_attribute(:status, ItemSpec.statuses["on_shelf"])
   end
 
+  def detect_amount_before_change
+    @amount_before_change = StockSpec.find(id).amount
+  end
+
   def replenish_empty_stock?
-    changed_attributes["amount"] == 0 and amount > 0
+    @amount_before_change == 0 and amount > 0
   end
 
   def item_spec_able_on_shelf?
