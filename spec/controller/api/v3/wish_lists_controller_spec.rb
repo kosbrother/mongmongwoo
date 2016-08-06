@@ -5,8 +5,7 @@ RSpec.describe Api::V3::WishListsController, :type => :controller do
   let!(:item) { FactoryGirl.create(:item_with_specs_and_photos) }
   let!(:spec) { item.specs.first }
   let!(:spec_2) { item.specs.second }
-  let!(:stock) { FactoryGirl.create(:stock, item_id: item.id) }
-  let!(:stock_spec) { FactoryGirl.create(:stock_spec, item_spec_id: spec.id, stock_id: stock.id, amount: 10) }
+  let!(:stock_spec) { FactoryGirl.create(:stock_spec, item_spec_id: spec.id, item_id: item.id, amount: 10) }
 
   describe "get#index" do
     let!(:wish_list) { FactoryGirl.create(:wish_list, user_id: user.id, item_id: item.id, item_spec_id: spec.id ) }

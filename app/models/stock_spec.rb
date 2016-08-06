@@ -6,6 +6,7 @@ class StockSpec < ActiveRecord::Base
 
   scope :recent, -> { order(id: :DESC) }
 
+  belongs_to :item
   belongs_to :stock
   belongs_to :item_spec
 
@@ -28,7 +29,7 @@ class StockSpec < ActiveRecord::Base
   def set_item_spec_on_shelf
     if amount > 0
       item_spec.update_attribute(:status, ItemSpec.statuses["on_shelf"])
-      stock.item.update_attribute(:status, Item.statuses["on_shelf"])
+      item.update_attribute(:status, Item.statuses["on_shelf"])
     end
   end
 end
