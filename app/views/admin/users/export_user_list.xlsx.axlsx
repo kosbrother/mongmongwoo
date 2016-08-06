@@ -1,0 +1,24 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "訂單用戶列表") do |sheet|
+  sheet.add_row ['編號', '性別', '臉書ID', '名稱', 'email', '訂單聯絡電話', '訂單email', '訂購次數', '累積訂購金額', '平均每單金額']
+  @user_list.each do |user|
+    fb_login = user.logins.find_by_provider('facebook')
+    if fb_login
+      fb_uid = fb_login.uid
+      gender = fb_login.gender
+    else
+      fb_uid = '無資料'
+      gender = '無資料'
+    end
+
+    if user.order_times > 0
+      last_order_info = user.orders.last.info
+      ship_phone = last_order_info.ship_phone
+      ship_email = last_order_info.ship_email
+    else
+      ship_phone = '無資料'
+      ship_email = '無資料'
+    end
+    sheet.add_row [user.id, gender, fb_uid, user.user_name, user.email, ship_phone, ship_email, user.order_times, user.order_total, user.avg_total.round(0) ]
+  end
+end

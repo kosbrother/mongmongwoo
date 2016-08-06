@@ -65,6 +65,10 @@ class Admin::UsersController < AdminController
     @users = User.search_by_search_terms(@search_term).paginate(page: params[:page])
   end
 
+  def export_user_list
+    @user_list = User.joins('LEFT JOIN orders ON orders.user_id = users.id').select('users.id, users.gender, users.user_name, users.email, COALESCE(COUNT( DISTINCT orders.id), 0) as order_times, COALESCE(SUM(orders.total), 0) as order_total, COALESCE(AVG(orders.total), 0) as avg_total').where(orders: {deleted_at: nil}).group(:id).order('order_total DESC')
+  end
+
   private
 
   def search_params
