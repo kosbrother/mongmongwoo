@@ -86,6 +86,7 @@ Rails.application.routes.draw do
     resources :admin_carts, only: [] do
       collection do
         get "checkout"
+        get "export_shopping_carts_excel"
         post "submit"
       end
 

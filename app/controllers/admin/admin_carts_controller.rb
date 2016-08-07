@@ -24,7 +24,6 @@ class Admin::AdminCartsController < AdminController
     @cart.update(note: params[:note])
   end
 
-  def export_shopping_cart_excel
-
+  def export_shopping_carts_excel
   end
 end

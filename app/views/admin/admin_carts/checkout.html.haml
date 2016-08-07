@@ -19,6 +19,8 @@
       = submit_tag '搜尋'
     = render partial: 'search_form', locals: { item: @searched_item }
     %h1 現有購物車
+    .pull-right
+      = link_to '輸出現有購物車EXCEL', export_shopping_carts_excel_admin_admin_carts_path(format: 'xlsx'), class: 'btn btn-primary'
     - current_admin_carts.each do |cart|
       .current-cart{id: "cart-#{cart.id}"}
         %h3= cart.taobao_supplier_name
