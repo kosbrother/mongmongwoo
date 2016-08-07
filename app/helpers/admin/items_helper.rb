@@ -115,4 +115,8 @@ module Admin::ItemsHelper
   def status_button_class(status)
     (status == "on_shelf") ? "btn btn-success" : "btn btn-danger"
   end
+
+  def link_to_item(item)
+    link_to item.name, admin_item_path(item), target: "_blank"
+  end
 end

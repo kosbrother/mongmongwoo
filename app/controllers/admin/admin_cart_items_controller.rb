@@ -14,7 +14,7 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def get_by_id
-    @item = Item.includes(:specs).select(:id, :status, :name, :taobao_supplier_id).find_by_id(params[:item_id])
+    @item = Item.includes(:specs).find_by_id(params[:item_id])
     if @item
       @item.taobao_supplier ? @supplier_name = @item.taobao_supplier.name : @supplier_name = '無'
       @specs = @item.specs.select(:id, :style, :style_pic)
