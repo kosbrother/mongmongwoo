@@ -48,7 +48,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.daily_order_quantity_and_income
-    result = created_at_within(Date.today.prev_day(1)..Date.today).select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income")[0]
+    result = created_at_within(DateTime.now.midnight.prev_day(1)..DateTime.now.midnight).select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income")[0]
     [result["quantity"], result["income"]]
   end
 
