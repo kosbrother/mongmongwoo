@@ -1,6 +1,7 @@
 class OrderItem < ActiveRecord::Base
   validates_presence_of :source_item_id, allow_blank: true
   validates_presence_of :item_name, :item_spec_id, :item_style, :item_quantity, :item_price
+  validate :product_able_to_buy
 
   belongs_to :order
   belongs_to :item, :foreign_key => "source_item_id"
@@ -52,5 +53,27 @@ class OrderItem < ActiveRecord::Base
 
   def able_to_pack?
     (stock_amount - OrderItem.statuses_total_amount(item_spec_id, Order::OCCUPY_STOCK_STATUS_CODE)) >= item_quantity
+  end
+
+  def stock_amount_enough?
+    stock_spec = StockSpec.find_by(item_spec_id: item_spec_id)
+    stock_spec.amount >= item_quantity
+  end
+
+  def item_spec_on_shelf?
+    spec = ItemSpec.find(item_spec_id)
+    spec.status == "on_shelf"
+  end
+
+  def able_to_buy?
+    stock_amount_enough? && item_spec_on_shelf?
+  end
+
+  def unable_to_buy_error
+    errors[:unable_to_buy] = { product_id: source_item_id.to_s, spec_id: item_spec_id.to_s, stock_amount: item_spec.stock_spec.amount.to_s, status: item_spec.status }
+  end
+
+  def product_able_to_buy
+    unable_to_buy_error unless able_to_buy?
   end
 end

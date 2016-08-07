@@ -1,20 +1,20 @@
 class Api::V3::OrdersController < ApiController
   def create
     errors = []
+    attributes_errors = []
+    products_errors = []
+
     ActiveRecord::Base.transaction do
       @order = Order.new
-
       if params[:email]
         @order.user_id =  User.find_by(email: params[:email]).id  if User.find_by(email: params[:email])
       elsif params[:uid]
         @order.uid = params[:uid]
         @order.user_id = User.find_by(uid: params[:uid]).id if User.find_by(uid: params[:uid])
       end
-
       @order.items_price = params[:items_price]
       @order.ship_fee = params[:ship_fee]
       @order.total = params[:total]
-
       device_of_order = DeviceRegistration.find_by(registration_id: params[:registration_id])
       @order.device_registration = device_of_order
       errors << @order.errors.messages unless @order.save
@@ -39,17 +39,28 @@ class Api::V3::OrdersController < ApiController
           item.item_style = product[:style]
           item.item_quantity = product[:quantity]
           item.item_price = product[:price]
-          item.save
           errors << item.errors.messages unless item.save
         end
       else
-        errors << ["params[products] is blank"] 
+        errors << {empty_params: ["params[products] is blank"]}
       end
+
       raise ActiveRecord::Rollback if errors.present?
     end
-    if errors.present?
-      Rails.logger.error("error: #{errors}")
-      render status: 400, json: {error: {message: errors.to_s}}
+
+    errors.each do |e|
+      if e.has_key?(:unable_to_buy)
+        products_errors << e[:unable_to_buy][0]
+      else
+        attributes_errors << e
+      end
+    end
+
+    if attributes_errors.present?
+      Rails.logger.error("error: #{attributes_errors}")
+      render status: 400, json: {error: {message: attributes_errors.to_s}}
+    elsif products_errors.present?
+      render status: 203, json: {data: {unable_to_buy: products_errors}}
     else
       OrderMailer.delay.notify_order_placed(@order)
       render status: 200, json: {data: @order.as_json(only: [:id])}
