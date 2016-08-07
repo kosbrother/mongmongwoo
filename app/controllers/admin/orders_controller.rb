@@ -9,7 +9,12 @@ class Admin::OrdersController < AdminController
 
   def status_index
     params[:status] ||= 0
-    @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).status(params[:status]).recent.paginate(page: params[:page])
+    if params[:restock]
+      restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
+      @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).where(status: params[:status],restock: restock).recent.paginate(page: params[:page])
+    else
+      @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).status(params[:status]).recent.paginate(page: params[:page])
+    end
   end
 
   def edit
