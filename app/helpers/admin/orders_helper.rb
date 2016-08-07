@@ -82,4 +82,17 @@ module Admin::OrdersHelper
       link_to "重入庫存", restock_admin_order_path(order), method: :patch, class: "btn btn-default"
     end
   end
+
+  def li_restock_status_link(status, restock_status)
+    content_tag(:li, class: restock_status == params[:restock_status] ? 'active' : '' ) do
+      link_to restock_status, restock_status_index_admin_orders_path(status: status, restock_status: restock_status)
+    end
+  end
+
+  def restock_status_navs(order_status)
+    content_tag(:ul, class: 'nav nav-tabs') do
+      li_restock_status_link(order_status, "未重入庫存") +
+      li_restock_status_link(order_status, "已重入庫存")
+    end
+  end
 end

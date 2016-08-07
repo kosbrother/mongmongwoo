@@ -176,6 +176,7 @@ Rails.application.routes.draw do
       collection do
         get "exporting_files"
         get "status_index"
+        get "restock_status_index"
         get "search"
         get "export_processing_order_list"
         get "export_returned_order_list"

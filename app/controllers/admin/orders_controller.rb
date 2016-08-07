@@ -12,6 +12,12 @@ class Admin::OrdersController < AdminController
     @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).status(params[:status]).recent.paginate(page: params[:page])
   end
 
+  def restock_status_index
+    restock_status = Order::RESTOCK_BOOLEAN_HASH[params[:restock_status]]
+    @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).status(params[:status]).where(restock: restock_status).recent.paginate(page: params[:page])
+    render 'status_index'
+  end
+
   def edit
     @order = Order.includes(:info).find(params[:id])
   end

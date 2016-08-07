@@ -1,6 +1,8 @@
 %br/
-.apple_pagination
-  = will_paginate orders, :container => false
+- if Order::RESTOCK_STATUS_CODE.include?(params[:status].to_i)
+  = restock_status_navs(params[:status])
+= pagination_links(orders)
+
 %table.table.table-striped.table-bordered.order-table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
   %thead
     %tr
