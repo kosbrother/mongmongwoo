@@ -91,8 +91,8 @@ module Admin::OrdersHelper
 
   def restock_status_navs(order_status)
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_restock_status_link(order_status, "已重入庫存") +
-      li_restock_status_link(order_status, "未重入庫存")
+      li_restock_status_link(order_status, "未重入庫存") +
+      li_restock_status_link(order_status, "已重入庫存")
     end
   end
 end
