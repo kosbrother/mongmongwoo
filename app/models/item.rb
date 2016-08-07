@@ -31,7 +31,7 @@ class Item < ActiveRecord::Base
   has_many :item_promotions
   has_many :promotions, through: :item_promotions
   has_many :order_items, foreign_key: :source_item_id
-  has_one :stock
+  has_many :stock_specs
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
@@ -121,6 +121,14 @@ class Item < ActiveRecord::Base
 
   def sales_quantity_within_date(date)
     order_items.where(created_at: date).sum(:item_quantity)
+  end
+
+  def ntd_cost
+    if cost
+      (cost * Item::CNY_RATING).round(2)
+    else
+      "尚未建立資料"
+    end
   end
 
   private

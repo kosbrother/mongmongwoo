@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805123451) do
+ActiveRecord::Schema.define(version: 20160806140957) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -422,23 +422,15 @@ ActiveRecord::Schema.define(version: 20160805123451) do
   add_index "shopping_points", ["user_id"], name: "index_shopping_points_on_user_id", using: :btree
 
   create_table "stock_specs", force: :cascade do |t|
-    t.integer  "stock_id",     limit: 4
     t.integer  "item_spec_id", limit: 4
     t.integer  "amount",       limit: 4, default: 0
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.integer  "item_id",      limit: 4
   end
 
+  add_index "stock_specs", ["item_id"], name: "index_stock_specs_on_item_id", using: :btree
   add_index "stock_specs", ["item_spec_id"], name: "index_stock_specs_on_item_spec_id", using: :btree
-  add_index "stock_specs", ["stock_id"], name: "index_stock_specs_on_stock_id", using: :btree
-
-  create_table "stocks", force: :cascade do |t|
-    t.integer  "item_id",    limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "stocks", ["item_id"], name: "index_stocks_on_item_id", using: :btree
 
   create_table "stores", force: :cascade do |t|
     t.integer  "county_id",  limit: 4
