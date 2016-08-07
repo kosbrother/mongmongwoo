@@ -207,7 +207,7 @@ describe Api::V3::OrdersController, type: :controller do
 
       it "does not update the user order to cancel" do
         patch :cancel, user_id: user.id, id: order.id
-        message = JSON.parse(response.body)["error"]["message"]
+        message = response.body
         order = user.orders.first
 
         expect(message).to eq(I18n.t('controller.error.message.can_not_cancel_order'))
