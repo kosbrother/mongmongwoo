@@ -7,9 +7,10 @@ module Admin::OrdersHelper
     link_to status_text, update_status_admin_order_path(order, status: Order.statuses[status_text]), { method: :patch, remote: true, disable_with: '狀態更新中' }
   end
 
-  def li_status_link(status)
+  def li_status_link(options = {status: 0})
+    status = options[:status]
     content_tag(:li, '' , class: set_class_to_active(status)) do
-      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", status_index_admin_orders_path(status: status)
+      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", status_index_admin_orders_path(options)
     end
   end
 
@@ -80,6 +81,19 @@ module Admin::OrdersHelper
       content_tag(:span, "已退回庫存", class: "label label-default")
     elsif Order::RESTOCK_STATUS.include?(order.status) && !(order.restock)
       link_to "重入庫存", restock_admin_order_path(order), method: :patch, class: "btn btn-default"
+    end
+  end
+
+  def li_restock_status_link(order_status: 0, restock_status: false, link_text: nil)
+    content_tag(:li, class: restock_status.to_s == params[:restock] ? 'active' : '' ) do
+      link_to link_text, status_index_admin_orders_path(status: order_status, restock: restock_status)
+    end
+  end
+
+  def restock_navs(order_status: 0)
+    content_tag(:ul, class: 'nav nav-tabs') do
+      li_restock_status_link(order_status: order_status, restock_status: false, link_text: "未重入庫存") +
+      li_restock_status_link(order_status: order_status, restock_status: true, link_text: "已重入庫存") 
     end
   end
 end

@@ -10,13 +10,13 @@
       = link_to '處理有現貨訂單', update_to_processing_admin_orders_path, class: 'btn btn-primary', method: :patch
       %hr
       %ul.nav.nav-tabs
-        = li_status_link(Order.statuses["新訂單"])
-        = li_status_link(Order.statuses["處理中"])
-        = li_status_link(Order.statuses["配送中"])
-        = li_status_link(Order.statuses["已到店"])
-        = li_status_link(Order.statuses["完成取貨"])
-        = li_status_link(Order.statuses["未取訂貨"])
-        = li_status_link(Order.statuses["訂單變更"])
-        = li_status_link(Order.statuses["訂單取消"])
-        = li_status_link(Order.statuses["退貨"])
+        = li_status_link(status: Order.statuses["新訂單"])
+        = li_status_link(status: Order.statuses["處理中"])
+        = li_status_link(status: Order.statuses["配送中"])
+        = li_status_link(status: Order.statuses["已到店"])
+        = li_status_link(status: Order.statuses["完成取貨"])
+        = li_status_link(status: Order.statuses["未取訂貨"], restock: false)
+        = li_status_link(status: Order.statuses["訂單變更"])
+        = li_status_link(status: Order.statuses["訂單取消"])
+        = li_status_link(status: Order.statuses["退貨"], restock: false)
       = render "order_table", orders: @orders
