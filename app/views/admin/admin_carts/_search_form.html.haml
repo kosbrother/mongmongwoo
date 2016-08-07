@@ -4,6 +4,7 @@
       %th.x-small 淘寶店家
       %th.x-small 商品編號
       %th.small 商品名稱
+      %th.x-small 淘寶連結
       %th.small 樣式名稱
       %th.mid-small 樣式圖片
       %th.mid-small 商品數量
@@ -16,6 +17,7 @@
         %th#result-supplier= supplier_name(item)
         %th#result-item-id= item ? item.id : ''
         %th#result-item-name= item ? link_to_item(item) : ''
+        %th#result-item-url= item ? link_to_item_taobao(item) : ''
         %th#result-spec-style= select_tag :item_spec_id, item ? options_for_select(item.specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }) : '', id: 'result-spec-id', 'data-item-id': item ? item.id : ''
         %th#result-spec-pic=image_tag item ? item.specs[0].style_pic.url : '', class: "cart-spec-pic"
         %th#result-quantity= number_field_tag :item_quantity, 1, min: 1, require: true

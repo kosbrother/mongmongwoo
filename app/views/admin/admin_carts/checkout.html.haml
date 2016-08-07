@@ -31,6 +31,7 @@
             %tr
               %th.x-small 商品編號
               %th.large-small 商品名稱
+              %th.x-small 淘寶連結
               %th.small 樣式名稱
               %th.mid-small 樣式圖片
               %th.mid-small 商品數量
@@ -40,6 +41,7 @@
               %tr{id: "cart-item-#{cart_item.id}"}
                 %td= cart_item.item_id
                 %td= link_to_item(cart_item.item)
+                %td= link_to_item_taobao(cart_item.item)
                 %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
                 %td= image_tag(cart_item.item_spec.style_pic.url, class: "cart-spec-pic")
                 %td

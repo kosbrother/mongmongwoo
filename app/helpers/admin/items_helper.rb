@@ -119,4 +119,8 @@ module Admin::ItemsHelper
   def link_to_item(item)
     link_to item.name, admin_item_path(item), target: "_blank"
   end
+
+  def link_to_item_taobao(item)
+    link_to '點擊連結', item.url, target: "_blank"
+  end
 end
