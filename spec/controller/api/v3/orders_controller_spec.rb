@@ -184,7 +184,7 @@ describe Api::V3::OrdersController, type: :controller do
         result = JSON.parse(response.body)["data"]
         order = user.orders.first
 
-        expect(result).to eq("success")
+        expect(result).to eq(I18n.t('controller.success.message.cancel_order'))
         expect(order.status).to eq("訂單取消")
       end
     end
@@ -197,7 +197,7 @@ describe Api::V3::OrdersController, type: :controller do
         result = JSON.parse(response.body)["data"]
         order = user.orders.first
 
-        expect(result).to eq("success")
+        expect(result).to eq(I18n.t('controller.success.message.cancel_order'))
         expect(order.status).to eq("訂單取消")
       end
     end

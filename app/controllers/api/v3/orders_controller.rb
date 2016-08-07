@@ -83,7 +83,7 @@ class Api::V3::OrdersController < ApiController
 
     if order.cancel_able?
       order.update(status: Order.statuses["訂單取消"])
-      render status: 200, json: {data: "success"}
+      render status: 200, json: {data: t('controller.success.message.cancel_order')}
     else
       render status: 400, json: t('controller.error.message.can_not_cancel_order')
     end

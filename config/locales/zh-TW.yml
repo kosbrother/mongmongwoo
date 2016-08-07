@@ -11,6 +11,9 @@ zh-TW:
         no_user: "抱歉，找不到此用戶"
         wrong_password: "密碼錯誤"
         can_not_cancel_order: "抱歉，這筆訂單已寄出，無法變更！"
+    success:
+      message:
+        cancel_order: "已成功取消訂單！"
   factory:
     item:
       name: '可愛電力公司手機擦'
