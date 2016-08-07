@@ -1,4 +1,4 @@
-= form_tag admin_cart_note_path(cart), method: :patch, remote: true,  class: "col-md-12 form-horizontal" do
+= form_tag note_admin_admin_cart_path(cart), method: :patch, remote: true,  class: "col-md-12 form-horizontal" do
   .form-group
     = label_tag :note, "備註", class: "sr-only"
     = text_field_tag :note, cart.note, class: "form-control", id: "cart-note-#{cart.id}"

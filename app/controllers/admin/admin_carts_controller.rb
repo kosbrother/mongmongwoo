@@ -23,4 +23,7 @@ class Admin::AdminCartsController < AdminController
     @cart = AdminCart.find(params[:id])
     @cart.update(note: params[:note])
   end
+
+  def export_shopping_carts_excel
+  end
 end

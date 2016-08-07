@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "#{Date.today}後台購物車清單") do |sheet|
+  header_highlight = sheet.styles.add_style(:bg_color => "B8DEE7")
+  sheet.add_row ['商家', '商品編號', '商品名稱', '商品樣式', '採購量'], style: header_highlight
+  current_admin_carts.each do |cart|
+    cart.admin_cart_items.each do |cart_item|
+      sheet.add_row [cart.taobao_supplier_name, cart_item.item_id, cart_item.item.name, cart_item.item_spec.style, cart_item.item_quantity]
+    end
+  end
+end
