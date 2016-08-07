@@ -76,13 +76,21 @@ Rails.application.routes.draw do
     get "/signin", to: "sessions#new"
     post "/signin", to: "sessions#create"
     delete "/signout", to: "sessions#destroy"
-    get "/checkout", to: "admin_carts#checkout", as: "checkout"
-    post "/submit", to: "admin_carts#submit", as: "submit_order"
-    patch "/admin_carts/:id", to: "admin_carts#note", as: "cart_note"
 
     resources :roads, only: [] do
       collection do
         get "get_road_options"
+      end
+    end
+
+    resources :admin_carts, only: [] do
+      collection do
+        get "checkout"
+        post "submit"
+      end
+
+      member do
+        patch "note"
       end
     end
 
