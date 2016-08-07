@@ -5,7 +5,7 @@ class Admin::AdminCartItemsController < AdminController
 
   def create
     flash[:notice] = "#{@cart_item.item.name}已新增至購物車"
-    redirect_to admin_checkout_path(item_id: params[:item_id])
+    redirect_to checkout_admin_admin_carts_path(item_id: params[:item_id])
   end
 
   def add

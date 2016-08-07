@@ -22,7 +22,7 @@
     - current_admin_carts.each do |cart|
       .current-cart{id: "cart-#{cart.id}"}
         %h3= cart.taobao_supplier_name
-        = form_tag admin_submit_order_path(admin_cart_id: cart.id) do
+        = form_tag submit_admin_admin_carts_path(admin_cart_id: cart.id) do
           = label_tag :taobao_order_id, '淘寶訂單編號'
           = text_field_tag :taobao_order_id, nil, placeholder: '請輸入淘寶訂單編號', required: true
           = submit_tag '送出購物車', class: 'btn btn-success'
