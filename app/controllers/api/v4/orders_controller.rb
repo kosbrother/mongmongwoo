@@ -27,7 +27,9 @@ class Api::V4::OrdersController < ApiController
       info.ship_email = params[:ship_email]
       errors << info.errors.messages unless info.save
 
-      unless params[:products].blank?
+      if params[:products].blank?
+        errors << {empty_params: ["params[products] is blank"]}
+      else
         params[:products].each do |product|
           item = OrderItem.new
           item.order_id = @order.id
@@ -39,8 +41,6 @@ class Api::V4::OrdersController < ApiController
           item.item_price = product[:price]
           errors << item.errors.messages unless item.save
         end
-      else
-        errors << {empty_params: ["params[products] is blank"]}
       end
 
       raise ActiveRecord::Rollback if errors.present?
@@ -53,7 +53,6 @@ class Api::V4::OrdersController < ApiController
       if error.has_key?(:unable_to_buy)
         products_errors << error[:unable_to_buy][0]
       else
-        error_aray = []
         error.each_value { |value| attributes_errors << value[0] }
       end
     end

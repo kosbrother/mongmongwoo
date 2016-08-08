@@ -55,6 +55,8 @@ class OrderItem < ActiveRecord::Base
     (stock_amount - OrderItem.statuses_total_amount(item_spec_id, Order::OCCUPY_STOCK_STATUS_CODE)) >= item_quantity
   end
 
+  private
+
   def stock_amount_enough?
     stock_spec = StockSpec.find_by(item_spec_id: item_spec_id)
     stock_spec.amount >= item_quantity
@@ -70,7 +72,14 @@ class OrderItem < ActiveRecord::Base
   end
 
   def unable_to_buy_error
-    errors[:unable_to_buy] = { product_id: source_item_id, spec_id: item_spec_id, stock_amount: item_spec.stock_spec.amount, status: item_spec.status }
+    data = {}
+    item = Item.find(source_item_id)
+    data = item.as_json(only: [:id, :name])
+    spec = item.specs.select(:id,:style,:style_pic,:status).with_stock_amount.find(item_spec_id)
+    data[:spec] = spec
+    data[:spec][:stock_amount] = item_spec.stock_spec.amount
+    data[:quantity_to_buy] = item_quantity
+    errors[:unable_to_buy] = data
   end
 
   def product_able_to_buy
