@@ -1,5 +1,9 @@
 .checkout
   .content-box-large
+    .pull-right.file-form
+      = form_tag import_excel_admin_admin_cart_items_path, :enctype =>'multipart/form-data'  do
+        = file_field_tag :excel_file, require: true, class: 'custom-file-input'
+        = submit_tag '送出'
     %h1 淘寶購物車
     %h3 透過淘寶商家找尋商品
     = form_tag admin_admin_cart_items_path do
@@ -18,12 +22,6 @@
       = number_field_tag :item_id, 31, min: Item.first.id, max: Item.last.id, require: true
       = submit_tag '搜尋'
     = render partial: 'search_form', locals: { item: @searched_item }
-    %h3 匯入EXCEL檔案
-    = form_tag import_excel_admin_admin_cart_items_path, :enctype =>'multipart/form-data'  do
-      = label_tag :excel_file, '上傳副檔名為 .xlsx'
-      = file_field_tag :excel_file, require: true, class: 'custom-file-input'
-      %p.help-block
-      = submit_tag '送出'
     %h1 現有購物車
     - current_admin_carts.each do |cart|
       .current-cart{id: "cart-#{cart.id}"}
