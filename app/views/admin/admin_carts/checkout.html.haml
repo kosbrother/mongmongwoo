@@ -22,12 +22,16 @@
     - current_admin_carts.each do |cart|
       .current-cart{id: "cart-#{cart.id}"}
         %h3= cart.taobao_supplier_name
-        = link_to '送出購物車', admin_submit_order_path(admin_cart_id: cart.id), class: 'btn btn-success', method: 'post'
+        = form_tag admin_submit_order_path(admin_cart_id: cart.id) do
+          = label_tag :taobao_order_id, '淘寶訂單編號'
+          = text_field_tag :taobao_order_id, nil, placeholder: '請輸入淘寶訂單編號', required: true
+          = submit_tag '送出購物車', class: 'btn btn-success'
         %table.table.table-striped.table-bordered
           %thead
             %tr
               %th.x-small 商品編號
               %th.large-small 商品名稱
+              %th.x-small 淘寶連結
               %th.small 樣式名稱
               %th.mid-small 樣式圖片
               %th.mid-small 商品數量
@@ -36,7 +40,8 @@
             - cart.admin_cart_items.each do |cart_item|
               %tr{id: "cart-item-#{cart_item.id}"}
                 %td= cart_item.item_id
-                %td= cart_item.item.name
+                %td= link_to_item(cart_item.item)
+                %td= link_to_item_taobao(cart_item.item)
                 %td= select_tag "cart-item-#{cart_item.id}-spec",options_from_collection_for_select(cart_item.item.specs, 'id', 'style', cart_item.item_spec_id ), class: 'update-spec-id', 'data-cart-item': cart_item.id
                 %td= image_tag(cart_item.item_spec.style_pic.url, class: "cart-spec-pic")
                 %td
