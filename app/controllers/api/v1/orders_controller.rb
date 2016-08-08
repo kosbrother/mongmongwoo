@@ -38,7 +38,7 @@ class Api::V1::OrdersController < ApiController
         item.item_style = product[:style]
         item.item_quantity = product[:quantity]
         item.item_price = product[:price]        
-        item.save(validate: false)
+        item.save!
       end
       
       OrderMailer.delay.notify_order_placed(order)

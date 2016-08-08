@@ -1,20 +1,18 @@
-class Api::V3::OrdersController < ApiController
+class Api::V4::OrdersController < ApiController
   def create
     errors = []
+
     ActiveRecord::Base.transaction do
       @order = Order.new
-
       if params[:email]
         @order.user_id =  User.find_by(email: params[:email]).id  if User.find_by(email: params[:email])
       elsif params[:uid]
         @order.uid = params[:uid]
         @order.user_id = User.find_by(uid: params[:uid]).id if User.find_by(uid: params[:uid])
       end
-
       @order.items_price = params[:items_price]
       @order.ship_fee = params[:ship_fee]
       @order.total = params[:total]
-
       device_of_order = DeviceRegistration.find_by(registration_id: params[:registration_id])
       @order.device_registration = device_of_order
       errors << @order.errors.messages unless @order.save
@@ -42,49 +40,31 @@ class Api::V3::OrdersController < ApiController
           errors << item.errors.messages unless item.save
         end
       else
-        errors << ["params[products] is blank"]
+        errors << {empty_params: ["params[products] is blank"]}
       end
+
       raise ActiveRecord::Rollback if errors.present?
     end
-    if errors.present?
-      Rails.logger.error("error: #{errors}")
-      render status: 400, json: errors
+
+    attributes_errors = []
+    products_errors = []
+
+    errors.each do |e|
+      if e.has_key?(:unable_to_buy)
+        products_errors << e[:unable_to_buy][0]
+      else
+        attributes_errors << e
+      end
+    end
+
+    if attributes_errors.present?
+      Rails.logger.error("error: #{attributes_errors}")
+      render status: 400, json: attributes_errors
+    elsif products_errors.present?
+      render status: 203, json: {data: {unable_to_buy: products_errors}}
     else
       OrderMailer.delay.notify_order_placed(@order)
       render status: 200, json: {data: @order.as_json(only: [:id])}
-    end
-  end
-
-  def show
-    order = Order.includes(:user, :info, :items).find(params[:id])
-    result_order = order.generate_result_order
-    render status: 200, json: {data: result_order}
-  end
-
-  def user_owned_orders
-    user_orders = Order.includes(:user).where(uid: params[:uid]).recent.page(params[:page]).per_page(20)
-    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
-  end
-
-  def by_user_email
-    user_orders =  Order.joins(:user).where('users.email = ?', params[:email]).recent
-    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
-  end
-
-  def by_email_phone
-    user_orders = Order.joins(:info).where("ship_email = ? and ship_phone = ?", params[:email], params[:phone]).recent
-    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
-  end
-
-  def cancel
-    user = User.find(params[:user_id])
-    order = user.orders.find(params[:id])
-
-    if order.cancel_able?
-      order.update(status: Order.statuses["訂單取消"])
-      render status: 200, json: {data: t('controller.success.message.cancel_order')}
-    else
-      render status: 400, json: t('controller.error.message.can_not_cancel_order')
     end
   end
 end

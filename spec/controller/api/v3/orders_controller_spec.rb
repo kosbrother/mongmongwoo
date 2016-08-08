@@ -70,7 +70,7 @@ describe Api::V3::OrdersController, type: :controller do
         post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
              ship_email: ship_email, products: products
-        message = JSON.parse(response.body)["error"]["message"]
+        message = JSON.parse(response.body)
         expect(message).not_to be_nil
         expect(Order.all.size).to eq(0)
         expect(OrderInfo.all.size).to eq(0)
@@ -79,7 +79,7 @@ describe Api::V3::OrdersController, type: :controller do
       it "return errors if missing ship params" do
         post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
              registration_id: registration_id, products: products
-        message = JSON.parse(response.body)["error"]["message"]
+        message = JSON.parse(response.body)
         expect(message).not_to be_nil
         expect(Order.all.size).to eq(0)
         expect(OrderInfo.all.size).to eq(0)
@@ -90,45 +90,10 @@ describe Api::V3::OrdersController, type: :controller do
              registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
              ship_email: ship_email
-        message = JSON.parse(response.body)["error"]["message"]
+        message = JSON.parse(response.body)
         expect(message).not_to be_nil
         expect(Order.all.size).to eq(0)
         expect(OrderInfo.all.size).to eq(0)
-      end
-    end
-
-    context 'when stock spec is not sufficient' do
-      let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 0) }
-      let!(:product) { {product_id: item.id, name: item.name, spec_id: spec.id, style: spec.style, quantity: 1, price: item.price} }
-      it "does not create order" do
-        post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
-             ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-             ship_email: ship_email, products: products
-        data = JSON.parse(response.body)["data"]["unable_to_buy"][0]
-        expect(data["product_id"]).to eq(products[0][:product_id].to_s)
-        expect(data["spec_id"]).to eq(products[0][:spec_id].to_s)
-        expect(data["stock_amount"]).to eq(stock_spec.amount.to_s)
-        expect(data["status"]).to eq(spec.status)
-        expect(user.orders).to be_empty
-      end
-    end
-
-    context 'when item spec is off shelf' do
-      let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 2) }
-      let!(:product) { {product_id: item.id, name: item.name, spec_id: spec.id, style: spec.style, quantity: 1, price: item.price} }
-      it "does not create order" do
-        spec.update(status: ItemSpec.statuses[:off_shelf])
-        post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
-             ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-             ship_email: ship_email, products: products
-        data = JSON.parse(response.body)["data"]["unable_to_buy"][0]
-        expect(data["product_id"]).to eq(products[0][:product_id].to_s)
-        expect(data["spec_id"]).to eq(products[0][:spec_id].to_s)
-        expect(data["stock_amount"]).to eq(stock_spec.amount.to_s)
-        expect(data["status"]).to eq(spec.status)
-        expect(user.orders).to be_empty
       end
     end
   end
