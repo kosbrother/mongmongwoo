@@ -75,9 +75,9 @@ class OrderItem < ActiveRecord::Base
     data = {}
     item = Item.find(source_item_id)
     data = item.as_json(only: [:id, :name])
+    data.delete_if {|k| k == :final_price}
     spec = item.specs.select(:id,:style,:style_pic,:status).with_stock_amount.find(item_spec_id)
     data[:spec] = spec
-    data[:spec][:stock_amount] = item_spec.stock_spec.amount
     data[:quantity_to_buy] = item_quantity
     errors[:unable_to_buy] = data
   end
