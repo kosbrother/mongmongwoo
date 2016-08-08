@@ -44,18 +44,27 @@ class Admin::AdminCartItemsController < AdminController
     end
   end
 
+  def import_excel
+    xlsx = Roo::Spreadsheet.open(params['excel_file'], extension: :xlsx)
+    records = xlsx.parse(taobao_supplier: '商家', item_id: '商品編號', item_spec_style: '商品樣式', item_quantity: '採購量')
+    records.each_with_index do |hash, index|
+      next if index == 0
+      taobao_supplier_id = TaobaoSupplier.find_by(name: hash[:taobao_supplier]).id
+      item = Item.find(hash[:item_id])
+      item_spec_id = item.specs.find_by(style: hash[:item_spec_style]).id
+
+      create_cart_item(taobao_supplier_id, hash[:item_id], item_spec_id, hash[:item_quantity])
+    end
+
+    redirect_to :back
+  end
+
   private
 
-  def create_cart_item
-    supplier_cart_items = current_supplier_cart(params[:taobao_supplier_id]).admin_cart_items
-    @cart_item = supplier_cart_items.find_or_create_by(item_id: params[:item_id], item_spec_id: params[:item_spec_id])
-
-    if @cart_item.item_quantity
-      @cart_item.item_quantity += params[:item_quantity].to_i
-    else
-      @cart_item.item_quantity = params[:item_quantity].to_i
-    end
-    @cart_item.save
+  def create_cart_item(taobao_supplier_id=params[:taobao_supplier_id], item_id=params[:item_id], item_spec_id=params[:item_spec_id], item_quantity=params[:item_quantity])
+    supplier_cart_items = current_supplier_cart(taobao_supplier_id).admin_cart_items
+    @cart_item = supplier_cart_items.find_or_create_by(item_id: item_id, item_spec_id: item_spec_id)
+    @cart_item.add_item_quantity(item_quantity)
   end
 
   def find_cart_item

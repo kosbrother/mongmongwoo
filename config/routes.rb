@@ -104,6 +104,7 @@ Rails.application.routes.draw do
       collection do
         post "add"
         post "get_by_id"
+        post "import_excel"
       end
       member do
         patch "update_quantity"
