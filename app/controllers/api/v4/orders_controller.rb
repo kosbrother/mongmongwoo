@@ -49,17 +49,18 @@ class Api::V4::OrdersController < ApiController
     attributes_errors = []
     products_errors = []
 
-    errors.each do |e|
-      if e.has_key?(:unable_to_buy)
-        products_errors << e[:unable_to_buy][0]
+    errors.each do |error|
+      if error.has_key?(:unable_to_buy)
+        products_errors << error[:unable_to_buy][0]
       else
-        attributes_errors << e
+        error_aray = []
+        error.each_value { |value| attributes_errors << value[0] }
       end
     end
 
     if attributes_errors.present?
-      Rails.logger.error("error: #{attributes_errors}")
-      render status: 400, json: attributes_errors
+      Rails.logger.error("error: #{attributes_errors.join("，")}")
+      render status: 400, json: attributes_errors.join("，")
     elsif products_errors.present?
       render status: 203, json: {data: {unable_to_buy: products_errors}}
     else

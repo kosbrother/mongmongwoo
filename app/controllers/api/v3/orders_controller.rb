@@ -48,7 +48,7 @@ class Api::V3::OrdersController < ApiController
     end
     if errors.present?
       Rails.logger.error("error: #{errors}")
-      render status: 400, json: errors
+      render status: 400, json: {error: errors}
     else
       OrderMailer.delay.notify_order_placed(@order)
       render status: 200, json: {data: @order.as_json(only: [:id])}

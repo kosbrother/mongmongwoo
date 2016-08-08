@@ -70,7 +70,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def unable_to_buy_error
-    errors[:unable_to_buy] = { product_id: source_item_id.to_s, spec_id: item_spec_id.to_s, stock_amount: item_spec.stock_spec.amount.to_s, status: item_spec.status }
+    errors[:unable_to_buy] = { product_id: source_item_id, spec_id: item_spec_id, stock_amount: item_spec.stock_spec.amount, status: item_spec.status }
   end
 
   def product_able_to_buy

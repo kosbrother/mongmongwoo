@@ -32,3 +32,11 @@ zh-TW:
               taken: "此信箱已被註冊，請重新輸入"
             password:
               blank: "密碼不可為空白"
+        order_info:
+          attributes:
+            ship_email:
+              blank: "信箱不可為空白"
+            ship_phone:
+              blank: "取件人手機電話不可為空白"
+            ship_name:
+              blank: "取件人姓名不可為空白"
