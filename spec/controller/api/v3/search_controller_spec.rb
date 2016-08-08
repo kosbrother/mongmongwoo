@@ -1,8 +1,9 @@
 require 'spec_helper'
 RSpec.describe Api::V3::SearchController, type: :controller do
   describe "get #search_items" do
-    let!(:item) { FactoryGirl.create(:item, name: I18n.t('factory.item.name'), description: I18n.t('factory.item.description'),status: Item.statuses["on_shelf"])}
-    let!(:off_shelf_item) { FactoryGirl.create(:item, name: I18n.t('factory.item.name'), description: I18n.t('factory.item.description'),status: Item.statuses["off_shelf"])}
+    let!(:category) { FactoryGirl.create(:category) }
+    let!(:on_shelf_item) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], name: I18n.t('factory.item.name'), description: I18n.t('factory.item.description')) }
+    let!(:off_shelf_item) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:off_shelf], categories: [category], name: I18n.t('factory.item.name'), description: I18n.t('factory.item.description')) }
     before :each do
       Item.import
       Item.all.each{|i| i.save}
@@ -15,11 +16,15 @@ RSpec.describe Api::V3::SearchController, type: :controller do
         expect(response.status).to eq(200)
         expect(response.content_type).to eq('application/json')
         expect(result.count).to eq(1)
-        expect(result.first['id']).to eq(item.id)
-        expect(result.first['name']).to eq(item.name)
-        expect(result.first['cover']['url']).to eq(item.cover.url)
-        expect(result.first['price']).to eq(item.price)
-        expect(result.first['slug']).to eq(item.slug)
+        expect(result.first['id']).to eq(on_shelf_item.id)
+        expect(result.first['name']).to eq(on_shelf_item.name)
+        expect(result.first['cover']['url']).to eq(on_shelf_item.cover.url)
+        expect(result.first['price']).to eq(on_shelf_item.price)
+        expect(result.first['slug']).to eq(on_shelf_item.slug)
+        
+        data = on_shelf_item.as_json(include: { on_shelf_specs: { only: [:id, :style, :style_pic], methods: [:stock_amount] } })
+        data["specs"] = data["on_shelf_specs"]
+        expect(result.first['specs']).to match_array(JSON.parse(data.to_json)['specs'])
       end
     end
     context 'when  search term is included in item description' do
@@ -29,11 +34,11 @@ RSpec.describe Api::V3::SearchController, type: :controller do
         expect(response.status).to eq(200)
         expect(response.content_type).to eq('application/json')
         expect(result.count).to eq(1)
-        expect(result.first['id']).to eq(item.id)
-        expect(result.first['name']).to eq(item.name)
-        expect(result.first['cover']['url']).to eq(item.cover.url)
-        expect(result.first['price']).to eq(item.price)
-        expect(result.first['slug']).to eq(item.slug)
+        expect(result.first['id']).to eq(on_shelf_item.id)
+        expect(result.first['name']).to eq(on_shelf_item.name)
+        expect(result.first['cover']['url']).to eq(on_shelf_item.cover.url)
+        expect(result.first['price']).to eq(on_shelf_item.price)
+        expect(result.first['slug']).to eq(on_shelf_item.slug)
       end
     end
   end
