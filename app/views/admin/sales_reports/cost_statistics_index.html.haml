@@ -12,11 +12,11 @@
       .panel-body
         .input-new-cost-data
           = form_for [:admin, CostStatistic.new], url: cost_statistics_index_admin_sales_reports_path, html: { class: "form-horizontal well" } do |f|
-            %p.lead 今日 #{display_date(Time.now)}
+            %p.lead 今日 #{display_date(Time.current)}
             .form-group
               = f.label :cost_date, "成本日期", class: "col-sm-2 control-label"
               .col-sm-5
-                = f.date_field :cost_date, { class: "datepicker form-control", value: Date.today, placeholder: "請輸入成本日期", required: true }
+                = f.date_field :cost_date, { class: "datepicker form-control", value: Time.current.to_date, placeholder: "請輸入成本日期", required: true }
             .form-group
               = f.label :cost_of_advertising, "廣告金額", class: "col-sm-2 control-label"
               .col-sm-5

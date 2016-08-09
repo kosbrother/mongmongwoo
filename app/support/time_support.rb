@@ -2,9 +2,9 @@ class TimeSupport
   attr_reader :time_param
 
   TIME_RANGE = {
-    "month" => Range.new((Time.now - 30.day), Time.now),
-    "week" => Range.new((Time.now - 7.day), Time.now),
-    "day" => Range.new((Time.now - 1.day), Time.now)
+    "month" => Range.new((Time.current - 30.day), Time.current),
+    "week" => Range.new((Time.current - 7.day), Time.current),
+    "day" => Range.new((Time.current - 1.day), Time.current)
   }
 
   def self.time_until(time_param)
@@ -16,6 +16,6 @@ class TimeSupport
   end
 
   def self.within_days(number)
-    Date.today.prev_day(number).beginning_of_day..Date.today.end_of_day
+    Time.current.to_date.prev_day(number).beginning_of_day..Time.current.to_date.end_of_day
   end
 end

@@ -30,9 +30,9 @@ RSpec.describe Api::V3::ItemsController, type: :controller do
     end
     context "with sort param" do
       let!(:category) { FactoryGirl.create(:category) }
-      let!(:on_shelf_item_1) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 50, created_at: Time.now) }
-      let!(:on_shelf_item_2) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 100, created_at: Time.now + 1) }
-      let!(:on_shelf_item_3) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 70, created_at: Time.now + 2) }
+      let!(:on_shelf_item_1) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 50, created_at: Time.current) }
+      let!(:on_shelf_item_2) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 100, created_at: Time.current + 1) }
+      let!(:on_shelf_item_3) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 70, created_at: Time.current + 2) }
 
       it "should order by price desc when with sort param price_desc" do
         get :index, category_id: category.id, sort: "price_desc"

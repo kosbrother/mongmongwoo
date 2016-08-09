@@ -43,7 +43,7 @@ class AllpayGoodsService
 
   def add_default_fields(params={})
     add_field("MerchantID", AllpayGoodsService.merchant_id)
-    add_field 'MerchantTradeDate', Time.now
+    add_field 'MerchantTradeDate', Time.current
     add_field("LogisticsType", params["LogisticsType"] || default_params["LogisticsType"])
     add_field("LogisticsSubType", params["LogisticsSubType"] || default_params["LogisticsSubType"])
     add_field("IsCollection", params["IsCollection"] || default_params["IsCollection"])
