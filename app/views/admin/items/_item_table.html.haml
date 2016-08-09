@@ -30,6 +30,10 @@
       %td.label-cell 淘寶價格
       %td{colspan: "5"}
         = number_to_currency(item.cost, unit: "¥ ")
+    %tr
+      %td.label-cell 商品備註
+      %td{colspan: "19"}
+        = item.note
 %p.lead.pull-left 商品銷量
 %table.table.table-bordered.order-table
   %thead
