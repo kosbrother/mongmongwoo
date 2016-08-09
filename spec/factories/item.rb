@@ -14,6 +14,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |item, evaluator|
+        FactoryGirl.create_list(:off_shelf_item_spec, evaluator.item_specs_count, :item => item)
         FactoryGirl.create_list(:item_spec, evaluator.item_specs_count, :item => item)
         FactoryGirl.create_list(:photo, evaluator.photos_count, :item => item)
       end
