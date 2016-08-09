@@ -19,82 +19,79 @@ describe Api::V3::OrdersController, type: :controller do
     let!(:ship_store_name) { store.name }
     let!(:ship_email) { Faker::Internet.email }
     let!(:products) { [product] }
-
-    context 'when item spec is on shelf and stock spec is sufficient' do
-      let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 2) }
-      let!(:product) { {product_id: item.id, name: item.name, spec_id: spec.id, style: spec.style, quantity: 1, price: item.price} }
-      context 'when  uid is provided' do
-        it "does create correct order" do
-          post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-               registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
-               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-               ship_email: ship_email, products: products
-          order_id = JSON.parse(response.body)["data"]['id']
-          order = Order.find(order_id)
-          expect(order.uid).to eq(uid)
-          expect(order.items_price).to eq(items_price)
-          expect(order.ship_fee).to eq(ship_fee)
-          expect(order.total).to eq(total)
-          expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
-          expect(order.info.ship_name).to eq(ship_name)
-          expect(order.info.ship_phone).to eq(ship_phone)
-          expect(order.info.ship_store_code).to eq(ship_store_code)
-          expect(order.info.ship_email).to eq(ship_email)
-          expect(order.items.size).to eq(products.size)
-          expect(order.items[0].item_name).to eq(product[:name])
-        end
-      end
-
-      context 'when  email is provided' do
-        it "does create correct order" do
-          post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
-               registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
-               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-               ship_email: ship_email, products: products
-          order_id = JSON.parse(response.body)["data"]['id']
-          order = Order.find(order_id)
-          expect(order.items_price).to eq(items_price)
-          expect(order.ship_fee).to eq(ship_fee)
-          expect(order.total).to eq(total)
-          expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
-          expect(order.info.ship_name).to eq(ship_name)
-          expect(order.info.ship_phone).to eq(ship_phone)
-          expect(order.info.ship_store_code).to eq(ship_store_code)
-          expect(order.info.ship_email).to eq(ship_email)
-          expect(order.items.size).to eq(products.size)
-          expect(order.items[0].item_name).to eq(product[:name])
-        end
-      end
-
-      it "return errors if missing order params" do
-        post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
-             ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-             ship_email: ship_email, products: products
-        message = JSON.parse(response.body)
-        expect(message).not_to be_nil
-        expect(Order.all.size).to eq(0)
-        expect(OrderInfo.all.size).to eq(0)
-      end
-
-      it "return errors if missing ship params" do
-        post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-             registration_id: registration_id, products: products
-        message = JSON.parse(response.body)
-        expect(message).not_to be_nil
-        expect(Order.all.size).to eq(0)
-        expect(OrderInfo.all.size).to eq(0)
-      end
-
-      it "return errors if missing products params" do
+    let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 2) }
+    let!(:product) { {product_id: item.id, name: item.name, spec_id: spec.id, style: spec.style, quantity: 1, price: item.price} }
+    context 'when  uid is provided' do
+      it "does create correct order" do
         post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
              registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-             ship_email: ship_email
-        message = JSON.parse(response.body)
-        expect(message).not_to be_nil
-        expect(Order.all.size).to eq(0)
-        expect(OrderInfo.all.size).to eq(0)
+             ship_email: ship_email, products: products
+        order_id = JSON.parse(response.body)["data"]['id']
+        order = Order.find(order_id)
+        expect(order.uid).to eq(uid)
+        expect(order.items_price).to eq(items_price)
+        expect(order.ship_fee).to eq(ship_fee)
+        expect(order.total).to eq(total)
+        expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+        expect(order.info.ship_name).to eq(ship_name)
+        expect(order.info.ship_phone).to eq(ship_phone)
+        expect(order.info.ship_store_code).to eq(ship_store_code)
+        expect(order.info.ship_email).to eq(ship_email)
+        expect(order.items.size).to eq(products.size)
+        expect(order.items[0].item_name).to eq(product[:name])
       end
+    end
+
+    context 'when  email is provided' do
+      it "does create correct order" do
+        post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
+             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+             ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+             ship_email: ship_email, products: products
+        order_id = JSON.parse(response.body)["data"]['id']
+        order = Order.find(order_id)
+        expect(order.items_price).to eq(items_price)
+        expect(order.ship_fee).to eq(ship_fee)
+        expect(order.total).to eq(total)
+        expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+        expect(order.info.ship_name).to eq(ship_name)
+        expect(order.info.ship_phone).to eq(ship_phone)
+        expect(order.info.ship_store_code).to eq(ship_store_code)
+        expect(order.info.ship_email).to eq(ship_email)
+        expect(order.items.size).to eq(products.size)
+        expect(order.items[0].item_name).to eq(product[:name])
+      end
+    end
+
+    it "return errors if missing order params" do
+      post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+           ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+           ship_email: ship_email, products: products
+      message = JSON.parse(response.body)["error"]["message"]
+      expect(message).not_to be_nil
+      expect(Order.all.size).to eq(0)
+      expect(OrderInfo.all.size).to eq(0)
+    end
+
+    it "return errors if missing ship params" do
+      post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+           registration_id: registration_id, products: products
+      message = JSON.parse(response.body)["error"]["message"]
+      expect(message).not_to be_nil
+      expect(Order.all.size).to eq(0)
+      expect(OrderInfo.all.size).to eq(0)
+    end
+
+    it "return errors if missing products params" do
+      post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+           registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+           ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+           ship_email: ship_email
+      message = JSON.parse(response.body)["error"]["message"]
+      expect(message).not_to be_nil
+      expect(Order.all.size).to eq(0)
+      expect(OrderInfo.all.size).to eq(0)
     end
   end
 

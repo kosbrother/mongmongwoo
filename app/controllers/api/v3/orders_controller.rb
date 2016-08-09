@@ -39,16 +39,17 @@ class Api::V3::OrdersController < ApiController
           item.item_style = product[:style]
           item.item_quantity = product[:quantity]
           item.item_price = product[:price]
+          item.save
           errors << item.errors.messages unless item.save
         end
       else
-        errors << ["params[products] is blank"]
+        errors << ["params[products] is blank"] 
       end
       raise ActiveRecord::Rollback if errors.present?
     end
     if errors.present?
       Rails.logger.error("error: #{errors}")
-      render status: 400, json: {error: errors}
+      render status: 400, json: {error: {message: errors.to_s}}
     else
       OrderMailer.delay.notify_order_placed(@order)
       render status: 200, json: {data: @order.as_json(only: [:id])}
