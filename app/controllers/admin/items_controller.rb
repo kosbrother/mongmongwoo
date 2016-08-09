@@ -5,6 +5,7 @@ class Admin::ItemsController < AdminController
   def new
     @item = Item.new
     @photo = @item.photos.new
+    @is_manager = true
   end
 
   def create
@@ -23,6 +24,10 @@ class Admin::ItemsController < AdminController
     @sales_volume = @item.sales_quantity
     @sales_volume_monthly = @item.sales_quantity_within_date(TimeSupport.time_until("month"))
     @sales_volume_weekly = @item.sales_quantity_within_date(TimeSupport.time_until("week"))
+  end
+
+  def edit
+    @is_manager = true
   end
 
   def update
