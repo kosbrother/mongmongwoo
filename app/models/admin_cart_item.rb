@@ -15,6 +15,6 @@ class AdminCartItem < ActiveRecord::Base
   end
 
   def add_item_quantity(quantity)
-    update_column(:item_quantity, item_quantity.to_i + quantity.to_i)
+    update_column(:item_quantity, item_quantity + quantity.to_i)
   end
 end
