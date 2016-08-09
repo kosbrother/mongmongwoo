@@ -8,9 +8,13 @@ class AdminCartItem < ActiveRecord::Base
   belongs_to :item
   belongs_to :item_spec
   
-  validates_presence_of :admin_cart_id, :item_id, :item_spec_id, :item_quantity
+  validates_presence_of :admin_cart_id, :item_id, :item_spec_id
 
   def spec_id
     item_spec_id
+  end
+
+  def add_item_quantity(quantity)
+    update_column(:item_quantity, item_quantity + quantity.to_i)
   end
 end

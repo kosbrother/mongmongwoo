@@ -76,9 +76,17 @@ Rails.application.routes.draw do
     get "/signin", to: "sessions#new"
     post "/signin", to: "sessions#create"
     delete "/signout", to: "sessions#destroy"
-    get "/checkout", to: "admin_carts#checkout", as: "checkout"
-    post "/submit", to: "admin_carts#submit", as: "submit_order"
-    patch "/admin_carts/:id", to: "admin_carts#note", as: "cart_note"
+
+    resources :admin_carts, only: [] do
+      collection do
+        get "checkout"
+        post "submit"
+      end
+
+      member do
+        patch "note"
+      end
+    end
 
     resources :roads, only: [] do
       collection do
@@ -96,6 +104,7 @@ Rails.application.routes.draw do
       collection do
         post "add"
         post "get_by_id"
+        post "import_excel"
       end
       member do
         patch "update_quantity"
