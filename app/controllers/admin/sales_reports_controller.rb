@@ -2,8 +2,8 @@ class Admin::SalesReportsController < AdminController
   before_action :require_manager
 
   def item_sales_result
-    params[:start_date] ||=  Date.today.prev_day(7)
-    params[:end_date] ||=  Date.today
+    params[:start_date] ||=  Time.current.to_date.prev_day(7)
+    params[:end_date] ||=  Time.current.to_date
     date_range =  params[:start_date] .. params[:end_date]
     @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_result.where('order_items.created_at': date_range)
   end

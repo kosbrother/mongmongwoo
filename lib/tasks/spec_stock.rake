@@ -2,7 +2,7 @@ namespace :specs do
 
   task :stock_recommend_num  => :environment do
     Item.find_each do |item|
-      if(item.created_at < Time.now - 10.days)
+      if(item.created_at < Time.current - 10.days)
         m_sales_amount = item.sales_within_30_days.m_sales_amount
         if m_sales_amount == 0
           item.specs.each{|s| s.update_attribute(:recommend_stock_num,0)}

@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :income_point, class: ShoppingPoint do
     point_type ShoppingPoint.point_types["退訂入帳"]
     amount 50
-    valid_until Date.today.next_month(1)
+    valid_until Time.current.to_date.next_month(1)
   end
 
   factory :spend_point, class: ShoppingPoint do
@@ -13,6 +13,6 @@ FactoryGirl.define do
   factory :gift_point, class: ShoppingPoint do
     point_type ShoppingPoint.point_types["贈金入帳"]
     amount 50
-    valid_until Date.today.next_month(1)
+    valid_until Time.current.to_date.next_month(1)
   end
 end
