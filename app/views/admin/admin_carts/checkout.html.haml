@@ -3,46 +3,38 @@
     .pull-right.file-form
       = form_tag import_excel_admin_admin_cart_items_path, :enctype =>'multipart/form-data'  do
         = file_field_tag :excel_file, require: true, class: 'custom-file-input'
-        = submit_tag '送出'
+        = submit_tag '送出', class: 'btn btn-default'
     %h1 淘寶購物車
-    %h3 透過淘寶商家找尋商品
-    = form_tag admin_admin_cart_items_path do
-      = label_tag :taobao_supplier_id, '淘寶店家'
-      = select_tag :taobao_supplier_id,  options_for_select(@taobao_list.collect{ |t| [t.name, t.id] }), id: 'select-taobao'
-      = label_tag :item_id, '商品名稱'
-      = select_tag :item_id, options_for_select(@first_taobao_items.collect{ |i| ["#{i.id}-#{i.name}", i.id] }), id: 'item-list'
-      = label_tag :item_spec_id, '商品樣式'
-      = select_tag :item_spec_id, options_for_select(@first_item_specs.collect{ |s| ["#{s.id}-#{s.style}", s.id] }), id: 'spec-list'
-      = label_tag :item_quantity, '商品數量'
-      = number_field_tag :item_quantity, 1, min: 1, require: true
-      = submit_tag '加入購物車'
-    %h3 透過商品編號找尋商品
-    = form_tag   get_by_id_admin_admin_cart_items_path, remote: true do
-      = label_tag :item_id, '商品編號'
-      = number_field_tag :item_id, 31, min: Item.first.id, max: Item.last.id, require: true
-      = submit_tag '搜尋'
+    .pull-right
+      = form_tag   get_by_id_admin_admin_cart_items_path, remote: true do
+        = label_tag :item_id, '商品編號'
+        = number_field_tag :item_id, 31, min: Item.first.id, max: Item.last.id, require: true
+        = submit_tag '搜尋', class: 'btn btn-default'
+        %p.help-block
     = render partial: 'search_form', locals: { item: @searched_item }
     %h1 現有購物車
     - current_admin_carts.each do |cart|
       .current-cart{id: "cart-#{cart.id}"}
         %h3= cart.taobao_supplier_name
-        = form_tag submit_admin_admin_carts_path(admin_cart_id: cart.id) do
-          = label_tag :taobao_order_id, '淘寶訂單編號'
-          = text_field_tag :taobao_order_id, nil, placeholder: '請輸入淘寶訂單編號', required: true
-          = submit_tag '送出購物車', class: 'btn btn-success'
+        .pull-right
+          = form_tag submit_admin_admin_carts_path(admin_cart_id: cart.id) do
+            = submit_tag '送出購物車', class: 'btn btn-primary'
+            %p.help-block
         %table.table.table-striped.table-bordered
           %thead
             %tr
-              %th.x-small 商品編號
-              %th.large-small 商品名稱
+              %th.x-small 淘寶店家
+              %th.xx-small 編號
+              %th.small 商品名稱
               %th.x-small 淘寶連結
               %th.small 樣式名稱
-              %th.mid-small 樣式圖片
-              %th.mid-small 商品數量
-              %th.x-small 移除商品
+              %th.x-small 樣式圖片
+              %th.mid-small 數量
+              %th.x-small 操作
           %tbody{id: "cart-#{cart.id}-items-list"}
             - cart.admin_cart_items.each do |cart_item|
               %tr{id: "cart-item-#{cart_item.id}"}
+                %td= supplier_name(cart_item.item)
                 %td= cart_item.item_id
                 %td= link_to_item(cart_item.item)
                 %td= link_to_item_taobao(cart_item.item)
@@ -51,5 +43,5 @@
                 %td
                   = form_tag update_quantity_admin_admin_cart_item_path(cart_item), method: 'patch', remote: true do
                     = number_field_tag :item_quantity, cart_item.item_quantity , min: 1,id: "cart-item-#{cart_item.id}-quantity" , class: 'update-cart-item-quantity'
-                    = submit_tag '修改數量'
+                    = submit_tag '修改'
                 %td= link_to '刪除', admin_admin_cart_item_path(cart_item), method: 'delete', remote: true, class: 'btn btn-warning'
