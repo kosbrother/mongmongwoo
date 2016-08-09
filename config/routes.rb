@@ -343,5 +343,9 @@ Rails.application.routes.draw do
       resources :oauth_sessions, only: [:create]
       resources :shop_infos, only: [:index]
     end
+
+    namespace :v4 do
+      resources :orders, only: [:create]
+    end
   end
 end
