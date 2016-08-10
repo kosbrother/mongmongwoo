@@ -28,7 +28,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def stock_amount
-    item_spec ? item_spec.stock_amount : 0
+    item_spec ? item_spec.stock_item_quantity : 0
   end
 
   def shipping_amount
