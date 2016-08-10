@@ -1,6 +1,6 @@
 class Admin::CategoriesController < AdminController
   before_action :require_manager
-  before_action :find_category, only: [:show, :edit, :update]
+  before_action :find_category, only: [:show, :edit, :update, :destroy]
 
   def index
     @categories = Category.recent
@@ -52,6 +52,12 @@ class Admin::CategoriesController < AdminController
     end
 
     render nothing: true
+  end
+
+  def destroy
+    @category.destroy
+    flash[:warning] = "分類已刪除"
+    redirect_to :back
   end
 
   private
