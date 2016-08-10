@@ -1,81 +1,46 @@
-.sidebar.content-box{:style => "display: block;"}
+.sidebar.content-box
   %ul.nav
-    / Main menu
-    %li.current
-      = link_to admin_root_path do
-        %i.glyphicon.glyphicon-home
-        管理首頁
     %li.submenu
       %a{:href => "#"}
-        %i.fa.fa-inbox
-        庫存管理
-        %span.caret.pull-right
-      / Sub menu
-      %ul
-        %li
-          = link_to "選擇淘寶商家", admin_stocks_path
-        %li
-          = link_to "確認收貨", admin_confirm_carts_path
-        %li
-          = link_to "新增到購物車", checkout_admin_admin_carts_path
-    %li
-      = link_to new_admin_item_path do
-        %i.glyphicon.glyphicon-plus
-        新增商品
-    %li
-      = link_to admin_taobao_suppliers_path do
-        %i.fa.fa-object-group
-        淘寶商家
-    %li.submenu
-      %a{:href => "#"}
-        %i.glyphicon.glyphicon-list-alt
-        分類管理
-        %span.caret.pull-right
-      / Sub menu
-      %ul
-        %li
-          = link_to "分類列表", admin_categories_path
-        %li
-          = link_to "新增分類", new_admin_category_path
-    %li.submenu
-      %a{:href => "#"}
-        %i.glyphicon.glyphicon-user
-        用戶管理
-        %span.caret.pull-right
-      / Sub menu
-      %ul
-        %li
-          = link_to "用戶資料列表", admin_users_path
-    %li.submenu
-      %a{:href => "#"}
-        %i.fa.fa-shopping-bag>
+        %i.fa.fa-shopping-bag
         訂單管理
         %span.caret.pul-right
-      / Sub menu
       %ul
         %li
           = link_to "狀態分類列表", status_index_admin_orders_path
         %li
           = link_to "所有訂單列表", admin_orders_path
-        %li
-          = link_to "寄件列表", exporting_files_admin_orders_path
     %li.submenu
       %a{:href => "#"}
-        %i.fa.fa-bell>
-        推播管理
-        %span.caret.pul-right
-      / Sub menu
+        %i.fa.fa-inbox
+        倉庫管理
+        %span.caret.pull-right
       %ul
         %li
-          = link_to "推播訊息", admin_notifications_path
+          = link_to "現貨管理", "#"
         %li
-          %a{:href => "#"} 註冊裝置
+          = link_to "進貨管理", admin_confirm_carts_path
+        %li
+          = link_to "淘寶商家", admin_taobao_suppliers_path
     %li.submenu
       %a{:href => "#"}
-        %i.glyphicon.glyphicon-stats>
+        %i.glyphicon.glyphicon-list-alt
+        商品管理
+        %span.caret.pull-right
+      %ul
+        %li
+          = link_to "分類列表", admin_categories_path
+        %li
+          = link_to "商品列表", "#"
+    %li
+      = link_to admin_notifications_path do
+        %i.fa.fa-bell
+        推播訊息
+    %li.submenu
+      %a{:href => "#"}
+        %i.glyphicon.glyphicon-stats>]
         銷售統計
         %span.caret.pul-right
-      / Sub menu
       %ul
         %li
           = link_to "商品銷量與金額", item_sales_result_admin_sales_reports_path
@@ -83,30 +48,22 @@
           = link_to "成本與毛利數據", cost_statistics_index_admin_sales_reports_path
     %li.submenu
       %a{:href => "#"}
-        %i.fa.fa-commenting>
-        訊息管理
-        %span.caret.pul-right
-      / Sub menu
-      %ul
-        %li
-          = link_to "官方訊息列表", admin_messages_path
-        %li
-          = link_to "管理購物須知", admin_shop_infos_path
-    %li.submenu
-      %a{:href => "#"}
-        %i.fa.fa-star
-        優惠活動管理
+        %i.fa.fa-inbox
+        其他
         %span.caret.pull-right
-      / Sub menu
       %ul
         %li
-          = link_to "優惠列表", admin_promotions_path
-    %li.submenu
-      %a{:href => "#"}
-        %i.fa.fa-building
-        超商門市管理
-        %span.caret.pull-right
-      / Sub menu
-      %ul
+          = link_to admin_users_path do
+            用戶資料列表
         %li
-          = link_to "查看門市資料", admin_stores_path
+          = link_to admin_promotions_path do
+            優惠列表
+        %li
+          = link_to admin_messages_path do
+            官方訊息列表
+        %li
+          = link_to admin_shop_infos_path do
+            購物須知列表
+        %li
+          = link_to admin_stores_path do
+            查看門市列表

@@ -149,12 +149,36 @@ div.item-cover-words-intro, div.notification-intro {
   }
 }
 
-.checkout{
-  .file-form{
+.checkout {
+  .file-form {
     margin-top: 27px;
-    .custom-file-input{
+    .custom-file-input {
       display: inline-block;
       width: 190px;
+    }
+  }
+}
+
+.header{
+  .user{
+    color: #fff;
+    margin-top: 18px;
+    > .user-name{
+      display: inline-block;
+    }
+    > .sign-out{
+      color: #fff;
+      font-size: 14px;
+      margin-left: 5px;
+    }
+  }
+  .cart{
+    margin-top: 18px;
+    text-align: right;
+    padding-right: 5px;
+    a{
+      color: #fff;
+      font-size: 14px;
     }
   }
 }

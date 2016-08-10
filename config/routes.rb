@@ -72,7 +72,7 @@ Rails.application.routes.draw do
 
   # 管理員後台
   namespace :admin do
-    root "categories#index"
+    root "orders#status_index"
     get "/signin", to: "sessions#new"
     post "/signin", to: "sessions#create"
     delete "/signout", to: "sessions#destroy"
