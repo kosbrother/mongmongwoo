@@ -60,12 +60,12 @@ class Admin::ItemsController < AdminController
   private
 
   def item_params
-    params.require(:item).permit(:name, :price, :special_price, :cover, :slug, :description, :url, :taobao_supplier_id, :cost, :shelf_position, :taobao_name, category_ids: [])
+    params.require(:item).permit(:name, :price, :special_price, :cover, :slug, :description, :url, :taobao_supplier_id, :cost, :shelf_position, :taobao_name, :note, category_ids: [])
   end
 
   def find_item
     @item = Item.find(params[:id])
     @photos = @item.photos
-    @specs = @item.specs.order(status: :ASC).includes(:stock_spec)
+    @specs = @item.specs.order(status: :ASC)
   end
 end
