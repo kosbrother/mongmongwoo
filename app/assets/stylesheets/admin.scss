@@ -98,11 +98,14 @@ div.item-cover-words-intro, div.notification-intro {
     margin-top: 20px;
   }
   .file-form {
-    margin-top: 27px;
+    margin-top: 20px;
     .custom-file-input {
       display: inline-block;
       width: 190px;
     }
+  }
+  .search-input{
+    height: 35px;
   }
   #item_quantity, .update-cart-item-quantity{
     width: 45px;
