@@ -1,12 +1,22 @@
-.row
-  .col-md-12.panel-warning
-    .content-box-header.panel-heading
-      .panel-title 分類列表
-    .content-box-large.box-with-header
-      .content.row
-        - @categories.each do |category|
-          .col-sm-6.col-md-4
-            = link_to admin_category_path(category) do
-              = show_image(category.image, "120x120")
-              %h3= category.name
-              %br
+.content-box-large.box-with-header
+  .header-btn
+    .pull-right
+      =link_to '新增', new_admin_category_path, class: 'btn btn-default'
+    %h2 分類列表
+  %p.help-block
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th.small 編號
+        %th.large-small 名稱
+        %th.large-small 圖片
+        %th.small 操作
+    %tbody
+      - @categories.each do |category|
+        %tr
+          %td= category.id
+          %td= link_to category.name, admin_category_path(category)
+          %td= show_image(category.image, "90x90")
+          %td
+            =link_to '編輯', edit_admin_category_path(category), class: 'btn btn-default'
+            =link_to '刪除', admin_category_path(category), class: 'btn btn-warning', method: :delete
