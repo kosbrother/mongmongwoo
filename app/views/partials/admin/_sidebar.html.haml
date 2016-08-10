@@ -33,7 +33,7 @@
         %li
           = link_to "商品列表", "#"
     %li
-      = link_to admin_notifications_path do
+      = link_to admin_notifications_path(is_execute: Schedule.execute_statuses[:false]) do
         %i.fa.fa-bell
         推播訊息
     %li.submenu

@@ -3,7 +3,7 @@ class Admin::NotificationsController < AdminController
   before_action :find_notification, only: [:show]
 
   def index
-    @notification_page = @notifications = Notification.includes(:item).recent.paginate(page: params[:page])
+    @notifications = Notification.includes(:item).joins(:schedule).where(schedules: { is_execute: params[:is_execute] }).recent.paginate(page: params[:page])
   end
 
   def show
@@ -16,12 +16,11 @@ class Admin::NotificationsController < AdminController
 
   def create
     @notification = Notification.new(notification_params)
-
-    if @notification.save!
-      GcmNotifyService.new.send_item_event_notification(@notification)
-
+    if @notification.save
+      schedule = Schedule.create(scheduleable: @notification, execute_time: params[:execute_time], schedule_type: @notification.schedule_type)
+      @notification.push_notification
       flash[:notice] = "成功推播訊息"
-      redirect_to admin_notifications_path
+      redirect_to admin_notifications_path(is_execute: Schedule.execute_statuses[:false])
     else
       flash.now[:alert] = "請確認訊息內容"
       render :new

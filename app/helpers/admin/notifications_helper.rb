@@ -19,4 +19,15 @@ module Admin::NotificationsHelper
 
     image_tag(image_url, :class => "thumbnail")
   end
+
+  def li_execute_status_link(options = {is_execute: Schedule.execute_statuses[:false]})
+    is_execute = options[:is_execute]
+    content_tag(:li, '', class: is_execute.to_s == params[:is_execute] ? 'active' : '') do
+      link_to link_text(is_execute), admin_notifications_path(options)
+    end
+  end
+
+  def link_text(execue_status)
+    execue_status == Schedule.execute_statuses[:false] ? "排程推播" : "已推播"
+  end
 end
