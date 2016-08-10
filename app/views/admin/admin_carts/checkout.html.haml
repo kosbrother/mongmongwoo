@@ -5,7 +5,7 @@
         = file_field_tag :excel_file, required: true, class: 'custom-file-input'
         = submit_tag '送出', class: 'btn btn-default'
     %h2 加入購物車
-    .clearfi.search-input
+    .clearfix.search-input
       .pull-right
         = form_tag   get_by_id_admin_admin_cart_items_path, remote: true do
           = label_tag :item_id, '商品編號'

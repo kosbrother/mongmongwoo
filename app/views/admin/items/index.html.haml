@@ -1,0 +1,47 @@
+.content-box-large
+  .header-btn
+    .pull-right
+      .search-bar
+        = form_tag search_admin_items_path, { class: "input-group form", method: :get } do
+          = search_field_tag(:search_term, params[:search_term], required: true, placeholder: "輸入商品名稱或商品編號", class: "form-control")
+          %span.input-group-btn
+            = button_tag "搜尋", class: "btn btn-primary"
+    %h2 商品列表
+    .clearfix
+      .pull-right
+        =link_to '新增商品', new_admin_item_path, class: 'btn btn-default'
+  .apple_pagination
+    = will_paginate @items, :container => false
+  %p.help-block
+
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th.xx-small 編號
+        %th.xx-small 排序
+        %th.xx-small 狀態
+        %th.x-small 貨架編號
+        %th.mid-small 名稱
+        %th.x-small 圖片
+        %th.x-small 價格
+        %th.x-small 操作
+    %tbody
+      - @items.each do |item|
+        %tr
+          %td= item.id
+          %td
+            %button.btn.btn-primary.btn-xs{:type => "button"}
+              排名：
+              %span.badge= item.category_position(@category)
+          %td{id: "status-#{item.id}"}
+            = link_to_update_item_status(item)
+          %td= item.shelf_position
+          %td= link_to item.name, admin_item_path(item)
+          %td= show_image(item.cover.icon, "90x60")
+          %td
+            %p= "淘寶：#{item.cost}"
+            %p= "定價：#{item.price}"
+            %p= "優惠：#{item.special_price}"
+          %td
+            = link_to "編輯", edit_admin_item_path(item), class: 'btn btn-default'
+            = link_to "刪除", admin_item_path(item), class: 'btn btn-warning', method: :delete, data: { confirm: "確定刪除？", disable_with: "刪除中..." }

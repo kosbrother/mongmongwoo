@@ -131,7 +131,7 @@ Rails.application.routes.draw do
 
     resources :stock_specs, only: [:update]
 
-    resources :items, only: [:new, :create, :show, :edit, :update, :destroy] do
+    resources :items, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
       collection do
         get "search"
       end

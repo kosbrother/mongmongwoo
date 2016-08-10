@@ -2,6 +2,11 @@ class Admin::ItemsController < AdminController
   before_action :require_manager
   before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
 
+  def index
+    @category = Category.first
+    @items = Item.paginate(page: params[:page]).per_page(20)
+  end
+
   def new
     @item = Item.new
     @photo = @item.photos.new
@@ -38,7 +43,7 @@ class Admin::ItemsController < AdminController
   def destroy
     @item.destroy
     flash[:warning] = "商品已刪除"
-    redirect_to admin_root_path
+    redirect_to :back
   end
 
   def on_shelf
