@@ -8,9 +8,15 @@ class Admin::ItemSpecsController < AdminController
     render json: {style_pic: url}
   end
 
+  def new
+    @item_spec = @item.specs.new
+  end
+
   def create
     @item_spec = @item.specs.new(spec_params)
     @item_spec.save
+    flash[:notice] = "商品樣式新增完成"
+    redirect_to admin_item_path(@item)
   end
 
   def update
@@ -52,6 +58,6 @@ class Admin::ItemSpecsController < AdminController
   end
 
   def spec_params
-    params.require(:item_spec).permit(:style, :style_pic, :style_amount)
+    params.require(:item_spec).permit(:style, :style_pic)
   end
 end

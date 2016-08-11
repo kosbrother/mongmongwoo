@@ -1,6 +1,3 @@
-%h3 編輯樣式
-= form_for [:admin, @item, @item_spec], html: { class: "form-horizontal well" } do |f|
-  = render "form", f: f
-  .form-group
-    .col-sm-offset-2.col-sm-10
-      = f.submit "確認送出", class: "btn btn-warning"
+.content-box-large
+  %h3 編輯樣式
+  = render "form"
