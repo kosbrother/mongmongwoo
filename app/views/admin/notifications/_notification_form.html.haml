@@ -18,7 +18,7 @@
   .form-group
     = label_tag "推播執行日期", nil, class: "col-sm-2 control-label"
     .col-sm-10
-      = datetime_local_field_tag "execute_time", nil, class: "form-control", placeholder: "請選擇執行日期", required: true
+      = datetime_field_tag "execute_time", nil, class: "form-control datetimepicker", placeholder: "請選擇執行日期", required: true
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit "確認送出", class: "btn btn-primary"

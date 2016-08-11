@@ -15,6 +15,7 @@
 //= require dataTables.bootstrap
 //= require ckeditor/init
 //= require pnotify.custom.min
+//= require jquery.datetimepicker.full.min
 //= require_tree ./admin
 
 //Ajax
@@ -61,6 +62,8 @@ ready = function() {
       return "<img src='"+$(this).data('imageUrl')+"' width='120' height='120'>";
     }
   });
+  // datetimepicker selector
+  $('.datetimepicker').datetimepicker();
 };
 
 $(document).ready(ready);
