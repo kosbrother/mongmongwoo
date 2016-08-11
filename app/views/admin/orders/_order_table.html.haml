@@ -19,7 +19,6 @@
           = render(partial: "info_and_items_list", locals: { order: order })
           %br
           = link_to "編輯訂單", edit_admin_order_path(order), class: "btn btn-default btn-sm"
-          .button{id: "send-#{order.id}"}= create_allpay_index_button(order)
           .button= link_to_send_survey_email(order)
           .button= link_to_combine_orders(order)
           .button{id: "barcode-#{order.id}"}= link_to_allpay_barcode(order)
@@ -108,4 +107,3 @@
                 %td= order.note
 .apple_pagination
   = will_paginate orders, :container => false
-%br/

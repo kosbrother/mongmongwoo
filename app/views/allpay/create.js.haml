@@ -1,7 +1,0 @@
-- @order = Order.find(params[:order_id])
-:plain
-  $(function(){
-    new PNotify({title: "#{j(@message)}"});
-  });
-  $("#send-#{@order.id}").html('#{content_tag(:span, '已傳送至歐付寶', class: "label label-default")}');
-  $("#barcode-#{@order.id}").html('#{link_to "產生物流單", barcode_allpay_index_path(@order), class: "btn btn-primary", target: "_blank"}');

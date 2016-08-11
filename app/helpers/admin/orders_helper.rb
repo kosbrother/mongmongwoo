@@ -26,14 +26,6 @@ module Admin::OrdersHelper
     end
   end
 
-  def create_allpay_index_button(order)
-    if order.logistics_status_code.nil?
-      button_to "傳送至歐付寶", create_allpay_index_path(order), remote: true, class: "btn btn-primary"
-    else
-      content_tag(:span, '已傳送至歐付寶', class: "label label-default")
-    end
-  end
-
   def link_to_allpay_barcode(order)
     if order.allpay_transfer_id.present?
       link_to "產生物流單", barcode_allpay_index_path(order), class: "btn btn-primary", target: "_blank"

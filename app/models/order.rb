@@ -34,6 +34,7 @@ class Order < ActiveRecord::Base
   scope :status_count, -> { group(:status).size }
   scope :status, -> (status_param) { where(status: status_param) }
   scope :enable_to_conbime, -> { where(status: [Order.statuses["新訂單"], Order.statuses["處理中"], Order.statuses["訂單變更"]]) }
+  scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
 
   acts_as_paranoid
 

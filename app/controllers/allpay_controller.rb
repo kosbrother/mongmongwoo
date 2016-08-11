@@ -1,9 +1,12 @@
 class AllpayController < ActionController::Base
-  def create
-    if PostToAllpayWorker.new.perform(params[:order_id], create_reply_allpay_index_url, status_update_allpay_index_url)
-      @message = "已將編號：#{params[:order_id]} 成功傳送到歐付寶"
-    else
-      @message = "編號：#{params[:order_id]} 傳送到歐付寶 失敗"
+  def create_from_processing
+    Order.status(Order.statuses["處理中"]).nil_logistics_code.each do |order|
+      if PostToAllpayWorker.new.perform(order.id, create_reply_allpay_index_url, status_update_allpay_index_url)
+        @message = "全部處理中訂單已成功傳送到歐付寶"
+      else
+        @message = "編號：#{order.id} 傳送到歐付寶 失敗"
+        break
+      end
     end
   end
 
