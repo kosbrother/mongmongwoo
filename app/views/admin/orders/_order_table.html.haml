@@ -1,8 +1,7 @@
 %br/
 - if params[:restock].present?
   = restock_navs(order_status: params[:status])
-.apple_pagination
-  = will_paginate orders, :container => false
+= render_pagination(orders)
 %table.table.table-striped.table-bordered.order-table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
   %thead
     %tr
@@ -105,5 +104,4 @@
                 %th 備註
               %tr
                 %td= order.note
-.apple_pagination
-  = will_paginate orders, :container => false
+= render_pagination(orders)
