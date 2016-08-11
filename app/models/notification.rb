@@ -18,6 +18,11 @@ class Notification < ActiveRecord::Base
     self.item.cover.url
   end
 
+  def push_notification
+    schedule = Schedule.find_by(scheduleable_id: id)
+    PushNotificationWorker.perform_at(schedule.execute_time, id)
+  end
+
   def schedule_type
     Notification.schedule_types[:on_shelf_schedule]
   end

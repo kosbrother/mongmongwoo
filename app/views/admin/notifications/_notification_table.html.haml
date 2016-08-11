@@ -21,10 +21,4 @@
         %td
           = t(notification.schedule_type)
         %td
-          .dropdown
-            %button#dropdownMenu1.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-              按此選擇
-              %span.caret
-            %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
-              %li= link_to "編輯"
-              %li= link_to "刪除"
+          = link_to "刪除", "#"
