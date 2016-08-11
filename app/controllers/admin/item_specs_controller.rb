@@ -14,15 +14,24 @@ class Admin::ItemSpecsController < AdminController
 
   def create
     @item_spec = @item.specs.new(spec_params)
-    @item_spec.save
-    flash[:notice] = "商品樣式新增完成"
-    redirect_to admin_item_path(@item)
+
+    if @item_spec.save
+      flash[:notice] = "商品樣式新增完成"
+      redirect_to admin_item_path(@item)
+    else
+      flash.now[:alert] = "請檢查資料是否正確"
+      render :new
+    end
   end
 
   def update
-    @item_spec.update(spec_params)
-    flash[:notice] = "商品樣式更新完成"
-    redirect_to admin_item_path(@item)
+    if @item_spec.update(spec_params)
+      flash[:notice] = "商品樣式更新完成"
+      redirect_to admin_item_path(@item)
+    else
+      flash.now[:alert] = "請檢查資料是否正確"
+      render :edit
+    end
   end
 
   def on_shelf
