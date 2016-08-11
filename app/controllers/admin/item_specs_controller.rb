@@ -13,6 +13,12 @@ class Admin::ItemSpecsController < AdminController
     @item_spec.save
   end
 
+  def update
+    @item_spec.update(spec_params)
+    flash[:notice] = "商品樣式更新完成"
+    redirect_to admin_item_path(@item)
+  end
+
   def on_shelf
     @item_spec.update_attribute(:status, ItemSpec.statuses["on_shelf"])
     @is_item_off_shelf = (@item_spec.item.status == "off_shelf")
@@ -38,7 +44,7 @@ class Admin::ItemSpecsController < AdminController
   private
 
   def find_item
-    @item = Item.includes(:specs).find(params[:item_id])
+    @item = Item.find(params[:item_id])
   end
 
   def find_spec
