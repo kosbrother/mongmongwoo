@@ -43,7 +43,7 @@ class OrderItem < ActiveRecord::Base
     item.stock_specs.find_or_create_by(item_spec_id: item_spec.id)
   end
 
-  def restock_amount
+  def restock
     spec = item_spec || find_item_spec
     stock_spec = spec.stock_spec || find_or_create_stock_spec(spec)
     stock_spec.amount += item_quantity
