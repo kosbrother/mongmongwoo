@@ -3,7 +3,7 @@ class Admin::NotificationsController < AdminController
   before_action :find_notification, only: [:show]
 
   def index
-    @notifications = Notification.includes(:item).joins(:schedule).where(schedules: { is_execute: params[:is_execute] }).recent.paginate(page: params[:page])
+    @notifications = Notification.includes(:item).with_schedule.by_execute(params[:is_execute]).recent.paginate(page: params[:page])
   end
 
   def show
@@ -40,6 +40,6 @@ class Admin::NotificationsController < AdminController
   end
 
   def find_notification
-    @notification = Notification.find(params[:id])
+    @notification = Notification.includes(:item).with_schedule.find(params[:id])
   end
 end
