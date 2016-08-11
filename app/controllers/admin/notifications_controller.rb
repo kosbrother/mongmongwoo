@@ -18,7 +18,7 @@ class Admin::NotificationsController < AdminController
     @notification = Notification.new(notification_params)
     if @notification.save
       schedule = Schedule.create(scheduleable: @notification, execute_time: params[:execute_time], schedule_type: @notification.schedule_type)
-      @notification.push_notification
+      @notification.put_in_schedule
       flash[:notice] = "成功加入推播排程"
       redirect_to admin_notifications_path(is_execute: Schedule.execute_statuses[:false])
     else

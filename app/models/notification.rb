@@ -1,7 +1,7 @@
 class Notification < ActiveRecord::Base
   include Scheduleable
 
-  enum schedule_type: { on_shelf_schedule: "on_shelf_schedule" }
+  enum schedule_type: { notify_item: "notify_item" }
 
   validates_presence_of :item_id, on: :create
   validates_presence_of :content_title, on: :create
@@ -18,12 +18,12 @@ class Notification < ActiveRecord::Base
     self.item.cover.url
   end
 
-  def push_notification
+  def put_in_schedule
     schedule = Schedule.find_by(scheduleable_id: id)
     PushNotificationWorker.perform_at(schedule.execute_time, id)
   end
 
   def schedule_type
-    Notification.schedule_types[:on_shelf_schedule]
+    Notification.schedule_types[:notify_item]
   end
 end
