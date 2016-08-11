@@ -3,8 +3,17 @@ class Admin::ItemsController < AdminController
   before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
 
   def index
-    @category = Category.first
-    @items = Item.paginate(page: params[:page]).per_page(20)
+    @categories = Category.all
+    params[:category_id] ||= Category::ALL_ID
+    params[:order] ||= 'position'
+    items = Item.joins(:item_categories).select('items.*, item_categories.position').where(item_categories: {category_id: params[:category_id]})
+    items = items.where(status: params[:status]) if params[:status]
+    if params[:order] == 'updated_at'
+      items = items.update_time
+    elsif params[:order] == 'position'
+      items = items.priority
+    end
+    @items = items.paginate(page: params[:page]).per_page(20)
   end
 
   def new

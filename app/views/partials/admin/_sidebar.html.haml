@@ -31,7 +31,7 @@
         %li
           = link_to "分類列表", admin_categories_path
         %li
-          = link_to "商品列表", "#"
+          = link_to "商品列表", admin_items_path
     %li
       = link_to admin_notifications_path(is_execute: Schedule.execute_statuses[:false]) do
         %i.fa.fa-bell

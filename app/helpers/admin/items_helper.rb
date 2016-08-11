@@ -123,4 +123,13 @@ module Admin::ItemsHelper
   def link_to_item_taobao(item)
     link_to '點擊連結', item.url, target: "_blank"
   end
+
+  def link_to_items_index(active_boolean, link_name, args)
+    args[:category_id] ||= params[:category_id]
+    args[:status] ||= params[:status]
+    args[:order] ||= params[:order]
+    content_tag(:li, class: "#{'active' if active_boolean}") do
+      link_to link_name, admin_items_path(category_id: args[:category_id], status: args[:status], order: args[:order])
+    end
+  end
 end

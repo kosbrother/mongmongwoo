@@ -186,9 +186,56 @@ div.item-cover-words-intro, div.notification-intro {
     }
   }
 }
-
 .search-bar{
   width: 300px;
+}
+.filter-area{
+  margin-top: 20px;
+  border: solid 1px #f1f1f1;
+  .filter-row:first-child{
+    border-top: 0;
+  }
+  .filter-row{
+    position: relative;
+    min-height: 56px;
+    padding-left: 70px;
+    border-top: solid 1px #f1f1f1;
+    > .filter-dt{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 70px;
+      height: 100%;
+      min-height: 54px;
+      line-height: 54px;
+      text-align: center;
+      background-color: #f1f1f1;
+    }
+    > .filter-dd{
+      position: relative;
+      padding-top: 14px;
+      > .filter-list{
+        padding-left: 15px;
+        float: left;
+        line-height: 26px;
+        margin-right: 20px;
+        list-style: none;
+        li{
+          float: left;
+          line-height: 26px;
+          margin-right: 20px;
+          padding: 3px;
+        }
+        .active{
+          background-color: #afb2ae;
+          border-radius: 5px;
+          a {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
 }
 .header-btn{
   margin-bottom: 20px;

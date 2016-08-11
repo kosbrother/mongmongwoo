@@ -1,4 +1,6 @@
 class Category < ActiveRecord::Base
+  ALL_ID = 10
+
   scope :recent, -> { order(id: :DESC) }
   scope :except_the_all_category, -> { where.not(id: 10) }
   scope :select_api_fields, -> { select(:id, :name, :image) }
