@@ -1,3 +1,3 @@
 jQuery ->
-  $("#new_item_spec").fileupload
+  $("#staff-new-item-spec").fileupload
     dataType: "script"

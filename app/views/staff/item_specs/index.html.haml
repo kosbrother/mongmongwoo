@@ -44,7 +44,7 @@
             = render partial: "edit_form", locals: { spec: spec }
             = link_to "刪除", staff_item_item_spec_path(@item, spec), method: :delete, data: { confirm: "確定刪除?", disable_with: "刪除中..." }, class: "btn btn-danger btn-xs"
   .well
-    = form_for [:staff, @item, ItemSpec.new], html: { class: "form-horizontal well" } do |f|
+    = form_for [:staff, @item, ItemSpec.new], html: { id: "staff-new-item-spec", class: "form-horizontal well" } do |f|
       %p.lead 新增樣式
       .form-group
         = f.label :style, "樣式名稱", class: "col-sm-2 control-label"
