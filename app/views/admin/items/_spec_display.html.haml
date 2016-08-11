@@ -12,7 +12,7 @@
         %th 運送中數量
         %th 是否補貨
         %th 訂購
-        %th 編輯樣式
+        %th
     %tbody
       - specs.each do |spec|
         %tr
@@ -43,4 +43,4 @@
               = number_field_tag :item_quantity, 1, min: 1, max: 99
               = submit_tag '訂購', class: "btn btn-primary btn-sm"
           %td
-            = link_to "編輯樣式" , edit_admin_item_item_spec_path(item, spec), class: "btn btn-default btn-sm"
+            = link_to "編輯" , edit_admin_item_item_spec_path(item, spec), class: "btn btn-default btn-sm"
