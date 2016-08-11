@@ -28,7 +28,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def stock_amount
-    item_spec ? item_spec.stock_amount : 0
+    item_spec ? item_spec.stock_item_quantity : 0
   end
 
   def shipping_amount
@@ -43,7 +43,7 @@ class OrderItem < ActiveRecord::Base
     item.stock_specs.find_or_create_by(item_spec_id: item_spec.id)
   end
 
-  def restock_amount
+  def restock
     spec = item_spec || find_item_spec
     stock_spec = spec.stock_spec || find_or_create_stock_spec(spec)
     stock_spec.amount += item_quantity
