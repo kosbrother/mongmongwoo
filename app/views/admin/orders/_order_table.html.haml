@@ -20,7 +20,8 @@
           = link_to "編輯訂單", edit_admin_order_path(order), class: "btn btn-default btn-sm"
           .button= link_to_send_survey_email(order)
           .button= link_to_combine_orders(order)
-          .button{id: "barcode-#{order.id}"}= link_to_allpay_barcode(order)
+          - if params[:status] == Order.statuses["處理中"].to_s
+            .button{id: "barcode-#{order.id}"}= link_to_allpay_barcode(order)
           .button= link_to_restock(order)
         %td
           = order.created_on
