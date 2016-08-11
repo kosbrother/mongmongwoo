@@ -28,7 +28,7 @@ module Admin::OrdersHelper
 
   def link_to_allpay_barcode(order)
     if order.allpay_transfer_id.present?
-      link_to "物流單", barcode_allpay_index_path(order), class: "btn btn-primary", target: "_blank"
+      link_to "物流單", barcode_allpay_index_path(order), class: "btn btn-default", target: "_blank"
     end
   end
 
