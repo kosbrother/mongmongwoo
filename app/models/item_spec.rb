@@ -7,6 +7,7 @@ class ItemSpec < ActiveRecord::Base
   enum status: { on_shelf: 0, off_shelf: 1 }
 
   validates_numericality_of :style_amount, :only_integer => true, :greater_than_or_equal_to => 0, :allow_blank => true
+  validates_presence_of :style, :style_pic
 
   after_update :update_recommend_stock_num, :notify_wish_list, :update_item_status
   after_create :set_defult_recommend_stock_num, :add_shelf_position

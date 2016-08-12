@@ -8,9 +8,30 @@ class Admin::ItemSpecsController < AdminController
     render json: {style_pic: url}
   end
 
+  def new
+    @item_spec = @item.specs.new
+  end
+
   def create
     @item_spec = @item.specs.new(spec_params)
-    @item_spec.save
+
+    if @item_spec.save
+      flash[:notice] = "商品樣式新增完成"
+      redirect_to admin_item_path(@item)
+    else
+      flash.now[:alert] = "請檢查資料是否正確"
+      render :new
+    end
+  end
+
+  def update
+    if @item_spec.update(spec_params)
+      flash[:notice] = "商品樣式更新完成"
+      redirect_to admin_item_path(@item)
+    else
+      flash.now[:alert] = "請檢查資料是否正確"
+      render :edit
+    end
   end
 
   def on_shelf
@@ -38,7 +59,7 @@ class Admin::ItemSpecsController < AdminController
   private
 
   def find_item
-    @item = Item.includes(:specs).find(params[:item_id])
+    @item = Item.find(params[:item_id])
   end
 
   def find_spec
@@ -46,6 +67,6 @@ class Admin::ItemSpecsController < AdminController
   end
 
   def spec_params
-    params.require(:item_spec).permit(:style, :style_pic, :style_amount)
+    params.require(:item_spec).permit(:style, :style_pic)
   end
 end
