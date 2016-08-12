@@ -410,6 +410,9 @@ ActiveRecord::Schema.define(version: 20160810072328) do
     t.datetime "execute_time"
     t.boolean  "is_execute",                    default: false
     t.string   "schedule_type",     limit: 255
+    t.string   "job_id",            limit: 255
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
   add_index "schedules", ["scheduleable_type", "scheduleable_id"], name: "index_schedules_on_scheduleable_type_and_scheduleable_id", using: :btree

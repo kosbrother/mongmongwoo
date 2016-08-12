@@ -20,7 +20,8 @@ class Notification < ActiveRecord::Base
 
   def put_in_schedule
     schedule = Schedule.find_by(scheduleable_id: id)
-    PushNotificationWorker.perform_at(schedule.execute_time, id)
+    job_id = PushNotificationWorker.perform_at(schedule.execute_time, id)
+    schedule.update_attribute(:job_id, job_id)
   end
 
   def schedule_type

@@ -1,6 +1,6 @@
 class Admin::NotificationsController < AdminController
   before_action :require_manager
-  before_action :find_notification, only: [:show]
+  before_action :find_notification, only: [:show, :destroy]
 
   def index
     @notifications = Notification.includes(:item).with_schedule.by_execute(params[:is_execute]).recent.paginate(page: params[:page])
@@ -31,6 +31,16 @@ class Admin::NotificationsController < AdminController
     category = Category.find(params[:category_id])
     items_list = category.items.on_shelf.order("id")
     render json: items_list
+  end
+
+  def destroy
+    queue = Sidekiq::Queue.new
+    schedule = @notification.schedule
+    queue.each { |job| job.delete if job.jid == schedule.job_id }
+    Rails.logger.info("Delete PushNotificationWorker: #{schedule.job_id}")
+    @notification.destroy
+    flash[:warning] = "已刪除推播訊息與排程"
+    redirect_to :back
   end
 
   private

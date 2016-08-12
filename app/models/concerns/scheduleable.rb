@@ -2,7 +2,7 @@ module Scheduleable
   extend ActiveSupport::Concern
 
   included do
-    has_one :schedule, as: :scheduleable
+    has_one :schedule, as: :scheduleable, dependent: :destroy
   end
 
   def schedule_type

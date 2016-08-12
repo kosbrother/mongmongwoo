@@ -13,9 +13,6 @@
         = li_execute_status_link(is_execute: Schedule.execute_statuses[:false])
         = li_execute_status_link(is_execute: Schedule.execute_statuses[:true])
       %br
-      .apple_pagination
-        = will_paginate @notifications, :container => false
+      = render_pagination(@notifications)
       %br
       = render "notification_table"
-      .apple_pagination
-        = will_paginate @notifications, :container => false
