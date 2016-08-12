@@ -60,17 +60,6 @@ class Admin::OrdersController < AdminController
     @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_search_terms(@search_term).paginate(:page => params[:page])
   end
 
-  def select_orders
-    current_order = Order.find(params[:id])
-    @combine_orders = Order.enable_to_conbime.includes(:user, :info).search_by_phone_or_email(current_order.ship_phone, current_order.ship_email)
-  end
-
-  def combine_orders
-    Order.combine_orders(params[:selected_order_ids])
-    flash[:notice] = "併單已完成"
-    redirect_to status_index_admin_orders_path
-  end
-
   def export_processing_order_list
     @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).recent
     @sheet_name = '處理中訂單清單'
