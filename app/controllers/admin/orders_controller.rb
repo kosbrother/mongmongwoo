@@ -1,6 +1,6 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
-  before_action :find_order, only: [:show, :update, :update_status]
+  before_action :find_order, only: [:update, :update_status]
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
@@ -22,8 +22,7 @@ class Admin::OrdersController < AdminController
   end
 
   def show
-    @info = @order.info
-    @items = @order.items
+    @order = Order.includes(:info, items: [:item, :item_spec]).find(params[:id])
   end
 
   def update

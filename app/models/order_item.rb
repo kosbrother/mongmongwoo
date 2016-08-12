@@ -55,17 +55,17 @@ class OrderItem < ActiveRecord::Base
     (stock_amount - OrderItem.statuses_total_amount(item_spec_id, Order::OCCUPY_STOCK_STATUS_CODE)) >= item_quantity
   end
 
-  private
-
   def stock_amount_enough?
     stock_spec = StockSpec.find_by(item_spec_id: item_spec_id)
-    stock_spec.amount >= item_quantity
+    stock_spec ? stock_spec.amount >= item_quantity : false
   end
 
   def item_spec_on_shelf?
     spec = ItemSpec.find(item_spec_id)
     spec.status == "on_shelf"
   end
+
+  private
 
   def able_to_buy?
     stock_amount_enough? && item_spec_on_shelf?
