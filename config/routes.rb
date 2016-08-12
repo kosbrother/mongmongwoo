@@ -63,7 +63,7 @@ Rails.application.routes.draw do
 
   resources :allpay, only:[] do
     collection do
-      post "/create/:order_id", to: "allpay#create", as: "create"
+      post "create_from_processing", as: "create"
       post "status_update"
       post "create_reply"
       get "/barcode/:order_id", to: "allpay#barcode", as: "barcode"
