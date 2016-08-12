@@ -1,0 +1,9 @@
+= form_for [:admin, @stock_spec], html: { class: "form-horizontal" } do |f|
+  .form-group
+    = f.label :amount, "庫存數量", class: "col-sm-2 control-label"
+    .col-sm-5
+      = f.number_field :amount, min: 1, max: 99, class: "form-control", placeholder: "請輸入庫存數量"
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit "確認送出", class: "btn btn-primary"
+      = link_to "取消離開", admin_stocks_path(taobao_supplier_id: @stock_spec.taobao_supplier_id, anchor: "stock-id-#{@stock_spec.item_id}"), class: "btn btn-warning"

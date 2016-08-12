@@ -129,7 +129,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :stock_specs, only: [:update]
+    resources :stock_specs, only: [:edit, :update]
 
     resources :items, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
       collection do

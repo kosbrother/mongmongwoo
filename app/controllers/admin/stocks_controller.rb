@@ -6,9 +6,9 @@ class Admin::StocksController < AdminController
     @taobao_supplier = @taobao_suppliers.find(params[:taobao_supplier_id])
 
     if params[:status]
-      @items = @taobao_supplier.items.includes(:specs).where(status: params[:status]).paginate(page: params[:page])
+      @items = @taobao_supplier.items.includes(specs: :stock_spec).where(status: params[:status]).paginate(page: params[:page])
     else
-      @items = @taobao_supplier.items.includes(:specs).paginate(page: params[:page])
+      @items = @taobao_supplier.items.includes(specs: :stock_spec).paginate(page: params[:page])
     end
   end
 

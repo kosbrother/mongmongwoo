@@ -12,7 +12,7 @@
   %tbody
     - stocks.each do |stock|
       %tr
-        %td{rowspan: stock.specs.count + 1}
+        %td{id: "stock-id-#{stock.id}", rowspan: stock.specs.count + 1}
           .media
             .media-left
               = image_tag(stock.cover.url, size: "120x120")
@@ -42,4 +42,4 @@
             %td
               = spec.requested_quantity
             %td
-              = link_to "編輯", "#", class: "btn btn-default"
+              = link_to_edit_stock_spec(spec)
