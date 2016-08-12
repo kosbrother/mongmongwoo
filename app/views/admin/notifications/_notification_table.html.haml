@@ -1,9 +1,11 @@
-%table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+%table#example.table.table-bordered
   %thead
     %tr
       %th 訊息編號
       %th 訊息標題
       %th 訊息圖片
+      %th 執行推播日期
+      %th 執行工作類型
       %th 操作選項
   %tbody
     - @notifications.each do |notification|
@@ -15,10 +17,8 @@
         %td
           = image_tag(notification.send_content_pic, size: "100x100")
         %td
-          .dropdown
-            %button#dropdownMenu1.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-              按此選擇
-              %span.caret
-            %ul.dropdown-menu.list-group{"aria-labelledby" => "dropdownMenu4"}
-              %li= link_to "編輯"
-              %li= link_to "刪除"
+          = display_date_and_time(notification.execute_time.localtime)
+        %td
+          = t(notification.schedule_type)
+        %td
+          = link_to "刪除", admin_notification_path(notification), method: :delete

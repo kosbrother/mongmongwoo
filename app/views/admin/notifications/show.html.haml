@@ -1,22 +1,25 @@
-%div{:clas => "row"}
-  .content-box-large
-    %ol.breadcrumb
-      %li
-        %a{:href => admin_root_path} 萌萌屋
-      %li
-        %a{:href => admin_notifications_path} 推播訊息列表
-      %li{:class => "#{"active" if current_page?(admin_notifications_path(@notification))}"}
-        = @notification.content_title
-    .pull-right
-      = link_to "回上頁", admin_notifications_path, { class: "btn btn-default" }
-    .notification-intro
-      .noti-cover.col-md-4
-        = image_tag(@notification.send_content_pic)
-      .noti-message.col-md-8
-        %dl.dl-horizontal
-          %dt 推播商品
-          %dd= link_to @item.name, admin_item_path(@item)
-          %dt 訊息標題
-          %dd= @notification.content_title
-          %dt 訊息內容
-          %dd= @notification.content_text
+.content-box-large
+  %ol.breadcrumb
+    %li
+      = link_to "萌萌屋", admin_root_path
+    %li
+      = link_to "推播訊息列表", admin_notifications_path(is_execute: Schedule.execute_statuses[:false])
+    %li.active
+      = @notification.content_title
+  .pull-right
+    = link_to "回上頁", admin_notifications_path, { class: "btn btn-default" }
+  .notification-intro
+    .noti-cover.col-md-4
+      = image_tag(@notification.send_content_pic)
+    .noti-message.col-md-8
+      %dl.dl-horizontal
+        %dt 推播商品
+        %dd= link_to @item.name, admin_item_path(@item)
+        %dt 訊息標題
+        %dd= @notification.content_title
+        %dt 訊息內容
+        %dd= @notification.content_text
+        %dt 執行推播日期
+        %dd= display_date_and_time(@notification.execute_time.localtime)
+        %dt 執行工作類型
+        %dd= t(@notification.schedule_type)

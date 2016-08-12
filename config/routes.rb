@@ -202,7 +202,7 @@ Rails.application.routes.draw do
     resources :device_registrations, only: [:index, :show]
 
     # 推播訊息
-    resources :notifications, only: [:index, :show, :new, :create] do
+    resources :notifications, only: [:index, :show, :new, :create, :destroy] do
       collection do
         get :get_items
       end

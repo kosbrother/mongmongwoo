@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809032132) do
+ActiveRecord::Schema.define(version: 20160810072328) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -403,6 +403,19 @@ ActiveRecord::Schema.define(version: 20160809032132) do
   end
 
   add_index "roads", ["store_type"], name: "index_roads_on_store_type", using: :btree
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer  "scheduleable_id",   limit: 4
+    t.string   "scheduleable_type", limit: 255
+    t.datetime "execute_time"
+    t.boolean  "is_execute",                    default: false
+    t.string   "schedule_type",     limit: 255
+    t.string   "job_id",            limit: 255
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  add_index "schedules", ["scheduleable_type", "scheduleable_id"], name: "index_schedules_on_scheduleable_type_and_scheduleable_id", using: :btree
 
   create_table "shop_infos", force: :cascade do |t|
     t.string   "question",   limit: 255

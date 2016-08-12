@@ -5,6 +5,7 @@ zh-TW:
   stock: "已入庫存"
   will_paginate:
     page_gap: "......"
+  notify_item: "推播商品"
   controller:
     error:
       message:
