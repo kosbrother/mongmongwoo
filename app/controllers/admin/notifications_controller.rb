@@ -34,10 +34,14 @@ class Admin::NotificationsController < AdminController
   end
 
   def destroy
-    queue = Sidekiq::Queue.new
     schedule = @notification.schedule
-    queue.each { |job| job.delete if job.jid == schedule.job_id }
-    Rails.logger.info("Delete PushNotificationWorker: #{schedule.job_id}")
+    scheduled_job = Sidekiq::ScheduledSet.new
+    scheduled_job.each do |job|
+      if job.jid == schedule.job_id
+        job.delete
+        Rails.logger.info("Delete PushNotificationWorker: #{schedule.job_id}")
+      end
+    end
     @notification.destroy
     flash[:warning] = "已刪除推播訊息與排程"
     redirect_to :back
