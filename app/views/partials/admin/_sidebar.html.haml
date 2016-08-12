@@ -17,7 +17,7 @@
         %span.caret.pull-right
       %ul
         %li
-          = link_to "現貨管理", admin_stocks_path
+          = link_to_stock_index(params[:taobao_supplier_id] == TaobaoSupplier::DEAFAULT_SUPPLIER_ID.to_s, "現貨管理", taobao_supplier_id: TaobaoSupplier::DEAFAULT_SUPPLIER_ID)
         %li
           = link_to "進貨管理", admin_confirm_carts_path
         %li
