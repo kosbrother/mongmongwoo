@@ -2,36 +2,31 @@
 - if params[:restock].present?
   = restock_navs(order_status: params[:status])
 = render_pagination(orders)
-%table.table.table-striped.table-bordered.order-table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+%table.table.table-striped.table-bordered.order-table
   %thead
     %tr
-      %th.x-small 編號
-      %th.mid-small 訂購日期與狀態
-      %th.mid-small 訂購用戶
-      %th.large-mid 訂購商品
+      %th.xx-small 編號
+      %th.x-small 訂購日期
+      %th.x-small 訂單狀態
+      %th.x-small 物流狀態
+      %th.x-small 訂購用戶
+      %th.x-small 訂購金額
+      %th.x-small 問題訂單
+      %th.small-mid 操作
   %tbody
     - orders.each do |order|
       %tr{id: "order-id-#{order.id}"}
         %td.item-id-cell
-          .button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
-            = order.id
-          = render(partial: "info_and_items_list", locals: { order: order })
-          %br
-          = link_to "編輯訂單", edit_admin_order_path(order), class: "btn btn-default btn-sm"
-          .button= link_to_send_survey_email(order)
-          .button= link_to_combine_orders(order)
-          - if params[:status].to_i == Order.statuses["處理中"]
-            .button{id: "barcode-#{order.id}"}= link_to_allpay_barcode(order)
-          .button= link_to_restock(order)
+          = order.id
         %td
           = order.created_on
-          %br
+        %td
           .dropdown{id: "dropdown-#{order.id}"}
             %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
               %span{id: "current-#{order.id}-status"}= order.status
               %span.caret
-            - unless order.status == "新訂單"
-              %ul.dropdown-menu.list-group
+            %ul.dropdown-menu.list-group
+              - unless order.status == "新訂單"
                 %li
                   = link_to_update_order_status("處理中", order)
                 %li
@@ -45,64 +40,23 @@
                 %li
                   = link_to_update_order_status("訂單變更", order)
                 %li
-                  = link_to_update_order_status("訂單取消", order)
-                %li
                   = link_to_update_order_status("退貨", order)
-          %hr
-          物流狀態：
-          %br
+              %li
+                = link_to_update_order_status("訂單取消", order)
+        %td
           %span{id: "logistis-#{order.id}"}= logistics_status(order)
+        %td
+          .user-name= link_to order.user.user_name, admin_user_path(order.user)
+        %td
+          = order.total
         %td.user-id-cell
           = blacklist_warning(order)
-          %br
-          = link_to order.info_user_name, admin_user_path(order.user)
-          %br
-          - statuses_count = order.user_orders.status_count
-          購買次數：#{order.user_orders.count}
-          %br
-          完成取貨：#{statuses_count[Order.statuses["完成取貨"]]}
-          %br
-          未取訂貨：#{statuses_count[Order.statuses["未取訂貨"]]}
-          %br
-          = render partial: "order_status_tooltip", locals:{ order: order, statuses_count: statuses_count }
-          .button= link_to "個人訊息列表", admin_user_my_messages_path(order.user), class: "btn btn-default btn-sm"
-          .button= render "message_notification", order: order
         %td
-          %table.table.table-bordered
-            %thead
-              %tr.active
-                %th.x-small 編號
-                %th.large-small  名稱
-                %th.mid-small 樣式
-                %th.x-small 數量
-                %th.mid-small 現貨數
-                %th.mid-small 運送中
-                %th.mid-small 需求量
-                %th.mid-small 訂購
-            %tbody
-              - if order.items
-                - order.items.each do |item|
-                  %tr.success{class: "item-spec-id-#{item.item_spec_id}"}
-                    %td= item.item.id
-                    %td= link_to item.item_name, admin_item_path(item.item)
-                    %td= item.item_style
-                    %td= item.item_quantity
-                    %td.stock-amount= item.stock_amount
-                    %td= item.shipping_amount
-                    %td= spec_requested_number(item)
-                    %td
-                      = form_tag add_admin_admin_cart_items_path, remote: true do
-                        = hidden_field_tag :item_id, item.item.id
-                        = hidden_field_tag :item_spec_id, item.item_spec_id
-                        = hidden_field_tag :item_quantity, item.item_quantity
-                        = hidden_field_tag :taobao_supplier_id, item.item.taobao_supplier_id
-                        = submit_tag '新增至購物車', class: "btn btn-primary "
-                %tr
-                  %td.text-right{colspan: 8} 總金額 #{order.total}
-          %table.table.table-bordered
-            %tbody
-              %tr.active
-                %th 備註
-              %tr
-                %td= order.note
+          = link_to "明細", "#",class: "button btn btn-default btn-sm", "data-target" => "#order-#{order.id}", "data-toggle" => "modal"
+          = render(partial: "info_and_items_list", locals: { order: order })
+          = link_to "編輯", edit_admin_order_path(order), class: "btn btn-default btn-sm"
+          = render "message_notification", order: order
+          = link_to_allpay_barcode(order)
+          = link_to_restock(order)
+          = link_to_send_survey_email(order)
 = render_pagination(orders)
