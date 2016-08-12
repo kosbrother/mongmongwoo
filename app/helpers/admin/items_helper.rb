@@ -124,12 +124,10 @@ module Admin::ItemsHelper
     link_to '點擊連結', item.url, target: "_blank"
   end
 
-  def link_to_items_index(active_boolean, link_name, args)
-    args[:category_id] ||= params[:category_id]
-    args[:status] ||= params[:status]
-    args[:order] ||= params[:order]
+  def link_to_items_index(active_boolean, link_name, options = {})
+    options = {category_id: params[:category_id], status: params[:status], order: params[:order]}.merge(options)
     content_tag(:li, class: "#{'active' if active_boolean}") do
-      link_to link_name, admin_items_path(category_id: args[:category_id], status: args[:status], order: args[:order])
+      link_to link_name, admin_items_path(category_id: options[:category_id], status: options[:status], order: options[:order])
     end
   end
 end

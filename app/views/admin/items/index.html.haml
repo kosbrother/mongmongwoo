@@ -16,19 +16,19 @@
         .filter-dd
           %ul.filter-list
             - @categories.each do |category|
-              = link_to_items_index(category.id == params[:category_id].to_i, category.name, {category_id: category.id})
+              = link_to_items_index(category.id == params[:category_id].to_i, category.name, category_id: category.id)
       .filter-row
         .filter-dt 排序
         .filter-dd
           %ul.filter-list
-            = link_to_items_index(params[:order] == 'position', '依分類排名', {order: 'position'})
-            = link_to_items_index(params[:order] == 'updated_at', '依更新時間', {order: 'updated_at'})
+            = link_to_items_index(params[:order] == 'position', '依分類排名', order: 'position')
+            = link_to_items_index(params[:order] == 'updated_at', '依更新時間', order: 'updated_at')
       .filter-row
         .filter-dt 狀態
         .filter-dd
           %ul.filter-list
-            = link_to_items_index(params[:status] == Item.statuses[:on_shelf].to_s, '上架中', {status: Item.statuses[:on_shelf]})
-            = link_to_items_index(params[:status] == Item.statuses[:off_shelf].to_s, '下架中', {status: Item.statuses[:off_shelf]})
+            = link_to_items_index(params[:status] == Item.statuses[:on_shelf].to_s, '上架中', status: Item.statuses[:on_shelf])
+            = link_to_items_index(params[:status] == Item.statuses[:off_shelf].to_s, '下架中', status: Item.statuses[:off_shelf])
   .apple_pagination
     = will_paginate @items, :container => false
   %p.help-block
