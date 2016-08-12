@@ -1,4 +1,6 @@
 class TaobaoSupplier < ActiveRecord::Base
+  DEAFAULT_SUPPLIER_ID = TaobaoSupplier.last.id
+
   has_many :items
 
   delegate :count, :on_shelf, :off_shelf, to: :items

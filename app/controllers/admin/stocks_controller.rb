@@ -3,14 +3,17 @@ class Admin::StocksController < AdminController
 
   def index
     @taobao_suppliers = TaobaoSupplier.recent
-    params[:taobao_supplier_id] ||= @taobao_suppliers.last.id
     @taobao_supplier = @taobao_suppliers.find(params[:taobao_supplier_id])
-    @items = @taobao_supplier.items.includes(stock_specs: :item_spec).paginate(page: params[:page])
+
+    if params[:status]
+      @items = @taobao_supplier.items.includes(:specs).where(status: params[:status]).paginate(page: params[:page])
+    else
+      @items = @taobao_supplier.items.includes(:specs).paginate(page: params[:page])
+    end
   end
 
   def stock_lists
     @taobao_supplier = TaobaoSupplier.find(params[:taobao_supplier_id])
     @items = @taobao_supplier.items
   end
-
 end

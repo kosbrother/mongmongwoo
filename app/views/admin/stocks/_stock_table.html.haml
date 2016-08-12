@@ -1,14 +1,18 @@
-%table.table.table-striped.table-bordered
+%table.table.table-bordered
   %thead
     %tr
-      %th 商品資訊
+      %th.large-small 商品資訊
+      %th 淘寶網站
       %th 樣式名稱
+      %th 樣式狀態
       %th 現貨數量
       %th 運送中數量
+      %th 建議庫存量
+      %th 操作
   %tbody
     - stocks.each do |stock|
       %tr
-        %td
+        %td{rowspan: stock.specs.count + 1}
           .media
             .media-left
               = image_tag(stock.cover.url, size: "120x120")
@@ -18,40 +22,24 @@
               商品名稱：
               = link_to stock.name, admin_item_path(stock), target: "_blank"
               %br
-              狀態：#{stock.status}
+              狀態：#{t(stock.status)}
               %br
               成本：#{stock.ntd_cost}
               %br
               價格：#{stock.price}
-        - stock.stock_specs.each do |spec|
-          %td
-            = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
-          %td
-            = form_for [:admin, spec], remote: true, method: :patch, html: { class: "form-inline" } do |f|
-              .form-group
-                = f.label :amount, "庫存數量", class: "sr-only"
-                = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
-                = f.submit "更新", class: "btn btn-warning"
-          %td
-            = spec.shipping_item_quantity
-
-        / %td
-        /   %table.table.table-bordered
-        /     %thead
-        /       %tr.active
-        /         %th.small-mid 樣式名稱
-        /         %th.large-small 現貨數量
-        /         %th.large-small 運送中數量
-        /     %tbody
-        /       - stock.stock_specs.each do |spec|
-        /         %tr
-        /           %td
-        /             = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
-        /           %td
-        /             = form_for [:admin, spec], remote: true, method: :patch, html: { class: "form-inline" } do |f|
-        /               .form-group
-        /                 = f.label :amount, "庫存數量", class: "sr-only"
-        /                 = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
-        /               = f.submit "更新", class: "btn btn-warning"
-        /           %td
-        /             = spec.shipping_item_quantity
+        %td{rowspan: stock.specs.count + 1}
+          = link_to "連結", stock.url, target: "_blank"
+        - stock.specs.each do |spec|
+          %tr
+            %td
+              = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+            %td
+              = t(spec.status)
+            %td
+              = spec.stock_item_quantity
+            %td
+              = spec.shipping_item_quantity
+            %td
+              = spec.requested_quantity
+            %td
+              = link_to "編輯", "#", class: "btn btn-default"
