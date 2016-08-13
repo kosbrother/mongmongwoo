@@ -1,8 +1,5 @@
-$("#current-#{@order.id}-status").html('#{@order.status}')
-$(function(){
-new PNotify({title: "#{j(@message)}"});
-});
-- if @order.status == '配送中'
-  - @order.items.each do |item|
-    :plain
-      $('.item-spec-id-#{item.item_spec_id} > .stock-amount').text('#{item.stock_amount}');
+:plain
+  $("#current-#{@order.id}-status").html('#{@order.status}');
+  $(function(){
+    new PNotify({title: "#{j(@message)}"});
+  });
