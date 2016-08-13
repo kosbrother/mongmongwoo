@@ -18,7 +18,7 @@ class Admin::OrdersController < AdminController
   end
 
   def edit
-    @order = Order.includes(items: [:item, :item_spec]).find(params[:id])
+    @order = Order.includes(items: :item).find(params[:id])
   end
 
   def show
