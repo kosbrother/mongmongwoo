@@ -4,16 +4,16 @@ class Admin::OrdersController < AdminController
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
-    @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user, info: :store, items: :item).recent.paginate(page: params[:page])
   end
 
   def status_index
     params[:status] ||= Order.statuses["新訂單"]
     if params[:restock]
       restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
-      @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).where(status: params[:status],restock: restock).recent.paginate(page: params[:page])
+      @orders = Order.includes(:user, info: :store, items: :item).where(status: params[:status],restock: restock).recent.paginate(page: params[:page])
     else
-      @orders = Order.includes(:user, info: :store, items: [:item, :item_spec]).status(params[:status]).recent.paginate(page: params[:page])
+      @orders = Order.includes(:user, info: :store, items: :item).status(params[:status]).recent.paginate(page: params[:page])
     end
   end
 
@@ -58,17 +58,6 @@ class Admin::OrdersController < AdminController
   def search
     @search_term = search_params
     @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_search_terms(@search_term).paginate(:page => params[:page])
-  end
-
-  def select_orders
-    current_order = Order.find(params[:id])
-    @combine_orders = Order.enable_to_conbime.includes(:user, :info).search_by_phone_or_email(current_order.ship_phone, current_order.ship_email)
-  end
-
-  def combine_orders
-    Order.combine_orders(params[:selected_order_ids])
-    flash[:notice] = "併單已完成"
-    redirect_to status_index_admin_orders_path
   end
 
   def export_processing_order_list

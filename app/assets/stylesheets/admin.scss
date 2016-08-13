@@ -71,7 +71,12 @@ div.item-cover-words-intro, div.notification-intro {
 .order-table, .search-order, .search-user{
   margin-top: 10px;
 }
-
+.order-table{
+  .user-name{
+    word-wrap: break-word;
+    width: 80px;
+  }
+}
 .item-id-cell, .user-id-cell{
   > .button{
     margin: 10px 0;

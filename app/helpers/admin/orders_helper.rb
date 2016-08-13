@@ -27,8 +27,8 @@ module Admin::OrdersHelper
   end
 
   def link_to_allpay_barcode(order)
-    if order.allpay_transfer_id.present?
-      link_to "物流單", barcode_allpay_index_path(order), class: "btn btn-default", target: "_blank"
+    if order.status == "處理中" && order.allpay_transfer_id.present?
+      link_to "物流單", barcode_allpay_index_path(order), class: "btn btn-default btn-sm", target: "_blank"
     end
   end
 
@@ -36,29 +36,13 @@ module Admin::OrdersHelper
     if order.status == "完成取貨" && order.survey_mail
      content_tag(:span, "已寄出", class: "label label-default")
     elsif order.status == "完成取貨" && order.survey_mail.nil?
-      link_to "寄出問卷調查", sending_survey_email_admin_mail_records_path(order), class: "btn btn-info", method: :patch, data: { confirm: "確定寄送Email給：#{order.ship_name}？" }
-    else
-      content_tag(:span, "未完成取貨", class: "label label-warning")
+      link_to "寄出問卷", sending_survey_email_admin_mail_records_path(order), class: "btn btn-default btn-sm", method: :patch, data: { confirm: "確定寄送Email給：#{order.ship_name}？" }
     end
   end
 
   def blacklist_warning(order)
     if order.is_blacklisted
       content_tag(:span, "問題訂單", class: "label label-danger")
-    end
-  end
-
-  def check_orders_to_combine(order)
-    if params[:id].to_i == order.id
-      check_box_tag "selected_order_ids[]", order.id, checked: true
-    else
-      check_box_tag "selected_order_ids[]", order.id
-    end
-  end
-
-  def link_to_combine_orders(order)
-    if Order::COMBINE_STATUS.include?(order.status)
-      link_to "合併其他訂單", select_orders_admin_order_path(order), class: "btn btn-default"
     end
   end
 
@@ -69,10 +53,8 @@ module Admin::OrdersHelper
   end
 
   def link_to_restock(order)
-    if order.restock
-      content_tag(:span, "已退回庫存", class: "label label-default")
-    elsif Order::RESTOCK_STATUS.include?(order.status) && !(order.restock)
-      link_to "重入庫存", restock_admin_order_path(order), method: :patch, class: "btn btn-default"
+    if Order::RESTOCK_STATUS.include?(order.status) && !(order.restock)
+      link_to "入庫", restock_admin_order_path(order), method: :patch, class: "btn btn-default btn-sm"
     end
   end
 
