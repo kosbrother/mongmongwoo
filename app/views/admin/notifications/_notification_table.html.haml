@@ -17,7 +17,7 @@
         %td
           = image_tag(notification.send_content_pic, size: "100x100")
         %td
-          = display_date_and_time(notification.execute_time.localtime)
+          = display_date_and_time(notification.execute_time.in_time_zone)
         %td
           = t(notification.schedule_type)
         %td
