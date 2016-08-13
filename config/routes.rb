@@ -122,12 +122,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :stocks, only: [:index] do
-      collection do
-        get "/:taobao_supplier_id/stock_lists", to: "stocks#stock_lists", as: "stock_lists"
-        get "anoymous_supplier_stocks"
-      end
-    end
+    resources :stocks, only: [:index]
 
     resources :stock_specs, only: [:edit, :update]
 

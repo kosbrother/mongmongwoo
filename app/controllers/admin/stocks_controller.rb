@@ -11,9 +11,4 @@ class Admin::StocksController < AdminController
       @items = @taobao_supplier.items.includes(specs: :stock_spec).paginate(page: params[:page])
     end
   end
-
-  def stock_lists
-    @taobao_supplier = TaobaoSupplier.find(params[:taobao_supplier_id])
-    @items = @taobao_supplier.items
-  end
 end
