@@ -1,5 +1,5 @@
 class TaobaoSupplier < ActiveRecord::Base
-  DEAFAULT_SUPPLIER_ID = TaobaoSupplier.last.id
+  DEFAULT_ID = 1
 
   has_many :items
 

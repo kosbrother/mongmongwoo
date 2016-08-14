@@ -2,13 +2,11 @@ class Admin::StocksController < AdminController
   before_action :require_manager
 
   def index
-    @taobao_suppliers = TaobaoSupplier.recent
-    @taobao_supplier = @taobao_suppliers.find(params[:taobao_supplier_id])
-
-    if params[:status]
-      @items = @taobao_supplier.items.includes(specs: :stock_spec).where(status: params[:status]).paginate(page: params[:page])
-    else
-      @items = @taobao_supplier.items.includes(specs: :stock_spec).paginate(page: params[:page])
-    end
+    @taobao_suppliers = TaobaoSupplier.all
+    params[:taobao_supplier_id] ||= TaobaoSupplier::DEFAULT_ID.to_s
+    taobao_supplier = @taobao_suppliers.find(params[:taobao_supplier_id])
+    items = taobao_supplier.items.includes(specs: :stock_spec)
+    items = items.where(status: params[:status]) if params[:status]
+    @items = items.recent.paginate(page: params[:page])
   end
 end

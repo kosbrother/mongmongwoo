@@ -11,9 +11,9 @@
       .filter-dt 商品狀態
       .filter-dd.clearfix
         %ul.filter-list
-          = link_to_stock_index(params[:status] == Item.statuses[:on_shelf].to_s, "上架中", taobao_supplier_id: @taobao_supplier.id, status: Item.statuses[:on_shelf])
-          = link_to_stock_index(params[:status] == Item.statuses[:off_shelf].to_s, "下架中", taobao_supplier_id: @taobao_supplier.id, status: Item.statuses[:off_shelf])
-  %br
+          = link_to_stock_index(params[:status] == Item.statuses[:on_shelf].to_s, "上架中", status: Item.statuses[:on_shelf])
+          = link_to_stock_index(params[:status] == Item.statuses[:off_shelf].to_s, "下架中", status: Item.statuses[:off_shelf])
+  %p.help-block
   = render_pagination(@items)
-  %br
+  %p.help-block
   = render "stock_table", stocks: @items
