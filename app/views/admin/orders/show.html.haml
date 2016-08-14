@@ -1,0 +1,53 @@
+.content-box-large
+  %h3 訂單明細
+  %h4 收件明細
+  %ul.list-group
+    - if @order.info
+      %li.list-group-item
+        收件人姓名： #{@order.ship_name}
+      %li.list-group-item
+        聯絡電話： #{@order.ship_phone}
+      %li.list-group-item
+        Email： #{@order.ship_email}
+      %li.list-group-item
+        門市店號： #{@order.ship_store_code}
+      %li.list-group-item
+        門市名稱： #{@order.ship_store_name}
+      %li.list-group-item
+        門市地址： #{@order.address}
+  %br/
+  %h4 商品明細
+  %table.table.table-bordered
+    %thead
+      %tr.active
+        %th.mid-small 商品名稱
+        %th.x-small 商品樣式
+        %th.xx-small 購買數量
+        %th.xx-small 商品單價
+        %th.xx-small 現貨數
+        %th.xx-small 運送中
+        %th.xx-small 需求量
+        %th.mid-small 狀態
+    %tbody
+      - @order.items.each do |order_item|
+        %tr
+          %td
+            = link_to order_item.item_name, admin_item_path(order_item.item)
+          %td= order_item.item_style
+          %td= order_item.item_quantity
+          %td= order_item.item_price
+          %td.stock-amount= order_item.stock_amount
+          %td= order_item.shipping_amount
+          %td= spec_requested_number(order_item)
+          %td= unable_to_buy_status(order_item)
+      %tr
+        %td.text-right{colspan: 8}= "訂單總金額：#{@order.total}"
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th 訂單備註
+    %tbody
+      %tr
+        %td
+          .note
+            = @order.note

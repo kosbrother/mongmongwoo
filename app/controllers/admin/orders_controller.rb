@@ -1,29 +1,28 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
-  before_action :find_order, only: [:show, :update, :update_status]
+  before_action :find_order, only: [:update, :update_status]
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
-    @orders = Order.includes(:user, info: :store, items: :item).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user, :info).recent.paginate(page: params[:page])
   end
 
   def status_index
     params[:status] ||= Order.statuses["新訂單"]
     if params[:restock]
       restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
-      @orders = Order.includes(:user, info: :store, items: :item).where(status: params[:status],restock: restock).recent.paginate(page: params[:page])
+      @orders = Order.includes(:user, :info).where(status: params[:status],restock: restock).recent.paginate(page: params[:page])
     else
-      @orders = Order.includes(:user, info: :store, items: :item).status(params[:status]).recent.paginate(page: params[:page])
+      @orders = Order.includes(:user, :info).status(params[:status]).recent.paginate(page: params[:page])
     end
   end
 
   def edit
-    @order = Order.includes(:info).find(params[:id])
+    @order = Order.includes(items: :item).find(params[:id])
   end
 
   def show
-    @info = @order.info
-    @items = @order.items
+    @order = Order.includes(:info, items: [:item, :item_spec]).find(params[:id])
   end
 
   def update

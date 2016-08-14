@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810072328) do
+ActiveRecord::Schema.define(version: 20160813002944) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -342,8 +342,10 @@ ActiveRecord::Schema.define(version: 20160810072328) do
     t.integer  "source_item_id", limit: 4
     t.integer  "item_spec_id",   limit: 4
     t.boolean  "restock",                    default: false
+    t.datetime "deleted_at"
   end
 
+  add_index "order_items", ["deleted_at"], name: "index_order_items_on_deleted_at", using: :btree
   add_index "order_items", ["item_spec_id"], name: "index_order_items_on_item_spec_id", using: :btree
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
   add_index "order_items", ["source_item_id"], name: "index_order_items_on_source_item_id", using: :btree

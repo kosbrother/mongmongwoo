@@ -15,6 +15,8 @@ class OrderItem < ActiveRecord::Base
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :total_income_and_cost, -> { joins(:item).select("COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) AS total_sales_income ", "COALESCE(SUM(order_items.item_quantity * items.cost), 0) AS total_cost_of_goods") }
 
+  acts_as_paranoid
+
   def self.statuses_total_amount(item_spec_id, statuses=[])
     item_spec_id ? joins(:order).where(item_spec_id: item_spec_id, orders: { status: statuses }).sum(:item_quantity) : 0
   end
@@ -55,17 +57,21 @@ class OrderItem < ActiveRecord::Base
     (stock_amount - OrderItem.statuses_total_amount(item_spec_id, Order::OCCUPY_STOCK_STATUS_CODE)) >= item_quantity
   end
 
-  private
-
   def stock_amount_enough?
     stock_spec = StockSpec.find_by(item_spec_id: item_spec_id)
-    stock_spec.amount >= item_quantity
+    stock_spec ? stock_spec.amount >= item_quantity : false
   end
 
   def item_spec_on_shelf?
     spec = ItemSpec.find(item_spec_id)
     spec.status == "on_shelf"
   end
+
+  def item_on_shelf?
+    item.status == "on_shelf"
+  end
+
+  private
 
   def able_to_buy?
     stock_amount_enough? && item_spec_on_shelf?

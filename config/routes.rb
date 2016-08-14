@@ -196,6 +196,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :order_items, only: [:destroy]
+
     # 註冊裝置
     resources :device_registrations, only: [:index, :show]
 
