@@ -1,25 +1,20 @@
 class Admin::StockSpecsController < AdminController
   before_action :require_manager
-  before_action :find_stock_spec, only: [:edit, :update]
+
+  def create
+    @stock_spec = StockSpec.create(stock_spec_params)
+    flash[:notice] = "已建立商品庫存資料"
+    redirect_to :back
+  end
 
   def update
     @stock_spec = StockSpec.find(params[:id])
-    if @stock_spec.update(stock_spec_params)
-      flash[:notice] = "更新庫存成功"
-      redirect_to admin_stocks_path(taobao_supplier_id: @stock_spec.taobao_supplier_id, anchor: "stock-id-#{@stock_spec.item_id}")
-    else
-      flash.now[:alert] = "請檢查資料是否正確"
-      render :new
-    end
+    @stock_spec.update(stock_spec_params)
   end
 
   private
 
   def stock_spec_params
-    params.require(:stock_spec).permit(:amount)
-  end
-
-  def find_stock_spec
-    @stock_spec = StockSpec.find(params[:id])
+    params.require(:stock_spec).permit(:amount, :item_id, :item_spec_id)
   end
 end

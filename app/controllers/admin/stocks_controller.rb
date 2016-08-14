@@ -5,8 +5,12 @@ class Admin::StocksController < AdminController
     @taobao_suppliers = TaobaoSupplier.all
     params[:taobao_supplier_id] ||= TaobaoSupplier::DEFAULT_ID.to_s
     taobao_supplier = @taobao_suppliers.find(params[:taobao_supplier_id])
-    items = taobao_supplier.items.includes(specs: :stock_spec)
+    items = taobao_supplier.items.includes(:specs)
     items = items.where(status: params[:status]) if params[:status]
     @items = items.recent.paginate(page: params[:page])
+  end
+
+  def edit
+    @stock = Item.includes(specs: :stock_spec).find(params[:id])
   end
 end
