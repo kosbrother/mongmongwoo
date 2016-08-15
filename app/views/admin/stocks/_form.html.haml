@@ -1,0 +1,14 @@
+- if spec.stock_spec
+  = form_for [:admin, spec.stock_spec], remote: true, method: :patch, html: { id: "update-#{spec.stock_spec.id}", class: "form-inline" } do |f|
+    .form-group
+      = f.label :amount, "庫存數量", class: "sr-only"
+      = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.stock_spec.id}-stock_spec"
+    = f.submit "更新數量", class: "btn btn-primary"
+- else
+  = form_for [:admin, StockSpec.new], html: { id: "create-#{spec.id}", class: "form-inline" } do |f|
+    = f.hidden_field :item_id, value: stock.id
+    = f.hidden_field :item_spec_id, value: spec.id
+    .form-group
+      = f.label :amount, "庫存數量", class: "sr-only"
+      = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
+      = f.submit "建立庫存", class: "btn btn-warning"
