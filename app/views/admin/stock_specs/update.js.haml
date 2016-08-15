@@ -1,5 +1,6 @@
-$(function(){
-new PNotify({
-title: "#{ j(@stock_spec.style) } 的庫存數量已修改"
-});
-});
+:plain
+  $(function(){
+    new PNotify({
+      title: "#{ j(@stock_spec.item_spec.style) } 的庫存數量已修改"
+    });
+  });

@@ -6,4 +6,11 @@ module Admin::AdminHelper
        end
     end
   end
+
+  def link_to_stock_index(active_boolean, link_name, options={})
+    options =  {taobao_supplier_id: params[:taobao_supplier_id], status: params[:status]}.merge(options)
+    content_tag(:li, class: "#{'active' if active_boolean}") do
+      link_to link_name, admin_stocks_path(taobao_supplier_id: options[:taobao_supplier_id], status: options[:status])
+    end
+  end
 end

@@ -1,43 +1,31 @@
-%table.table.table-striped.table-bordered
+%table.table.table-bordered
   %thead
     %tr
-      %th.small-mid 商品資訊
-      %th.large-mid 樣式資訊
+      %th.large-small 商品資訊
+      %th 淘寶網站
+      %th 樣式名稱
+      %th 樣式狀態
+      %th 現貨數量
+      %th 運送中數量
+      %th 建議庫存量
+      %th 操作
   %tbody
     - stocks.each do |stock|
       %tr
-        %td
-          .media
-            .media-left
-              = image_tag(stock.cover.url, size: "120x120")
-            .media-body
-              商品編號：#{stock.id}
-              %br
-              商品名稱：
-              = link_to stock.name, admin_item_path(stock), target: "_blank"
-              %br
-              狀態：#{stock.status}
-              %br
-              成本：#{stock.ntd_cost}
-              %br
-              價格：#{stock.price}
-        %td
-          %table.table.table-bordered
-            %thead
-              %tr.active
-                %th.small-mid 樣式名稱
-                %th.large-small 現貨數量
-                %th.large-small 運送中數量
-            %tbody
-              - stock.stock_specs.each do |spec|
-                %tr
-                  %td
-                    = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
-                  %td
-                    = form_for [:admin, spec], remote: true, method: :patch, html: { class: "form-inline" } do |f|
-                      .form-group
-                        = f.label :amount, "庫存數量", class: "sr-only"
-                        = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
-                      = f.submit "更新", class: "btn btn-warning"
-                  %td
-                    = spec.shipping_item_quantity
+        = render "stock_information", stock: stock
+        %td{rowspan: stock.specs.count + 1}
+          = link_to "連結", stock.url, target: "_blank"
+        - stock.specs.each do |item_spec|
+          %tr
+            %td
+              = link_to item_spec.style, "#", rel: "popover", data: { "image-url": "#{item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+            %td
+              = t(item_spec.status)
+            %td
+              = item_spec.stock_item_quantity
+            %td
+              = item_spec.shipping_item_quantity
+            %td
+              = item_spec.requested_quantity
+            %td
+              = link_to "編輯", edit_admin_stock_path(stock), class: "btn btn-default"
