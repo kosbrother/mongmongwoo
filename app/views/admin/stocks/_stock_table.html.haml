@@ -11,4 +11,21 @@
       %th 操作
   %tbody
     - stocks.each do |stock|
-      = render "stock_spec", stock: stock
+      %tr
+        = render "stock_information", stock: stock
+        %td{rowspan: stock.specs.count + 1}
+          = link_to "連結", stock.url, target: "_blank"
+        - stock.specs.each do |item_spec|
+          %tr
+            %td
+              = link_to item_spec.style, "#", rel: "popover", data: { "image-url": "#{item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+            %td
+              = t(item_spec.status)
+            %td
+              = item_spec.stock_item_quantity
+            %td
+              = item_spec.shipping_item_quantity
+            %td
+              = item_spec.requested_quantity
+            %td
+              = link_to "編輯", edit_admin_stock_path(stock), class: "btn btn-default"

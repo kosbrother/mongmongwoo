@@ -3,11 +3,11 @@ class Admin::StocksController < AdminController
 
   def index
     @taobao_suppliers = TaobaoSupplier.all
-    params[:taobao_supplier_id] ||= TaobaoSupplier::DEFAULT_ID.to_s
+    params[:taobao_supplier_id] ||= @taobao_suppliers.first.id
     taobao_supplier = @taobao_suppliers.find(params[:taobao_supplier_id])
     items = taobao_supplier.items.includes(:specs)
-    items = items.where(status: params[:status]) if params[:status]
-    @items = items.recent.paginate(page: params[:page])
+    status_hash = params.permit(:status)
+    @items = items.where(status_hash).recent.paginate(page: params[:page])
   end
 
   def edit

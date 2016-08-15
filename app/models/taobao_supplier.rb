@@ -1,6 +1,4 @@
 class TaobaoSupplier < ActiveRecord::Base
-  DEFAULT_ID = 1
-
   has_many :items
 
   delegate :count, :on_shelf, :off_shelf, to: :items

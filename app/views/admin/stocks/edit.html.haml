@@ -2,17 +2,41 @@
   .info-title.clearfix
     %p.lead.pull-left 編輯商品樣式庫存
     %p.pull-right.inline-display
-      = link_to "商品頁面", admin_item_path(@stock), class: "btn btn-default"
-      = link_to "庫存列表", admin_stocks_path(taobao_supplier_id: @stock.taobao_supplier_id, anchor: "stock-id-#{@stock.id}"), class: "btn btn-default"
+      = link_to "返回庫存列表", admin_stocks_path(taobao_supplier_id: @stock.taobao_supplier_id, anchor: "stock-id-#{@stock.id}"), class: "btn btn-default"
   %table.table.table-bordered
     %thead
       %tr
         %th.small-mid 商品資訊
-        %th 淘寶網站
         %th 樣式名稱
         %th 樣式狀態
         %th 現貨數量
         %th 運送中數量
         %th 建議庫存量
     %tbody
-      = render "stock_spec", stock: @stock
+      %tr
+        = render "stock_information", stock: @stock
+        - @stock.specs.each do |spec|
+          %tr
+            %td
+              = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+            %td
+              = t(spec.status)
+            %td
+              - if spec.stock_spec
+                = form_for [:admin, spec.stock_spec], remote: true, method: :patch, html: { id: "update-#{spec.stock_spec.id}", class: "form-inline" } do |f|
+                  .form-group
+                    = f.label :amount, "庫存數量", class: "sr-only"
+                    = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.stock_spec.id}-stock_spec"
+                  = f.submit "更新數量", class: "btn btn-primary"
+              - else
+                = form_for [:admin, StockSpec.new], html: { id: "create-#{spec.id}", class: "form-inline" } do |f|
+                  = f.hidden_field :item_id, value: @stock.id
+                  = f.hidden_field :item_spec_id, value: spec.id
+                  .form-group
+                    = f.label :amount, "庫存數量", class: "sr-only"
+                    = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
+                    = f.submit "建立庫存", class: "btn btn-warning"
+            %td
+              = spec.shipping_item_quantity
+            %td
+              = spec.requested_quantity

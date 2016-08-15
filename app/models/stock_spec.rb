@@ -11,10 +11,6 @@ class StockSpec < ActiveRecord::Base
 
   delegate :style, :style_pic, to: :item_spec
 
-  def taobao_supplier_id
-    item.taobao_supplier.id
-  end
-
   def spec_id
     item_spec_id
   end
