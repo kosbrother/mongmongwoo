@@ -27,9 +27,11 @@
               %p.help-block
               狀態：#{t(@stock.status)}
               %p.help-block
-              成本：#{@stock.ntd_cost}
+              淘寶：#{@stock.ntd_cost}
               %p.help-block
-              價格：#{@stock.price}
+              定價：#{@stock.price}
+              %p.help-block
+              優惠：#{@stock.special_price}
         - @stock.specs.each do |spec|
           %tr
             %td
