@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816000243) do
+ActiveRecord::Schema.define(version: 20160815121119) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id", limit: 4
@@ -87,8 +87,10 @@ ActiveRecord::Schema.define(version: 20160816000243) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "image",      limit: 255
+    t.integer  "parent_id",  limit: 4
   end
 
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -426,42 +428,17 @@ ActiveRecord::Schema.define(version: 20160816000243) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "shopping_point_campaigns", force: :cascade do |t|
-    t.string   "description", limit: 255
-    t.integer  "amount",      limit: 4
-    t.date     "valid_until"
-    t.boolean  "is_expired",              default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "shopping_point_campaigns", ["is_expired"], name: "index_shopping_point_campaigns_on_is_expired", using: :btree
-  add_index "shopping_point_campaigns", ["valid_until"], name: "index_shopping_point_campaigns_on_valid_until", using: :btree
-
-  create_table "shopping_point_records", force: :cascade do |t|
-    t.integer  "shopping_point_id", limit: 4
-    t.integer  "order_id",          limit: 4
-    t.integer  "amount",            limit: 4
-    t.integer  "balance",           limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "shopping_point_records", ["order_id"], name: "index_shopping_point_records_on_order_id", using: :btree
-  add_index "shopping_point_records", ["shopping_point_id"], name: "index_shopping_point_records_on_shopping_point_id", using: :btree
-
   create_table "shopping_points", force: :cascade do |t|
     t.integer  "user_id",     limit: 4
     t.integer  "point_type",  limit: 4
     t.integer  "amount",      limit: 4,   default: 0, null: false
     t.date     "valid_until"
+    t.string   "note",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "shopping_point_campaign_id", limit: 4
   end
 
   add_index "shopping_points", ["point_type"], name: "index_shopping_points_on_point_type", using: :btree
-  add_index "shopping_points", ["shopping_point_campaign_id"], name: "index_shopping_points_on_shopping_point_campaign_id", using: :btree
   add_index "shopping_points", ["user_id"], name: "index_shopping_points_on_user_id", using: :btree
 
   create_table "stock_specs", force: :cascade do |t|

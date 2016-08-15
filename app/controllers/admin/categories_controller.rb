@@ -33,9 +33,6 @@ class Admin::CategoriesController < AdminController
     end
   end
 
-  def edit 
-  end
-
   def update
     if @category.update(category_params)
       flash[:notice] = "分類已更新完成"
@@ -63,7 +60,7 @@ class Admin::CategoriesController < AdminController
   private
 
   def category_params
-    params.require(:category).permit(:name, :image)
+    params.require(:category).permit(:name, :image, :parent_id)
   end
 
   def find_category

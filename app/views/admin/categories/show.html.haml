@@ -7,7 +7,8 @@
         = link_to "分類列表", admin_categories_path
       %li.active= @category.name
   .pull-right
-    = link_to "編輯分類", edit_admin_category_path(@category), class: "btn btn-success"
+    = link_to "編輯分類", edit_admin_category_path(@category), class: "btn btn-default"
+    = link_to "新增子分類", new_admin_category_path(parent_id: @category.id), class: "btn btn-default"
   %h2= @category.name
   .category-all-items    
     .panel-body
