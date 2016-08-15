@@ -6,7 +6,7 @@
   .form-group
     = f.label :answer, "Answer", class: "col-sm-2 control-label"
     .col-sm-10
-      = f.text_area :answer, { class: "form-control", required: true }
+      = f.text_area :answer, { class: "form-control", required: true, rows: 8 }
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit "確認送出", class: "btn btn-primary"
