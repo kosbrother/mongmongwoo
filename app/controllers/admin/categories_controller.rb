@@ -3,7 +3,7 @@ class Admin::CategoriesController < AdminController
   before_action :find_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.recent
+    @categories = Category.recent.paginate(:page => params[:page])
   end
 
   def new
@@ -22,15 +22,9 @@ class Admin::CategoriesController < AdminController
     end
   end
 
-  def show    
-    params['order'] = 'position' if params['order'].nil?
-    if params['order'] == 'update'
-      @on_shelf_items = @category.items.on_shelf.update_time
-      @off_shelf_items = @category.items.off_shelf.update_time
-    elsif params['order'] == 'position'
-      @on_shelf_items = @category.items.on_shelf.priority
-      @off_shelf_items = @category.items.off_shelf.priority
-    end
+  def show
+    @parent_category = @category.parent_category
+    @child_categories = @category.child_categories.recent.paginate(:page => params[:page])
   end
 
   def update
@@ -38,17 +32,9 @@ class Admin::CategoriesController < AdminController
       flash[:notice] = "分類已更新完成"
       redirect_to admin_categories_path
     else
-      flash[:danger] = "請確認欄位資料"
+      flash.now[:alert] = "請確認欄位資料"
       render :edit
     end
-  end
-
-  def sort_items_priority
-    params[:item].each_with_index do |id, index|
-      ItemCategory.where(category_id: params[:category],item_id: id).update_all({position: index + 1})
-    end
-
-    render nothing: true
   end
 
   def destroy

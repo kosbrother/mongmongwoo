@@ -150,11 +150,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :categories, only: [:new, :create, :show, :index, :edit, :update, :destroy] do
-      collection do
-        post "sort_items_priority"
-      end
-    end
+    resources :categories
 
     resources :users, only: [:index, :show, :create, :update] do
       collection do
