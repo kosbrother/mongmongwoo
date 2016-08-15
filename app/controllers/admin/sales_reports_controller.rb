@@ -9,7 +9,8 @@ class Admin::SalesReportsController < AdminController
   end
 
   def export_item_sales_result
-    @sales_result =  Item.with_all_items_sales_result
+    date_range =  params[:start_date] .. params[:end_date]
+    @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_result.where('order_items.created_at': date_range)
   end
 
   def item_revenue_result
