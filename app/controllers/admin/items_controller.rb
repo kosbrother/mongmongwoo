@@ -6,14 +6,16 @@ class Admin::ItemsController < AdminController
     @categories = Category.all
     params[:category_id] ||= Category::ALL_ID
     params[:order] ||= 'position'
-    items = Item.joins(:item_categories).select('items.*, item_categories.position').where(item_categories: {category_id: params[:category_id]})
-    items = items.where(status: params[:status]) if params[:status]
+    query_hash = {item_categories: {category_id: params[:category_id]}}
+    query_hash = query_hash.merge({status: params[:status]}) if params[:status]
+
     if params[:order] == 'updated_at'
-      items = items.update_time
+      order_query = {updated_at: :DESC}
     elsif params[:order] == 'position'
-      items = items.priority
+      order_query = "item_categories.position ASC"
     end
-    @items = items.paginate(page: params[:page]).per_page(20)
+
+    @items = Item.joins(:item_categories).select('items.*, item_categories.position').where(query_hash).order(order_query).paginate(page: params[:page])
   end
 
   def new
