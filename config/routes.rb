@@ -229,7 +229,7 @@ Rails.application.routes.draw do
 
     resources :messages, only: [:index, :new, :create, :show, :destroy]
     resources :promotions, only: [:index, :new, :create, :destroy]
-    resources :shop_infos, except: [:edit, :update]
+    resources :shop_infos, except: [:show]
   end
 
   # API for App

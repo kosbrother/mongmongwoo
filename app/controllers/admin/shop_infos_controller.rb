@@ -1,5 +1,6 @@
 class Admin::ShopInfosController < AdminController
   before_action :require_manager
+  before_action :find_shop_info, only: [:edit, :update, :destroy]
 
   def index
     @infos = ShopInfo.all
@@ -15,13 +16,22 @@ class Admin::ShopInfosController < AdminController
      flash[:notice] = "成功新增購物須知"
      redirect_to admin_shop_infos_path
    else
-     flash[:danger] = "請檢查資料是否正確"
+     flash.now[:danger] = "請檢查資料是否正確"
      render :new
    end
   end
 
+  def update
+    if @info.update(info_params)
+      flash[:notice] = "成功編輯購物須知"
+      redirect_to admin_shop_infos_path
+    else
+      flash.now[:danger] = "請檢查資料是否正確"
+      render :edit
+    end
+  end
+
   def destroy
-    @info = ShopInfo.find(params[:id])
     @info.destroy
     flash[:notice] = "成功刪除購物須知"
     redirect_to admin_shop_infos_path
@@ -31,5 +41,9 @@ class Admin::ShopInfosController < AdminController
 
   def info_params
     params.require(:shop_info).permit(:question, :answer)
+  end
+
+  def find_shop_info
+    @info = ShopInfo.find(params[:id])
   end
 end
