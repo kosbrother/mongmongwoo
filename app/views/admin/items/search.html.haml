@@ -34,7 +34,7 @@
                     = link_to item.name, admin_item_path(item)
                   %td{:id => "status-#{item.id}"}
                     = link_to update_shelf_path(item), method: :patch, remote: true do
-                      = item_status(item.status)
+                      = t(item.status)
                   %td
                     = item.price
                   %td

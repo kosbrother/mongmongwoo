@@ -19,10 +19,10 @@
         %ul.nav.nav-tabs{:role => "tablist"}
           %li.active{:role => "presentation"}
             %a{"aria-controls" => "on-shelf", "data-toggle" => "tab", :href => "#on-shelf", :role => "tab"}
-              = "上架中:  #{@on_shelf_items.count}"
+              = "#{t('on_shelf')}:  #{@on_shelf_items.count}"
           %li{:role => "presentation"}
             %a{"aria-controls" => "off-shelf", "data-toggle" => "tab", :href => "#off-shelf", :role => "tab"}
-              = "下架中:  #{@off_shelf_items.count}"
+              = "#{t('off_shelf')}:  #{@off_shelf_items.count}"
         / Tab panes
         .tab-content
           #on-shelf.tab-pane.active{:role => "tabpanel"}

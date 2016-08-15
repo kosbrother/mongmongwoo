@@ -14,33 +14,32 @@
         %th 訂購
         %th
     %tbody
-      - specs.each do |spec|
+      - specs.each do |item_spec|
         %tr
           %td
-            = spec.item_shelf_position
+            = item_spec.item_shelf_position
           %td
-            = raw(spec.style)
-          %td{:id => "status-#{spec.id}"}
-            = link_to (spec.on_shelf? ? off_shelf_admin_item_item_spec_path(item, spec) : on_shelf_admin_item_item_spec_path(@item, spec)), method: :patch, remote: true, class: status_button_class(spec.status) do
-              = spec_status(spec.status)
+            = raw(item_spec.style)
+          %td{:id => "status-#{item_spec.id}"}
+            = link_to_update_item_spec(item_spec)
           %td
-            = number_to_percentage((spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
+            = number_to_percentage((item_spec.sales_quantity.to_f / @sales_volume)*100, precision: 0)
           %td
-            = spec.sales_amount_within_days(30)
+            = item_spec.sales_amount_within_days(30)
           %td
-            = spec.recommend_stock_num
+            = item_spec.recommend_stock_num
           %td
-            = spec.stock_item_quantity
+            = item_spec.stock_item_quantity
           %td
-            = spec.shipping_item_quantity
-          %td{id: "stop-recommend-spec-id-#{spec.id}"}
-            = link_to_stop_recommend(item, spec)
+            = item_spec.shipping_item_quantity
+          %td{id: "stop-recommend-spec-id-#{item_spec.id}"}
+            = link_to_stop_recommend(item, item_spec)
           %td
             = form_tag add_admin_admin_cart_items_path, remote: true do
-              = hidden_field_tag :item_id, spec.item_id
-              = hidden_field_tag :item_spec_id, spec.id
-              = hidden_field_tag :taobao_supplier_id, spec.item.taobao_supplier_id
+              = hidden_field_tag :item_id, item_spec.item_id
+              = hidden_field_tag :item_spec_id, item_spec.id
+              = hidden_field_tag :taobao_supplier_id, item_spec.item.taobao_supplier_id
               = number_field_tag :item_quantity, 1, min: 1, max: 99
               = submit_tag '訂購', class: "btn btn-primary btn-sm"
           %td
-            = link_to "編輯" , edit_admin_item_item_spec_path(item, spec), class: "btn btn-default btn-sm"
+            = link_to "編輯" , edit_admin_item_item_spec_path(item, item_spec), class: "btn btn-default btn-sm"
