@@ -4,8 +4,6 @@
       .panel-title 商品銷售數量列表
     .content-box-large.box-with-header
       .panel-body
-        .panel-body
-          = link_to '輸出EXCEL', export_item_sales_result_admin_sales_reports_path(format: 'xlsx'), class: 'btn btn-primary'
         .input-new-cost-data
           = form_tag item_sales_result_admin_sales_reports_path, { class: "form-horizontal well", method: :get } do
             .form-group
@@ -20,5 +18,8 @@
               .col-sm-offset-2.col-sm-3
                 = submit_tag "確認", class: "btn btn-primary"
                 = link_to "取消"
+        .panel-body
+          .pull-right
+            = link_to '輸出EXCEL', export_item_sales_result_admin_sales_reports_path(format: 'xlsx', start_date: params[:start_date], end_date: params[:end_date]), class: 'btn btn-primary'
         %table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           = render partial: "item_sales_table"
