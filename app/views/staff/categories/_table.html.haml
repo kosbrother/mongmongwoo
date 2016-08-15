@@ -17,7 +17,7 @@
             排序：
             %span.badge= item.category_position(@category)
         %td{:id => "status-#{item.id}"}
-          = item_status(item.status)
+          = t(item.status)
         %td
           = link_to staff_item_path(item) do
             = item_icon(item.cover)

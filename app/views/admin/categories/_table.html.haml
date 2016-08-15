@@ -23,7 +23,7 @@
             按住我
         %td{:id => "status-#{item.id}"}
           = link_to ( update_shelf_path(item) ), method: :patch, remote: true do
-            = item_status(item.status)
+            = t(item.status)
           %div= "貨架編號: #{item.shelf_position}"
         %td
           = link_to admin_item_path(item) do

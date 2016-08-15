@@ -24,7 +24,7 @@
           %td
             = spec_photo(spec, photo_size="150x150")
           %td{:id => "status-#{spec.id}"}
-            = spec_status(spec.status)
+            = t(spec.status)
           %td= raw(spec.style)
           %td
             %div

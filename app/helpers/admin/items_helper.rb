@@ -60,24 +60,6 @@ module Admin::ItemsHelper
     amount == 0 ? "無庫存" : amount
   end
 
-  def item_status(status)
-    case status
-    when "on_shelf"
-      return "上架中"
-    when "off_shelf"
-      return "已下架" 
-    end
-  end
-
-  def spec_status(status)
-    case status
-    when "on_shelf"
-      return "上架中"
-    when "off_shelf"
-      return "已下架" 
-    end
-  end
-
   def update_shelf_path(item)
     item.on_shelf? ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item)
   end
@@ -101,14 +83,14 @@ module Admin::ItemsHelper
   end
 
   def link_to_update_item_status(item)
-    link_to item_status(item.status), update_shelf_path(item), method: :patch, remote: true, class: status_button_class(item.status)
+    link_to t(item.status), update_shelf_path(item), method: :patch, remote: true, class: status_button_class(item.status)
   end
 
   def link_to_update_item_spec(item_spec)
     if item_spec.status == "off_shelf"
-      link_to "已下架", on_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
+      link_to t('off_shelf'), on_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
     else
-      link_to "上架中", off_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
+      link_to t('on_shelf'), off_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
     end
   end
 
