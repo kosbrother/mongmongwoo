@@ -4,10 +4,8 @@ class Admin::StocksController < AdminController
   def index
     @taobao_suppliers = TaobaoSupplier.all
     params[:taobao_supplier_id] ||= @taobao_suppliers.first.id
-    taobao_supplier = @taobao_suppliers.find(params[:taobao_supplier_id])
-    items = taobao_supplier.items.includes(:specs)
-    status_hash = params.permit(:status)
-    @items = items.where(status_hash).recent.paginate(page: params[:page])
+    query_hash = params.permit(:taobao_supplier_id ,:status)
+    @items = Item.includes(:specs).where(query_hash).recent.paginate(page: params[:page])
   end
 
   def edit
