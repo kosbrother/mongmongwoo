@@ -11,8 +11,8 @@
       .filter-dt 商品狀態
       .filter-dd.clearfix
         %ul.filter-list
-          = link_to_stock_index(params[:status] == Item.statuses[:on_shelf].to_s, "上架中", status: Item.statuses[:on_shelf])
-          = link_to_stock_index(params[:status] == Item.statuses[:off_shelf].to_s, "已下架", status: Item.statuses[:off_shelf])
+          = link_to_stock_index(params[:status] == Item.statuses[:on_shelf].to_s, "#{t(:on_shelf)}", status: Item.statuses[:on_shelf])
+          = link_to_stock_index(params[:status] == Item.statuses[:off_shelf].to_s, "#{t(:off_shelf)}", status: Item.statuses[:off_shelf])
   = render_pagination(@items)
   %p.help-block
   = render "stock_table", stocks: @items

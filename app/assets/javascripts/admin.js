@@ -59,7 +59,7 @@ ready = function() {
     'trigger':'hover',
     'html':true,
     'content':function(){
-      return "<img src='"+$(this).data('imageUrl')+"' width='120' height='120'>";
+      return "<img src='"+$(this).data('imageUrl')+"' width='120' height='90'>";
     }
   });
   // datetimepicker selector
