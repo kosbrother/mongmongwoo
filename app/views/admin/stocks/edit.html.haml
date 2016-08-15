@@ -15,28 +15,28 @@
     %tbody
       %tr
         = render "stock_information", stock: @stock
-        - @stock.specs.each do |spec|
+        - @stock.specs.each do |item_spec|
           %tr
             %td
-              = link_to spec.style, "#", rel: "popover", data: { "image-url": "#{spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+              = link_to item_spec.style, "#", rel: "popover", data: { "image-url": "#{item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
             %td
-              = t(spec.status)
+              = t(item_spec.status)
             %td
-              - if spec.stock_spec
-                = form_for [:admin, spec.stock_spec], remote: true, method: :patch, html: { id: "update-#{spec.stock_spec.id}", class: "form-inline" } do |f|
+              - if item_spec.stock_spec
+                = form_for [:admin, item_spec.stock_spec], remote: true, method: :patch, html: { id: "update-#{item_spec.stock_spec.id}", class: "form-inline" } do |f|
                   .form-group
                     = f.label :amount, "庫存數量", class: "sr-only"
-                    = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.stock_spec.id}-stock_spec"
+                    = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{item_spec.stock_spec.id}-stock_spec"
                   = f.submit "更新數量", class: "btn btn-primary"
               - else
-                = form_for [:admin, StockSpec.new], html: { id: "create-#{spec.id}", class: "form-inline" } do |f|
+                = form_for [:admin, StockSpec.new], html: { id: "create-#{item_spec.id}", class: "form-inline" } do |f|
                   = f.hidden_field :item_id, value: @stock.id
-                  = f.hidden_field :item_spec_id, value: spec.id
+                  = f.hidden_field :item_spec_id, value: item_spec.id
                   .form-group
                     = f.label :amount, "庫存數量", class: "sr-only"
-                    = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{spec.id}-stock_spec"
+                    = f.number_field :amount, min: "0", class: "form-control form-amount", id: "#{item_spec.id}-stock_spec"
                     = f.submit "建立庫存", class: "btn btn-warning"
             %td
-              = spec.shipping_item_quantity
+              = item_spec.shipping_item_quantity
             %td
-              = spec.requested_quantity
+              = item_spec.requested_quantity
