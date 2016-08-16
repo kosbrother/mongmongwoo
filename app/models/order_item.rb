@@ -58,8 +58,8 @@ class OrderItem < ActiveRecord::Base
   end
 
   def stock_amount_enough?
-    stock_spec = StockSpec.find_by(item_spec_id: item_spec_id)
-    stock_spec ? stock_spec.amount >= item_quantity : false
+    item_spec = ItemSpec.find(item_spec_id)
+    item_spec.stock_amount >= item_quantity
   end
 
   def item_spec_on_shelf?
