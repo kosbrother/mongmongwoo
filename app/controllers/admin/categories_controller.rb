@@ -1,4 +1,5 @@
 class Admin::CategoriesController < AdminController
+  include Admin::CategoriesHelper
   before_action :require_manager
   before_action :find_category, only: [:show, :edit, :update, :destroy]
 
@@ -15,7 +16,7 @@ class Admin::CategoriesController < AdminController
 
     if @category.save
       flash[:notice] = "新增分類成功"
-      redirect_to redirect_path
+      redirect_to parent_category_page(@category)
     else
       flash.now[:alert] = "請確認欄位資料"
       render :new
@@ -30,7 +31,7 @@ class Admin::CategoriesController < AdminController
   def update
     if @category.update(category_params)
       flash[:notice] = "分類已更新完成"
-      redirect_to redirect_path
+      redirect_to parent_category_page(@category)
     else
       flash.now[:alert] = "請確認欄位資料"
       render :edit
@@ -51,9 +52,5 @@ class Admin::CategoriesController < AdminController
 
   def find_category
     @category = Category.all_categories.find(params[:id])
-  end
-
-  def redirect_path
-    @category.parent_category ? admin_category_path(@category.parent_category) : admin_categories_path
   end
 end
