@@ -13,7 +13,7 @@ class Admin::UsersController < AdminController
   end
 
   def show
-    @user = User.includes(orders: [:info, :items, items: :item, info: :store]).find(params[:id])
+    @user = User.includes(orders: :info).find(params[:id])
 
     respond_to do |format|
       format.html
