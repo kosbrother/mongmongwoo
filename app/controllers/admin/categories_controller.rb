@@ -4,7 +4,7 @@ class Admin::CategoriesController < AdminController
   before_action :find_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.recent.paginate(:page => params[:page])
+    @categories = Category.parent_categories.recent.paginate(:page => params[:page])
   end
 
   def new
@@ -51,6 +51,6 @@ class Admin::CategoriesController < AdminController
   end
 
   def find_category
-    @category = Category.all_categories.find(params[:id])
+    @category = Category.find(params[:id])
   end
 end
