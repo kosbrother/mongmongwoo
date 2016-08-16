@@ -1,7 +1,7 @@
 class OrderItem < ActiveRecord::Base
-  validates_presence_of :source_item_id, allow_blank: true
-  validates_presence_of :item_name, :item_spec_id, :item_style, :item_quantity, :item_price
+  validates_presence_of :item_name, :item_spec_id, :item_style, :item_quantity, :item_price, :source_item_id
   validate :product_able_to_buy
+  validates_numericality_of :item_quantity, greater_than: 0
 
   belongs_to :order
   belongs_to :item, :foreign_key => "source_item_id"

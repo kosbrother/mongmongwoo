@@ -31,7 +31,8 @@ class ItemSpec < ActiveRecord::Base
   end
 
   def stock_amount
-    stock_item_quantity - requested_quantity
+    amount = stock_item_quantity - requested_quantity
+    (amount > 0) ? amount : 0
   end
 
   def item_shelf_position
