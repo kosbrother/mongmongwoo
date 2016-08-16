@@ -5,7 +5,7 @@ describe Api::V1::OrdersController, :type => :controller  do
     let!(:item) { FactoryGirl.create(:item_with_specs_and_photos) }
     let!(:spec) { item.specs.first }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
-    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
     let!(:order) {  FactoryGirl.create(:order, items: [order_item]) }
 
     before :each do

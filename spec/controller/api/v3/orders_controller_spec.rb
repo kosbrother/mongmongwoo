@@ -97,7 +97,7 @@ describe Api::V3::OrdersController, type: :controller do
 
   describe "get #show" do
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
-    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
     let!(:order) { FactoryGirl.create(:order, items: [order_item]) }
     before :each do
       get :show, id: order.id
@@ -114,8 +114,9 @@ describe Api::V3::OrdersController, type: :controller do
   describe "get #user_owned_orders" do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
-    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec) }
-    let!(:orders) { create_list(:order, 3, user_id: user.id, uid: user.uid, items: [order_item]) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, items: [order_item]) }
+    let!(:orders) { [order] }
     before :each do
       get :user_owned_orders, uid: user.uid, page: '1'
     end
@@ -137,8 +138,9 @@ describe Api::V3::OrdersController, type: :controller do
   describe "get #by_email_phone" do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
-    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec) }
-    let!(:orders) { create_list(:order, 3, user_id: user.id, uid: user.uid, items: [order_item]) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, items: [order_item]) }
+    let!(:orders) { [order] }
     let!(:email) { orders[0].info.ship_email }
     let!(:phone) { orders[0].info.ship_phone }
     before :each do
@@ -162,8 +164,9 @@ describe Api::V3::OrdersController, type: :controller do
   describe "get #by_user_email" do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
-    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec) }
-    let!(:orders) { create_list(:order, 3, user_id: user.id, uid: user.uid, items: [order_item]) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, items: [order_item]) }
+    let!(:orders) { [order] }
     let!(:email) { user.email }
     before :each do
       get :by_user_email, email: email
@@ -186,7 +189,7 @@ describe Api::V3::OrdersController, type: :controller do
   describe "patch #cancel" do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
-    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
     context "when order status is new" do
       let!(:order) { FactoryGirl.create(:order, user_id: user.id, status: Order.statuses["新訂單"], items: [order_item]) }
 
