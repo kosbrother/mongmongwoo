@@ -39,8 +39,5 @@
             %td= order.ship_phone
             %td= order.ship_email
             %td= order.status
-            %td
-              %button.btn.btn-default.btn-sm{"data-target" => "#order-#{order.id}", "data-toggle" => "modal", :type => "button"}
-                = order.id
-              = render(partial: "admin/orders/info_and_items_list", locals: { order: order })
+            %td= link_to '明細', admin_order_path(order),class: "button btn btn-default btn-sm"
             %td= link_to_send_survey_email(order)
