@@ -3,7 +3,7 @@ class Admin::CategoriesController < AdminController
   before_action :find_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.main_parents.recent.paginate(:page => params[:page])
+    @categories = Category.recent.paginate(:page => params[:page])
   end
 
   def new
@@ -50,7 +50,7 @@ class Admin::CategoriesController < AdminController
   end
 
   def find_category
-    @category = Category.find(params[:id]) 
+    @category = Category.all_categories.find(params[:id])
   end
 
   def redirect_path
