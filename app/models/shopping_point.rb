@@ -7,7 +7,7 @@ class ShoppingPoint < ActiveRecord::Base
   belongs_to :shopping_point_campaign
   has_many :shopping_point_records
 
-  scope :available, ->{where('valid_until > :today OR valid_until IS NULL', today: Time.current)}
+  scope :available, ->{where('amount > 0 AND (valid_until > :today OR valid_until IS NULL)', today: Time.current)}
 
   private
 
