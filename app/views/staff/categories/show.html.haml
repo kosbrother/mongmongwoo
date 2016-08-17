@@ -11,8 +11,8 @@
     .category-all-items
       .panel-body
         .apple_pagination
-          = will_paginate @category_page, :container => false
+          = will_paginate @category_items, :container => false
         %br/
         = render "table"
         .apple_pagination
-          = will_paginate @category_page, :container => false
+          = will_paginate @category_items, :container => false

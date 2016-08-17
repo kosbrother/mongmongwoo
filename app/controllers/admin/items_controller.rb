@@ -3,7 +3,7 @@ class Admin::ItemsController < AdminController
   before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
 
   def index
-    @categories = Category.all
+    @categories = Category.parent_categories
     params[:category_id] ||= Category::ALL_ID
     params[:order] ||= 'position'
     query_hash = {item_categories: {category_id: params[:category_id]}}

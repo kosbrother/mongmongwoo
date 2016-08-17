@@ -10,7 +10,7 @@
   .form-group
     = f.label :category_id, "推播分類", class: "col-sm-2 control-label"
     .col-sm-10
-      = f.select :category_id, Category.all.collect { |category| ["#{category.id} : #{category.name}", category.id] }, { include_blank: "請選擇分類" }, { class: "form-control", required: true }
+      = f.select :category_id, Category.parent_categories.collect { |category| ["#{category.id} : #{category.name}", category.id] }, { include_blank: "請選擇分類" }, { class: "form-control", required: true }
   .form-group
     = f.label :item_id, "推播商品", class: "col-sm-2 control-label"
     .col-sm-10
