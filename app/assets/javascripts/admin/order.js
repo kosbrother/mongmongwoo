@@ -32,6 +32,11 @@ get_store = function() {
       $('#submit-' + order_id).attr('disabled', true);
     });
   });
+
+  $('.btn-barcode').on('click', function() {
+    var self = $(this);
+    self.addClass('btn-warning');
+  });
 };
 
 $(document).ready(get_store);
