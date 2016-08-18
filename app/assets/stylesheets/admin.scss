@@ -248,3 +248,9 @@ div.item-cover-words-intro, div.notification-intro {
 .parent_category {
   font-size: 0.7em;
 }
+#sub-category-field {
+  > label {
+    margin-left: 0;
+    margin-right: 20px;
+  }
+}
