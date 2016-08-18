@@ -46,14 +46,12 @@ class Admin::AdminCartItemsController < AdminController
 
   def import_excel
     xlsx = Roo::Spreadsheet.open(params['excel_file'], extension: :xlsx)
-    records = xlsx.parse(taobao_supplier: '商家', item_id: '商品編號', item_spec_style: '商品樣式', item_quantity: '採購量')
+    records = xlsx.parse(taobao_supplier: '商家', item_id: '商品編號', item_spec_id: '商品樣式編號', item_quantity: '採購量')
     records.each_with_index do |hash, index|
       next if index == 0
       taobao_supplier_id = TaobaoSupplier.find_by(name: hash[:taobao_supplier]).id
-      item = Item.find(hash[:item_id])
-      item_spec_id = item.specs.find_by(style: hash[:item_spec_style]).id
 
-      create_cart_item(taobao_supplier_id, hash[:item_id], item_spec_id, hash[:item_quantity])
+      create_cart_item(taobao_supplier_id, hash[:item_id], hash[:item_spec_id], hash[:item_quantity])
     end
 
     redirect_to :back
