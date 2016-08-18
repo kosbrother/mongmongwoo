@@ -7,7 +7,7 @@ wb.add_worksheet(name: @sheet_name) do |sheet|
     sheet.add_row ['訂單編號', '訂購日期與狀態', '訂購用戶', '收件人姓名']
     sheet.add_row [order.id, display_date(order.created_at), order.user.user_name, order.info.ship_name], style: bold_font
     sheet.add_row ['商品編號', '名稱', '樣式', '數量', '貨架編號'], style: header_highlight
-    order.items.each do |item|
+    order.items.by_shelf_position.each do |item|
       sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position], style: content_highlight
     end
     sheet.add_row ['備註']
