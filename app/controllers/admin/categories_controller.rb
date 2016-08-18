@@ -4,7 +4,7 @@ class Admin::CategoriesController < AdminController
   before_action :find_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.parent_categories.recent.paginate(:page => params[:page])
+    @categories = Category.parent_categories.paginate(:page => params[:page])
   end
 
   def new
@@ -16,7 +16,7 @@ class Admin::CategoriesController < AdminController
 
     if @category.save
       flash[:notice] = "新增分類成功"
-      redirect_to parent_category_page(@category)
+      redirect_to parent_category_path(@category)
     else
       flash.now[:alert] = "請確認欄位資料"
       render :new
@@ -25,13 +25,13 @@ class Admin::CategoriesController < AdminController
 
   def show
     @parent_category = @category.parent_category
-    @child_categories = @category.child_categories.recent.paginate(:page => params[:page])
+    @child_categories = @category.child_categories.paginate(:page => params[:page])
   end
 
   def update
     if @category.update(category_params)
       flash[:notice] = "分類已更新完成"
-      redirect_to parent_category_page(@category)
+      redirect_to parent_category_path(@category)
     else
       flash.now[:alert] = "請確認欄位資料"
       render :edit

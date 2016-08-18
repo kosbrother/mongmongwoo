@@ -8,7 +8,6 @@ class Category < ActiveRecord::Base
   belongs_to :parent_category, class_name: "Category", foreign_key: "parent_id"
   has_many :child_categories, class_name: "Category", foreign_key: "parent_id"
 
-  scope :recent, -> { order(id: :DESC) }
   scope :except_the_all_category, -> { where.not(id: 10) }
   scope :select_api_fields, -> { select(:id, :name, :image) }
   scope :parent_categories, -> { where(parent_id: nil) }

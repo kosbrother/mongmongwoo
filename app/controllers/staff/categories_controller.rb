@@ -3,7 +3,7 @@ class Staff::CategoriesController < StaffController
   before_action :find_category, only: [:show]
 
   def index
-    @categories = Category.parent_categories.recent
+    @categories = Category.parent_categories
   end
 
   def show
