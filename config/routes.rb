@@ -52,7 +52,11 @@ Rails.application.routes.draw do
     post "/signin", to: "sessions#create"
     delete "/signout", to: "sessions#destroy"
 
-    resources :categories, only: [:show, :index]
+    resources :categories, only: [:show, :index] do
+      member do
+        get "subcategory"
+      end
+    end
 
     resources :items, only: [:new, :create, :show, :edit, :update, :destroy] do
       resources :photos, except: [:show]

@@ -78,7 +78,7 @@ ready = function() {
           for (var i in categories) {
             var id = categories[i].id;
             var title = categories[i].name;
-            $("#sub-category-field").append('<label class="checkbox-inline parent-' + category_id + '"><input class="checkbox" type="checkbox" value="' + id + '" name="item[category_ids][]" data-parent-id="' + category_id + '">' + title + '</label>');
+            $("#sub-category-field").append('<label class="checkbox-inline parent-' + category_id + '"><input class="checkbox" type="checkbox" value="' + id + '" name="item[category_ids][]">' + title + '</label>');
           }
         },
         error: function(XMLHttpRequest, errorTextStatus, error){
