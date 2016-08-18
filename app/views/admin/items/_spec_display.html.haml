@@ -3,6 +3,7 @@
     %thead
       %tr
         %th 貨架編號
+        %th 樣式編號
         %th 樣式名稱
         %th 樣式狀態
         %th 銷售比例
@@ -18,6 +19,8 @@
         %tr
           %td
             = item_spec.item_shelf_position
+          %td
+            = item_spec.id
           %td
             = raw(item_spec.style)
           %td{:id => "status-#{item_spec.id}"}
