@@ -87,8 +87,10 @@ ActiveRecord::Schema.define(version: 20160816000243) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "image",      limit: 255
+    t.integer  "parent_id",  limit: 4
   end
 
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -451,9 +453,9 @@ ActiveRecord::Schema.define(version: 20160816000243) do
   add_index "shopping_point_records", ["shopping_point_id"], name: "index_shopping_point_records_on_shopping_point_id", using: :btree
 
   create_table "shopping_points", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "point_type",  limit: 4
-    t.integer  "amount",      limit: 4,   default: 0, null: false
+    t.integer  "user_id",                    limit: 4
+    t.integer  "point_type",                 limit: 4
+    t.integer  "amount",                     limit: 4, default: 0, null: false
     t.date     "valid_until"
     t.datetime "created_at"
     t.datetime "updated_at"

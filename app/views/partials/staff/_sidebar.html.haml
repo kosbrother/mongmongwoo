@@ -19,7 +19,7 @@
         %li
           %a{:href => staff_categories_path}
             分類列表
-        - Category.all.each do |category|
+        - Category.parent_categories.each do |category|
           %li
             %a{:href => "#{staff_category_path(category)}"}
               = category.name

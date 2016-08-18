@@ -26,7 +26,7 @@ module ItemHelper
   end
 
   def categories_checkox(f)
-    f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb|
+    f.collection_check_boxes :category_ids, Category.parent_categories, :id, :name do |cb|
       category_checkbox(cb,f)
     end
   end

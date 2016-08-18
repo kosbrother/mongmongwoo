@@ -1,31 +1,14 @@
-.content-box-large
-  .breadcrumb-topbar
-    %ol.breadcrumb
-      %li
-        = link_to "萌萌屋", admin_root_path
-      %li
-        = link_to "分類列表", admin_categories_path
-      %li.active= @category.name
-  .pull-right
-    = link_to "編輯分類", edit_admin_category_path(@category), class: "btn btn-success"
-  %h2= @category.name
-  .category-all-items    
-    .panel-body
-      .btn-group{"aria-label" => "排序方式", :role => "group"}
-        = link_to '依照排名', url_for(order: 'position'), class:  get_btn_class('position')
-        = link_to '依照更新時間', url_for(order: 'update'), class:  get_btn_class('update')
-      %div
-        / Nav tabs
-        %ul.nav.nav-tabs{:role => "tablist"}
-          %li.active{:role => "presentation"}
-            %a{"aria-controls" => "on-shelf", "data-toggle" => "tab", :href => "#on-shelf", :role => "tab"}
-              = "#{t('on_shelf')}:  #{@on_shelf_items.count}"
-          %li{:role => "presentation"}
-            %a{"aria-controls" => "off-shelf", "data-toggle" => "tab", :href => "#off-shelf", :role => "tab"}
-              = "#{t('off_shelf')}:  #{@off_shelf_items.count}"
-        / Tab panes
-        .tab-content
-          #on-shelf.tab-pane.active{:role => "tabpanel"}
-            = render "table", category_items: @on_shelf_items
-          #off-shelf.tab-pane{:role => "tabpanel"}
-            = render "table", category_items: @off_shelf_items
+.content-box-large.box-with-header
+  .header-btn
+    .pull-right
+      = link_to "返回母分類列表", parent_category_path(@category), class: "btn btn-default"
+      = link_to "新增子分類", new_admin_category_path(parent_id: @category.id), class: "btn btn-default"
+    %h2
+      #{@category.name}
+      - if @parent_category
+        %span.parent_category（母分類：#{@parent_category.name}）
+    %p.lead 子分類列表
+    = render_pagination(@child_categories)
+    %p.help-block
+    = render "table", categories: @child_categories
+    = render_pagination(@child_categories)
