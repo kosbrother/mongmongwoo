@@ -49,9 +49,8 @@
     = categories_checkox(f)
 .form-group
   = f.label "商品子分類", class: "col-sm-2 control-label"
-  .col-sm-8
+  #sub-category-field.col-sm-8
     = subcategories_checkbox(f)
-  #sub-category-field.col-sm-8.col-sm-offset-2
 .form-group
   .col-sm-offset-2.col-sm-10
     = f.submit "確認送出", class: "btn btn-primary"

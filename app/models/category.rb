@@ -12,7 +12,7 @@ class Category < ActiveRecord::Base
   scope :except_the_all_category, -> { where.not(id: 10) }
   scope :select_api_fields, -> { select(:id, :name, :image) }
   scope :parent_categories, -> { where(parent_id: nil) }
-  scope :default_subcategories, -> { where(parent_id: [ALL_ID, NEW_ID]) }
+  scope :subcategories, -> (parent_category_ids) { where(parent_id: parent_category_ids) }
 
   mount_uploader :image, OriginalPicUploader
 
