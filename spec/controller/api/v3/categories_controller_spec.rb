@@ -22,4 +22,19 @@ RSpec.describe Api::V3::CategoriesController, type: :controller do
       expect(data[1]["image"]["url"]).to eq(Category.all[1].image_url)
     end
   end
+
+  describe "GET subcategory" do
+    let!(:parent_category) { FactoryGirl.create(:category) }
+    let!(:subcategories) { FactoryGirl.create_list(:category, 3, parent_category: parent_category) }
+    let!(:first_child_category) { parent_category.child_categories.first }
+
+    it "should contain correct child categories" do
+      get :subcategory, id: parent_category.id
+      data = JSON.parse(response.body)["data"]
+      expect(data.size).to eq(parent_category.child_categories.size)
+      expect(data[0]["id"]).to eq(first_child_category.id)
+      expect(data[0]["name"]).to eq(first_child_category.name)
+      expect(data[0]["image"]["url"]).to eq(first_child_category.image_url)
+    end
+  end
 end

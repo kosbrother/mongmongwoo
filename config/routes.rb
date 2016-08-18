@@ -310,6 +310,10 @@ Rails.application.routes.draw do
       end
 
       resources :categories, only: [:index] do
+        member do
+          get "subcategory"
+        end
+
         resources :items, only: [:index, :show]
       end
 
