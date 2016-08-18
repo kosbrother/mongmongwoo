@@ -58,11 +58,11 @@ class Admin::ItemsController < AdminController
   end
 
   def on_shelf
-    @item.update_column(:status, 0)
+    @item.update_attribute(:status, 0)
   end
 
   def off_shelf
-    @item.update_column(:status, 1)
+    @item.update_attribute(:status, 1)
   end
 
   def search
