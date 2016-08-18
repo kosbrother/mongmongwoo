@@ -21,13 +21,19 @@ module ItemHelper
         cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox disabled", disabled: "disabled") + cb.text}
       end
     else
-      cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox") + cb.text}
+      cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox parent-category") + cb.text}
     end
   end
 
   def categories_checkox(f)
     f.collection_check_boxes :category_ids, Category.parent_categories, :id, :name do |cb|
       category_checkbox(cb,f)
+    end
+  end
+
+  def subcategories_checkbox(f)
+    f.collection_check_boxes :category_ids, Category.default_subcategories, :id, :name do |cb|
+      cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox") + cb.text}
     end
   end
 

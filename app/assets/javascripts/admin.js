@@ -64,6 +64,31 @@ ready = function() {
   });
   // datetimepicker selector
   $('.datetimepicker').datetimepicker();
+
+  // sub category check box
+  $('.parent-category').change(function() {
+    var self = $(this);
+    var category_id = self.val();
+    if (self.prop("checked") === true) {
+      $.ajax({
+        url: "/admin/categories/" + category_id + "/subcategory",
+        type: "GET",
+        success: function(data) {
+          categories = data["data"]
+          for (var i in categories) {
+            var id = categories[i].id;
+            var title = categories[i].name;
+            $("#sub-category-field").append('<label class="checkbox-inline parent-' + category_id + '"><input class="checkbox" type="checkbox" value="' + id + '" name="item[category_ids][]" data-parent-id="' + category_id + '">' + title + '</label>');
+          }
+        },
+        error: function(XMLHttpRequest, errorTextStatus, error){
+          alert("Failed: "+ errorTextStatus+" ;"+error);
+        }
+      });
+    } else {
+      $(".parent-" + category_id).remove();
+    }
+  });
 };
 
 $(document).ready(ready);

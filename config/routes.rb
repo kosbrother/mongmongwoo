@@ -150,7 +150,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :categories
+    resources :categories do
+      member do
+        get "subcategory"
+      end
+    end
 
     resources :users, only: [:index, :show, :create, :update] do
       collection do

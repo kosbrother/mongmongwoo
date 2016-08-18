@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
   ALL_ID = 10
+  NEW_ID = 11
 
   validates_presence_of :name, :image
 
@@ -11,6 +12,7 @@ class Category < ActiveRecord::Base
   scope :except_the_all_category, -> { where.not(id: 10) }
   scope :select_api_fields, -> { select(:id, :name, :image) }
   scope :parent_categories, -> { where(parent_id: nil) }
+  scope :default_subcategories, -> { where(parent_id: [ALL_ID, NEW_ID]) }
 
   mount_uploader :image, OriginalPicUploader
 

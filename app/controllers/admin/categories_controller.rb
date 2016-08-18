@@ -1,7 +1,7 @@
 class Admin::CategoriesController < AdminController
   include Admin::CategoriesHelper
   before_action :require_manager
-  before_action :find_category, only: [:show, :edit, :update, :destroy]
+  before_action :find_category, only: [:show, :edit, :update, :destroy, :subcategory]
 
   def index
     @categories = Category.parent_categories.paginate(:page => params[:page])
@@ -42,6 +42,12 @@ class Admin::CategoriesController < AdminController
     @category.destroy
     flash[:warning] = "分類已刪除"
     redirect_to :back
+  end
+
+  def subcategory
+    categories = @category.child_categories
+
+    render status: 200, json: {data: categories}
   end
 
   private
