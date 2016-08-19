@@ -1,6 +1,5 @@
-%br/
-.apple_pagination
-  = will_paginate carts, :container => false
+%p.help-block
+= render_pagination(carts)
 .panel-body
   %table.table.table-striped.table-bordered
     %thead
@@ -53,6 +52,4 @@
                     = admin_cart_note(cart)
           %td
             = link_to_confirm_button(cart)
-.apple_pagination
-  = will_paginate carts, :container => false
-%br/
+= render_pagination(carts)

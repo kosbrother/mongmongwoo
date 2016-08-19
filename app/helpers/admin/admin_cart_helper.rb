@@ -52,4 +52,12 @@ module Admin::AdminCartHelper
       content_tag(:p, "收貨日期：#{admin_cart.confirmed_on}")
     end
   end
+
+  def setting_quantity_class(admin_cart_item)
+    unless admin_cart_item.real_item_quantity == admin_cart_item.item_quantity
+      'form-amount form-control update-cart-item-quantity red-color'
+    else
+      'form-amount form-control update-cart-item-quantity'
+    end
+  end
 end
