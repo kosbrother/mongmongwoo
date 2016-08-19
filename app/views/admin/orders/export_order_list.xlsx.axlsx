@@ -11,8 +11,9 @@ wb.add_worksheet(name: @sheet_name) do |sheet|
     order.items.by_shelf_position.each do |item|
       sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position], :height => 25, style: content_highlight
     end
-    sheet.add_row [nil, '萌萌屋贈品', nil, nil, nil], style:Axlsx::STYLE_THIN_BORDER
+    sheet.add_row [nil, '萌萌屋贈品', nil, 1, nil], style: content_highlight
     sheet.add_row ['備註', order.note, nil, nil, nil], style:Axlsx::STYLE_THIN_BORDER
+    sheet.merge_cells("B#{sheet.rows.count}:E#{sheet.rows.count}")
     sheet.add_row
   end
   sheet.column_widths 10, 35, 25, 15
