@@ -40,3 +40,9 @@ div.item-cover-words-intro {
   color: #777;
   cursor: move;
 }
+#sub-category-field {
+  > label {
+    margin-left: 0;
+    margin-right: 20px;
+  }
+}

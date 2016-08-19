@@ -44,9 +44,13 @@
     .col-sm-10
       = f.text_field :note, class: "form-control", placeholder: "請輸入商品備註"
 .form-group
-  = f.label "商品分類", class: "col-sm-2 control-label"
+  = f.label "商品母分類", class: "col-sm-2 control-label"
   .col-sm-10
     = categories_checkox(f)
+.form-group
+  = f.label "商品子分類", class: "col-sm-2 control-label"
+  #sub-category-field.col-sm-10
+    = subcategories_checkbox(f)
 .form-group
   .col-sm-offset-2.col-sm-10
     = f.submit "確認送出", class: "btn btn-primary"
