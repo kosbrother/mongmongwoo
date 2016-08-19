@@ -1,5 +1,3 @@
-%p.help-block
-= render_pagination(carts)
 .panel-body
   %table.table.table-striped.table-bordered
     %thead
@@ -31,7 +29,7 @@
                   %th.small 商品數量
                   %th.small 到貨量
               %tbody
-                - cart.admin_cart_items.by_cart.each do |item|
+                - cart.admin_cart_items.recent.each do |item|
                   %tr
                     %td
                       = item.item.id
@@ -52,4 +50,3 @@
                     = admin_cart_note(cart)
           %td
             = link_to_confirm_button(cart)
-= render_pagination(carts)

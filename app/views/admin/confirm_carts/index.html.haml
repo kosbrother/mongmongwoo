@@ -1,13 +1,22 @@
 .content-box-large
-  .breadcrumb-topbar
-    %ol.breadcrumb
-      %li
-        = link_to "萌萌屋", admin_root_path
-      %li.active 確認收貨單列表
-  .panel-body
+  .info-title
     .pull-right
       = link_to "運送中商品清單EXCEL", export_shipping_list_admin_confirm_carts_path(format: 'xlsx'), class: 'btn btn-primary'
-    %ul.nav.nav-tabs
-      = li_cart_status_link(AdminCart::STATUS[:shipping])
-      = li_cart_status_link(AdminCart::STATUS[:stock])
-    = render "cart_table", carts: @carts
+    %h2 確認收貨單列表
+  .filter-area.clearfix
+    .filter-row
+      .filter-dt 收貨狀態
+      .filter-dd.clearfix
+        %ul.filter-list
+          = li_cart_status_link(AdminCart::STATUS[:shipping])
+          = li_cart_status_link(AdminCart::STATUS[:stock])
+    .filter-row
+      .filter-dt 訂單編號
+      .filter-dd.clearfix
+        %ul.filter-list
+          - @cart_ids.each do |id|
+            = link_to_cart_index(params[:id] == id.to_s, id, id: id)
+  = render_pagination(@carts)
+  %p.help-block
+  = render "cart_table", carts: @carts
+  = render_pagination(@carts)
