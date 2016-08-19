@@ -1,6 +1,6 @@
 = form_tag note_admin_admin_cart_path(cart), method: :patch, remote: true,  class: "col-md-12 form-horizontal" do
   .form-group
     = label_tag :note, "備註", class: "sr-only"
-    = text_field_tag :note, cart.note, class: "form-control", id: "cart-note-#{cart.id}"
+    = text_area_tag :note, cart.note, rows: 3, class: "form-control .form-amount", id: "cart-note-#{cart.id}"
   .form-group
-    = submit_tag "送出", class: "btn btn-info btn-sm"
+    = submit_tag "送出", class: "btn btn-default btn-sm"
