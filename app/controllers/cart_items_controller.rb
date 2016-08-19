@@ -12,8 +12,7 @@ class CartItemsController < ApplicationController
     when 'quantity-plus'
       item.increment_quantity
     end
-    items = current_cart.cart_items.includes(:item)
-    render json: subtotal_and_total_with_shipping(item, items)
+    render json: subtotal_and_total_with_shipping(item)
   end
 
   def update_spec
@@ -28,8 +27,7 @@ class CartItemsController < ApplicationController
       flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
       render :js => "window.location = '/'"
     else
-      items = current_cart.cart_items.includes(:item)
-      render json: total_with_shipping(items)
+      render json: total_with_shipping
     end
   end
 
@@ -39,12 +37,12 @@ class CartItemsController < ApplicationController
     params.require(:cart_item).permit(:item_id, :item_spec_id, :item_quantity).merge({ cart_id: current_cart.id})
   end
 
-  def subtotal_and_total_with_shipping(item, items)
-    { subtotal: "NT.#{item.subtotal}", total: "NT.#{total(items)}", ship_fee:"NT.#{ship_fee(items)}", total_with_shipping: "NT.#{total(items) + ship_fee(items)}" }
+  def subtotal_and_total_with_shipping(item)
+    { subtotal: "NT.#{item.subtotal}", total: "NT.#{current_cart.calculate_items_price}", ship_fee:"NT.#{current_cart.calculate_ship_fee}", total_with_shipping: "NT.#{current_cart.calculate_total}" }
   end
 
-  def total_with_shipping(items)
-    { total: "NT.#{total(items)}", ship_fee:"NT.#{ship_fee(items)}", total_with_shipping: "NT.#{total(items) + ship_fee(items)}" }
+  def total_with_shipping
+    { total: "NT.#{current_cart.calculate_items_price}", ship_fee:"NT.#{current_cart.calculate_ship_fee}", total_with_shipping: "NT.#{current_cart.calculate_total}" }
   end
 
 end
