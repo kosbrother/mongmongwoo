@@ -7,7 +7,7 @@ wb = xlsx_package.workbook
     item_quantity_style = sheet.styles.add_style(:bg_color => "C6E0B4", :border => Axlsx::STYLE_THIN_BORDER, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true})
 
     sheet.add_row ['購物車編號', '日期', '狀態', '淘寶商家', '淘寶訂單編號'], style: Axlsx::STYLE_THIN_BORDER
-    sheet.add_row [cart.id, display_date(cart.created_at), t(cart.status), cart.taobao_supplier_name, cart.taobao_order_id], style: Axlsx::STYLE_THIN_BORDER
+    sheet.add_row [cart.id, display_date(cart.created_at), t(cart.status), cart.taobao_supplier_name, "#{cart.taobao_order_id}."], style: Axlsx::STYLE_THIN_BORDER
     sheet.add_row ['商品編號', '商品名稱', '商品樣式', '商品數量', '貨架編號'], style: header_highlight
 
     cart.admin_cart_items.by_item.each do |item|
