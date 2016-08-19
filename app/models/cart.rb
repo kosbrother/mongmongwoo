@@ -1,4 +1,5 @@
 class Cart < ActiveRecord::Base
+  include CalculatePrice
 
   has_many :cart_items, dependent: :destroy
   has_one :cart_info, dependent: :destroy
@@ -8,5 +9,7 @@ class Cart < ActiveRecord::Base
   FREE_SHIPPING_PRICE = 490
   SHIP_FEE = 90
 
-
+  def m_items
+    cart_items
+  end
 end
