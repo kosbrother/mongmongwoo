@@ -13,40 +13,6 @@ module ItemHelper
     end
   end
 
-  def category_checkbox(cb,f)
-    if cb.object.id == 10 || cb.object.id == 11
-      if f.object.new_record?
-        cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox disabled", disabled: "disabled", checked:"checked") + cb.text}
-      else
-        cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox disabled", disabled: "disabled") + cb.text}
-      end
-    else
-      cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox parent-category") + cb.text}
-    end
-  end
-
-  def categories_checkox(f)
-    f.collection_check_boxes :category_ids, Category.parent_categories, :id, :name do |cb|
-      category_checkbox(cb,f)
-    end
-  end
-
-  def subcategory_checkbox(f, parent_category_ids)
-    f.collection_check_boxes :category_ids, Category.subcategories(parent_category_ids), :id, :name do |cb|
-      cb.label(class: "checkbox-inline parent-#{cb.object.parent_id}") {cb.check_box(class: "checkbox") + cb.text}
-    end
-  end
-
-  def subcategories_checkbox(f)
-    if f.object.new_record?
-      parent_category_ids = [Category::ALL_ID, Category::NEW_ID]
-      subcategory_checkbox(f,parent_category_ids)
-    else
-      parent_category_ids = f.object.categories.map(&:id)
-      subcategory_checkbox(f, parent_category_ids)
-    end
-  end
-
   def render_item_status_block(status)
     content_tag(:div, t(status), class: status == "on_shelf" ? 'block' :  'block -off-shelf')
   end

@@ -9,7 +9,7 @@ class Category < ActiveRecord::Base
   belongs_to :parent_category, class_name: "Category", foreign_key: "parent_id"
   has_many :child_categories, class_name: "Category", foreign_key: "parent_id"
 
-  scope :except_the_all_category, -> { where.not(id: 10) }
+  scope :except_the_all_category, -> { where.not(id: ALL_ID) }
   scope :select_api_fields, -> { select(:id, :name, :image) }
   scope :parent_categories, -> { where(parent_id: nil) }
   scope :subcategories, -> (parent_category_ids) { where(parent_id: parent_category_ids) }
