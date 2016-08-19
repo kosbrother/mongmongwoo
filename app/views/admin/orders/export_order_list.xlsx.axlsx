@@ -1,20 +1,19 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: @sheet_name) do |sheet|
-  header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1", border: Axlsx::STYLE_THIN_BORDER)
-  content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4", border: Axlsx::STYLE_THIN_BORDER)
+  header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1", :border => Axlsx::STYLE_THIN_BORDER)
+  content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4", border: Axlsx::STYLE_THIN_BORDER, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true})
   bold_font = sheet.styles.add_style(:b => true, border: Axlsx::STYLE_THIN_BORDER)
   border_wrap = sheet.styles.add_style border: Axlsx::STYLE_THIN_BORDER
-
   @order_list.each do |order|
     sheet.add_row ['訂單編號', '訂購日期與狀態', '訂購用戶', '收件人姓名', ''], style: border_wrap
     sheet.add_row [order.id, display_date(order.created_at), order.user.user_name, order.info.ship_name, ''], style: bold_font
     sheet.add_row ['商品編號', '名稱', '樣式', '數量', '貨架編號'], style: header_highlight
-    order.items.each do |item|
-      sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position], style: content_highlight
+    order.items.by_shelf_position.each do |item|
+      sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position], :height => 25, style: content_highlight
     end
-    sheet.add_row ['備註'], style:Axlsx::STYLE_THIN_BORDER
-    sheet.add_row [order.note], style: Axlsx::STYLE_THIN_BORDER
+    sheet.add_row [nil, '萌萌屋贈品', nil, nil, nil], style:Axlsx::STYLE_THIN_BORDER
+    sheet.add_row ['備註', order.note, nil, nil, nil], style:Axlsx::STYLE_THIN_BORDER
     sheet.add_row
   end
-  sheet.column_widths 10, 30, 25, 15
+  sheet.column_widths 10, 35, 25, 15
 end

@@ -35,7 +35,7 @@ get_store = function() {
 
   $('.btn-barcode').on('click', function() {
     var self = $(this);
-    self.addClass('btn-warning');
+    self.addClass('btn-info');
   });
 };
 
