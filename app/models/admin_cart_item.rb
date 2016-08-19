@@ -3,6 +3,7 @@ class AdminCartItem < ActiveRecord::Base
   
   scope :shipping_status, -> { joins(:admin_cart).where(admin_carts: { status: AdminCart::STATUS[:shipping] }) }
   scope :by_cart, -> { includes(:admin_cart) }
+  scope :by_item, -> { order(item_id: :ASC) }
 
   belongs_to :admin_cart
   belongs_to :item

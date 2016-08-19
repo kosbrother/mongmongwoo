@@ -1,15 +1,19 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: "運送中產品清單") do |sheet|
-  header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1")
-  content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4")
-  @shipping_list.each do |cart|
-    sheet.add_row ['購物車編號', '日期', '狀態', '淘寶商家']
-    sheet.add_row [cart.id, display_date(cart.created_at), t(cart.status), cart.taobao_supplier_name]
+
+@shipping_list.each do |cart|
+  wb.add_worksheet(name: "#{cart.taobao_supplier.name}：#{cart.id}") do |sheet|
+    header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1", :border => Axlsx::STYLE_THIN_BORDER)
+    content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4", :border => Axlsx::STYLE_THIN_BORDER, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true})
+
+    sheet.add_row ['購物車編號', '日期', '狀態', '淘寶商家', '淘寶訂單編號'], style: Axlsx::STYLE_THIN_BORDER
+    sheet.add_row [cart.id, display_date(cart.created_at), t(cart.status), cart.taobao_supplier_name, cart.taobao_order_id], style: Axlsx::STYLE_THIN_BORDER
     sheet.add_row ['商品編號', '商品名稱', '商品樣式', '商品數量', '貨架編號'], style: header_highlight
-    cart.admin_cart_items.each do |item|
-      sheet.add_row [item.item_id, item.item.name, item.item_spec.style, item.item_quantity, item.item_spec.item_shelf_position], style: content_highlight
+
+    cart.admin_cart_items.by_item.each do |item|
+      sheet.add_row [item.item_id, item.item.name, item.item_spec.style, item.item_quantity, item.item_spec.item_shelf_position], :height => 25, style: content_highlight
     end
+
     sheet.add_row
+    sheet.column_widths 10, 30, 30, 10
   end
-  sheet.column_widths 10, 30, 30, 10
 end
