@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
   include OrderConcern
+  include CalculatePrice
 
   enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7, "退貨" => 8 }
 
@@ -50,15 +51,6 @@ class Order < ActiveRecord::Base
   def self.daily_order_quantity_and_income
     result = created_at_within((Time.current - 1.days).midnight..Time.current.midnight).select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income")[0]
     [result["quantity"], result["income"]]
-  end
-
-  def self.to_csv(options={})
-    CSV.generate(options) do |csv|
-      csv << ["配送類別", "訂單類別", "取件人姓名", "取件人手機", "取件人電子郵件", "取件門市", "訂單金額"]
-      all.each do |order|
-        csv << ["K", "1", order.info_user_name, order.info_user_phone, "user@example.com", order.info_store_code, order.total]
-      end
-    end
   end
 
   def survey_mail
@@ -149,6 +141,10 @@ class Order < ActiveRecord::Base
 
   def cancel_able?
     Order::CANCELABLE_STATUS.include?(status)
+  end
+
+  def m_items
+    items
   end
 
   private

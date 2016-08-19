@@ -40,20 +40,6 @@ class ApplicationController < ActionController::Base
     @cart
   end
 
-  def total(items)
-    items.reduce(0) do |sum, current|
-      sum + current.subtotal
-    end
-  end
-
-  def ship_fee(items)
-    if total(items) > Cart::FREE_SHIPPING_PRICE
-      0
-    else
-      Cart::SHIP_FEE
-    end
-  end
-
   def set_current_user_and_cart(user)
     session[:user_id] = user.id
     current_cart.user = user
