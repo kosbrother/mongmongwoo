@@ -2,12 +2,6 @@ namespace :items do
 
   task :item_position  => :environment do
 
-    # 最新上架 only keep 150 items
-    cs = ItemCategory.where(category_id: 11).order(created_at: :desc)
-    cs.each_with_index do |c,index|
-      c.delete if index > 149
-    end
-
     # put all goods in 所有商品
     category = Category.first
     Item.all.each do |i|
@@ -19,7 +13,7 @@ namespace :items do
 
       cs = ItemCategory.where(category_id: category.id).order(created_at: :desc).map(&:id)
       # select 20 items by item sales times
-      ois = OrderItem.sort_by_sales.limit(30) + OrderItem.sort_by_revenue.limit(30)
+      ois = OrderItem.sort_by_sales.limit(50) + OrderItem.sort_by_revenue.limit(50)
       ois.shuffle!
       
       ois.each do |oi|
@@ -46,6 +40,17 @@ namespace :items do
         item.position = index + 1
         item.save
       end
+    end
+
+    # 最新上架 only keep 150 items
+    cs = ItemCategory.where(category_id: 11).order(created_at: :desc)
+    cs.each_with_index do |c,index|
+      c.delete if index > 199
+    end
+    cs = ItemCategory.where(category_id: 11).order('rand()')
+    cs.each_with_index do |c,index|
+      c.position = index + 1
+      c.save
     end
   end
 end
