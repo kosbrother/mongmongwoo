@@ -30,6 +30,7 @@
                   %th.small-mid 商品名稱
                   %th.large-small 商品樣式
                   %th.small 商品數量
+                  %th.small 到貨量
               %tbody
                 - cart.admin_cart_items.by_cart.each do |item|
                   %tr
@@ -39,6 +40,8 @@
                       = link_to item.item.name, admin_item_path(item.item), target: "_blank"
                     %td
                       = link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+                    %td
+                      = item.item_quantity
                     %td
                       = admin_cart_item_quantity(item)
             %table.table.table-bordered

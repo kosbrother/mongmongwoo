@@ -37,7 +37,7 @@ class AdminCart < ActiveRecord::Base
     self.admin_cart_items.each do |cart_item|
       item = cart_item.item
       stock_spec = item.stock_specs.find_or_initialize_by(item_spec_id: cart_item.item_spec_id)
-      stock_spec.amount += cart_item.item_quantity
+      stock_spec.amount += cart_item.real_item_quantity
       stock_spec.save
     end
   end
