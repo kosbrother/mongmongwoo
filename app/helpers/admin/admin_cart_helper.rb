@@ -62,9 +62,9 @@ module Admin::AdminCartHelper
   end
 
   def link_to_cart_index(active_boolean, link_name, options={})
-    options = {id: params[:id]}.merge(options)
+    options = {status: params[:status], id: params[:id]}.merge(options)
     content_tag(:li, class: "#{'active' if active_boolean}") do
-      link_to link_name, admin_confirm_carts_path(id: options[:id])
+      link_to link_name, admin_confirm_carts_path(status: options[:status], id: options[:id])
     end
   end
 end
