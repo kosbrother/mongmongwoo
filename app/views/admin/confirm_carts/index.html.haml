@@ -14,9 +14,9 @@
       .filter-dt 訂單編號
       .filter-dd.clearfix
         %ul.filter-list
-          - @cart_ids.each do |id|
-            = link_to_cart_index(params[:id] == id.to_s, id, id: id)
-  = render_pagination(@carts)
+          - @carts_id_field.each do |cart|
+            = link_to_cart_index(params[:id] == cart.id.to_s, cart.id, id: cart.id, page: @carts_id_field.current_page)
+  = render_pagination(@carts_id_field)
   %p.help-block
   = render "cart_table", carts: @carts
-  = render_pagination(@carts)
+  = render_pagination(@carts_id_field)

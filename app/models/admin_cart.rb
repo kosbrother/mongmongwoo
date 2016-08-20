@@ -1,5 +1,5 @@
 class AdminCart < ActiveRecord::Base
-  scope :status, -> (status) { includes(:taobao_supplier, admin_cart_items: [:item, :item_spec]).where(status: status) }
+  scope :status, -> (status) { where(status: status) }
   scope :recent, -> { order(id: :desc) }
 
   has_many :admin_cart_items
@@ -9,6 +9,8 @@ class AdminCart < ActiveRecord::Base
   enum status: {'cart': 0, 'shipping': 1, 'stock': 2}
   
   STATUS = { cart: 0, shipping: 1, stock: 2 }
+
+  self.per_page = 50
 
   def set_to_shipping
     if self.admin_cart_items.any?

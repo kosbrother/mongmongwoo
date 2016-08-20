@@ -30,6 +30,7 @@ module Admin::AdminCartHelper
       render "update_quantity", item: cart_item
     elsif cart_item.admin_cart.status == "stock"
       content_tag :div do
+        content_tag(:p, "到貨數：#{cart_item.real_item_quantity}", class: "#{quantity_warning_class(cart_item)}") +
         content_tag(:p, "現貨數：#{cart_item.stock_item_quantity}") +
         content_tag(:p, "運送中：#{cart_item.shipping_item_quantity}")
       end
@@ -53,18 +54,16 @@ module Admin::AdminCartHelper
     end
   end
 
-  def setting_quantity_class(admin_cart_item)
+  def quantity_warning_class(admin_cart_item)
     unless admin_cart_item.real_item_quantity == admin_cart_item.item_quantity
-      'form-amount form-control update-cart-item-quantity red-color'
-    else
-      'form-amount form-control update-cart-item-quantity'
+      "red-color"
     end
   end
 
   def link_to_cart_index(active_boolean, link_name, options={})
-    options = {status: params[:status], id: params[:id]}.merge(options)
-    content_tag(:li, class: "#{'active' if active_boolean}") do
-      link_to link_name, admin_confirm_carts_path(status: options[:status], id: options[:id])
+    options = {status: params[:status], id: params[:id], page: params[:page]}.merge(options)
+    content_tag(:li, class: "#{'active' if active_boolean}", id: "cart-link-#{options[:id]}") do
+      link_to link_name, admin_confirm_carts_path(status: options[:status], id: options[:id], page: options[:page])
     end
   end
 end
