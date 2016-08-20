@@ -84,4 +84,8 @@ class User < ActiveRecord::Base
   def device_id
     orders.last.device_registration_id if orders.any?
   end
+
+  def order_times(order_status)
+    Order.where(status: order_status, user_id: id).size
+  end
 end
