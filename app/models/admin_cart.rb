@@ -1,14 +1,14 @@
 class AdminCart < ActiveRecord::Base
-  scope :status, -> (status) { where(status: status) }
-  scope :recent, -> { order(id: :desc) }
+  enum status: {'cart': 0, 'shipping': 1, 'stock': 2}
+
+  STATUS = { cart: 0, shipping: 1, stock: 2 }
 
   has_many :admin_cart_items
   has_many :shipping_items
   belongs_to :taobao_supplier
 
-  enum status: {'cart': 0, 'shipping': 1, 'stock': 2}
-  
-  STATUS = { cart: 0, shipping: 1, stock: 2 }
+  scope :status, -> (status) { where(status: status) }
+  scope :recent, -> { order(id: :desc) }
 
   self.per_page = 50
 

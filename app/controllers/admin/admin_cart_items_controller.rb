@@ -29,7 +29,13 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def update_quantity
-    @cart_item.real_item_quantity = params[:real_item_quantity]
+    if @cart_item.admin_cart.status == "cart"
+      @cart_item.item_quantity = params[:item_quantity]
+      @cart_item.real_item_quantity = params[:item_quantity]
+    elsif @cart_item.admin_cart.status == "shipping"
+      @cart_item.real_item_quantity = params[:real_item_quantity]
+    end
+
     @result = '數量已更新'
     @cart_item.save
     render 'notify'
