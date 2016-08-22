@@ -11,7 +11,7 @@ module Admin::AdminCartHelper
 
   def link_to_confirm_button(cart)
     if cart.status == "shipping"
-      link_to "確認收貨", confirm_admin_confirm_cart_path(cart), method: :post, remote: :true, class: "btn btn-success"
+      link_to "編號：#{cart.id} 收貨", confirm_admin_confirm_cart_path(cart), method: :post, remote: :true, class: "btn btn-primary"
     elsif cart.status == "stock"
       content_tag(:span, "已收貨", class: "label label-default")
     end
@@ -40,17 +40,18 @@ module Admin::AdminCartHelper
   def admin_cart_note(admin_cart)
     if admin_cart.status == "shipping"
       render "update_note", cart: admin_cart
-    elsif admin_cart.status == "stock"
-      admin_cart.note
+    elsif admin_cart.status == "stock" && admin_cart.note.present?
+      content_tag(:td, "備註：#{admin_cart.note}", colspan: "6")
     end
   end
 
   def admin_cart_date(admin_cart)
     if admin_cart.status == "shipping"
-      content_tag(:p, "訂購日期：#{admin_cart.ordered_on}")
+      content_tag(:span, "訂購日期：#{admin_cart.ordered_on}")
     elsif admin_cart.status == "stock"
-      content_tag(:p, "訂購日期：#{admin_cart.ordered_on}") +
-      content_tag(:p, "收貨日期：#{admin_cart.confirmed_on}")
+      content_tag(:span, "訂購日期：#{admin_cart.ordered_on}") +
+      tag(:br) +
+      content_tag(:span, "收貨日期：#{admin_cart.confirmed_on}")
     end
   end
 

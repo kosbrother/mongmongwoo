@@ -1,51 +1,31 @@
-%table.table.table-bordered
-  %thead
-    %tr
-      %th.xx-small 編號
-      %th.x-small 日期與狀態
-      %th.xx-small 淘寶商家
-      %th.x-small 淘寶訂單編號
-      %th
-        %ul.stock-head-list
-          %li.col-sm-2 商品編號
-          %li.col-sm-3 商品名稱
-          %li.col-sm-4 商品樣式
-          %li.col-sm-2 訂購數量
-          %li.col-sm-3 到貨數量
-      %th 備註
-      %th.xx-small
-        收貨
-  %tbody
-    - carts.each do |cart|
-      %tr{id: "cart-#{cart.id}"}
-        %td
-          = cart.id
-        %td
-          = admin_cart_date(cart)
-          = t(cart.status)
-        %td
-          = cart.taobao_supplier_name
-        %td
-          = cart.taobao_order_id
-        %td
-          .row
-            - cart.admin_cart_items.recent.each_with_index do |item, index|
-              - if index == 0
-                .list-start-boundary.clearfix
-              %ul.stock-head-list
-                %li.col-sm-2.left-content
-                  = item.item.id
-                %li.col-sm-3.central-content
-                  = link_to item.item.name, admin_item_path(item.item), target: "_blank"
-                %li.col-sm-4
-                  = link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
-                %li.col-sm-2
-                  = item.item_quantity
-                %li.col-sm-3.right-content
-                  = admin_cart_item_quantity(item)
-              - unless index == cart.admin_cart_items.count - 1
-                .list-end-boundary.clearfix
-        %td
-          = admin_cart_note(cart)
-        %td
-          = link_to_confirm_button(cart)
+- carts.each do |cart|
+  .cart-table{id: "cart-#{cart.id}"}
+    .pull-right= link_to_confirm_button(cart)
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th.mid-small 收貨資訊
+          %th.xx-small 商品編號
+          %th.large-small 商品名稱
+          %th.big-small 商品樣式
+          %th.xx-small 訂購數量
+          %th.x-small 到貨數量
+      %tbody
+        %tr
+          %td{rowspan: cart.admin_cart_items.count + 1}
+            編號：#{cart.id}
+            %br
+            = admin_cart_date(cart)
+            %br
+            淘寶商家：#{cart.taobao_supplier_name}
+            %br
+            淘寶訂單編號：#{cart.taobao_order_id}
+          - cart.admin_cart_items.recent.each do |item|
+            %tr
+              %td= item.item.id
+              %td= link_to item.item.name, admin_item_path(item.item), target: "_blank"
+              %td= link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+              %td= item.item_quantity
+              %td= admin_cart_item_quantity(item)
+          %tr
+            = admin_cart_note(cart)

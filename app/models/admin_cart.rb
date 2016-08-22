@@ -10,7 +10,7 @@ class AdminCart < ActiveRecord::Base
   scope :status, -> (status) { where(status: status) }
   scope :recent, -> { order(id: :desc) }
 
-  self.per_page = 50
+  self.per_page = 15
 
   def set_to_shipping
     if self.admin_cart_items.any?

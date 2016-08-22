@@ -1,7 +1,7 @@
 .content-box-large
   .info-title
     .pull-right
-      = link_to "運送中商品清單EXCEL", export_shipping_list_admin_confirm_carts_path(format: 'xlsx'), class: 'btn btn-primary'
+      = link_to "運送中商品清單EXCEL", export_shipping_list_admin_confirm_carts_path(format: 'xlsx'), class: 'btn btn-default'
     %h2 確認收貨單列表
   .filter-area.clearfix
     .filter-row
@@ -16,7 +16,6 @@
         %ul.filter-list
           - @carts_id_field.each do |cart|
             = link_to_cart_index(params[:id] == cart.id.to_s, cart.id, id: cart.id, page: @carts_id_field.current_page)
-  = render_pagination(@carts_id_field)
+      .cart-id-pagination= render_pagination(@carts_id_field)
   %p.help-block
   = render "cart_table", carts: @carts
-  = render_pagination(@carts_id_field)
