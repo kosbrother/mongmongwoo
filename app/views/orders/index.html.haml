@@ -14,7 +14,7 @@
         - if index > 0
           .divider.visible-xs-block
         .row
-          .col-1-5.col-xs-12.date= order.created_on.in_time_zone
+          .col-1-5.col-xs-12.date= display_date(order.created_at)
           .col-1-5.col-xs-6.id= order.id
           .col-1-5.col-xs-6.total= price_with_unit(order.total)
           .col-1-5.col-xs-6.status

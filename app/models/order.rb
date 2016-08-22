@@ -75,7 +75,7 @@ class Order < ActiveRecord::Base
     result_order[:uid] = uid
     result_order[:user_id] = user_id
     result_order[:status] = status
-    result_order[:created_on] = created_on.in_time_zone
+    result_order[:created_on] = created_at
     result_order[:items_price] = items_price
     result_order[:ship_fee] = ship_fee
     result_order[:total] = total
@@ -106,10 +106,6 @@ class Order < ActiveRecord::Base
     result_order[:items] = include_items
 
     result_order
-  end
-
-  def created_at_for_api
-    created_at.strftime("%Y-%m-%d")
   end
 
   def user_status_count(order_status)
