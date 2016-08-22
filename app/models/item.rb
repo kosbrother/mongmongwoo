@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+  include Bannerable
   include Elasticsearch::Model
   index_name [Rails.env, self.base_class.to_s.pluralize.underscore].join('_')
 

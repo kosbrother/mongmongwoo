@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 20160823035811) do
 
   add_index "assistants", ["deleted_at"], name: "index_assistants_on_deleted_at", using: :btree
 
+  create_table "banners", force: :cascade do |t|
+    t.integer  "bannerable_id",   limit: 4
+    t.string   "bannerable_type", limit: 255
+    t.string   "title",           limit: 255
+    t.string   "image",           limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "banners", ["bannerable_type", "bannerable_id"], name: "index_banners_on_bannerable_type_and_bannerable_id", using: :btree
+
   create_table "cart_items", force: :cascade do |t|
     t.integer  "cart_id",       limit: 4
     t.integer  "item_id",       limit: 4
