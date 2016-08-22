@@ -3,7 +3,7 @@
   .icon-header.-pencil 訂單明細
   .cart-result
     .header.row
-      .col-lg-2.col-sm-2.hidden-xs.no-padding= display_date(@order.created_on)
+      .col-lg-2.col-sm-2.hidden-xs.no-padding= display_date(@order.created_at)
       .col-lg-2.col-sm-2.col-xs-4.no-padding= "訂單編號：#{@order.id}"
       .col-lg-2.col-sm-3.col-xs-5.no-padding
         %span 訂單狀態：

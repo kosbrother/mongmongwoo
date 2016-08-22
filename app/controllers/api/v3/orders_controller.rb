@@ -64,17 +64,23 @@ class Api::V3::OrdersController < ApiController
 
   def user_owned_orders
     user_orders = Order.includes(:user).where(uid: params[:uid]).recent.page(params[:page]).per_page(20)
-    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
+    datas = user_orders.as_json(only: [:id, :uid, :total, :created_at, :status, :user_id])
+    datas.each{|data| data["created_on"] = data["created_at"].strftime("%Y-%m-%d")}
+    render status: 200, json: {data: datas}
   end
 
   def by_user_email
     user_orders =  Order.joins(:user).where('users.email = ?', params[:email]).recent
-    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
+    datas = user_orders.as_json(only: [:id, :uid, :total, :created_at, :status, :user_id])
+    datas.each{|data| data["created_on"] = data["created_at"].strftime("%Y-%m-%d")}
+    render status: 200, json: {data: datas}
   end
 
   def by_email_phone
     user_orders = Order.joins(:info).where("ship_email = ? and ship_phone = ?", params[:email], params[:phone]).recent
-    render status: 200, json: {data: user_orders.as_json(only: [:id, :uid, :total, :created_on, :status, :user_id])}
+    datas = user_orders.as_json(only: [:id, :uid, :total, :created_at, :status, :user_id])
+    datas.each{|data| data["created_on"] = data["created_at"].strftime("%Y-%m-%d")}
+    render status: 200, json: {data: datas}
   end
 
   def cancel

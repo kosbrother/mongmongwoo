@@ -20,6 +20,6 @@
         %dt 訊息內容
         %dd= @notification.content_text
         %dt 執行推播日期
-        %dd= display_date_and_time(@notification.execute_time.localtime)
+        %dd= display_date_and_time(@notification.execute_time.in_time_zone)
         %dt 執行工作類型
         %dd= t(@notification.schedule_type)

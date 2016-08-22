@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816000243) do
+ActiveRecord::Schema.define(version: 20160822035324) do
 
   create_table "admin_cart_items", force: :cascade do |t|
-    t.integer  "admin_cart_id", limit: 4
-    t.integer  "item_id",       limit: 4
-    t.integer  "item_spec_id",  limit: 4
-    t.integer  "item_quantity", limit: 4, default: 0
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.integer  "admin_cart_id",      limit: 4
+    t.integer  "item_id",            limit: 4
+    t.integer  "item_spec_id",       limit: 4
+    t.integer  "item_quantity",      limit: 4, default: 0
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "real_item_quantity", limit: 4, default: 0
   end
 
   add_index "admin_cart_items", ["admin_cart_id"], name: "index_admin_cart_items_on_admin_cart_id", using: :btree
@@ -355,17 +356,13 @@ ActiveRecord::Schema.define(version: 20160816000243) do
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id",                limit: 4
     t.integer  "total",                  limit: 4,   default: 0
-    t.boolean  "is_paid",                            default: false
     t.datetime "deleted_at"
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
     t.integer  "status",                 limit: 4,   default: 0
-    t.string   "payment_method",         limit: 255
-    t.string   "token",                  limit: 255
     t.string   "uid",                    limit: 255
     t.integer  "ship_fee",               limit: 4
     t.integer  "items_price",            limit: 4
-    t.date     "created_on"
     t.string   "note",                   limit: 255, default: ""
     t.integer  "device_registration_id", limit: 4
     t.integer  "logistics_status_code",  limit: 4

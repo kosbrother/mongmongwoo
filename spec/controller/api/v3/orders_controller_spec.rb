@@ -105,7 +105,8 @@ describe Api::V3::OrdersController, type: :controller do
     context 'when order id provide' do
       it 'does generate correct order info' do
         result = JSON.parse(response.body)["data"]
-        json = order.generate_result_order.to_json
+        the_order = Order.find(order.id)
+        json = the_order.generate_result_order.to_json
         expect(result.to_json).to eq(json)
       end
     end
@@ -130,7 +131,7 @@ describe Api::V3::OrdersController, type: :controller do
         expect(result[0]['uid']).to eq(orders[0].uid)
         expect(result[0]['total']).to eq(orders[0].total)
         expect(result[0]['status']).to eq(orders[0].status)
-        expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
+        expect(result[0]['created_on']).to eq(orders[0].created_at.strftime("%Y-%m-%d"))
       end
     end
   end
@@ -156,7 +157,7 @@ describe Api::V3::OrdersController, type: :controller do
         expect(result[0]['uid']).to eq(orders[0].uid)
         expect(result[0]['total']).to eq(orders[0].total)
         expect(result[0]['status']).to eq(orders[0].status)
-        expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
+        expect(result[0]['created_on']).to eq(orders[0].created_at.strftime("%Y-%m-%d"))
       end
     end
   end
@@ -181,7 +182,7 @@ describe Api::V3::OrdersController, type: :controller do
         expect(result[0]['uid']).to eq(orders[0].uid)
         expect(result[0]['total']).to eq(orders[0].total)
         expect(result[0]['status']).to eq(orders[0].status)
-        expect(result[0]['created_on']).to eq(orders[0].created_on.to_s)
+        expect(result[0]['created_on']).to eq(orders[0].created_at.strftime("%Y-%m-%d"))
       end
     end
   end
