@@ -6,6 +6,6 @@
       = search_field_tag 'user_search_term[email]', '', class: "form-control", placeholder: "輸入Email"
     .form-group
       = search_field_tag 'user_search_term[user_name]', '', class: "form-control", placeholder: "輸入使用者名稱"
-    = button_tag "搜尋使用者", class: "btn btn-info"
+    = button_tag "搜尋使用者", class: "btn btn-default"
     .pull-right
-      = link_to '訂單用戶EXCEL', export_user_list_admin_users_path(format: 'xlsx'), class: 'btn btn-primary'
+      = link_to '訂單用戶EXCEL', export_user_list_admin_users_path(format: 'xlsx'), class: 'btn btn-default'
