@@ -13,8 +13,9 @@ class AdminCart < ActiveRecord::Base
   self.per_page = 15
 
   def set_to_shipping
-    if self.admin_cart_items.any?
-      self.update_attributes(status:AdminCart::STATUS[:shipping], ordered_on: Time.current)
+    if admin_cart_items.any?
+      update_cart_items
+      update_attributes(status:AdminCart::STATUS[:shipping], ordered_on: Time.current)
     end
   end
 
@@ -41,6 +42,12 @@ class AdminCart < ActiveRecord::Base
       stock_spec = item.stock_specs.find_or_initialize_by(item_spec_id: cart_item.item_spec_id)
       stock_spec.amount += cart_item.real_item_quantity
       stock_spec.save
+    end
+  end
+
+  def update_cart_items
+    admin_cart_items.each do |cart_item|
+      cart_item.update_real_item_quantity
     end
   end
 end

@@ -1,6 +1,6 @@
 class Admin::AdminCartItemsController < AdminController
   before_action :require_manager
-  before_action :find_cart_item, only: [:update_spec, :update_quantity,:destroy]
+  before_action :find_cart_item, only: [:update_spec, :update_quantity,:destroy, :update_real_quantity]
   before_action :create_cart_item, only: [:create, :add]
 
   def create
@@ -29,16 +29,16 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def update_quantity
-    if @cart_item.admin_cart.status == "cart"
-      @cart_item.item_quantity = params[:item_quantity]
-      @cart_item.real_item_quantity = params[:item_quantity]
-    elsif @cart_item.admin_cart.status == "shipping"
-      @cart_item.real_item_quantity = params[:real_item_quantity]
-    end
-
+    @cart_item.item_quantity = params[:item_quantity]
     @result = '數量已更新'
     @cart_item.save
     render 'notify'
+  end
+
+  def update_real_quantity
+    @cart_item.real_item_quantity = params[:real_item_quantity]
+    @result = '到貨數量已更新'
+    @cart_item.save
   end
 
   def destroy
