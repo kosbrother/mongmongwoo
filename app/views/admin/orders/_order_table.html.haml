@@ -19,7 +19,7 @@
         %td.item-id-cell
           = order.id
         %td
-          = order.created_on
+          = order.created_on.in_time_zone
         %td
           .dropdown{id: "dropdown-#{order.id}"}
             %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}

@@ -75,7 +75,7 @@ class Order < ActiveRecord::Base
     result_order[:uid] = uid
     result_order[:user_id] = user_id
     result_order[:status] = status
-    result_order[:created_on] = created_on
+    result_order[:created_on] = created_on.in_time_zone
     result_order[:items_price] = items_price
     result_order[:ship_fee] = ship_fee
     result_order[:total] = total
