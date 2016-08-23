@@ -28,7 +28,7 @@ module Admin::AdminCartHelper
       render "update_quantity", item: cart_item
     elsif cart_item.admin_cart.status == "stock"
       content_tag :div do
-        content_tag(:span, cart_item.real_item_quantity, class: "#{quantity_warning_class(cart_item)}")
+        content_tag(:span, cart_item.actual_item_quantity, class: "#{quantity_warning_class(cart_item)}")
       end
     end
   end
@@ -54,7 +54,7 @@ module Admin::AdminCartHelper
     if admin_cart.status == "shipping"
       render "update_note", cart: admin_cart
     elsif admin_cart.status == "stock" && admin_cart.note.present?
-      content_tag(:td, "備註：#{admin_cart.note}", colspan: "6")
+      content_tag(:td, "備註：#{admin_cart.note}", colspan: "8")
     end
   end
 
@@ -69,7 +69,7 @@ module Admin::AdminCartHelper
   end
 
   def quantity_warning_class(admin_cart_item)
-    unless admin_cart_item.real_item_quantity == admin_cart_item.item_quantity
+    if admin_cart_item.actual_item_quantity != admin_cart_item.item_quantity
       "red-color"
     end
   end

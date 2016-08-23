@@ -14,7 +14,7 @@ class AdminCart < ActiveRecord::Base
 
   def set_to_shipping
     if admin_cart_items.any?
-      update_cart_items
+      update_cart_quantity
       update_attributes(status:AdminCart::STATUS[:shipping], ordered_on: Time.current)
     end
   end
@@ -40,14 +40,14 @@ class AdminCart < ActiveRecord::Base
     self.admin_cart_items.each do |cart_item|
       item = cart_item.item
       stock_spec = item.stock_specs.find_or_initialize_by(item_spec_id: cart_item.item_spec_id)
-      stock_spec.amount += cart_item.real_item_quantity
+      stock_spec.amount += cart_item.actual_item_quantity
       stock_spec.save
     end
   end
 
-  def update_cart_items
+  def update_cart_quantity
     admin_cart_items.each do |cart_item|
-      cart_item.update_real_item_quantity
+      cart_item.update_actual_item_quantity
     end
   end
 end

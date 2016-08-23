@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822035324) do
+ActiveRecord::Schema.define(version: 20160823035643) do
 
   create_table "admin_cart_items", force: :cascade do |t|
-    t.integer  "admin_cart_id", limit: 4
-    t.integer  "item_id",       limit: 4
-    t.integer  "item_spec_id",  limit: 4
-    t.integer  "item_quantity", limit: 4, default: 0
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.integer  "admin_cart_id",        limit: 4
+    t.integer  "item_id",              limit: 4
+    t.integer  "item_spec_id",         limit: 4
+    t.integer  "item_quantity",        limit: 4, default: 0
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.integer  "actual_item_quantity", limit: 4, default: 0
   end
 
   add_index "admin_cart_items", ["admin_cart_id"], name: "index_admin_cart_items_on_admin_cart_id", using: :btree
@@ -58,6 +59,17 @@ ActiveRecord::Schema.define(version: 20160822035324) do
   end
 
   add_index "assistants", ["deleted_at"], name: "index_assistants_on_deleted_at", using: :btree
+
+  create_table "banners", force: :cascade do |t|
+    t.integer  "bannerable_id",   limit: 4
+    t.string   "bannerable_type", limit: 255
+    t.string   "title",           limit: 255
+    t.string   "image",           limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "banners", ["bannerable_type", "bannerable_id"], name: "index_banners_on_bannerable_type_and_bannerable_id", using: :btree
 
   create_table "cart_items", force: :cascade do |t|
     t.integer  "cart_id",       limit: 4

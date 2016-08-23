@@ -17,11 +17,10 @@ class AdminCartItem < ActiveRecord::Base
   end
 
   def add_item_quantity(quantity)
-    update_columns(item_quantity: item_quantity + quantity.to_i)
+    update_column(:item_quantity, item_quantity + quantity.to_i)
   end
 
-  def update_real_item_quantity
-    quantity = item_quantity
-    update_column(:real_item_quantity, quantity)
+  def update_actual_item_quantity
+    update_column(:actual_item_quantity, item_quantity)
   end
 end
