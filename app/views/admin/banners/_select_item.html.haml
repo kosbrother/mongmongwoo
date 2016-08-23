@@ -2,4 +2,4 @@
   = label_tag "banner[bannerable_id]", "廣告商品", class: "col-sm-2 control-label"
   .col-sm-10
     = select_tag "banner[bannerable_id]", options_for_select(Item.on_shelf.collect { |item| ["#{item.id}：#{item.name}", item.id] }), class: "form-control", include_blank: "請選擇商品"
-    = hidden_field_tag "banner[bannerable_type]", "Item"
+    = hidden_field_tag "banner[bannerable_type]", Banner::Item_RECORD
