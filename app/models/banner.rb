@@ -12,15 +12,14 @@ class Banner < ActiveRecord::Base
   private
 
   def generate_url
-    baes_url = "https://www.mmwooo.com/categories/"
+    baes_url = "https://www.mmwooo.com"
 
     if record_type == "category"
       category = bannerable
-      result_url = baes_url + category.name
+      result_url = baes_url + category.record_path
     elsif record_type == "item"
       item = bannerable
-      category = item.categories.first
-      result_url = baes_url + category.name + "/items/" + item.name
+      result_url = baes_url + item.record_path
     end
 
     update_column(:url, result_url)
