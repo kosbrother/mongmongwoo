@@ -9,7 +9,6 @@ class AdminCartItem < ActiveRecord::Base
 
   scope :recent, -> { order(id: :desc) }
   scope :shipping_status, -> { joins(:admin_cart).where(admin_carts: { status: AdminCart::STATUS[:shipping] }) }
-  scope :by_cart, -> { includes(:admin_cart) }
   scope :by_item, -> { order(item_id: :ASC) }
 
   def spec_id
