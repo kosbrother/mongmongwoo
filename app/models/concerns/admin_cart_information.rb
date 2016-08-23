@@ -3,7 +3,7 @@ module AdminCartInformation
 
   def shipping_item_quantity
     items = AdminCartItem.shipping_status.where(item_spec_id: spec_id)
-    items.map(&:item_quantity).inject(:+) || 0
+    items.map(&:actual_item_quantity).inject(:+) || 0
   end
 
   def stock_item_quantity

@@ -1,0 +1,8 @@
+- if @cart_item.reload.actual_item_quantity == @cart_item.item_quantity
+  $('#cart-item-#{@cart_item.id}').removeClass('red-color');
+- else
+  $('#cart-item-#{@cart_item.id}').addClass('red-color');
+:plain
+  $(function(){
+    new PNotify({title: '#{j(@result)}'});
+  });

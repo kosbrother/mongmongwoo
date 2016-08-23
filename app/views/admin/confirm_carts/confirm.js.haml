@@ -1,6 +1,8 @@
 :plain
   var cart = $('#cart-#{@shipping_cart.id}');
+  var cart_link = $('#cart-link-#{@shipping_cart.id}');
   cart.remove();
+  cart_link.remove();
   $(function(){
     new PNotify({title: "#{j(@message)}"});
   });

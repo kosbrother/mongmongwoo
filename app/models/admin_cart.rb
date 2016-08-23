@@ -1,18 +1,21 @@
 class AdminCart < ActiveRecord::Base
-  scope :status, -> (status) { includes(:taobao_supplier, admin_cart_items: [:item, :item_spec]).where(status: status) }
-  scope :recent, -> { order(ordered_on: :desc) }
+  enum status: {'cart': 0, 'shipping': 1, 'stock': 2}
+
+  STATUS = { cart: 0, shipping: 1, stock: 2 }
 
   has_many :admin_cart_items
   has_many :shipping_items
   belongs_to :taobao_supplier
 
-  enum status: {'cart': 0, 'shipping': 1, 'stock': 2}
-  
-  STATUS = { cart: 0, shipping: 1, stock: 2 }
+  scope :status, -> (status) { where(status: status) }
+  scope :recent, -> { order(id: :desc) }
+
+  self.per_page = 15
 
   def set_to_shipping
-    if self.admin_cart_items.any?
-      self.update_attributes(status:AdminCart::STATUS[:shipping], ordered_on: Time.current)
+    if admin_cart_items.any?
+      update_cart_quantity
+      update_attributes(status:AdminCart::STATUS[:shipping], ordered_on: Time.current)
     end
   end
 
@@ -37,8 +40,14 @@ class AdminCart < ActiveRecord::Base
     self.admin_cart_items.each do |cart_item|
       item = cart_item.item
       stock_spec = item.stock_specs.find_or_initialize_by(item_spec_id: cart_item.item_spec_id)
-      stock_spec.amount += cart_item.item_quantity
+      stock_spec.amount += cart_item.actual_item_quantity
       stock_spec.save
+    end
+  end
+
+  def update_cart_quantity
+    admin_cart_items.each do |cart_item|
+      cart_item.update_actual_item_quantity
     end
   end
 end

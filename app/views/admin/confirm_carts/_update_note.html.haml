@@ -1,6 +1,5 @@
-= form_tag note_admin_admin_cart_path(cart), method: :patch, remote: true,  class: "col-md-12 form-horizontal" do
-  .form-group
-    = label_tag :note, "備註", class: "sr-only"
-    = text_field_tag :note, cart.note, class: "form-control", id: "cart-note-#{cart.id}"
-  .form-group
-    = submit_tag "送出", class: "btn btn-info btn-sm"
+%td{colspan: "6"}
+  = form_tag note_admin_admin_cart_path(cart), method: :patch, remote: true,  class: "col-sm-12 form-horizontal" do
+    .form-group
+      .col-sm-10= text_field_tag :note, cart.note, class: "form-control", id: "cart-note-#{cart.id}", placeholder: "備註"
+      .col-sm-2= submit_tag "送出", class: "btn btn-default btn-sm"

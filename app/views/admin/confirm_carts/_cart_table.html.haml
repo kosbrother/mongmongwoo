@@ -1,55 +1,32 @@
-%br/
-.apple_pagination
-  = will_paginate carts, :container => false
-.panel-body
-  %table.table.table-striped.table-bordered
-    %thead
-      %tr
-        %th 編號
-        %th 日期與狀態
-        %th 淘寶商家
-        %th 訂購商品
-        %th 收貨
-    %tbody
-      - carts.each do |cart|
-        %tr{id: "cart-#{cart.id}"}
-          %td
-            = cart.id
-          %td
+- carts.each do |cart|
+  .cart-table{id: "cart-#{cart.id}"}
+    .pull-right= link_to_confirm_button(cart)
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th.mid-small 收貨資訊
+          %th.xx-small 商品編號
+          %th.x-small 商品名稱
+          %th.xx-small 商品樣式
+          %th.xx-small 訂購量
+          = admin_cart_table_head(cart)
+      %tbody
+        %tr
+          %td{rowspan: cart.admin_cart_items.count + 1}
+            編號：#{cart.id}
+            %br
             = admin_cart_date(cart)
-            = t(cart.status)
-          %td
-            = cart.taobao_supplier_name
-          %td
-            %h5
-              = "淘寶訂單編號：#{cart.taobao_order_id}"
-            %table.table.table-bordered
-              %thead
-                %tr.active
-                  %th.x-small 商品編號
-                  %th.small-mid 商品名稱
-                  %th.large-small 商品樣式
-                  %th.small 商品數量
-              %tbody
-                - cart.admin_cart_items.by_cart.each do |item|
-                  %tr
-                    %td
-                      = item.item.id
-                    %td
-                      = link_to item.item.name, admin_item_path(item.item), target: "_blank"
-                    %td
-                      = link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
-                    %td
-                      = admin_cart_item_quantity(item)
-            %table.table.table-bordered
-              %tbody
-                %tr.active
-                  %th 備註
-                %tr
-                  %td
-                    = admin_cart_note(cart)
-          %td
-            = link_to_confirm_button(cart)
-.apple_pagination
-  = will_paginate carts, :container => false
-%br/
+            %br
+            淘寶商家：#{cart.taobao_supplier_name}
+            %br
+            淘寶訂單編號：#{cart.taobao_order_id}
+          - cart.admin_cart_items.recent.each do |item|
+            %tr
+              %td= item.item.id
+              %td= link_to item.item.name, admin_item_path(item.item), target: "_blank"
+              %td= link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
+              %td= item.item_quantity
+              %td= admin_cart_item_quantity(item)
+              = stock_cart_item_table_data(item)
+          %tr
+            = admin_cart_note(cart)

@@ -113,6 +113,7 @@ Rails.application.routes.draw do
       member do
         patch "update_quantity"
         patch "update_spec"
+        patch "update_actual_quantity"
       end
     end
 

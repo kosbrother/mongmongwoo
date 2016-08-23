@@ -3,7 +3,14 @@ class Admin::ConfirmCartsController < AdminController
 
   def index
     params[:status] ||= AdminCart::STATUS[:shipping]
-    @carts = AdminCart.status(params[:status]).recent.paginate(page: params[:page])
+    carts = AdminCart.status(params[:status]).recent
+    @carts_id_field = carts.select(:id).paginate(page: params[:page])
+
+    if params[:id]
+      @carts = carts.includes(:taobao_supplier, admin_cart_items: [:item, :item_spec]).where(id: params[:id])
+    else
+      @carts = carts.includes(:taobao_supplier, admin_cart_items: [:item, :item_spec]).paginate(page: params[:page])
+    end
   end
 
   def confirm
