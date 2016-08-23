@@ -1,7 +1,10 @@
 class Banner < ActiveRecord::Base
-  enum record_type: { "category": 0, "item": 1 }
+  include Rails.application.routes.url_helpers
 
-  after_create :generate_url
+  CATEGORY_RECORD = "Category"
+  Item_RECORD = "Item"
+  RECORD_TYPES = [CATEGORY_RECORD, Item_RECORD]
+  RECORD_OPTONS = Banner::RECORD_TYPES.map { |record| [I18n.t(record), record] }
 
   belongs_to :bannerable, polymorphic: true
 
@@ -9,19 +12,15 @@ class Banner < ActiveRecord::Base
 
   mount_uploader :image, OriginalPicUploader
 
-  private
-
-  def generate_url
-    baes_url = "https://www.mmwooo.com"
-
-    if record_type == "category"
+  def record_path
+    case bannerable_type
+    when CATEGORY_RECORD
       category = bannerable
-      result_url = baes_url + category.record_path
-    elsif record_type == "item"
+      category_path(category)
+    when Item_RECORD
       item = bannerable
-      result_url = baes_url + item.record_path
+      category = item.categories.last
+      category_item_path(category, item)
     end
-
-    update_column(:url, result_url)
   end
 end

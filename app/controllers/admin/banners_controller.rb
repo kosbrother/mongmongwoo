@@ -2,7 +2,7 @@ class Admin::BannersController < AdminController
   before_action :require_manager
 
   def index
-    @banners = Banner.recent.paginate(page: params[:page])
+    @banners = Banner.includes(:bannerable).recent.paginate(page: params[:page])
   end
 
   def new
@@ -30,7 +30,6 @@ class Admin::BannersController < AdminController
 
   def render_select_form
     @banner_type = params[:banner_type]
-    render "render_select_form"
   end
 
   private

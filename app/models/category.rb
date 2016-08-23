@@ -1,5 +1,4 @@
 class Category < ActiveRecord::Base
-  include Rails.application.routes.url_helpers
   include Bannerable
 
   ALL_ID = 10
@@ -28,9 +27,5 @@ class Category < ActiveRecord::Base
 
   def normalize_friendly_id(input)
     input.to_s.to_slug.normalize.to_s
-  end
-
-  def record_path
-    category_path(self)
   end
 end

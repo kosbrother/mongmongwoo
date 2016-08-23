@@ -6,8 +6,8 @@ zh-TW:
   will_paginate:
     page_gap: "......"
   notify_item: "推播商品"
-  category: "分類"
-  item: "商品"
+  Category: "分類"
+  Item: "商品"
   controller:
     error:
       message:

@@ -1,7 +1,6 @@
 class Item < ActiveRecord::Base
   include Elasticsearch::Model
   index_name [Rails.env, self.base_class.to_s.pluralize.underscore].join('_')
-  include Rails.application.routes.url_helpers
   include Bannerable
 
   mapping do
@@ -130,11 +129,6 @@ class Item < ActiveRecord::Base
     else
       "尚未建立資料"
     end
-  end
-
-  def record_path
-    category = categories.first
-    category_item_path(category, self)
   end
 
   private

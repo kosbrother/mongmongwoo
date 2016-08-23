@@ -19,6 +19,6 @@
         %td
           = banner.bannerable_type
         %td
-          = link_to "連結", banner.url, target: "_blank"
+          = link_to "連結", banner.record_path, target: "_blank"
         %td
           = link_to "刪除", admin_banner_path(banner), method: :delete, data: { confirm: "確定刪除？" }, class: "btn btn-default"
