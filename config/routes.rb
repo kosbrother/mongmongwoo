@@ -359,6 +359,8 @@ Rails.application.routes.draw do
     namespace :v4 do
       resources :orders, only: [:create]
       resources :banners, only: [:index]
+      resources :oauth_sessions, only: [:create]
+      resources :mmw_registrations, only: [:create]
     end
   end
 end

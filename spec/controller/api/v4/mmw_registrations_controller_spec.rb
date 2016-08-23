@@ -1,0 +1,85 @@
+require 'spec_helper'
+
+RSpec.describe Api::V4::MmwRegistrationsController, :type => :controller do
+  let!(:email) { Faker::Internet.email }
+  let!(:password) { Faker::Internet.password }
+  let!(:device) { FactoryGirl.create(:device_registration) }
+
+  describe 'post #create' do
+    it 'should create new user' do
+      post :create, email: email, password: password, registration_id: device.registration_id
+      user = User.find_by(email: email)
+      message = JSON.parse(response.body)['data']
+      expect(user).to be_present
+      expect(user.devices).to include(device)
+      expect(message).to eq(user.id)
+    end
+
+    context 'when user with same email exist' do
+      context 'when user is not registered' do
+        let!(:user) { FactoryGirl.create(:user, email: email)}
+
+        it 'does register the exist user' do
+          post :create, email: email, password: password, registration_id: device.registration_id
+          user = User.find_by(email: email)
+          message = JSON.parse(response.body)['data']
+          expect(user.is_mmw_registered).to be_truthy
+          expect(user.devices).to include(device)
+          expect(message).to eq(user.id)
+        end
+      end
+
+      context 'when user is registered' do
+        let!(:user) { FactoryGirl.create(:user, email: email, is_mmw_registered: true) }
+        let!(:origin_users_count) { User.count }
+
+        it 'does not create new user' do
+          post :create, email: email, password: password, registration_id: device.registration_id
+          message = response.body
+          expect(User.count).to eq(origin_users_count)
+          expect(user.devices).not_to include(device)
+          expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.email.taken'))
+        end
+      end
+    end
+
+    context 'when email is empty' do
+      let!(:email) { '' }
+      let!(:origin_users_count) { User.count }
+
+      it 'does not create new user' do
+        post :create, email: email, password: password, registration_id: device.registration_id
+        message = response.body
+        expect(User.count).to eq(origin_users_count)
+        expect(device.user).to be_nil
+        expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.email.blank') + ' ' + I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
+      end
+    end
+
+    context 'when email format is wrong' do
+      let!(:email) { '12345678' }
+      let!(:origin_users_count) { User.count }
+
+      it 'does not create new user' do
+        post :create, email: email, password: password, registration_id: device.registration_id
+        message = response.body
+        expect(User.count).to eq(origin_users_count)
+        expect(device.user).to be_nil
+        expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
+      end
+    end
+
+    context 'when password is empty' do
+      let!(:password) { '' }
+      let!(:origin_users_count) { User.count }
+
+      it 'does not create new user' do
+        post :create, email: email, password: password, registration_id: device.registration_id
+        message = response.body
+        expect(User.count).to eq(origin_users_count)
+        expect(device.user).to be_nil
+        expect(message).to eq(I18n.t('activerecord.errors.models.user.attributes.password.blank'))
+      end
+    end
+  end
+end
