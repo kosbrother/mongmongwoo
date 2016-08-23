@@ -60,7 +60,7 @@ module Admin::OrdersHelper
 
   def link_to_create_refund_shopping_point(order)
     if order.status == "退貨" && ShoppingPointManager.new.has_refund_shopping_point?(order) == false
-      link_to "產生購物金", refund_shopping_point_admin_order_path(order), method: :post, class: "btn btn-default btn-sm"
+      link_to "退購物金", refund_shopping_point_admin_order_path(order), method: :post, class: "btn btn-default btn-sm"
     end
   end
 

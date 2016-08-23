@@ -10,15 +10,15 @@ class Admin::OrdersController < AdminController
   def status_index
     params[:status] ||= Order.statuses["新訂單"]
     query_hash = {status: params[:status]}
-    includes_hash = [:user, :info]
+    includes_array = [:user, :info]
 
     if params[:restock]
       restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
       query_hash = query_hash.merge(restock: restock)
     end
-    includes_hash << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
+    includes_array << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
 
-    @orders = Order.includes(includes_hash).where(query_hash).recent.paginate(page: params[:page])
+    @orders = Order.includes(includes_array).where(query_hash).recent.paginate(page: params[:page])
   end
 
   def edit

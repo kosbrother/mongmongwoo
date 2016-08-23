@@ -8,7 +8,7 @@ class ShoppingPointManager
 
   def spend_shopping_points(order)
     user = order.user
-    shopping_points = user.shopping_points.available
+    shopping_points = user.shopping_points.valid
     spend_amount = [shopping_points.sum(:amount), order.items_price].min
     ActiveRecord::Base.transaction do
       shopping_points.each do |shopping_point|
