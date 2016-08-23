@@ -8,8 +8,8 @@
           %th.xx-small 商品編號
           %th.large-small 商品名稱
           %th.big-small 商品樣式
-          %th.xx-small 訂購數量
-          %th.x-small 到貨數量
+          %th.xx-small 訂購量
+          = admin_cart_table_head(cart)
       %tbody
         %tr
           %td{rowspan: cart.admin_cart_items.count + 1}
@@ -27,5 +27,6 @@
               %td= link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
               %td= item.item_quantity
               %td= admin_cart_item_quantity(item)
+              = stock_cart_item_table_data(item)
           %tr
             = admin_cart_note(cart)

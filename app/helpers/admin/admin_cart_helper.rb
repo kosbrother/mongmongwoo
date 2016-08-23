@@ -12,8 +12,6 @@ module Admin::AdminCartHelper
   def link_to_confirm_button(cart)
     if cart.status == "shipping"
       link_to "編號：#{cart.id} 收貨", confirm_admin_confirm_cart_path(cart), method: :post, remote: :true, class: "btn btn-primary"
-    elsif cart.status == "stock"
-      content_tag(:span, "已收貨", class: "label label-default")
     end
   end
 
@@ -30,10 +28,25 @@ module Admin::AdminCartHelper
       render "update_quantity", item: cart_item
     elsif cart_item.admin_cart.status == "stock"
       content_tag :div do
-        content_tag(:p, "到貨數：#{cart_item.real_item_quantity}", class: "#{quantity_warning_class(cart_item)}") +
-        content_tag(:p, "現貨數：#{cart_item.stock_item_quantity}") +
-        content_tag(:p, "運送中：#{cart_item.shipping_item_quantity}")
+        content_tag(:span, cart_item.real_item_quantity, class: "#{quantity_warning_class(cart_item)}")
       end
+    end
+  end
+
+  def admin_cart_table_head(admin_cart)
+    if admin_cart.status == "shipping"
+      content_tag(:th, "到貨量", class: "x-small")
+    elsif admin_cart.status == "stock"
+      content_tag(:th, "到貨量", class: "xx-small") +
+      content_tag(:th, "現貨量", class: "xx-small") +
+      content_tag(:th, "運送中", class: "xx-small")
+    end
+  end
+
+  def stock_cart_item_table_data(cart_item)
+    if cart_item.admin_cart.status == "stock"
+      content_tag(:td, "#{cart_item.stock_item_quantity}") +
+      content_tag(:td, "#{cart_item.shipping_item_quantity}")
     end
   end
 
