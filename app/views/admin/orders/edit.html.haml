@@ -43,4 +43,4 @@
     .form-group
       .col-sm-offset-2.col-sm-6
         = f.submit "送出變更", class: "btn btn-primary", id: "submit-#{@order.id}"
-        = link_to "取消", status_index_admin_orders_path(status: Order.statuses[@order.status], anchor: "order-id-#{@order.id}"), class: "btn btn-default"
+        = link_to "返回狀態分類列表", status_index_admin_orders_path(status: Order.statuses[@order.status], anchor: "order-id-#{@order.id}"), class: "btn btn-default"
