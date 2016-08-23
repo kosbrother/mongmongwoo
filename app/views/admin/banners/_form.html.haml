@@ -1,0 +1,18 @@
+= form_for [:admin, @banner], html: { class: "form-horizontal" } do |f|
+  .form-group
+    = f.label :title, "廣告標題", class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.text_field :title, { class: "form-control", placeholder: "請輸入標題", required: true }
+  .form-group
+    = f.label :image, "廣告圖片", class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.file_field :image, { class: "form-control", required: true }
+  .form-group
+    = f.label :record_type, "廣告類型", class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.select :record_type, options_for_select(Banner.record_types.keys.map {|key| [t(key), key]}), {include_blank: "請選擇廣告類型"}, class: "form-control", id: "banner-type"
+  .select-type-field
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit "確認送出", class: "btn btn-primary"
+      = link_to "取消離開", admin_banners_path, class: "btn btn-warning"

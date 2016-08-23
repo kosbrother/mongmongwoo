@@ -1,0 +1,5 @@
+$('.select-type-field').children().remove()
+- if @banner_type == "category"
+  $('.select-type-field').append('#{j(render 'select_category')}');
+- elsif @banner_type == "item"
+  $('.select-type-field').append('#{j(render 'select_item')}');

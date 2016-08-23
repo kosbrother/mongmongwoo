@@ -1,0 +1,24 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      %th 廣告編號
+      %th 廣告標題
+      %th 廣告圖片
+      %th 廣告類型
+      %th 廣告連結
+      %th 操作選項
+  %tbody
+    - banners.each do |banner|
+      %tr
+        %td
+          = banner.id
+        %td
+          = banner.title
+        %td
+          = show_image(banner.image, "120x120")
+        %td
+          = banner.bannerable_type
+        %td
+          = link_to "連結", banner.url, target: "_blank"
+        %td
+          = link_to "刪除", admin_banner_path(banner), method: :delete, data: { confirm: "確定刪除？" }, class: "btn btn-default"

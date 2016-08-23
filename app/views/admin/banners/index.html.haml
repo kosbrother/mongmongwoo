@@ -1,0 +1,14 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 廣告列表
+  .pull-right
+    = link_to "新增廣告", new_admin_banner_path, class: "btn btn-default"
+  %h2 廣告列表
+  .category-all-items
+    .panel-body
+      = render_pagination(@banners)
+      = render "banner_table", banners: @banners
+      = render_pagination(@banners)

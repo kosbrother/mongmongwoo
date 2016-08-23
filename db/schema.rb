@@ -65,11 +65,13 @@ ActiveRecord::Schema.define(version: 20160823035811) do
     t.string   "bannerable_type", limit: 255
     t.string   "title",           limit: 255
     t.string   "image",           limit: 255
+    t.integer  "record_type",     limit: 4
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
 
   add_index "banners", ["bannerable_type", "bannerable_id"], name: "index_banners_on_bannerable_type_and_bannerable_id", using: :btree
+  add_index "banners", ["record_type"], name: "index_banners_on_record_type", using: :btree
 
   create_table "cart_items", force: :cascade do |t|
     t.integer  "cart_id",       limit: 4

@@ -5,7 +5,10 @@ class CreateBanners < ActiveRecord::Migration
       t.string :title
       t.string :url
       t.string :image
+      t.integer :record_type
       t.timestamps null: false
     end
+
+    add_index :banners, :record_type
   end
 end

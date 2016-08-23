@@ -1,0 +1,14 @@
+.col-md-10
+  .content-box-large
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li
+          = link_to "廣告列表", admin_banners_path
+        %li.active 新增廣告
+    .panel-heading
+      .panel-title
+        %h2 新增廣告
+    .panel-body
+      = render "form"
