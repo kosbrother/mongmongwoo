@@ -18,7 +18,7 @@ class Admin::OrdersController < AdminController
   end
 
   def edit
-    @order = Order.includes(items: :item).find(params[:id])
+    @order = Order.includes(items: [:item, :item_spec]).find(params[:id])
   end
 
   def show
@@ -28,7 +28,7 @@ class Admin::OrdersController < AdminController
   def update
     if @order.update(order_params)
       flash[:notice] = "訂單編號：#{@order.id}變更完成"
-      redirect_to status_index_admin_orders_path(status: Order.statuses[@order.status], anchor: "order-id-#{@order.id}")
+      redirect_to :back
     else
       flash.now[:danger] = "請確認資料是否正確"
       render :edit
