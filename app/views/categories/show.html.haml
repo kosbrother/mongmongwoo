@@ -1,3 +1,6 @@
+- content_for :head do
+  %link{href: "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{category_path(@category)}", rel: "alternate"}
+
 - breadcrumb :category, @category
 .show
   = render "partials/product_list", category: @category, items: @items
