@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823035643) do
+ActiveRecord::Schema.define(version: 20160823034659) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20160823035643) do
     t.integer  "taobao_supplier_id", limit: 4
     t.integer  "status",             limit: 4,   default: 0
     t.string   "note",               limit: 255
-    t.date     "ordered_on"
-    t.date     "confirmed_on"
+    t.datetime "ordered_on"
+    t.datetime "confirmed_on"
     t.string   "taobao_order_id",    limit: 255
   end
 
@@ -428,7 +428,7 @@ ActiveRecord::Schema.define(version: 20160823035643) do
   create_table "shopping_point_campaigns", force: :cascade do |t|
     t.string   "description", limit: 255
     t.integer  "amount",      limit: 4
-    t.date     "valid_until"
+    t.datetime "valid_until"
     t.boolean  "is_expired",              default: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -453,7 +453,7 @@ ActiveRecord::Schema.define(version: 20160823035643) do
     t.integer  "user_id",                    limit: 4
     t.integer  "point_type",                 limit: 4
     t.integer  "amount",                     limit: 4, default: 0, null: false
-    t.date     "valid_until"
+    t.datetime "valid_until"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "shopping_point_campaign_id", limit: 4
