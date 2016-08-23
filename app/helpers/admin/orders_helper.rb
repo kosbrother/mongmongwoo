@@ -58,6 +58,12 @@ module Admin::OrdersHelper
     end
   end
 
+  def link_to_create_refund_shopping_point(order)
+    if order.status == "退貨" && ShoppingPointManager.has_refund_shopping_point?(order) == false
+      link_to "退購物金", refund_shopping_point_admin_order_path(order), method: :post, class: "btn btn-default btn-sm"
+    end
+  end
+
   def li_restock_status_link(order_status: 0, restock_status: false, link_text: nil)
     content_tag(:li, class: restock_status.to_s == params[:restock] ? 'active' : '' ) do
       link_to link_text, status_index_admin_orders_path(status: order_status, restock: restock_status)

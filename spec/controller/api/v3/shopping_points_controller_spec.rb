@@ -12,7 +12,7 @@ RSpec.describe Api::V3::ShoppingPointsController, :type => :controller do
         get :index, user_id: user.id
         data = JSON.parse(response.body)["data"]
 
-        expect(data["total"]).to eq(user.shopping_points.available.sum(:amount))
+        expect(data["total"]).to eq(user.shopping_points.valid.sum(:amount))
         expect(data["shopping_points"].length).to eq(user.shopping_points.size)
         expect(data["shopping_points"][0]["point_type"]).to eq(user.shopping_points.first.point_type)
         expect(data["shopping_points"][0]["amount"]).to eq(user.shopping_points.first.amount)

@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
 
   validates_presence_of :user_id, :items_price, :ship_fee, :total
 
-  after_update :update_stock_amount, if: :status_changed_to_shipping?
+  after_update :reduce_stock_amount_if_status_shipping
 
   belongs_to :user
   has_many :items, class_name: "OrderItem", dependent: :destroy
@@ -112,16 +112,6 @@ class Order < ActiveRecord::Base
     user_orders.where(status: order_status).count
   end
 
-  def update_stock_amount
-    items.each do |item|
-      stock_spec = StockSpec.find_by(item_spec_id: item.item_spec_id)
-      if stock_spec
-        stock_spec.amount -= item.item_quantity
-        stock_spec.save
-      end
-    end
-  end
-
   def restock_order_items
     ActiveRecord::Base.transaction do
       items.each do |item|
@@ -147,5 +137,17 @@ class Order < ActiveRecord::Base
 
   def status_changed_to_shipping?
     status_changed? && status == '配送中'
+  end
+
+  def reduce_stock_amount_if_status_shipping
+    if status_changed_to_shipping?
+      items.each do |item|
+        stock_spec = StockSpec.find_by(item_spec_id: item.item_spec_id)
+        if stock_spec
+          stock_spec.amount -= item.item_quantity
+          stock_spec.save
+        end
+      end
+    end
   end
 end
