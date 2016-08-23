@@ -14,13 +14,12 @@
 ActiveRecord::Schema.define(version: 20160822035324) do
 
   create_table "admin_cart_items", force: :cascade do |t|
-    t.integer  "admin_cart_id",      limit: 4
-    t.integer  "item_id",            limit: 4
-    t.integer  "item_spec_id",       limit: 4
-    t.integer  "item_quantity",      limit: 4, default: 0
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.integer  "real_item_quantity", limit: 4, default: 0
+    t.integer  "admin_cart_id", limit: 4
+    t.integer  "item_id",       limit: 4
+    t.integer  "item_spec_id",  limit: 4
+    t.integer  "item_quantity", limit: 4, default: 0
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "admin_cart_items", ["admin_cart_id"], name: "index_admin_cart_items_on_admin_cart_id", using: :btree
