@@ -1,6 +1,6 @@
 class Admin::OrdersController < AdminController
   before_action :require_manager
-  before_action :find_order, only: [:update, :update_status]
+  before_action :find_order, only: [:update, :update_status, :refund_shopping_point]
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
@@ -9,12 +9,16 @@ class Admin::OrdersController < AdminController
 
   def status_index
     params[:status] ||= Order.statuses["新訂單"]
+    query_hash = {status: params[:status]}
+    includes_hash = [:user, :info]
+
     if params[:restock]
       restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
-      @orders = Order.includes(:user, :info).where(status: params[:status],restock: restock).recent.paginate(page: params[:page])
-    else
-      @orders = Order.includes(:user, :info).status(params[:status]).recent.paginate(page: params[:page])
+      query_hash = query_hash.merge(restock: restock)
     end
+    includes_hash << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
+
+    @orders = Order.includes(includes_hash).where(query_hash).recent.paginate(page: params[:page])
   end
 
   def edit
@@ -87,6 +91,17 @@ class Admin::OrdersController < AdminController
     end
 
     redirect_to status_index_admin_orders_path(status: Order.statuses["新訂單"])
+  end
+
+  def refund_shopping_point
+    if @order.user_id == User::ANONYMOUS
+      flash[:danger] = "該訂單為匿名購買，因此無法產生購物金"
+    else
+      ShoppingPointManager.new.create_refund_shopping_point(@order)
+      flash[:notice] = "訂單編號#{@order.id} 退貨購物金已產生"
+    end
+
+    redirect_to :back
   end
 
   private

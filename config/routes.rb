@@ -193,6 +193,7 @@ Rails.application.routes.draw do
       member do
         patch "update_status"
         patch "restock"
+        post "refund_shopping_point"
       end
     end
 

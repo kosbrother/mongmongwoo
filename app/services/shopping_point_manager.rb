@@ -28,4 +28,8 @@ class ShoppingPointManager
     shopping_point.save
     shopping_point.shopping_point_records.create(order_id: order_id, amount: -reduce_amount, balance: shopping_point.amount)
   end
+
+  def has_refund_shopping_point?(order)
+    order.shopping_point_records.any?{|record| record.amount > 0}
+  end
 end
