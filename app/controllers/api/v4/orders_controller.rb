@@ -63,6 +63,7 @@ class Api::V4::OrdersController < ApiController
     elsif products_errors.present?
       render status: 203, json: {data: {unable_to_buy: products_errors}}
     else
+      ShoppingPointManager.spend_shopping_points(@order, params[:shopping_points_amount].to_i) if params[:shopping_points_amount].to_i > 0
       OrderMailer.delay.notify_order_placed(@order)
       render status: 200, json: {data: @order.as_json(only: [:id])}
     end
