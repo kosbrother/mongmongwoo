@@ -85,4 +85,45 @@ RSpec.describe Api::V4::MmwRegistrationsController, :type => :controller do
       end
     end
   end
+
+  describe 'post #login' do
+    let!(:user) { FactoryGirl.create(:user, email: email, password: password, is_mmw_registered: true) }
+
+    context 'when password is correct' do
+      it 'does find the user and pass the correct password' do
+        post :login, email: email, password: password, registration_id: device.registration_id
+        message = JSON.parse(response.body)['data']
+        expect(message).to eq(user.id)
+        expect(user.devices).to include(device)
+      end
+    end
+
+    context 'when password is not correct' do
+      it 'does not pass the wrong password' do
+        post :login, email: email, password: '1234', registration_id: device.registration_id
+        message = response.body
+        expect(device.user).to be_nil
+        expect(message).to eq(I18n.t('controller.error.message.wrong_password'))
+      end
+    end
+
+    context 'when no user email match' do
+      it 'does not pass login' do
+        post :login, email: 'test@test.com', password: '1234', registration_id: device.registration_id
+        message = response.body
+        expect(device.user).to be_nil
+        expect(message).to eq(I18n.t('controller.error.message.no_user'))
+      end
+    end
+
+    context 'when user with same email exist but is not registered' do
+      let!(:user) { FactoryGirl.create(:user, email: email, password: password, is_mmw_registered: false) }
+      it 'does not pass login' do
+        post :login, email: 'test@test.com', password: '1234', registration_id: device.registration_id
+        message = response.body
+        expect(device.user).to be_nil
+        expect(message).to eq(I18n.t('controller.error.message.no_user'))
+      end
+    end
+  end
 end

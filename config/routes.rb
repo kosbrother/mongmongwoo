@@ -360,7 +360,11 @@ Rails.application.routes.draw do
       resources :orders, only: [:create]
       resources :banners, only: [:index]
       resources :oauth_sessions, only: [:create]
-      resources :mmw_registrations, only: [:create]
+      resources :mmw_registrations, only: [:create] do
+        collection do
+          post "login"
+        end
+      end
     end
   end
 end

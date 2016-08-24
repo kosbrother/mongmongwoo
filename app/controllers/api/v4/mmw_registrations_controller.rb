@@ -11,4 +11,18 @@ class Api::V4::MmwRegistrationsController < ApiController
       render status: 400, json: message
     end
   end
+
+  def login
+    user = User.find_by(email: params[:email])
+    device = DeviceRegistration.find_or_create_by(registration_id: params[:registration_id])
+
+    if user.nil? || user.is_mmw_registered == false
+      render status: 400, json: t('controller.error.message.no_user')
+    elsif  user.authenticate(params[:password])
+      user.devices << device
+      render status: 200, json: {data: user.id}
+    else
+      render status: 400, json: t('controller.error.message.wrong_password')
+    end
+  end
 end
