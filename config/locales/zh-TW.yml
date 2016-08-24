@@ -40,7 +40,7 @@ zh-TW:
             uid:
               blank: "UID不可為空白"
             provider:
-              blank: "登入帳號供應商資訊不可為空白"
+              blank: "第三方登入資訊不可為空白"
         order_info:
           attributes:
             ship_email:
