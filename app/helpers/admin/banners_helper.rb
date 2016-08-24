@@ -1,5 +1,5 @@
 module Admin::BannersHelper
-  def record_url(banner)
+  def bannerable_url(banner)
     case banner.bannerable_type
     when Banner::CATEGORY_RECORD
       category = banner.bannerable
