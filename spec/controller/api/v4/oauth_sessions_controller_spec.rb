@@ -58,7 +58,7 @@ RSpec.describe Api::V4::OauthSessionsController, type: :controller do
 
       it 'does not create new user and new fb login' do
         error_message = response.body
-        expect(error_message).to be_present
+        expect(error_message).to eq(I18n.t('activerecord.errors.models.user.attributes.email.blank') + ', ' + I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
         expect(User.where(email: email)).to be_empty
         expect(Login.where(provider: provider, uid: uid)).to be_empty
         expect(device.user).to be_nil
@@ -70,7 +70,19 @@ RSpec.describe Api::V4::OauthSessionsController, type: :controller do
 
       it 'does not create new user and new fb login' do
         error_message = response.body
-        expect(error_message).to be_present
+        expect(error_message).to eq(I18n.t('activerecord.errors.models.login.attributes.provider.blank'))
+        expect(User.where(email: email)).to be_empty
+        expect(Login.where(provider: provider, uid: uid)).to be_empty
+        expect(device.user).to be_nil
+      end
+    end
+
+    context 'when uid is not provided' do
+      let!(:uid) { nil }
+
+      it 'does not create new user and new fb login' do
+        error_message = response.body
+        expect(error_message).to eq(I18n.t('activerecord.errors.models.login.attributes.uid.blank'))
         expect(User.where(email: email)).to be_empty
         expect(Login.where(provider: provider, uid: uid)).to be_empty
         expect(device.user).to be_nil

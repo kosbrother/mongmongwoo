@@ -35,6 +35,12 @@ zh-TW:
               taken: "此信箱已被註冊，請重新輸入"
             password:
               blank: "密碼不可為空白"
+        login:
+          attributes:
+            uid:
+              blank: "UID不可為空白"
+            provider:
+              blank: "登入帳號供應商資訊不可為空白"
         order_info:
           attributes:
             ship_email:
