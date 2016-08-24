@@ -159,6 +159,9 @@ Rails.application.routes.draw do
       member do
         get "subcategory"
       end
+      collection do
+        post "import_excel"
+      end
     end
 
     resources :users, only: [:index, :show, :create, :update] do

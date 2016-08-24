@@ -50,7 +50,39 @@ class Admin::CategoriesController < AdminController
     render status: 200, json: {data: categories}
   end
 
+  def import_excel
+    xlsx = Roo::Spreadsheet.open(params['excel_file'], extension: :xlsx)
+    sheet = xlsx.sheet(0)
+    records = sheet.parse(item_id: '商品編號', class_1: '商品分類1', class_2: '商品分類2', class_3: '商品分類3', sub_class_1: '子分類1', sub_class_2: '子分類2', sub_class_3: '子分類3')
+    records.each_with_index do |hash, index|
+      next if index < 1
+      set_item_category(hash)
+    end
+    flash[:notice] = "商品分類已匯入完成"
+    redirect_to :back
+  end
+
   private
+
+  def set_item_category(hash)
+    item = Item.find(hash[:item_id])
+    hash.delete(:item_id)
+    item.categories.delete_all
+    categories =[]
+    hash.each do |key,value|
+      next if value.blank?
+      raise NotFindCategoryError unless Category.exists?(name: value)
+      if key.to_s.include?("sub")
+        key = key.to_s.gsub("sub_","")
+        category = Category.find_by(name: hash[key.to_sym])
+        new_categories = Category.where(name: value,parent_id: category.id)
+      else
+        new_categories = Category.where("name = ?",value)
+      end
+      categories += new_categories   
+    end
+    item.categories << categories
+  end
 
   def category_params
     params.require(:category).permit(:name, :image, :parent_id)
