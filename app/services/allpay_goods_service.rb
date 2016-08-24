@@ -19,9 +19,9 @@ class AllpayGoodsService
     puts resp.body
     
     if resp.body.start_with? '0'
-      return false
+      return false, resp.body
     else
-      return true
+      return true, resp.body
     end
   end
 
