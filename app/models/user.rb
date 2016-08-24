@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true,
             uniqueness: true,
             format: { with: /\A([\w+-].?)+@[a-z\d-]+(.[a-z]+)*.[a-z]+\z/i }
+  after_create :create_register_shopping_point
 
   has_secure_password
   has_many :orders, dependent: :destroy
@@ -87,5 +88,11 @@ class User < ActiveRecord::Base
 
   def order_times(order_status)
     Order.where(status: order_status, user_id: id).size
+  end
+
+  private
+
+  def create_register_shopping_point
+    ShoppingPointManager.create_register_shopping_point(id)
   end
 end
