@@ -1,4 +1,6 @@
 class Category < ActiveRecord::Base
+  include Bannerable
+
   ALL_ID = 10
   NEW_ID = 11
 
