@@ -8,14 +8,18 @@ describe Api::V4::ShoppingPointCampaignsController, type: :controller do
     context "when user_id is provided" do
       it "does show all the shopping_point_campaigns and status of user collection" do
         get :index, user_id: user.id
-        last_shopping_point_campaigns = JSON.parse(response.body)["data"].last
+        data = JSON.parse(response.body)["data"]
+        last_shopping_point_campaign = ShoppingPointCampaign.all.last
 
-        expect(last_shopping_point_campaigns["id"]).to eq(shopping_point_campaign.id)
-        expect(last_shopping_point_campaigns["description"]).to eq(shopping_point_campaign.description)
-        expect(last_shopping_point_campaigns["amount"]).to eq(shopping_point_campaign.amount)
-        expect(last_shopping_point_campaigns["valid_until"]).to eq(shopping_point_campaign.valid_until.as_json)
-        expect(last_shopping_point_campaigns["is_expired"]).to eq(shopping_point_campaign.is_expired)
-        expect(last_shopping_point_campaigns["is_collected"]).to eq(true)
+        expect(data.length).to eq(ShoppingPointCampaign.all.size)
+        expect(data.last["id"]).to eq(last_shopping_point_campaign.id)
+        expect(data.last["title"]).to eq(last_shopping_point_campaign.title)
+        expect(data.last["description"]).to eq(last_shopping_point_campaign.description)
+        expect(data.last["amount"]).to eq(last_shopping_point_campaign.amount)
+        expect(data.last["created_at"]).to eq(last_shopping_point_campaign.created_at.as_json)
+        expect(data.last["valid_until"]).to eq(last_shopping_point_campaign.valid_until.as_json)
+        expect(data.last["is_expired"]).to eq(last_shopping_point_campaign.is_expired)
+        expect(data.last["is_collected"]).to eq(true)
       end
     end
   end
