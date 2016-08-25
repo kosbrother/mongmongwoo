@@ -7,6 +7,7 @@ class ShoppingPointManager
   end
 
   def self.spend_shopping_points(order, spend_amount)
+    return if spend_amount <= 0
     user = order.user
     shopping_points = user.shopping_points.valid
     ActiveRecord::Base.transaction do
