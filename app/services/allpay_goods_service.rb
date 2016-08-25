@@ -18,10 +18,10 @@ class AllpayGoodsService
     resp, data = Net::HTTP.post_form(url, @fields.sort.to_h)
     puts resp.body
     
-    if resp.body.start_with? '0'
-      return false, resp.body
-    else
+    if resp.body.include?("AllPayLogisticsID")
       return true, resp.body
+    else
+      return false, resp.body
     end
   end
 
