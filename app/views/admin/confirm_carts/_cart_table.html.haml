@@ -7,6 +7,7 @@
           %th.mid-small 收貨資訊
           %th.xx-small 商品編號
           %th.x-small 商品名稱
+          %th.xx-small 樣式編號
           %th.xx-small 商品樣式
           %th.xx-small 訂購量
           = admin_cart_table_head(cart)
@@ -24,6 +25,7 @@
             %tr
               %td= item.item.id
               %td= link_to item.item.name, admin_item_path(item.item), target: "_blank"
+              %td= item.item_spec.id
               %td= link_to item.item_spec.style, "#", rel: "popover", data: { "image-url": "#{item.item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
               %td= item.item_quantity
               %td= admin_cart_item_quantity(item)
