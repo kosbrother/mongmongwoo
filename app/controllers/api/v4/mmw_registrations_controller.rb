@@ -1,4 +1,6 @@
-class Api::V4::MmwRegistrationsController < ApiController
+class Api::V4::MmwRegistrationsController < Api::SessionsController
+  before_action  :reguire_registration_id
+
   def create
     register = User.register(params[:email], params[:password])
 

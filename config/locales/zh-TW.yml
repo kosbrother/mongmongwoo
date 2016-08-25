@@ -14,6 +14,7 @@ zh-TW:
         no_user: "抱歉，找不到此用戶"
         wrong_password: "密碼錯誤"
         can_not_cancel_order: "抱歉，這筆訂單已寄出，無法變更！"
+        no_regitration_id: "裝置ID沒有上傳，無法註冊或登入，請聯絡客服人員"
     success:
       message:
         cancel_order: "已成功取消訂單！"

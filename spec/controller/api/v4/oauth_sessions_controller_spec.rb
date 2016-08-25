@@ -9,6 +9,10 @@ RSpec.describe Api::V4::OauthSessionsController, type: :controller do
     let!(:provider) {'facebook'}
     let!(:device) { FactoryGirl.create(:device_registration) }
 
+    it_behaves_like "when registration_id is empty" do
+      let(:action) { post :create }
+    end
+
     before :each do
       post :create, email: email, uid: uid, provider: provider, user_name: user_name, gender: gender, registration_id: device.registration_id
     end

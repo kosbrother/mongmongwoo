@@ -1,4 +1,6 @@
-class Api::V4::OauthSessionsController < ApiController
+class Api::V4::OauthSessionsController < Api::SessionsController
+  before_action  :reguire_registration_id
+  
   def create
     errors = []
     user = User.find_or_initialize_by(email: params[:email])
