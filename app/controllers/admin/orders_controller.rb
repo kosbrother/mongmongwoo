@@ -63,10 +63,15 @@ class Admin::OrdersController < AdminController
     @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_search_terms(@search_term).paginate(:page => params[:page])
   end
 
-  def export_processing_order_list
-    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).recent
-    @sheet_name = '處理中訂單清單'
+  def export_processing_order_list_and_barcode
+    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
 
+    @order_list.each do |order|
+      Launchy.open(barcode_allpay_index_url(order))
+      order.update_attribute(:status, Order.statuses["配送中"])
+    end
+
+    @sheet_name = '處理中訂單清單'
     render 'export_order_list'
   end
 
