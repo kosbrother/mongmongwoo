@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823035811) do
+ActiveRecord::Schema.define(version: 20160825094643) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -226,13 +226,13 @@ ActiveRecord::Schema.define(version: 20160823035811) do
   add_index "item_specs", ["item_id"], name: "index_item_specs_on_item_id", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",               limit: 255,                                        null: false
-    t.integer  "price",              limit: 4,                                          null: false
+    t.string   "name",               limit: 255,                                            null: false
+    t.integer  "price",              limit: 4,                                              null: false
     t.string   "slug",               limit: 255
     t.integer  "status",             limit: 4,                              default: 1
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                            null: false
-    t.datetime "updated_at",                                                            null: false
+    t.datetime "created_at",                                                                null: false
+    t.datetime "updated_at",                                                                null: false
     t.text     "description",        limit: 65535
     t.string   "cover",              limit: 255
     t.string   "url",                limit: 255
@@ -242,9 +242,11 @@ ActiveRecord::Schema.define(version: 20160823035811) do
     t.string   "shelf_position",     limit: 255
     t.string   "taobao_name",        limit: 255
     t.string   "note",               limit: 255
+    t.boolean  "is_ever_on_shelf",                                          default: false
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
+  add_index "items", ["is_ever_on_shelf"], name: "index_items_on_is_ever_on_shelf", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", unique: true, using: :btree
   add_index "items", ["taobao_supplier_id"], name: "index_items_on_taobao_supplier_id", using: :btree
 

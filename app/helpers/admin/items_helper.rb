@@ -83,7 +83,15 @@ module Admin::ItemsHelper
   end
 
   def link_to_update_item_status(item)
-    link_to t(item.status), update_shelf_path(item), method: :patch, remote: true, class: status_button_class(item.status)
+    link_to item_status_text(item), update_shelf_path(item), method: :patch, remote: true, class: status_button_class(item.status)
+  end
+
+  def item_status_text(item)
+    if item.is_ever_on_shelf == false
+      "新商品未上架"
+    else
+      t(item.status)
+    end
   end
 
   def link_to_update_item_spec(item_spec)
