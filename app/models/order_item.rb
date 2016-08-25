@@ -15,6 +15,7 @@ class OrderItem < ActiveRecord::Base
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :total_income_and_cost, -> { joins(:item).select("COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) AS total_sales_income ", "COALESCE(SUM(order_items.item_quantity * items.cost), 0) AS total_cost_of_goods") }
   scope :by_shelf_position, -> { joins(:item).order("items.shelf_position ASC") }
+  scope :by_source_item, -> { order(source_item_id: :ASC) }
 
   acts_as_paranoid
 
