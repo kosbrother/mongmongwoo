@@ -43,8 +43,10 @@ Rails.application.routes.draw do
       get :favorite
       get :remove
     end
-
   end
+
+  resources :shopping_point_campaigns, only: [:index]
+
   # 助理後台
   namespace :staff do
     root "categories#index"
@@ -355,6 +357,9 @@ Rails.application.routes.draw do
 
     namespace :v4 do
       resources :orders, only: [:create]
+      resources :users do
+        resources :my_messages, only: [:index]
+      end
     end
   end
 end
