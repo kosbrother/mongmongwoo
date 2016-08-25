@@ -318,7 +318,6 @@ Rails.application.routes.draw do
             delete 'item_specs/:item_spec_id' => 'wish_lists#destroy'
           end
         end
-        resources :shopping_points, only: [:index]
         resources :orders do
           member do
             patch "cancel"
@@ -357,9 +356,9 @@ Rails.application.routes.draw do
 
     namespace :v4 do
       resources :orders, only: [:create]
-
       resources :users, only: [] do
         resources :my_messages, only: [:index]
+        resources :shopping_points, only: [:index]
         resources :shopping_point_campaigns, only: [:index]
       end
     end

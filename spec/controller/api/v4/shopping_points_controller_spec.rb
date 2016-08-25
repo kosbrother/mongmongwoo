@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Api::V3::ShoppingPointsController, :type => :controller do
+RSpec.describe Api::V4::ShoppingPointsController, :type => :controller do
   let!(:user) { FactoryGirl.create(:user) }
 
   describe "get#index" do
@@ -13,13 +13,14 @@ RSpec.describe Api::V3::ShoppingPointsController, :type => :controller do
         get :index, user_id: user.id
         data = JSON.parse(response.body)["data"]
         last_shopping_point = user.shopping_points.last
+
         expect(data["total"]).to eq(user.shopping_points.valid.sum(:amount))
         expect(data["shopping_points"].length).to eq(user.shopping_points.size)
-        expect(data["shopping_points"][1]["point_type"]).to eq(last_shopping_point.point_type)
-        expect(data["shopping_points"][1]["amount"]).to eq(last_shopping_point.amount)
-        expect(data["shopping_points"][1]["valid_until"]).to eq(last_shopping_point.valid_until.as_json)
-        expect(data["shopping_points"][1]["shopping_point_campaign"]["description"]).to eq(last_shopping_point.shopping_point_campaign.description)
-        expect(data["shopping_points"][1]["shopping_point_records"][0]).to eq(
+        expect(data["shopping_points"].last["amount"]).to eq(last_shopping_point.amount)
+        expect(data["shopping_points"].last["valid_until"]).to eq(last_shopping_point.valid_until.as_json)
+        expect(data["shopping_points"].last["description"]).to eq(last_shopping_point.description)
+        expect(data["shopping_points"].last["point_type"]).to eq(last_shopping_point.point_type)
+        expect(data["shopping_points"].last["shopping_point_records"][0]).to eq(
           {
             "order_id"=>shopping_point_first_record.order_id,
             "amount"=>shopping_point_first_record.amount,
