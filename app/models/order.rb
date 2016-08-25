@@ -35,6 +35,7 @@ class Order < ActiveRecord::Base
   scope :status_count, -> { group(:status).size }
   scope :status, -> (status_param) { where(status: status_param) }
   scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
+  scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
 
   acts_as_paranoid
 
