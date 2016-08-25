@@ -1,4 +1,15 @@
-:plain
-  $(function(){
-    new PNotify({title: "#{j(@message)}"});
-  });
+- if @fail_messages
+  :plain
+    $(function(){
+      new PNotify({
+        title: "傳送到歐付寶失敗",
+        text: "#{j(@fail_messages)}",
+        width: '500px',
+        min_height: '400px'
+      });
+    });
+- elsif @success_message
+  :plain
+    $(function(){
+      new PNotify({title: "#{j(@success_message)}"});
+    });

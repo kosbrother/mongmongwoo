@@ -1,13 +1,21 @@
 class AllpayController < ActionController::Base
   def create_from_processing
-    fail_ids = []
+    fail_messages = []
     Order.status(Order.statuses["處理中"]).nil_logistics_code.each do |order|
-      fail_ids << order.id unless PostToAllpayWorker.new.perform(order.id, create_reply_allpay_index_url, status_update_allpay_index_url)
+      results = PostToAllpayWorker.new.perform(order.id, create_reply_allpay_index_url, status_update_allpay_index_url)
+
+      if results[0] == false
+        id =  order.id
+        error = results[1].to_s.force_encoding("UTF-8").delete!("0|")
+        message = "編號：#{id} 傳送到歐付寶失敗\n錯誤訊息：#{error}\n"
+        fail_messages << message
+      end
     end
-    if fail_ids.present?
-      @message = "編號：#{fail_ids.join(',')} 傳送到歐付寶 失敗"
+
+    if fail_messages.present?
+      @fail_messages = fail_messages.join("\n")
     else
-      @message = "全部處理中訂單已成功傳送到歐付寶"
+      @success_message = "全部處理中訂單已成功傳送到歐付寶"
     end
   end
 
