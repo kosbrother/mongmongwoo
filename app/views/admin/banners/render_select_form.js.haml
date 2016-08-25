@@ -1,5 +1,5 @@
 $('.select-type-field').children().remove()
-- if @banner_type == Banner::CATEGORY_RECORD
+- if @banner_type == Category.name
   $('.select-type-field').append('#{j(render 'select_category')}');
-- elsif @banner_type == Banner::Item_RECORD
+- elsif @banner_type == Item.name
   $('.select-type-field').append('#{j(render 'select_item')}');

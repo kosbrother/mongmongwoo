@@ -358,6 +358,7 @@ Rails.application.routes.draw do
 
     namespace :v4 do
       resources :orders, only: [:create]
+      resources :banners, only: [:index]
     end
   end
 end

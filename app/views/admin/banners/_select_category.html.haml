@@ -1,5 +1,5 @@
 .form-group
   = label_tag "banner[bannerable_id]", "廣告分類", class: "col-sm-2 control-label"
   .col-sm-10
-    = select_tag "banner[bannerable_id]", options_for_select(Category.parent_categories.collect { |category| ["#{category.id} : #{category.name}", category.id] }), class: "form-control", include_blank: "請選擇分類"
-    = hidden_field_tag "banner[bannerable_type]", Banner::CATEGORY_RECORD
+    = select_tag "banner[bannerable_id]", options_for_select(Category.all.collect { |category| [category_select_name(category), category.id] }), class: "form-control", include_blank: "請選擇分類"
+    = hidden_field_tag "banner[bannerable_type]", Category.name
