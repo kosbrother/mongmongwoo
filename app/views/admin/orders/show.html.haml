@@ -4,6 +4,10 @@
   %ul.list-group
     - if @order.info
       %li.list-group-item
+        訂單編號： #{@order.id}
+      %li.list-group-item
+        訂購日期： #{display_date(@order.created_at)}
+      %li.list-group-item
         收件人姓名： #{@order.ship_name}
       %li.list-group-item
         聯絡電話： #{@order.ship_phone}
@@ -15,11 +19,11 @@
         門市名稱： #{@order.ship_store_name}
       %li.list-group-item
         門市地址： #{@order.address}
-  %br/
   %h4 商品明細
   %table.table.table-bordered
     %thead
       %tr.active
+        %th.xx-small 商品編號
         %th.mid-small 商品名稱
         %th.x-small 商品樣式
         %th.xx-small 購買數量
@@ -29,8 +33,9 @@
         %th.xx-small 需求量
         %th.mid-small 狀態
     %tbody
-      - @order.items.each do |order_item|
+      - @order.items.by_source_item.each do |order_item|
         %tr
+          %td= order_item.source_item_id
           %td
             = link_to order_item.item_name, admin_item_path(order_item.item)
           %td= order_item.item_style
@@ -41,7 +46,7 @@
           %td= spec_requested_number(order_item)
           %td= unable_to_buy_status(order_item)
       %tr
-        %td.text-right{colspan: 8}= "訂單總金額：#{@order.total}"
+        %td.text-right{colspan: 9}= "訂單總金額：#{@order.total}"
   %table.table.table-bordered
     %thead
       %tr
