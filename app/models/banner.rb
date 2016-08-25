@@ -1,10 +1,8 @@
 class Banner < ActiveRecord::Base
   include AndroidApp
 
-  CATEGORY_RECORD = "Category"
-  Item_RECORD = "Item"
-  RECORD_TYPES = [CATEGORY_RECORD, Item_RECORD]
-  RECORD_OPTONS = Banner::RECORD_TYPES.map { |record| [I18n.t(record), record] }
+  BANNER_TYPES = [Category.name, Item.name]
+  BANNER_OPTONS = Banner::BANNER_TYPES.map { |option| [I18n.t(option), option] }
 
   belongs_to :bannerable, polymorphic: true
 
@@ -14,10 +12,10 @@ class Banner < ActiveRecord::Base
 
   def able_path
     case bannerable_type
-    when CATEGORY_RECORD
+    when Category.name
       category = bannerable
       category_path(category)
-    when Item_RECORD
+    when Item.name
       item = bannerable
       category = item.categories.last
       category_item_path(category, item)
