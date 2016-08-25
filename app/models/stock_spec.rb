@@ -28,6 +28,14 @@ class StockSpec < ActiveRecord::Base
   def set_item_spec_on_shelf
     if amount > 0
       item_spec.update_attribute(:status, ItemSpec.statuses["on_shelf"])
+      update_item_status
+    end
+  end
+
+  def update_item_status
+    if item.is_ever_on_shelf == false
+      item.update_attributes(status: Item.statuses["on_shelf"], is_ever_on_shelf: true, created_at: Time.current)
+    else
       item.update_attribute(:status, Item.statuses["on_shelf"])
     end
   end
