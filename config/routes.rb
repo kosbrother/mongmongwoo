@@ -357,9 +357,12 @@ Rails.application.routes.draw do
 
     namespace :v4 do
       resources :orders, only: [:create]
-      resources :users do
+
+      resources :users, only: [] do
         resources :my_messages, only: [:index]
+        resources :shopping_point_campaigns, only: [:index]
       end
     end
+
   end
 end
