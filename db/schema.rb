@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823120807) do
+ActiveRecord::Schema.define(version: 20160824033436) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -297,14 +297,17 @@ ActiveRecord::Schema.define(version: 20160823120807) do
   add_index "message_records", ["user_id"], name: "index_message_records_on_user_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.string   "message_type", limit: 255
-    t.string   "title",        limit: 255
-    t.text     "content",      limit: 65535
+    t.string   "message_type",     limit: 255
+    t.string   "title",            limit: 255
+    t.text     "content",          limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "messageable_id",   limit: 4
+    t.string   "messageable_type", limit: 255
   end
 
   add_index "messages", ["message_type"], name: "index_messages_on_message_type", using: :btree
+  add_index "messages", ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "item_id",       limit: 4
