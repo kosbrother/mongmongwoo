@@ -70,4 +70,20 @@ module Admin::OrdersHelper
       li_restock_status_link(order_status: order_status, restock_status: true, link_text: "已重入庫存") 
     end
   end
+
+  def is_repurchased_order?(order)
+    order.info.is_repurchased?
+  end
+
+  def repurchased_order_class(order)
+    if is_repurchased_order?(order)
+      "info"
+    end
+  end
+
+  def repurchased_tag(order)
+    if is_repurchased_order?(order)
+      content_tag(:span, "回購訂單", class: "label label-success")
+    end
+  end
 end

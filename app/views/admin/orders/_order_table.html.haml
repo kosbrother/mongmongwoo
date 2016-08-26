@@ -2,7 +2,7 @@
 - if params[:restock].present?
   = restock_navs(order_status: params[:status])
 = render_pagination(orders)
-%table.table.table-striped.table-bordered.order-table
+%table.table.table-bordered.order-table
   %thead
     %tr
       %th.xx-small 編號
@@ -11,11 +11,11 @@
       %th.x-small 物流狀態
       %th.x-small 訂購用戶
       %th.x-small 訂購金額
-      %th.x-small 問題訂單
+      %th.x-small 訂單標籤
       %th.small-mid 操作
   %tbody
     - orders.each do |order|
-      %tr{id: "order-id-#{order.id}"}
+      %tr{id: "order-id-#{order.id}", class: "#{repurchased_order_class(order)}"}
         %td.item-id-cell
           = order.id
         %td
@@ -50,6 +50,7 @@
         %td
           = order.total
         %td.user-id-cell
+          = repurchased_tag(order)
           = blacklist_warning(order)
         %td
           = link_to "明細", admin_order_path(order),class: "button btn btn-default btn-sm"
