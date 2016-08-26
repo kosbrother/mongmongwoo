@@ -66,6 +66,24 @@ describe Api::V4::OrdersController, type: :controller do
         end
       end
 
+      context "when shopping point is used" do
+        let!(:shopping_point_campaign) { FactoryGirl.create(:shopping_point_campaign) }
+        let!(:shopping_point) { FactoryGirl.create(:campaign_point, user: user, amount: shopping_point_campaign.amount, shopping_point_campaign: shopping_point_campaign) }
+        let!(:spend_amount) { user.shopping_points.valid.sum(:amount) }
+        it "does spend user's shopping point" do
+          post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+               ship_email: ship_email, products: products, shopping_points_amount: spend_amount
+          order_id = JSON.parse(response.body)["data"]["id"]
+
+          user.shopping_points.each do |shopping_point|
+            expect(shopping_point.shopping_point_records.last.order_id).to eq(order_id)
+          end
+          expect(user.shopping_points.valid.sum(:amount)).to eq(0)
+        end
+      end
+
       it "return errors if missing order params" do
         post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,

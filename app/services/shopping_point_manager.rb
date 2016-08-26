@@ -6,10 +6,10 @@ class ShoppingPointManager
     shopping_point.shopping_point_records.first.update_column(:order_id, order.id)
   end
 
-  def self.spend_shopping_points(order)
+  def self.spend_shopping_points(order, spend_amount)
+    return if spend_amount <= 0
     user = order.user
     shopping_points = user.shopping_points.valid
-    spend_amount = [shopping_points.sum(:amount), order.items_price].min
     ActiveRecord::Base.transaction do
       shopping_points.each do |shopping_point|
         if spend_amount > shopping_point.amount
@@ -34,7 +34,7 @@ class ShoppingPointManager
 
   private
 
-  def reduce_shopping_point(shopping_point, reduce_amount, order_id)
+  def self.reduce_shopping_point(shopping_point, reduce_amount, order_id)
     shopping_point.amount -= reduce_amount
     shopping_point.save
     shopping_point.shopping_point_records.create(order_id: order_id, amount: -reduce_amount, balance: shopping_point.amount)
