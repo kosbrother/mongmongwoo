@@ -3,6 +3,7 @@
   %table.table.table-bordered
     %thead
       %tr.active
+        %th.xx-small 商品編號
         %th.small 商品名稱
         %th.mid-small 商品樣式
         %th.x-small 購買數量
@@ -10,8 +11,9 @@
         %th.large-small 狀態
         %th.xx-small 操作
     %tbody
-      - @order.items.each do |order_item|
+      - @order.items.by_source_item.each do |order_item|
         %tr{id: "order-item-#{order_item.id}"}
+          %td= order_item.source_item_id
           %td= link_to order_item.item_name, admin_item_path(order_item.item)
           %td= order_item.item_style
           %td= order_item.item_quantity
