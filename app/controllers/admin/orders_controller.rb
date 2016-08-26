@@ -63,11 +63,22 @@ class Admin::OrdersController < AdminController
     @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_search_terms(@search_term).paginate(:page => params[:page])
   end
 
-  def export_processing_order_list_and_barcode
+  def open_barcode_tab
+    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+  end
+
+  def change_status_to_transfer
+    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+    @order_list.each do |order|
+      order.update_attribute(:status, Order.statuses["配送中"])
+    end
+    redirect_to :back
+  end
+
+  def export_processing_order_list
     @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
 
     @order_list.each do |order|
-      Launchy.open(barcode_allpay_index_url(order))
       order.update_attribute(:status, Order.statuses["配送中"])
     end
 

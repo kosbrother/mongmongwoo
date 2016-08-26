@@ -188,7 +188,9 @@ Rails.application.routes.draw do
         get "exporting_files"
         get "status_index"
         get "search"
-        get "export_processing_order_list_and_barcode"
+        get "change_status_to_transfer"
+        get "export_processing_order_list"
+        get "open_barcode_tab"
         get "export_returned_order_list"
         patch "update_to_processing"
       end
