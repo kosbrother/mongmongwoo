@@ -87,10 +87,16 @@ module Admin::ItemsHelper
   end
 
   def item_status_text(item)
-    if item.is_ever_on_shelf == false
+    if item.ever_on_shelf == false
       "新商品未上架"
     else
       t(item.status)
+    end
+  end
+
+  def item_initial_on_shelf_date(item)
+    if item.ever_on_shelf
+      "(首次上架日期:#{display_date(item.created_at)})"
     end
   end
 

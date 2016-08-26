@@ -58,8 +58,8 @@ class Admin::ItemsController < AdminController
   end
 
   def on_shelf
-    if @item.is_ever_on_shelf == false
-      @item.update_attributes(status: Item.statuses["on_shelf"], is_ever_on_shelf: true, created_at: Time.current)
+    if @item.ever_on_shelf == false
+      @item.update_attributes(status: Item.statuses["on_shelf"], ever_on_shelf: true, created_at: Time.current)
     else
       @item.update_attribute(:status, Item.statuses["on_shelf"])
     end
