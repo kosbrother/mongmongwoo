@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825094643) do
+ActiveRecord::Schema.define(version: 20160825151421) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -242,11 +242,11 @@ ActiveRecord::Schema.define(version: 20160825094643) do
     t.string   "shelf_position",     limit: 255
     t.string   "taobao_name",        limit: 255
     t.string   "note",               limit: 255
-    t.boolean  "is_ever_on_shelf",                                          default: false
+    t.boolean  "ever_on_shelf",                                             default: false
   end
 
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
-  add_index "items", ["is_ever_on_shelf"], name: "index_items_on_is_ever_on_shelf", using: :btree
+  add_index "items", ["ever_on_shelf"], name: "index_items_on_ever_on_shelf", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", unique: true, using: :btree
   add_index "items", ["taobao_supplier_id"], name: "index_items_on_taobao_supplier_id", using: :btree
 
