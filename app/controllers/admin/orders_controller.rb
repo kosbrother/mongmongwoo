@@ -72,7 +72,7 @@ class Admin::OrdersController < AdminController
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
     end
-    redirect_to :back
+    redirect_to status_index_admin_orders_path(status: Order.statuses["處理中"])
   end
 
   def export_processing_order_list
