@@ -1,6 +1,9 @@
 %table.table.table-bordered.order-table
   %tbody
     %tr
+      %td.label-cell 分類
+      %td{colspan: "19"}= parent_and_child_categories_name(item.categories)
+    %tr
       %td.label-cell 商品編號
       %td{colspan: "4"}
         = item.id
