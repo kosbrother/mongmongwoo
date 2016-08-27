@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post "/register" => "users#create", as: "register"
   post "/forget" => "users#sent_reset_email"
   get '/shop_infos' => "pages#shop_infos"
+  get '/search_items', to: "searchs#search_items"
 
   resources :categories, only: [:show] do
     resources :items, only: [:show]
