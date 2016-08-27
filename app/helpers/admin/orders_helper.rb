@@ -34,7 +34,7 @@ module Admin::OrdersHelper
     end
   end
 
-  def blacklist_warning(order)
+  def blacklist_notice(order)
     if order.is_blacklisted
       content_tag(:span, "問題訂單", class: "label label-danger")
     end
@@ -72,7 +72,7 @@ module Admin::OrdersHelper
   end
 
   def is_repurchased_order?(order)
-    order.is_repurchased?
+    order.is_repurchased
   end
 
   def repurchased_order_class(order)

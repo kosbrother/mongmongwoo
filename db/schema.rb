@@ -342,7 +342,6 @@ ActiveRecord::Schema.define(version: 20160829031139) do
     t.integer  "ship_store_id",   limit: 4
     t.string   "ship_store_name", limit: 255
     t.string   "ship_email",      limit: 255
-    t.boolean  "is_blacklisted"
   end
 
   add_index "order_infos", ["order_id"], name: "index_order_infos_on_order_id", using: :btree
@@ -382,10 +381,12 @@ ActiveRecord::Schema.define(version: 20160829031139) do
     t.integer  "allpay_transfer_id",     limit: 4
     t.boolean  "restock",                            default: false
     t.boolean  "is_repurchased",                     default: false
+    t.boolean  "is_blacklisted",                     default: false
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
   add_index "orders", ["device_registration_id"], name: "index_orders_on_device_registration_id", using: :btree
+  add_index "orders", ["is_blacklisted"], name: "index_orders_on_is_blacklisted", using: :btree
   add_index "orders", ["is_repurchased"], name: "index_orders_on_is_repurchased", using: :btree
   add_index "orders", ["logistics_status_code"], name: "index_orders_on_logistics_status_code", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree

@@ -4,19 +4,20 @@ class Admin::OrdersController < AdminController
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 
   def index
-    @orders = Order.includes(:user, :info).recent.paginate(page: params[:page])
+    @orders = Order.includes(:user).recent.paginate(page: params[:page])
   end
 
   def status_index
     params[:status] ||= Order.statuses["新訂單"]
     query_hash = {status: params[:status]}
-    includes_array = [:user, :info]
+    includes_array = [:user]
 
     if params[:restock]
       restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
       query_hash = query_hash.merge(restock: restock)
     end
     includes_array << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
+    includes_array << :info if params[:status] == Order.statuses["完成取貨"].to_s
 
     @orders = Order.includes(includes_array).where(query_hash).recent.paginate(page: params[:page])
   end
