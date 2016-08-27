@@ -61,7 +61,7 @@ module Admin::ItemsHelper
   end
 
   def update_shelf_path(item)
-    item.on_shelf? ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item)
+    (item.on_shelf? && item.ever_on_shelf) ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item)
   end
 
   def link_to_supplier(item)
@@ -83,7 +83,11 @@ module Admin::ItemsHelper
   end
 
   def link_to_update_item_status(item)
-    link_to item_status_text(item), update_shelf_path(item), method: :patch, remote: true, class: status_button_class(item.status)
+    link_to item_status_text(item), update_shelf_path(item), method: :patch, remote: true, class: item_status_class(item)
+  end
+
+  def item_status_class(item)
+    (item.on_shelf? && item.ever_on_shelf) ? "btn btn-success" : "btn btn-danger"
   end
 
   def item_status_text(item)
