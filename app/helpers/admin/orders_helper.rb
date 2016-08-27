@@ -72,7 +72,7 @@ module Admin::OrdersHelper
   end
 
   def is_repurchased_order?(order)
-    order.info.is_repurchased?
+    order.is_repurchased?
   end
 
   def repurchased_order_class(order)
@@ -81,7 +81,7 @@ module Admin::OrdersHelper
     end
   end
 
-  def repurchased_tag(order)
+  def repurchased_notice(order)
     if is_repurchased_order?(order)
       content_tag(:span, "回購訂單", class: "label label-success")
     end

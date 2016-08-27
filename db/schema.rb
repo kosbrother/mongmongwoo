@@ -335,18 +335,16 @@ ActiveRecord::Schema.define(version: 20160829031139) do
     t.integer  "order_id",        limit: 4
     t.string   "ship_name",       limit: 255
     t.string   "ship_address",    limit: 255
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "ship_store_code", limit: 255
     t.string   "ship_phone",      limit: 255
     t.integer  "ship_store_id",   limit: 4
     t.string   "ship_store_name", limit: 255
     t.string   "ship_email",      limit: 255
     t.boolean  "is_blacklisted"
-    t.boolean  "is_repurchased",              default: false
   end
 
-  add_index "order_infos", ["is_repurchased"], name: "index_order_infos_on_is_repurchased", using: :btree
   add_index "order_infos", ["order_id"], name: "index_order_infos_on_order_id", using: :btree
 
   create_table "order_items", force: :cascade do |t|
