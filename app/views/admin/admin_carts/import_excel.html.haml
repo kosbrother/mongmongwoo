@@ -1,0 +1,13 @@
+.checkout
+  .content-box-large
+    .pull-right.file-form
+      = form_tag import_excel_admin_admin_cart_items_path, :enctype =>'multipart/form-data' do
+        = file_field_tag :excel_file, required: true, class: 'custom-file-input'
+        = submit_tag '送出', class: 'btn btn-default'
+    %h2 匯入資料有誤，請確認
+    .tab-content
+      .list-group
+        - @error_messages.each do |message|
+          .row
+            .col-sm-6
+              %p.text-center.list-group-item.list-group-item-danger= message
