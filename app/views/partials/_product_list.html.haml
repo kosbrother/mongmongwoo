@@ -9,4 +9,4 @@
           .price
             = list_item_current_price(item)
           .text
-            = item.name
+            = truncate(item.name, length: 17)
