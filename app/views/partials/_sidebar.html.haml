@@ -13,6 +13,7 @@
       = link_to category_item_path(@category_all, item), onClick: analytic_event("popular_product", "view", item.name) do
         .pop-list
           .image
+            = render_special_price_icon(item)
             = image_tag(item.cover.icon.url)
           .group
             .list

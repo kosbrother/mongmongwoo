@@ -19,20 +19,19 @@ module ItemHelper
 
   def side_item_current_price(item)
     if item.special_price
-      content_tag(:div, "優惠價#{price_with_unit(item.price)}", class: "special -delete") +
+      content_tag(:div, "原價#{price_with_unit(item.price)}", class: "special -delete") +
       content_tag(:div, price_with_unit(item.special_price), class: "price")
     else
-      content_tag(:div, "-優惠價-", class: "special") +
+      content_tag(:div, "", class: "special -delete") +
       content_tag(:div, price_with_unit(item.price), class: "price")
     end
   end
 
   def list_item_current_price(item)
     if item.special_price
-      content_tag(:span, "優惠價#{price_with_unit(item.price)}", class: "special -delete") +
-      content_tag(:span, price_with_unit(item.special_price))
+      content_tag(:span, price_with_unit(item.special_price))+
+      content_tag(:span, "原價#{price_with_unit(item.price)}", class: "special -delete")
     else
-      content_tag(:span, "-優惠價-", class: "special") +
       content_tag(:span, price_with_unit(item.price))
     end
   end
@@ -54,5 +53,11 @@ module ItemHelper
 
   def render_stock_amount(stock_amount)
      stock_amount > 10 ? '庫存充足' : stock_amount
+  end
+
+  def render_special_price_icon(item)
+    if item.special_price
+      content_tag(:div,'', class: "special-price-tag")
+    end
   end
 end
