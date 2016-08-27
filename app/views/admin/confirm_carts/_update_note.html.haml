@@ -1,4 +1,4 @@
-%td{colspan: "6"}
+%td{colspan: "8"}
   = form_tag note_admin_admin_cart_path(cart), method: :patch, remote: true,  class: "col-sm-12 form-horizontal" do
     .form-group
       .col-sm-10= text_field_tag :note, cart.note, class: "form-control", id: "cart-note-#{cart.id}", placeholder: "備註"

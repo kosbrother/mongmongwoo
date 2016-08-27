@@ -1,8 +1,12 @@
 - carts.each do |cart|
   .cart-table{id: "cart-#{cart.id}"}
-    .pull-right= link_to_confirm_button(cart)
+    .pull-right
+      = link_to_confirm_button(cart)
+      %P.help-block
     %table.table.table-bordered
       %thead
+        %tr
+          = admin_cart_note(cart)
         %tr
           %th.mid-small 收貨資訊
           %th.xx-small 商品編號
@@ -30,5 +34,3 @@
               %td= item.item_quantity
               %td= admin_cart_item_quantity(item)
               = stock_cart_item_table_data(item)
-          %tr
-            = admin_cart_note(cart)

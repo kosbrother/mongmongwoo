@@ -54,7 +54,7 @@ module Admin::AdminCartHelper
     if admin_cart.status == "shipping"
       render "update_note", cart: admin_cart
     elsif admin_cart.status == "stock" && admin_cart.note.present?
-      content_tag(:td, "備註：#{admin_cart.note}", colspan: "8")
+      content_tag(:td, "備註：#{admin_cart.note}", colspan: "10")
     end
   end
 
