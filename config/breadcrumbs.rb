@@ -31,3 +31,8 @@ crumb :shop_infos do
   link "購物明細", shop_infos_path
   parent :root
 end
+
+crumb :search_result do
+  link "搜尋結果",  search_items_path
+  parent :root
+end

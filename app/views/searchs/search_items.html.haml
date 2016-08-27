@@ -1,0 +1,9 @@
+- breadcrumb :search_result
+.search-items
+  .search-result-text
+    關於
+    %span.pink-color="“#{params[:query]}”"
+    的搜尋，共有#{@items.total_entries}筆搜尋結果
+  = render "partials/product_list", category: @category, items: @items
+  .text-align
+    = pagination_links(@items)

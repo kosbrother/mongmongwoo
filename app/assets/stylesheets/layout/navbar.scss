@@ -7,9 +7,6 @@
       .icon-bar{
         background-color: $navbar-toggle-color;
       }
-    > .navbar-toggle{
-      border-color: $navbar-toggle-color;
-    }
     > .navbar-toggle:hover, .navbar-toggle:focus {
       background-color: $nav-background-color;
     }
@@ -167,6 +164,16 @@
 @media screen and (max-width: 768px) {
   .nav-bar{
     margin-bottom: 15px;
+    .navbar-header{
+      #nav-drop{
+        border: none;
+        margin-right: -10px;
+      }
+      .logo-block{
+        padding: 3px 0;
+        font-size: 24px;
+      }
+    }
     .modal{
       > .modal-dialog {
         width: 90%;
@@ -188,9 +195,12 @@
         }
       }
     }
-    .nav-list{
+    #nav-bar-collapse .nav-list{
       .dropdown-menu{
         margin: 0 -25px;
+      }
+      .user{
+        margin: 0 10px;
       }
     }
   }

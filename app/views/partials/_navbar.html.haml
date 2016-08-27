@@ -11,7 +11,11 @@
         = image_tag('icons/logo.png', class: 'logo')
         .name
           萌萌屋
-    / Collect the nav links, forms, and other content for toggling
+      .search-bars.visible-xs-inline-block
+        = form_tag search_items_path, method: :get do
+          =text_field_tag :query, params[:query], placeholder: "請輸入關鍵字", class: "search"
+          %button.search-btn
+            %span.glyphicon.glyphicon-search.search-icon{:type => "submit"}
     - if current_user.nil?
       = render 'partials/sessions/login'
       = render 'partials/sessions/register'
@@ -19,6 +23,12 @@
       = render 'partials/sessions/sent_success'
     #nav-bar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
+        %li.nav-list.hidden-xs
+          .search-bars
+            = form_tag search_items_path, method: :get do
+              =text_field_tag :query, params[:query], placeholder: "請輸入關鍵字", class: "search"
+              %button.search-btn
+                %span.glyphicon.glyphicon-search.search-icon{:type => "submit"}
         %li.nav-list.visible-xs-block
           .dropdown
             .list.diamond.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
