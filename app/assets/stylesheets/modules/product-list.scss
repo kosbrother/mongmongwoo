@@ -9,28 +9,35 @@
     >.image{
       overflow: hidden;
       height: 170px;
+      .special-price-tag{
+        background-image: image-url("icons/ic_special_price_web.png");
+        position: absolute;
+        height: 73px;
+        left: 0px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-position: right 25px top;
+      }
     }
     >.text{
-      padding: 5px 0;
       margin: 5px 5px;
       color: #262626;
       height: 25px;
-      font-size: 15px;
+      font-size: 16px;
     }
     >.price{
       color: $price-font-color;
       font-size: $price-font-size;
-      margin: 0 10px;
-      > span{
-        float: right;
-      }
+      margin: 5px;
       > .special{
         font-size: 12px;
         color: #4a4a4a;
         float: none;
       }
       > .-delete{
+        text-indent: 5px;
         text-decoration: line-through;
+        display: inline-block;
       }
     }
   }
@@ -38,23 +45,32 @@
 
 @media screen and (max-width: 768px)  {
   .product-list {
-    height: 145px;
+    height: 153px;
     > a {
       > .image {
         overflow: hidden;
         height: 90px;
+        .special-price-tag{
+          background-image: image-url("icons/ic_special_price_mobile.png");
+          background-position: right 25px top;
+          left: 0px;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-position: right 10px top;
+          height: 44px;
+        }
       }
       > .text {
-        height: 37px;
-        padding: 5px;
+        height: 15px;
+        padding: 0 5px;
         margin: 0;
         font-size: 12px;
       }
       > .price{
-        height: 20px;
+        height: 15px;
         font-size: 12px;
         text-align: left;
-        margin: 0 5px;
+        margin: 5px;
         > .special{
           font-size: 10px;
         }
