@@ -1,0 +1,14 @@
+.content-box-large.box-with-header
+  .header-btn
+    .pull-right
+      = link_to "返回母分類列表", parent_category_path(@category), class: "btn btn-default"
+      = link_to "新增子分類", new_admin_category_path(parent_id: @category.id), class: "btn btn-default"
+    %h2
+      #{@category.name}
+      - if @parent_category
+        %span.parent_category（母分類：#{@parent_category.name}）
+    %p.lead 子分類列表
+    = render_pagination(@child_categories)
+    %p.help-block
+    = render "table", categories: @child_categories
+    = render_pagination(@child_categories)

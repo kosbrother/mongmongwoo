@@ -45,6 +45,7 @@ class Item < ActiveRecord::Base
   scope :with_sold_items_sales_result, -> { joins(:order_items).select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id").order('subtotal DESC') }
 
   acts_as_paranoid
+  acts_as_taggable
 
   self.per_page = 15
 

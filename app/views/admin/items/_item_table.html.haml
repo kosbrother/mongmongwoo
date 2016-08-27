@@ -34,6 +34,10 @@
       %td{colspan: "5"}
         = number_to_currency(item.cost, unit: "¥ ")
     %tr
+      %td.label-cell 商品標籤
+      %td{colspan: "19"}
+        = item.tag_list
+    %tr
       %td.label-cell 商品備註
       %td{colspan: "19"}
         = item.note
