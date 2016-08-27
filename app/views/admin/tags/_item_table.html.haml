@@ -1,0 +1,10 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      %th.small 編號
+      %th.large-small 名稱
+  %tbody
+    - items.each do |item|
+      %tr
+        %td= item.id
+        %td= link_to item.name, admin_item_path(item), target: "_blank"

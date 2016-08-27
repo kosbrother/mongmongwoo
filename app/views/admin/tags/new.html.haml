@@ -3,4 +3,5 @@
     .panel-title
       %h3 新增標籤
   .panel-body
-    = render "form"
+    = form_tag admin_tags_path, class: "form-horizontal" do
+      = render "form"

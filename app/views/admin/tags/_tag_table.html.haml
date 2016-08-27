@@ -1,0 +1,16 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      %th.small 編號
+      %th.large-small 名稱
+      %th.large-small 標註的商品
+      %th.small 操作
+  %tbody
+    - tags.each do |tag|
+      %tr
+        %td= tag.id
+        %td= tag.name
+        %td= link_to "點擊查看", admin_tag_path(tag)
+        %td
+          = link_to '編輯', edit_admin_tag_path(tag), class: 'btn btn-default'
+          = link_to '刪除', admin_tag_path(tag), class: 'btn btn-warning', method: :delete

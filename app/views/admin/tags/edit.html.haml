@@ -1,6 +1,7 @@
 .content-box-large
   .panel-heading
     .panel-title
-      %h3 編輯分類
+      %h3 編輯標籤
   .panel-body
-    = render "form"
+    = form_tag admin_tag_path(@tag), method: :patch, class: "form-horizontal" do
+      = render "form"
