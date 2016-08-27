@@ -51,16 +51,32 @@ class Admin::AdminCartItemsController < AdminController
   end
 
   def import_excel
+    errors = []
     xlsx = Roo::Spreadsheet.open(params['excel_file'], extension: :xlsx)
-    records = xlsx.parse(taobao_supplier: '商家', item_id: '商品編號', item_spec_id: '商品樣式編號', item_quantity: '採購量')
+    records = xlsx.parse(item_id: '商品編號', item_spec_id: '商品樣式編號', item_quantity: '採購量')
+
     records.each_with_index do |hash, index|
       next if index == 0
-      taobao_supplier_id = TaobaoSupplier.find_by(name: hash[:taobao_supplier]).id
+      item = Item.find(hash[:item_id])
 
-      create_cart_item(taobao_supplier_id, hash[:item_id], hash[:item_spec_id], hash[:item_quantity])
+      unless item.specs.map(&:id).include?(hash[:item_spec_id])
+        error = "第 #{index + 1} 行的商品樣式編號錯誤，該商品沒有編號 #{hash[:item_spec_id]} 的樣式"
+        errors << error
+      end
     end
 
-    redirect_to :back
+    if errors.present?
+      @error_messages = errors
+      render "admin/admin_carts/import_excel"
+    else
+      records.each_with_index do |hash, index|
+        next if index == 0
+        create_cart_item(Item.find(hash[:item_id].taobao_supplier_id), hash[:item_id], hash[:item_spec_id], hash[:item_quantity])
+      end
+
+      flash[:notice] = "訂購資料匯入完成"
+      redirect_to checkout_admin_admin_carts_path
+    end
   end
 
   private
