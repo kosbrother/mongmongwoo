@@ -2,7 +2,7 @@ class StockSpec < ActiveRecord::Base
   include AdminCartInformation
   
   after_update :sef_item_spec_off_shelf, if: :stock_empty_and_stop_replenish?
-  after_create :set_item_and_item_spec_on_shelf
+  after_create :set_on_shelf_when_amout_larger_than_zero
 
   scope :recent, -> { order(id: :DESC) }
 
@@ -35,7 +35,7 @@ class StockSpec < ActiveRecord::Base
     item_spec.update_attribute(:status, ItemSpec.statuses["on_shelf"])
   end
 
-  def set_item_and_item_spec_on_shelf
+  def set_on_shelf_when_amout_larger_than_zero
     update_item_and_item_spec_status if amount > 0
   end
 end
