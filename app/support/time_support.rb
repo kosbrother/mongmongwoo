@@ -16,6 +16,6 @@ class TimeSupport
   end
 
   def self.within_days(number)
-    Time.current.to_date.prev_day(number).beginning_of_day..Time.current.to_date.end_of_day
+    (Time.current - number.days)..Time.current
   end
 end

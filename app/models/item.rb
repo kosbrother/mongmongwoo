@@ -112,7 +112,7 @@ class Item < ActiveRecord::Base
   end
 
   def sales_within_30_days
-    OrderItem.where(created_at: Time.current.to_date.prev_day(30)..Time.current.to_date).select('COALESCE(SUM(order_items.item_quantity), 0)as m_sales_amount, COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) as m_subtotal').find_by(source_item_id: id)
+    OrderItem.where(created_at: TimeSupport.within_days(30)).select('COALESCE(SUM(order_items.item_quantity), 0)as m_sales_amount, COALESCE(SUM(order_items.item_quantity * order_items.item_price), 0) as m_subtotal').find_by(source_item_id: id)
   end
 
   def sales_quantity
