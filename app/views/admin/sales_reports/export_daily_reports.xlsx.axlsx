@@ -49,16 +49,12 @@ wb.add_worksheet(name: "建議下架清單") do |sheet|
 end
 
 wb.add_worksheet(name: "昨日銷售資訊") do |sheet|
-  sheet.add_row ['昨日總訂單數', '昨日總銷售額']
-  sheet.add_row [total_quantity, total_income]
-end
-
-wb.add_worksheet(name: "回購訂單資訊") do |sheet|
-  sheet.add_row ['回購訂單數', '回購訂單金額']
-  sheet.add_row [repurchased_quantity, repurchased_income]
-end
-
-wb.add_worksheet(name: "取消訂單資訊") do |sheet|
-  sheet.add_row ['取消訂單數', '取消訂單金額']
-  sheet.add_row [cancel_quantity, cancel_income]
+  sheet.add_row ['昨日總訂單數', '昨日總銷售額'], :style => Axlsx::STYLE_THIN_BORDER
+  sheet.add_row [total_quantity, total_income], :style => Axlsx::STYLE_THIN_BORDER
+  sheet.add_row
+  sheet.add_row ['回購訂單數', '回購訂單金額'], :style => Axlsx::STYLE_THIN_BORDER
+  sheet.add_row [repurchased_quantity, repurchased_income], :style => Axlsx::STYLE_THIN_BORDER
+  sheet.add_row
+  sheet.add_row ['取消訂單數', '取消訂單金額'], :style => Axlsx::STYLE_THIN_BORDER
+  sheet.add_row [cancel_quantity, cancel_income], :style => Axlsx::STYLE_THIN_BORDER
 end
