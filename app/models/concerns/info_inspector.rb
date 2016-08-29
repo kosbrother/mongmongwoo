@@ -2,16 +2,16 @@ module InfoInspector
   extend ActiveSupport::Concern
 
   included do
-    after_save :set_blacklisted_by_checking_order_info, :set_is_repurchased_by_checking_order_info
+    after_save :check_blacklisted, :check_repurchased
   end
 
-  def set_blacklisted_by_checking_order_info
+  def check_blacklisted
     if has_data_in_blacklist? || invalid_data_format?
       order.update_column(:is_blacklisted, true)
     end
   end
 
-  def set_is_repurchased_by_checking_order_info
+  def check_repurchased
     if is_repurchased_order_info?
       order.update_column(:is_repurchased, true)
     end

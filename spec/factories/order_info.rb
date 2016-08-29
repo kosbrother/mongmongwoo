@@ -10,7 +10,7 @@ FactoryGirl.define do
       info.ship_store_name = info.store.store_code
     end
 
-    after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :set_blacklisted_by_checking_order_info) }
-    after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :set_is_repurchased_by_checking_order_info) }
+    after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :check_blacklisted) }
+    after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :check_repurchased) }
   end
 end
