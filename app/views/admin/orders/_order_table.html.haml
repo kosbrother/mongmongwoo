@@ -15,7 +15,7 @@
       %th.small-mid 操作
   %tbody
     - orders.each do |order|
-      %tr{id: "order-id-#{order.id}", class: "#{repurchased_order_class(order)}"}
+      %tr{id: "order-id-#{order.id}", class: "#{set_class_if_repurchased(order)}"}
         %td.item-id-cell
           = order.id
         %td
