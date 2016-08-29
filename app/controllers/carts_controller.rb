@@ -4,6 +4,7 @@ class CartsController < ApplicationController
   layout 'cart'
   skip_before_action :verify_authenticity_token, only: :info
   before_action  :load_categories
+  include DeviceHelper
 
   def checkout
     @step = Cart::STEP[:checkout]
@@ -32,13 +33,14 @@ class CartsController < ApplicationController
     cookies[:email] = params[:email]
     cookies[:phone] = params[:phone]
 
-    url = generate_url(ENV['ALL_PAY_URL'],
-                       MerchantID: ENV['MERCHANT_ID'],
-                       MerchantTradeNo: '1111',
-                       LogisticsType: 'CVS',
-                       LogisticsSubType: 'UNIMART',
-                       IsCollection: 'Y',
-                       ServerReplyURL: store_reply_url)
+    url_query = {MerchantID: ENV['MERCHANT_ID'],
+                 MerchantTradeNo: '1111',
+                 LogisticsType: 'CVS',
+                 LogisticsSubType: 'UNIMART',
+                 IsCollection: 'Y',
+                 ServerReplyURL: store_reply_url}
+    url_query = url_query.merge(Device: 1) if mobile?
+    url = generate_url('http://logistics.allpay.com.tw/Express/map', url_query)
 
     render json: {url: url}
   end

@@ -19,10 +19,6 @@ module ApplicationHelper
     image_tag("icons/category_header/#{id}.png")
   end
 
-  def mobile?
-    request.user_agent =~ /Android/i
-  end
-
   def pagination_links(collection, options = {})
     options[:renderer] ||= BootstrapPaginationHelper::LinkRenderer
     options[:class] ||= 'pagination pagination-centered'
