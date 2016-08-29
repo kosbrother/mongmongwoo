@@ -4,12 +4,12 @@ class Admin::SalesReportsController < AdminController
   def item_sales_result
     params[:start_date] ||=  Time.current.to_date.prev_day(7)
     params[:end_date] ||=  Time.current.to_date
-    date_range =  params[:start_date] .. params[:end_date]
+    date_range =  params[:start_date].in_time_zone .. params[:end_date].in_time_zone.end_of_day
     @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_result.where('order_items.created_at': date_range)
   end
 
   def export_item_sales_result
-    date_range =  params[:start_date] .. params[:end_date]
+    date_range =  params[:start_date].in_time_zone .. params[:end_date].in_time_zone.end_of_day
     @sales_result = Item.includes(:taobao_supplier).with_sold_items_sales_result.where('order_items.created_at': date_range)
   end
 
