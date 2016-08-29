@@ -6,7 +6,7 @@ module AndroidApp
   end
 
   def app_index_url
-    "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{able_path}"
+    "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{able_path}" if able_path
   end
 
   def able_path
