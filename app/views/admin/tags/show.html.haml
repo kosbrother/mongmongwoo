@@ -1,0 +1,10 @@
+.content-box-large.box-with-header
+  .header-btn
+    .pull-right
+      = link_to "返回標籤列表", admin_tags_path, class: "btn btn-default"
+    %h2 #{@tag.name}
+    %p.lead 標註的商品列表
+    = render_pagination(@items)
+    %p.help-block
+    = render "item_table", items: @items
+    = render_pagination(@items)

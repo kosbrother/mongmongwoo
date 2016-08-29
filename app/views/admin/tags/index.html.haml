@@ -1,0 +1,10 @@
+.content-box-large.box-with-header
+  .header-btn
+    .pull-right
+      =link_to '新增', new_admin_tag_path, class: 'btn btn-default'
+    %h2 標籤列表
+    %p.help-block
+    = render_pagination(@tags)
+    %p.help-block
+    = render "tag_table", tags: @tags
+    = render_pagination(@tags)

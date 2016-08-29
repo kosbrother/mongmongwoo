@@ -164,4 +164,10 @@ module Admin::ItemsHelper
       subcategory_checkbox(f, parent_category_ids)
     end
   end
+
+  def tag_checkbox(f)
+    f.collection_check_boxes :tag_list, ActsAsTaggableOn::Tag.all, :name, :name do |cb|
+      cb.label(class: "checkbox-inline") {cb.check_box(class: "checkbox") + cb.text}
+    end
+  end
 end

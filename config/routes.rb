@@ -165,6 +165,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :tags
+
     resources :users, only: [:index, :show, :create, :update] do
       collection do
         post "import_user"
