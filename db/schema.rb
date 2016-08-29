@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825151421) do
+ActiveRecord::Schema.define(version: 20160829031139) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -300,7 +300,7 @@ ActiveRecord::Schema.define(version: 20160825151421) do
 
   create_table "messages", force: :cascade do |t|
     t.string   "message_type", limit: 255
-    t.string   "title",        limit: 255
+    t.text     "title",        limit: 65535
     t.text     "content",      limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
