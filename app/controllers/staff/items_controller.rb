@@ -8,7 +8,7 @@ class Staff::ItemsController < StaffController
   end
 
   def create
-    @item = Item.new(item_params)
+    @item = Item.new(item_with_tag_params)
 
     if @item.save
       flash[:notice] = "新增商品成功"
@@ -20,7 +20,7 @@ class Staff::ItemsController < StaffController
   end
 
   def update
-    if @item.update(item_params)
+    if @item.update(item_with_tag_params)
       flash[:notice] = "成功更新商品"
       redirect_to staff_item_path(@item)
     else
@@ -39,6 +39,11 @@ class Staff::ItemsController < StaffController
 
   def item_params
     params.require(:item).permit(:name, :price, :special_price, :cover, :slug, :description, :url, :taobao_supplier_id, :cost, :taobao_name, category_ids: [])
+  end
+
+  def item_with_tag_params
+    tag_list = params[:item][:tag_list].join(", ")
+    item_params.merge(tag_list: tag_list)
   end
 
   def find_item
