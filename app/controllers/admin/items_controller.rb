@@ -85,7 +85,7 @@ class Admin::ItemsController < AdminController
 
   def item_with_tag_params
     tag_list = params[:item][:tag_list].join(", ")
-    item_params.merge!(tag_list: tag_list)
+    item_params.merge(tag_list: tag_list)
   end
 
   def find_item
