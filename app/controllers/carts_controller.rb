@@ -20,6 +20,9 @@ class CartsController < ApplicationController
     @step = Cart::STEP[:info]
     if params['CVSStoreID']
       @store = Store.find_by(store_code: params['CVSStoreID'])
+      cookies[:store_id] = @store.id
+    elsif cookies[:store_id]
+      @store = Store.find_by(id: cookies[:store_id])
     end
     set_meta_tags title: "訂購資料", noindex: true
   end
