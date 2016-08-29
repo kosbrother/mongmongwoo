@@ -38,6 +38,7 @@ class Order < ActiveRecord::Base
   scope :status, -> (status_param) { where(status: status_param) }
   scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
+  scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
 
   acts_as_paranoid
 
@@ -49,11 +50,6 @@ class Order < ActiveRecord::Base
 
   def self.search_by_phone_or_email(phone, email)
     joins(:info).where('ship_phone = ? OR ship_email = ?', phone, email).recent
-  end
-
-  def self.daily_order_quantity_and_income
-    result = created_at_within((Time.current - 1.days).midnight..Time.current.midnight).select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income")[0]
-    [result["quantity"], result["income"]]
   end
 
   def survey_mail
