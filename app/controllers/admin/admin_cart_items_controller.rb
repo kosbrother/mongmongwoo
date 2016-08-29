@@ -71,7 +71,7 @@ class Admin::AdminCartItemsController < AdminController
     else
       records.each_with_index do |hash, index|
         next if index == 0
-        create_cart_item(Item.find(hash[:item_id].taobao_supplier_id), hash[:item_id], hash[:item_spec_id], hash[:item_quantity])
+        create_cart_item(Item.find(hash[:item_id]).taobao_supplier_id, hash[:item_id], hash[:item_spec_id], hash[:item_quantity])
       end
 
       flash[:notice] = "訂購資料匯入完成"
