@@ -48,7 +48,17 @@ wb.add_worksheet(name: "建議下架清單") do |sheet|
   end
 end
 
-wb.add_worksheet(name: "昨日銷售量") do |sheet|
+wb.add_worksheet(name: "昨日銷售資訊") do |sheet|
   sheet.add_row ['昨日總訂單數', '昨日總銷售額']
-  sheet.add_row [daily_order_quantity, daily_sales_income]
+  sheet.add_row [total_quantity, total_income]
+end
+
+wb.add_worksheet(name: "回購訂單資訊") do |sheet|
+  sheet.add_row ['回購訂單數', '回購訂單金額']
+  sheet.add_row [repurchased_quantity, repurchased_income]
+end
+
+wb.add_worksheet(name: "取消訂單資訊") do |sheet|
+  sheet.add_row ['取消訂單數', '取消訂單金額']
+  sheet.add_row [cancel_quantity, cancel_income]
 end
