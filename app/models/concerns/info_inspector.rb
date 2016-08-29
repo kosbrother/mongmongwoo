@@ -7,13 +7,13 @@ module InfoInspector
 
   def set_blacklisted_by_checking_order_info
     if has_data_in_blacklist? || invalid_data_format?
-      order.update_column(:is_blacklisted, true) if order
+      order.update_column(:is_blacklisted, true)
     end
   end
 
   def set_is_repurchased_by_checking_order_info
     if is_repurchased_order_info?
-      order.update_column(:is_repurchased, true) if order
+      order.update_column(:is_repurchased, true)
     end
   end
 

@@ -16,6 +16,7 @@ class Api::V4::OrdersController < ApiController
       device_of_order = DeviceRegistration.find_by(registration_id: params[:registration_id])
       @order.device_registration = device_of_order
       errors << @order.errors.messages unless @order.save
+      raise ActiveRecord::Rollback if @order.invalid?
 
       info = OrderInfo.new
       info.order_id = @order.id
