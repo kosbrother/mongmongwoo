@@ -59,5 +59,5 @@
                   = link_to "我的收藏", favorite_items_path, class: 'link'
                 %li.list
                   = link_to "登出", signout_path, class: 'link'
-    - if mobile?
+    - if android?
       = render 'partials/app_install_banner'
