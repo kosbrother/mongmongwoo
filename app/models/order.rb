@@ -13,6 +13,8 @@ class Order < ActiveRecord::Base
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
 
   validates_presence_of :user_id, :items_price, :ship_fee, :total
+  validates_numericality_of :items_price, :total, greater_than: 0
+
 
   after_update :reduce_stock_amount_if_status_shipping
 
