@@ -384,10 +384,6 @@ ActiveRecord::Schema.define(version: 20160829031139) do
     t.boolean  "is_blacklisted",                     default: false
   end
 
-  add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
-  add_index "orders", ["device_registration_id"], name: "index_orders_on_device_registration_id", using: :btree
-  add_index "orders", ["is_blacklisted"], name: "index_orders_on_is_blacklisted", using: :btree
-  add_index "orders", ["is_repurchased"], name: "index_orders_on_is_repurchased", using: :btree
   add_index "orders", ["logistics_status_code"], name: "index_orders_on_logistics_status_code", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
