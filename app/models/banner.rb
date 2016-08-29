@@ -1,8 +1,7 @@
 class Banner < ActiveRecord::Base
   include AndroidApp
 
-  BANNER_TYPES = [Category.name, Item.name]
-  BANNER_OPTONS = Banner::BANNER_TYPES.map { |option| [I18n.t(option), option] }
+  BANNER_TYPES = [nil, Category.name, Item.name]
 
   belongs_to :bannerable, polymorphic: true
 
