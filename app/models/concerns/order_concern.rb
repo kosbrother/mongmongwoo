@@ -22,13 +22,13 @@ module OrderConcern
 
   def update_order_status_if_goods_arrive_store_or_pickup
     if logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("門市配達")
-      self.update_columns(status: Order.statuses["已到店"])
+      update_columns(status: Order.statuses["已到店"])
       email_to_notify_pickup
       notification_to_notify_pickup
     elsif logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("消費者成功取件")
-      self.update_columns(status: Order.statuses["完成取貨"])
+      update_columns(status: Order.statuses["完成取貨"])
     elsif logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("廠商未至門市取退貨，商品已退回至大智通")
-      self.update_columns(status: Order.statuses["未取訂貨"])
+      update_columns(status: Order.statuses["未取訂貨"])
     end
   end
 
@@ -46,7 +46,7 @@ module OrderConcern
   end
 
   def set_to_blacklist
-    OrderBlacklist.find_or_create_by(email: self.ship_email, phone: self.ship_phone)
-    self.info.update_column(:is_blacklisted, true)
+    OrderBlacklist.find_or_create_by(email: ship_email, phone: ship_phone)
+    update_column(:is_blacklisted, true)
   end
 end

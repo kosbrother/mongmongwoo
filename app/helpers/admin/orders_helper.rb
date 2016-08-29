@@ -34,7 +34,7 @@ module Admin::OrdersHelper
     end
   end
 
-  def blacklist_warning(order)
+  def blacklist_notice(order)
     if order.is_blacklisted
       content_tag(:span, "問題訂單", class: "label label-danger")
     end
@@ -68,6 +68,18 @@ module Admin::OrdersHelper
     content_tag(:ul, class: 'nav nav-tabs') do
       li_restock_status_link(order_status: order_status, restock_status: false, link_text: "未重入庫存") +
       li_restock_status_link(order_status: order_status, restock_status: true, link_text: "已重入庫存") 
+    end
+  end
+
+  def set_class_if_repurchased(order)
+    if order.is_repurchased
+      "info"
+    end
+  end
+
+  def repurchased_notice(order)
+    if order.is_repurchased
+      content_tag(:span, "回購訂單", class: "label label-success")
     end
   end
 end

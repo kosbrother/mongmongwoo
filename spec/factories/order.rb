@@ -5,6 +5,5 @@ FactoryGirl.define do
     items_price Faker::Commerce.price
     total Faker::Commerce.price
     ship_fee Faker::Commerce.price
-    association :info, factory: :order_info
   end
 end
