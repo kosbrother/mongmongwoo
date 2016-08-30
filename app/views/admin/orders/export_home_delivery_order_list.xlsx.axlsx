@@ -1,6 +1,0 @@
-wb = xlsx_package.workbook
-wb.add_worksheet(name: @sheet_name) do |sheet|
-  @order_list.each do |order|
-    sheet.add_row [order.ship_name, "#{order.ship_phone}", order.zip_code, order.ship_address, "4277907101", "", order.id, "", "1", "文具飾品", order.total, "1", order.note, "", ""], style: Axlsx::STYLE_THIN_BORDER
-  end
-end

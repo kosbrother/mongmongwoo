@@ -19,7 +19,7 @@
               = link_to '退貨訂單EXCEL(尚未入庫)', export_returned_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-default'
           - if params[:status].to_i == Order.statuses["宅配"]
             .pull-right
-              = link_to "下載宅配訂單EXCEL", export_home_delivery_order_list_admin_orders_path(format: 'xlsx'), class: "btn btn-default"
+              = link_to "下載宅配訂單EXCEL", export_home_delivery_order_list_admin_orders_path, class: "btn btn-default"
         %h2.header-title 訂單狀態分類列表
       %p.help-block
       %ul.nav.nav-tabs
