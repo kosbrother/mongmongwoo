@@ -52,6 +52,7 @@ gem 'axlsx', git: 'https://github.com/randym/axlsx.git'
 gem 'axlsx_rails'
 gem 'roo', '~> 2.4.0'
 gem 'acts-as-taggable-on', '~> 4.0'
+gem 'spreadsheet'
 
 group :development do
   gem "better_errors"
