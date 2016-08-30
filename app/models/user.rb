@@ -88,4 +88,8 @@ class User < ActiveRecord::Base
   def order_times(order_status)
     Order.where(status: order_status, user_id: id).size
   end
+
+  def not_anonymous_user?
+    id != ANONYMOUS
+  end
 end

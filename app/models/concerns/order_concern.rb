@@ -8,7 +8,7 @@ module OrderConcern
   def notify_user_if_arrive_store
     if (status_changed? && status == "已到店")
       email_to_notify_pickup
-      UserNotifyService.new(user).notify_user_to_pick_up(self)
+      UserNotifyService.new(user).notify_to_pick_up(self)
     end
   end
 
@@ -22,7 +22,7 @@ module OrderConcern
     if logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("門市配達")
       update_columns(status: Order.statuses["已到店"])
       email_to_notify_pickup
-      UserNotifyService.new(user).notify_user_to_pick_up(self)
+      UserNotifyService.new(user).notify_to_pick_up(self)
     elsif logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("消費者成功取件")
       update_columns(status: Order.statuses["完成取貨"])
     elsif logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("廠商未至門市取退貨，商品已退回至大智通")
