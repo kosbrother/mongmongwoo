@@ -5,6 +5,7 @@ class Message < ActiveRecord::Base
 
   has_many :message_records, dependent: :destroy
   has_many :users, through: :message_records
+  belongs_to :messageable, polymorphic: true
 
   scope :official_messages, -> { where(message_type: Message.message_types["萌萌屋官方訊息"]).order(created_at: :DESC) }
   scope :select_api_fields, -> { select(:id, :message_type, :title, :content, :created_at) }
