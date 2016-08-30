@@ -23,7 +23,7 @@ class GcmNotifyService
   end
 
   def send_message_notification(device_id, message)
-    registration_id = [device_id]
+    registration_id = [DeviceRegistration.find(device_id).registration_id]
     options = generate_options_for_send_message(message)
     @gcm.send(registration_id, options)
   end
