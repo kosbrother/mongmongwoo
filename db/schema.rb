@@ -447,6 +447,7 @@ ActiveRecord::Schema.define(version: 20160829092240) do
     t.boolean  "is_expired",              default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title",       limit: 255
   end
 
   add_index "shopping_point_campaigns", ["is_expired"], name: "index_shopping_point_campaigns_on_is_expired", using: :btree

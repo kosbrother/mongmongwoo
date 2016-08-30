@@ -1,0 +1,1 @@
+ShoppingPointCampaign.find_or_create_by(id: ShoppingPointCampaign::REGISTER_ID, title: '註冊就送購物金', description: '註冊就送購物金', amount: 25)
