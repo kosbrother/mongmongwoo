@@ -27,6 +27,11 @@ class ShoppingPointManager
     order.shopping_point_records.any?{|record| record.amount > 0}
   end
 
+  def self.create_register_shopping_point(user_id)
+    campaign = ShoppingPointCampaign.find(ShoppingPointCampaign::REGISTER_ID)
+    ShoppingPoint.create(user_id: user_id, point_type: ShoppingPoint.point_types["活動購物金"], amount: campaign.amount, shopping_point_campaign_id: campaign.id)
+  end
+
   private
 
   def self.reduce_shopping_point(shopping_point, reduce_amount, order_id)
