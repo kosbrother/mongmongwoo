@@ -69,4 +69,10 @@ class Api::V4::OrdersController < ApiController
       render status: 200, json: {data: @order.as_json(only: [:id])}
     end
   end
+
+  def show
+    order = Order.includes(:user, :info, :items).find(params[:id])
+    result_order = order.generate_result_order
+    render status: 200, json: {data: result_order}
+  end
 end

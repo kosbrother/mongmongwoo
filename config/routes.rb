@@ -326,7 +326,7 @@ Rails.application.routes.draw do
             delete 'item_specs/:item_spec_id' => 'wish_lists#destroy'
           end
         end
-        resources :orders do
+        resources :orders, only: [] do
           member do
             patch "cancel"
           end
@@ -363,7 +363,7 @@ Rails.application.routes.draw do
     end
 
     namespace :v4 do
-      resources :orders, only: [:create]
+      resources :orders, only: [:create, :show]
       resources :banners, only: [:index]
       resources :oauth_sessions, only: [:create]
       resources :mmw_registrations, only: [:create] do

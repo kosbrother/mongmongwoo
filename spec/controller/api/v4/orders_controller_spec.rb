@@ -153,4 +153,22 @@ describe Api::V4::OrdersController, type: :controller do
       end
     end
   end
+
+  describe "get #show" do
+    let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    let!(:order_info) { FactoryGirl.create(:order_info) }
+    let!(:order) { FactoryGirl.create(:order, info: order_info, items: [order_item]) }
+    before :each do
+      get :show, id: order.id
+    end
+    context 'when order id provide' do
+      it 'does generate correct order info' do
+        result = JSON.parse(response.body)["data"]
+        the_order = Order.find(order.id)
+        json = the_order.generate_result_order.to_json
+        expect(result.to_json).to eq(json)
+      end
+    end
+  end
 end
