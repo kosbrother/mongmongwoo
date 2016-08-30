@@ -44,7 +44,6 @@ Rails.application.routes.draw do
       get :favorite
       get :remove
     end
-
   end
   # 助理後台
   namespace :staff do
@@ -369,6 +368,10 @@ Rails.application.routes.draw do
         collection do
           post "login"
         end
+      end
+
+      resources :users, only: [] do
+        resources :shopping_point_campaigns, only: [:index]
       end
     end
   end
