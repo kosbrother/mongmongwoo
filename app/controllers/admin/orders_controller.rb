@@ -109,7 +109,7 @@ class Admin::OrdersController < AdminController
   end
 
   def export_home_delivery_order_list
-    order_list = Order.includes(:user).joins(:info).where(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] }).status(Order.statuses["宅配"]).recent
+    order_list = Order.includes(:user).home_delivery.recent
     sheet_name = "宅配訂單清單"
     filename = "home_delivery_order_list.xls"
     tempfile = Tempfile.new(filename)
