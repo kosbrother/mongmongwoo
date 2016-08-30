@@ -206,6 +206,7 @@ Rails.application.routes.draw do
         get "open_barcode_tab"
         get "export_returned_order_list"
         patch "update_to_processing"
+        get "export_home_delivery_order_list"
       end
 
       member do

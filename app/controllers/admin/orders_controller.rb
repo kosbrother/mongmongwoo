@@ -108,6 +108,13 @@ class Admin::OrdersController < AdminController
     render 'export_order_list'
   end
 
+  def export_home_delivery_order_list
+    @order_list = Order.includes(:user).joins(:info).where(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] }).status(Order.statuses["宅配"]).recent
+    @sheet_name = "宅配訂單清單"
+
+    render "export_home_delivery_order_list"
+  end
+
   def restock
     order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
     order.restock_order_items
