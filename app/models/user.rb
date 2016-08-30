@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
     Order.where(status: order_status, user_id: id).size
   end
 
-  def not_anonymous_user?
-    id != ANONYMOUS
+  def anonymous_user?
+    id == ANONYMOUS
   end
 end

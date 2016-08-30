@@ -12,7 +12,7 @@ class UserNotifyService
   end
 
   def notify_to_pick_up(order)
-    message = user.messages.create(order_message_params(order)) if user.not_anonymous_user?
+    message = user.messages.create(order_message_params(order)) if !(user.anonymous_user?)
     GcmNotifyService.new.send_pickup_notification(order, message) if order.device_registration
   end
 
