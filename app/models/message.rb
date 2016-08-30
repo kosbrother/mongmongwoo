@@ -1,4 +1,6 @@
 class Message < ActiveRecord::Base
+  include AndroidApp
+
   enum message_type: { "萌萌屋官方訊息": "0", "個人訊息": "1" }
 
   validates_presence_of :title, :content
@@ -13,5 +15,12 @@ class Message < ActiveRecord::Base
 
   def self.message_type_lists
     message_types.to_a
+  end
+
+  def able_path
+    case messageable_type
+    when ShoppingPointCampaign.name
+      shopping_point_campaigns_path
+    end
   end
 end

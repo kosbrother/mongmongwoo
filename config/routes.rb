@@ -45,6 +45,9 @@ Rails.application.routes.draw do
       get :remove
     end
   end
+
+  resources :shopping_point_campaigns, only: [:index]
+
   # 助理後台
   namespace :staff do
     root "categories#index"
@@ -371,6 +374,7 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: [] do
+        resources :my_messages, only: [:index]
         resources :shopping_point_campaigns, only: [:index]
       end
     end
