@@ -110,19 +110,9 @@ class Admin::OrdersController < AdminController
 
   def export_home_delivery_order_list
     order_list = Order.includes(:user).home_delivery.recent
-    sheet_name = "宅配訂單清單"
-    filename = "home_delivery_order_list.xls"
-    tempfile = Tempfile.new(filename)
-    workbook = Spreadsheet::Workbook.new
-    sheet = workbook.create_worksheet name: sheet_name
-
-    order_list.each_with_index do |order, index|
-      row = sheet.row(index)
-      row.push order.ship_name, order.ship_phone, order.zip_code, order.ship_address, "4277907101", "", order.id, "", "1", "文具飾品", order.total, "1", order.note, "", ""
-    end
-
-    workbook.write(tempfile.path)
-    send_file tempfile.path, :filename => filename
+    file_name = "home_delivery_order_list.xls"
+    spreadsheet = Order.generate_home_delivery_order_xls(order_list)
+    send_data(spreadsheet, type: "application/vnd.ms-excel", filename: file_name)
   end
 
   def restock
