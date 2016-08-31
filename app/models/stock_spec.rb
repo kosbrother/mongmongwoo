@@ -25,17 +25,11 @@ class StockSpec < ActiveRecord::Base
     amount == 0 and item_spec.is_stop_recommend == true
   end
 
-  def update_item_and_item_spec_status
-    if item.ever_on_shelf == false
-      item.update_attributes(status: Item.statuses["on_shelf"], ever_on_shelf: true, created_at: Time.current)
-    else
-      item.update_attribute(:status, Item.statuses["on_shelf"])
-    end
-
+  def set_item_spec_on_shelf
     item_spec.update_attribute(:status, ItemSpec.statuses["on_shelf"])
   end
 
   def set_on_shelf_when_amout_larger_than_zero
-    update_item_and_item_spec_status if amount > 0
+    set_item_spec_on_shelf if amount > 0
   end
 end
