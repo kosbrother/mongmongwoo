@@ -78,7 +78,12 @@ class Admin::OrdersController < AdminController
   end
 
   def change_status_to_transfer
-    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+    if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
+      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+    elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
+      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).home_delivery.recent
+    end
+
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
     end
@@ -86,7 +91,11 @@ class Admin::OrdersController < AdminController
   end
 
   def export_processing_order_list
-    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+    if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
+      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+    elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
+      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).home_delivery.recent
+    end
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -110,7 +119,7 @@ class Admin::OrdersController < AdminController
   end
 
   def export_home_delivery_order_list
-    order_list = Order.includes(:user).home_delivery.recent
+    order_list = Order.includes(:user).status(Order.statuses['處理中']).home_delivery.recent
     file_name = "home_delivery_order_list.xls"
     spreadsheet = Order.generate_home_delivery_order_xls(order_list)
     send_data(spreadsheet, type: "application/vnd.ms-excel", filename: file_name)

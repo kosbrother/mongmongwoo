@@ -1,0 +1,8 @@
+.pull-right
+  = link_to '轉配送中', change_status_to_transfer_admin_orders_path(ship_type: params[:ship_type]), class: 'btn btn-default inline-display'
+  = link_to '下載揀貨單EXCEL', export_processing_order_list_admin_orders_path(format: 'xlsx', ship_type: params[:ship_type]), class: 'btn btn-default inline-display'
+  - if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
+    = link_to '物流單', open_barcode_tab_admin_orders_path, remote: true, class: 'btn btn-default inline-display'
+    = link_to '傳送至歐付寶', create_allpay_index_path, remote: true, class: 'btn btn-default inline-display', method: :post
+  - elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
+    = link_to "下載宅配訂單EXCEL", export_home_delivery_order_list_admin_orders_path(format: :xls), class: "btn btn-default"
