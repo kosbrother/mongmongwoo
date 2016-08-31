@@ -52,7 +52,7 @@ class Order < ActiveRecord::Base
 
     orders.each_with_index do |order, index|
       row = sheet.row(index)
-      row.push order.ship_name, order.ship_phone, order.zip_code, order.ship_address, "4277907101", "", order.id, "", "1", "文具飾品", order.total, "1", order.note, "", ""
+      row.push order.ship_name, order.ship_phone, "", order.ship_address, "4277907101", "", order.id, "", "1", "文具飾品", order.total, "1", order.note, "", ""
     end
 
     spreadsheet = StringIO.new
