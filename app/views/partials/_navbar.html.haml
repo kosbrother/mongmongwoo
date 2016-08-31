@@ -58,6 +58,8 @@
                 %li.list
                   = link_to "我的收藏", favorite_items_path, class: 'link'
                 %li.list
+                  = link_to "補貨清單", wish_lists_path, class: 'link'
+                %li.list
                   = link_to "登出", signout_path, class: 'link'
     - if android?
       = render 'partials/app_install_banner'

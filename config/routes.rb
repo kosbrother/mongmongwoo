@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   end
 
   resources :shopping_point_campaigns, only: [:index]
+  resources :wish_lists, only: [:index, :destroy]
 
   # 助理後台
   namespace :staff do

@@ -27,6 +27,11 @@ crumb :favorites do
   parent :root
 end
 
+crumb :wish_lists do
+  link "補貨清單", wish_lists_path
+  parent :root
+end
+
 crumb :shop_infos do
   link "購物明細", shop_infos_path
   parent :root

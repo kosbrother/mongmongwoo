@@ -1,0 +1,29 @@
+- breadcrumb :wish_lists
+.orders
+  .icon-header.-pencil 補貨清單
+  .favorite-list.-wish-lists
+    .header.row.hidden-xs
+      .col-lg-2.col-sm-2 商品照片
+      .col-lg-4.col-sm-3.no-padding 商品名稱
+      .col-lg-2.col-sm-2.no-padding 商品樣式
+      .col-lg-1.col-sm-2.no-padding 商品單價
+      .col-lg-1.col-sm-1.no-padding 現貨數
+      .col-lg-2.col-sm-2 取消通知
+    .divider.hidden-xs
+    .body
+      - @wish_lists.each do |list|
+        .row{id: "row-item-#{list.id}"}
+          .col-lg-2.col-sm-2.col-xs-3.image= image_tag(list.item.cover.icon.url, class: 'cover')
+          .col-lg-4.col-sm-3.col-xs-9.no-padding.xs-padding.name= link_to list.item.name, category_item_path(@category_all, list.item)
+          .col-lg-2.col-sm-2.col-xs-9.no-padding.xs-padding.spec= list.item_spec.style
+          .col-lg-1.col-sm-2.col-xs-3.no-padding.xs-padding.price= price_with_unit(list.item.price)
+          .col-lg-1.col-sm-1.col-xs-3.no-padding.xs-padding.stock= list.item_spec.stock_amount
+          .col-lg-2.col-sm-2.col-xs-2
+            %span.notify{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#modal-#{list.id}"}
+            .modal.fade{ :role => "dialog", :tabindex => "-1", id: "modal-#{list.id}"}
+              .modal-dialog
+                .modal-content
+                  .modal-body= "確定要移除”#{list.item.name}“的補貨通知？"
+                  .modal-footer
+                    %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 取消
+                    = link_to '確定', wish_list_path(list), class: 'btn btn-confirm', method: :delete, remote: true

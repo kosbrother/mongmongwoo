@@ -90,6 +90,22 @@
   }
 }
 
+.-wish-lists {
+  .row {
+    margin: 0;
+  }
+  .body > .row{
+    .spec {
+      text-align: center;
+    }
+    .notify:before{
+      cursor: pointer;
+      content: image_url('icons/ic_bell.png');
+      vertical-align: -webkit-baseline-middle;
+    }
+  }
+}
+
 @media screen and (min-width: 769px) and (max-width: 1200px){
   .favorite-list{
     .body {
@@ -163,6 +179,30 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .-wish-lists {
+    .body > .row{
+      .image{
+        text-align: center;
+        height: 70px;
+        line-height: 70px;
+      }
+      > div{
+        line-height: 27px;
+        height: 25px;
+        text-align: left;
+      }
+      .spec {
+        text-align: left;
+      }
+      .price{
+        margin-top: 0;
+      }
+      .notify:before{
+        float: right;
       }
     }
   }
