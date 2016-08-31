@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
   validates_numericality_of :items_price, :total, greater_than: 0
 
 
-  after_update :reduce_stock_amount_if_status_shipping, :restock_if_status_order_changed
+  after_update :reduce_stock_amount_if_status_shipping, :restock_if_status_changed_from_shipping
 
   belongs_to :user
   has_many :items, class_name: "OrderItem", dependent: :destroy
@@ -146,17 +146,19 @@ class Order < ActiveRecord::Base
           stock_spec.amount -= item.item_quantity
           stock_spec.save
         end
-
-        item.update_column(:restock, false) if item.restock
       end
-
-      update_column(:restock, false) if restock
     end
   end
 
-  def restock_if_status_order_changed
-    if status_changed_to?("訂單變更")
-      restock_order_items
+  def restock_if_status_changed_from_shipping
+    if status_changed_to?("訂單變更") && status_was == "配送中"
+      items.each do |item|
+        stock_spec = StockSpec.find_by(item_spec_id: item.item_spec_id)
+        if stock_spec
+          stock_spec.amount += item.item_quantity
+          stock_spec.save
+        end
+      end
     end
   end
 end

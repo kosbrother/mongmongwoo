@@ -14,14 +14,19 @@ module Admin::OrdersHelper
   end
 
   def able_change_status_to(order)
-    if order.status == "新訂單"
+    case order.status
+    when "新訂單"
       ["訂單取消"]
-    elsif order.status == "配送中"
+    when "處理中"
+      ["訂單取消"]
+    when "配送中"
       ["訂單變更"]
-    elsif order.status == "訂單變更"
-      ["配送中", "訂單取消"]
+    when "完成取貨"
+      ["退貨"]
+    when "訂單變更"
+      ["處理中","配送中", "訂單取消"]
     else
-      ["處理中", "配送中", "已到店", "完成取貨", "未取訂貨", "訂單變更", "退貨"]
+      []
     end
   end
 
