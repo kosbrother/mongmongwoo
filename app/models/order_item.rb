@@ -39,17 +39,8 @@ class OrderItem < ActiveRecord::Base
     item_spec ? item_spec.shipping_item_quantity : 0
   end
 
-  def find_item_spec
-    item.specs.find_by(style: item_style)
-  end
-
-  def find_or_create_stock_spec(item_spec)
-    item.stock_specs.find_or_create_by(item_spec_id: item_spec.id)
-  end
-
   def restock_item
-    spec = item_spec || find_item_spec
-    stock_spec = spec.stock_spec || find_or_create_stock_spec(spec)
+    stock_spec = item_spec.stock_spec || item.stock_specs.create(item_spec: item_spec)
     stock_spec.amount += item_quantity
     stock_spec.save
     update_attribute(:restock, true)
