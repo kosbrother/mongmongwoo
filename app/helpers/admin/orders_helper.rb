@@ -58,6 +58,12 @@ module Admin::OrdersHelper
     end
   end
 
+  def link_to_allpay_barcode(order)
+    if order.status == "配送中" && order.allpay_transfer_id.present?
+      link_to "物流單", barcode_allpay_index_path(order), class: "btn btn-default btn-sm btn-barcode", target: "_blank"
+    end
+  end
+
   def li_restock_status_link(order_status: 0, restock_status: false, link_text: nil)
     content_tag(:li, class: restock_status.to_s == params[:restock] ? 'active' : '' ) do
       link_to link_text, status_index_admin_orders_path(status: order_status, restock: restock_status)
