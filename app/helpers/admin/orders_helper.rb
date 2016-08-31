@@ -93,16 +93,29 @@ module Admin::OrdersHelper
     end
   end
 
-  def li_restock_status_link(order_status: 0, restock_status: false, link_text: nil)
+  def li_restock_status_link(order_status: order_status, restock_status: false, link_text: nil)
     content_tag(:li, class: restock_status.to_s == params[:restock] ? 'active' : '' ) do
       link_to link_text, status_index_admin_orders_path(status: order_status, restock: restock_status)
     end
   end
 
-  def restock_navs(order_status: 0)
+  def restock_navs(order_status: order_status)
     content_tag(:ul, class: 'nav nav-tabs') do
       li_restock_status_link(order_status: order_status, restock_status: false, link_text: "未重入庫存") +
       li_restock_status_link(order_status: order_status, restock_status: true, link_text: "已重入庫存") 
+    end
+  end
+
+  def li_ship_type_link(order_status: order_status, ship_type: ship_type, link_text: nil)
+    content_tag(:li, class: ship_type.to_s == params[:ship_type] ? 'active' : '' ) do
+      link_to link_text, status_index_admin_orders_path(status: order_status, ship_type: ship_type)
+    end
+  end
+
+  def ship_type_navs(order_status: order_status)
+    content_tag(:ul, class: 'nav nav-tabs') do
+      li_ship_type_link(order_status: order_status, ship_type: OrderInfo.ship_types["store_delivery"], link_text: "超商取貨") +
+      li_ship_type_link(order_status: order_status, ship_type: OrderInfo.ship_types["home_delivery"], link_text: "宅配")
     end
   end
 
