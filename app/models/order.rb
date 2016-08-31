@@ -40,7 +40,7 @@ class Order < ActiveRecord::Base
   scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
   scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
-  scope :home_delivery, -> { joins(:info).where(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] }).status(Order.statuses["宅配"]) }
+  scope :home_delivery, -> { joins(:info).where(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] }) }
 
   acts_as_paranoid
 
