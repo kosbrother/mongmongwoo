@@ -60,4 +60,7 @@
           = link_to_restock(order)
           = link_to_send_survey_email(order)
           = link_to_create_refund_shopping_point(order)
+          - if params[:status] == Order.statuses["訂單變更"].to_s && order.note.present?
+            %p.help-block
+            %p 備註：#{order.note}
 = render_pagination(orders)
