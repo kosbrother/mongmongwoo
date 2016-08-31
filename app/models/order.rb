@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :info
 
-  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, :zip_code, :ship_address, to: :info
+  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, :ship_address, to: :info
   delegate :orders, to: :user, prefix: true
 
   scope :recent, -> { order(id: :DESC) }
