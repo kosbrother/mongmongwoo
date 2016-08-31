@@ -39,10 +39,9 @@ Rails.application.routes.draw do
     end
   end
   resources :orders, only: [:index, :show]
-  resources :favorite_items, only: [:index] do
+  resources :favorite_items, only: [:index, :destroy] do
     member do
       get :favorite
-      get :remove
     end
   end
 
