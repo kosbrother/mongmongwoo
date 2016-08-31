@@ -1,7 +1,8 @@
 class CartItemsController < ApplicationController
 
   def create
-    CartItem.create(cart_item_params)
+    cart_item = current_cart.cart_items.find_or_create_by(cart_item_params)
+    cart_item.increment_quantity(params[:cart_item][:item_quantity].to_i)
   end
 
   def update_quantity
@@ -34,7 +35,7 @@ class CartItemsController < ApplicationController
   private
 
   def cart_item_params
-    params.require(:cart_item).permit(:item_id, :item_spec_id, :item_quantity).merge({ cart_id: current_cart.id})
+    params.require(:cart_item).permit(:item_id, :item_spec_id)
   end
 
   def subtotal_and_total_with_shipping(item)
