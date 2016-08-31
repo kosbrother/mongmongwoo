@@ -139,14 +139,18 @@ class Order < ActiveRecord::Base
   end
 
   def reduce_stock_amount_if_status_shipping
-     if status_changed_to?("配送中")
+    if status_changed_to?("配送中")
       items.each do |item|
         stock_spec = StockSpec.find_by(item_spec_id: item.item_spec_id)
         if stock_spec
           stock_spec.amount -= item.item_quantity
           stock_spec.save
         end
+
+        item.update_column(:restock, false) if item.restock
       end
+
+      update_column(:restock, false) if restock
     end
   end
 
