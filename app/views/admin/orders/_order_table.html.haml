@@ -26,23 +26,7 @@
               %span{id: "current-#{order.id}-status"}= order.status
               %span.caret
             %ul.dropdown-menu.list-group
-              - unless order.status == "新訂單"
-                %li
-                  = link_to_update_order_status("處理中", order)
-                %li
-                  = link_to_update_order_status("配送中", order)
-                %li
-                  = link_to_update_order_status("已到店", order)
-                %li
-                  = link_to_update_order_status("完成取貨", order)
-                %li
-                  = link_to_update_order_status("未取訂貨", order)
-                %li
-                  = link_to_update_order_status("訂單變更", order)
-                %li
-                  = link_to_update_order_status("退貨", order)
-              %li
-                = link_to_update_order_status("訂單取消", order)
+              = link_to_update_order_status(order)
         %td
           %span{id: "logistis-#{order.id}"}= logistics_status(order)
         %td

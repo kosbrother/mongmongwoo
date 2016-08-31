@@ -3,8 +3,26 @@ module Admin::OrdersHelper
     order.info.ship_phone
   end
 
-  def link_to_update_order_status(status_text, order)
-    link_to status_text, update_status_admin_order_path(order, status: Order.statuses[status_text]), { method: :patch, remote: true, disable_with: '狀態更新中' }
+  def link_to_update_order_status(order)
+    status_text_list = able_change_status_to(order)
+
+    status_text_list.collect do |status_text|
+      content_tag(:li) do
+        link_to status_text, update_status_admin_order_path(order, status: Order.statuses[status_text]), { method: :patch, remote: true, disable_with: '狀態更新中' }
+      end
+    end.join.html_safe
+  end
+
+  def able_change_status_to(order)
+    if order.status == "新訂單"
+      ["訂單取消"]
+    elsif order.status == "配送中"
+      ["訂單變更"]
+    elsif order.status == "訂單變更"
+      ["配送中", "訂單取消"]
+    else
+      ["處理中", "配送中", "已到店", "完成取貨", "未取訂貨", "訂單變更", "退貨"]
+    end
   end
 
   def li_status_link(options = {status: 0})
