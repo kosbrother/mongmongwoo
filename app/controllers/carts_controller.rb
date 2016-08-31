@@ -61,12 +61,13 @@ class CartsController < ApplicationController
     store = Store.find(params[:store])
     order,errors = create_order(items, params[:info], store)
     if errors.present?
-      # need handle errors here
-      redirect_to checkout_path
+      @unable_to_buy_lists = errors.select{|error| error.key?(:unable_to_buy)}.map{|list| list[:unable_to_buy][0]}
+      @updated_ids = destroy_and_return_ids(@unable_to_buy_lists)
+      render 'error_infos'
     else
       session[:cart_id] = nil
       OrderMailer.delay.notify_order_placed(order)
-      redirect_to success_path
+      render :js => "window.location = '#{success_path}'"
     end
   end
 
@@ -114,5 +115,17 @@ class CartsController < ApplicationController
       raise ActiveRecord::Rollback if errors.present?
     end
     [order,errors]
+  end
+
+  def destroy_and_return_ids(unable_to_buy_lists)
+    updated_ids = []
+    unable_to_buy_lists.each do |list|
+      cart_item = current_cart.cart_items.find_by(item_spec_id: list[:spec].id)
+      cart_item.update(item_quantity: list[:spec].stock_amount)
+      updated_ids << {id: cart_item.id, item_quantity: cart_item.item_quantity}
+      cart_item.destroy if cart_item.item_quantity == 0
+    end
+
+    updated_ids
   end
 end
