@@ -78,11 +78,18 @@ class Admin::OrdersController < AdminController
   end
 
   def change_status_to_transfer
+    orders = Order.includes(:user, :items).status(Order.statuses['處理中'])
+    query_data = {}
+    joins_array = []
+
     if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
-      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+      query_data = 'orders.allpay_transfer_id IS NOT NULL'
     elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
-      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).home_delivery.recent
+      query_data = query_data.merge(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] })
+      joins_array << :info
     end
+
+    @order_list = orders.joins(joins_array).where(query_data).recent
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -91,11 +98,18 @@ class Admin::OrdersController < AdminController
   end
 
   def export_processing_order_list
+    orders = Order.includes(:user, :items).status(Order.statuses['處理中'])
+    query_data = {}
+    joins_array = []
+
     if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
-      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+      query_data = 'orders.allpay_transfer_id IS NOT NULL'
     elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
-      @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).home_delivery.recent
+      query_data = query_data.merge(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] })
+      joins_array << :info
     end
+
+    @order_list = orders.joins(joins_array).where(query_data).recent
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
