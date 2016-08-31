@@ -78,7 +78,7 @@
       margin: 5px 0;
     }
     #totalprice{
-      color: #ff0000;
+      color: $price-font-color;
     }
   }
   .modal{
@@ -262,6 +262,5 @@
         content: '小計：'
       }
     }
-  ;
   }
 }
