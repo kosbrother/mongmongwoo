@@ -63,6 +63,7 @@ class CartsController < ApplicationController
     if errors.present?
       @unable_to_buy_lists = errors.select{|error| error.key?(:unable_to_buy)}.map{|list| list[:unable_to_buy][0]}
       @updated_ids = destroy_and_return_ids(@unable_to_buy_lists)
+      add_to_wish_lists(@unable_to_buy_lists)
       render 'error_infos'
     else
       session[:cart_id] = nil
@@ -127,5 +128,11 @@ class CartsController < ApplicationController
     end
 
     updated_ids
+  end
+
+  def add_to_wish_lists(unable_to_buy_lists)
+    unable_to_buy_lists.each do |list|
+      current_user.wish_lists.find_or_create_by(item_id: list["id"] ,item_spec_id: list[:spec].id)
+    end
   end
 end
