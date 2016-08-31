@@ -119,6 +119,10 @@ module Admin::OrdersHelper
     end
   end
 
+  def able_render_ship_type_navs?(order_status)
+    [Order.statuses["新訂單"].to_s, Order.statuses["處理中"].to_s, Order.statuses["配送中"].to_s].include?(order_status)
+  end
+
   def set_class_if_repurchased(order)
     if order.is_repurchased
       "info"
