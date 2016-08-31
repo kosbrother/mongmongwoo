@@ -1,5 +1,5 @@
 %br/
-- if [Order.statuses["新訂單"].to_s, Order.statuses["處理中"].to_s, Order.statuses["配送中"].to_s].include?(params[:status])
+- if able_render_ship_type_navs?(params[:status])
   = ship_type_navs(order_status: params[:status])
 - if params[:restock].present?
   = restock_navs(order_status: params[:status])
