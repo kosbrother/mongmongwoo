@@ -26,23 +26,7 @@
               %span{id: "current-#{order.id}-status"}= order.status
               %span.caret
             %ul.dropdown-menu.list-group
-              - unless order.status == "新訂單"
-                %li
-                  = link_to_update_order_status("處理中", order)
-                %li
-                  = link_to_update_order_status("配送中", order)
-                %li
-                  = link_to_update_order_status("已到店", order)
-                %li
-                  = link_to_update_order_status("完成取貨", order)
-                %li
-                  = link_to_update_order_status("未取訂貨", order)
-                %li
-                  = link_to_update_order_status("訂單變更", order)
-                %li
-                  = link_to_update_order_status("退貨", order)
-              %li
-                = link_to_update_order_status("訂單取消", order)
+              = link_to_update_order_status(order)
         %td
           %span{id: "logistis-#{order.id}"}= logistics_status(order)
         %td
@@ -56,7 +40,11 @@
           = link_to "明細", admin_order_path(order),class: "button btn btn-default btn-sm"
           = link_to "編輯", edit_admin_order_path(order), class: "btn btn-default btn-sm"
           = render "message_notification", order: order
+          = link_to_allpay_barcode(order)
           = link_to_restock(order)
           = link_to_send_survey_email(order)
           = link_to_create_refund_shopping_point(order)
+          - if params[:status] == Order.statuses["訂單變更"].to_s && order.note.present?
+            %p.help-block
+            %p 備註：#{order.note}
 = render_pagination(orders)

@@ -3,8 +3,31 @@ module Admin::OrdersHelper
     order.info.ship_phone
   end
 
-  def link_to_update_order_status(status_text, order)
-    link_to status_text, update_status_admin_order_path(order, status: Order.statuses[status_text]), { method: :patch, remote: true, disable_with: '狀態更新中' }
+  def link_to_update_order_status(order)
+    status_text_list = able_change_status_to(order)
+
+    status_text_list.collect do |status_text|
+      content_tag(:li) do
+        link_to status_text, update_status_admin_order_path(order, status: Order.statuses[status_text]), { method: :patch, remote: true, disable_with: '狀態更新中' }
+      end
+    end.join.html_safe
+  end
+
+  def able_change_status_to(order)
+    case order.status
+    when "新訂單"
+      ["訂單取消"]
+    when "處理中"
+      ["訂單取消"]
+    when "配送中"
+      ["訂單變更"]
+    when "完成取貨"
+      ["退貨"]
+    when "訂單變更"
+      ["處理中","配送中", "訂單取消"]
+    else
+      []
+    end
   end
 
   def li_status_link(options = {status: 0})
@@ -55,6 +78,12 @@ module Admin::OrdersHelper
   def link_to_create_refund_shopping_point(order)
     if order.status == "退貨" && ShoppingPointManager.has_refund_shopping_point?(order) == false
       link_to "退購物金", refund_shopping_point_admin_order_path(order), method: :post, class: "btn btn-default btn-sm"
+    end
+  end
+
+  def link_to_allpay_barcode(order)
+    if order.status == "配送中" && order.allpay_transfer_id.present?
+      link_to "物流單", barcode_allpay_index_path(order), class: "btn btn-default btn-sm btn-barcode", target: "_blank"
     end
   end
 
