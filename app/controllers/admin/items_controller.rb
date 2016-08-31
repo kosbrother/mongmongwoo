@@ -9,10 +9,13 @@ class Admin::ItemsController < AdminController
     query_hash = {item_categories: {category_id: params[:category_id]}}
     query_hash = query_hash.merge({status: params[:status]}) if params[:status]
 
-    if params[:order] == 'updated_at'
+    case(params[:order])
+    when 'updated_at'
       order_query = {updated_at: :DESC}
-    elsif params[:order] == 'position'
+    when 'position'
       order_query = "item_categories.position ASC"
+    when 'id'
+      order_query = {id: :DESC}
     end
 
     @items = Item.joins(:item_categories).select('items.*, item_categories.position').where(query_hash).order(order_query).paginate(page: params[:page])

@@ -22,6 +22,7 @@
           %ul.filter-list
             = link_to_items_index(params[:order] == 'position', '依分類排名', order: 'position')
             = link_to_items_index(params[:order] == 'updated_at', '依更新時間', order: 'updated_at')
+            = link_to_items_index(params[:order] == 'id', '依編號', order: 'id')
       .filter-row
         .filter-dt 狀態
         .filter-dd
