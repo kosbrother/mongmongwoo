@@ -44,8 +44,10 @@ Rails.application.routes.draw do
       get :favorite
       get :remove
     end
-
   end
+
+  resources :shopping_point_campaigns, only: [:index]
+
   # 助理後台
   namespace :staff do
     root "categories#index"
@@ -324,8 +326,7 @@ Rails.application.routes.draw do
             delete 'item_specs/:item_spec_id' => 'wish_lists#destroy'
           end
         end
-        resources :shopping_points, only: [:index]
-        resources :orders do
+        resources :orders, only: [] do
           member do
             patch "cancel"
           end
@@ -362,13 +363,19 @@ Rails.application.routes.draw do
     end
 
     namespace :v4 do
-      resources :orders, only: [:create]
+      resources :orders, only: [:create, :show]
       resources :banners, only: [:index]
       resources :oauth_sessions, only: [:create]
       resources :mmw_registrations, only: [:create] do
         collection do
           post "login"
         end
+      end
+
+      resources :users, only: [] do
+        resources :my_messages, only: [:index]
+        resources :shopping_points, only: [:index]
+        resources :shopping_point_campaigns, only: [:index]
       end
     end
   end

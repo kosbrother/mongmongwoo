@@ -66,6 +66,24 @@ describe Api::V4::OrdersController, type: :controller do
         end
       end
 
+      context "when shopping point is used" do
+        let!(:shopping_point_campaign) { FactoryGirl.create(:shopping_point_campaign) }
+        let!(:shopping_point) { FactoryGirl.create(:campaign_point, user: user, amount: shopping_point_campaign.amount, shopping_point_campaign: shopping_point_campaign) }
+        let!(:spend_amount) { user.shopping_points.valid.sum(:amount) }
+        it "does spend user's shopping point" do
+          post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+               ship_email: ship_email, products: products, shopping_points_amount: spend_amount
+          order_id = JSON.parse(response.body)["data"]["id"]
+
+          user.shopping_points.each do |shopping_point|
+            expect(shopping_point.shopping_point_records.last.order_id).to eq(order_id)
+          end
+          expect(user.shopping_points.valid.sum(:amount)).to eq(0)
+        end
+      end
+
       it "return errors if missing order params" do
         post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
@@ -132,6 +150,24 @@ describe Api::V4::OrdersController, type: :controller do
         expect(data["spec"]["status"]).to eq(spec.status)
         expect(data["quantity_to_buy"]).to eq(products[0][:quantity])
         expect(user.orders).to be_empty
+      end
+    end
+  end
+
+  describe "get #show" do
+    let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    let!(:order_info) { FactoryGirl.create(:order_info) }
+    let!(:order) { FactoryGirl.create(:order, info: order_info, items: [order_item]) }
+    before :each do
+      get :show, id: order.id
+    end
+    context 'when order id provide' do
+      it 'does generate correct order info' do
+        result = JSON.parse(response.body)["data"]
+        the_order = Order.find(order.id)
+        json = the_order.generate_result_order.to_json
+        expect(result.to_json).to eq(json)
       end
     end
   end

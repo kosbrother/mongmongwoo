@@ -78,6 +78,7 @@ class Order < ActiveRecord::Base
     result_order[:items_price] = items_price
     result_order[:ship_fee] = ship_fee
     result_order[:total] = total
+    result_order[:shopping_point_amount] = shopping_point_spend_amount
     result_order[:note] = note
 
     include_info = {}
@@ -130,6 +131,10 @@ class Order < ActiveRecord::Base
 
   def m_items
     items
+  end
+
+  def shopping_point_spend_amount
+    shopping_point_records.where('shopping_point_records.amount < 0').sum(:amount).abs
   end
 
   private
