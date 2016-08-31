@@ -347,7 +347,6 @@ ActiveRecord::Schema.define(version: 20160904102536) do
     t.string   "ship_store_name", limit: 255
     t.string   "ship_email",      limit: 255
     t.integer  "ship_type",       limit: 4
-    t.string   "zip_code",        limit: 255
   end
 
   add_index "order_infos", ["order_id"], name: "index_order_infos_on_order_id", using: :btree
