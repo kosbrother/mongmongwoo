@@ -8,8 +8,9 @@ class Admin::OrdersController < AdminController
   end
 
   def status_index
-    params[:status] ||= Order.statuses["新訂單"]
-    query_hash = {status: params[:status]}
+    params[:status] ||= Order.statuses["新訂單"].to_s
+    params[:ship_type] ||= OrderInfo.ship_types["store_delivery"].to_s
+    query_hash = {status: params[:status], order_infos: { ship_type: params[:ship_type]}}
     includes_array = [:user]
 
     if params[:restock]
@@ -19,7 +20,7 @@ class Admin::OrdersController < AdminController
     includes_array << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
     includes_array << :info if params[:status] == Order.statuses["完成取貨"].to_s
 
-    @orders = Order.includes(includes_array).where(query_hash).recent.paginate(page: params[:page])
+    @orders = Order.includes(includes_array).joins(:info).where(query_hash).recent.paginate(page: params[:page])
   end
 
   def edit
