@@ -39,27 +39,40 @@ ready = function() {
         if (quantity < max)
             $('#cart_item_item_quantity').val(quantity + 1)
     });
+
     //production details page: Show selected spec images from icon
+    function calculate_quantity_input_value(stock_amount) {
+        $('#cart_item_item_quantity').attr('max', stock_amount);
+        if (($('#cart_item_item_quantity').val() > stock_amount) && (stock_amount > 0)) {
+            $('#cart_item_item_quantity').val(stock_amount);
+        }
+        else if (stock_amount == 0) {
+            $('#cart_item_item_quantity').val(1);
+        }
+    }
+
+    function switch_add_btn(btn_id_name) {
+        $('.add-btn').addClass('hidden');
+        $(btn_id_name).removeClass('hidden');
+    }
+
+    function switch_selected_icon(id) {
+        $('.spec-photos > .icons > .icon').removeClass('active');
+        $(id).addClass('active');
+    }
+
     $('.spec-photos > .icons > .icon').on('click', function(){
         var url = $(this).attr('src'),
             spec_id = $(this).data('id'),
             stock_status = $(this).data('stock-status'),
             stock_amount =$(this).data('stock-amount'),
             btn_id_name = '#add-btn-' + spec_id;
-        $('.spec-photos > .icons > .icon').removeClass('active');
-        $(this).addClass('active');
+        switch_selected_icon(this)
         $('.show').html("<img class='img-responsive' src=" + url + ">");
         $('.spec-select option[value='+ spec_id +']').prop('selected', true);
         $('.stock-amount').text(stock_status);
-        $('.add-btn').addClass('hidden');
-        $(btn_id_name).removeClass('hidden');
-        $('#cart_item_item_quantity').attr('max', stock_amount);
-        if( $('#cart_item_item_quantity').val() > stock_amount && (stock_amount > 0)){
-            $('#cart_item_item_quantity').val(stock_amount);
-        }
-        else if(stock_amount == 0){
-            $('#cart_item_item_quantity').val(1);
-        }
+        switch_add_btn(btn_id_name);
+        calculate_quantity_input_value(stock_amount);
     });
 
     //PRODUCTION DETAIL PAGE: show selected spec image from option
@@ -69,19 +82,11 @@ ready = function() {
             stock_status = $(id).data('stock-status'),
             stock_amount =$(id).data('stock-amount'),
             btn_id_name = '#add-btn-' + $(this).val();
-        $('.spec-photos > .icons > .icon').removeClass('active');
-        $(id).addClass('active');
+        switch_selected_icon(id);
         $('.show').html("<img class='img-responsive' src=" + url + ">");
         $('.stock-amount').text(stock_status);
-        $('.add-btn').addClass('hidden');
-        $(btn_id_name).removeClass('hidden');
-        $('#cart_item_item_quantity').attr('max', stock_amount);
-        if(($('#cart_item_item_quantity').val() > stock_amount) && (stock_amount > 0)){
-            $('#cart_item_item_quantity').val(stock_amount);
-        }
-        else if(stock_amount == 0){
-            $('#cart_item_item_quantity').val(1);
-        }
+        switch_add_btn(btn_id_name);
+        calculate_quantity_input_value(stock_amount);
     });
 
     //Hover on navbar's user, will show dropdown menu
