@@ -23,7 +23,7 @@
         text-align: center;
         height: 70px;
         line-height: 70px;
-        > .cover {
+        > .cover{
           width: 56px;
           height: 56px;
           border: solid 1px #979797;
@@ -34,24 +34,34 @@
         }
         > .modal{
           > .modal-dialog{
-            width: 350px;
+            margin:0 auto;
+            border-radius: 6px;
+            background-color: #ffffff;
+            width: 570px;
             height: 200px;
             > .modal-content{
-              .btn-confirm{
-                width: 150px;
-                height: 50px;
-                font-size: 20px;
-                background-color: $modal-confirm-btn-color;
-                color: #fff;
-                line-height: 38px;
+              padding: 30px;
+              width: 570px;
+              height: 260px;
+              border: none;
+              > .modal-body{
+                height: 120px;
+                font-size: 24px;
+                font-weight: 500;
+                color: #000000;
+                line-height: 30px;
               }
-              .btn-close{
-                width: 150px;
-                height: 50px;
-                border: $modal-btn-border;
-                font-size: 20px;
-                color: $modal-confirm-btn-color;
-                background-color: transparent;
+              .modal-footer{
+                border-top: none;
+                .btn-confirm, .btn-close{
+                  line-height: 35px;
+                  width: 150px;
+                  height: 50px;
+                  border: $modal-btn-border;
+                  font-size: 20px;
+                  color: $modal-confirm-btn-color;
+                  background-color: transparent;
+                }
               }
             }
           }
@@ -60,7 +70,7 @@
       > .name{
         padding-left: 0px;
         padding-right: 0px;
-        text-align: left;
+        text-align: center;
       }
       > .status{
         > .block{
@@ -79,6 +89,23 @@
     }
   }
 }
+
+.-wish-lists {
+  .row {
+    margin: 0;
+  }
+  .body > .row{
+    .spec {
+      text-align: center;
+    }
+    .notify:before{
+      cursor: pointer;
+      content: image_url('icons/ic_bell.png');
+      vertical-align: -webkit-baseline-middle;
+    }
+  }
+}
+
 @media screen and (min-width: 769px) and (max-width: 1200px){
   .favorite-list{
     .body {
@@ -123,6 +150,65 @@
             text-align: center;
           }
         }
+        div > .modal{
+          > .modal-dialog{
+            width: 280px;
+            height: 100px;
+            > .modal-content{
+              padding: 20px;
+              width: 280px;
+              height: 128px;
+              > .modal-body{
+                padding: 0;
+                height: 50px;
+                font-size: 12px;
+                font-weight: normal;
+                line-height: 20px;
+              }
+              .modal-footer{
+                .btn-confirm, .btn-close{
+                  line-height: 12px;
+                  width: 74px;
+                  height: 25px;
+                  border-radius: 2.5px;
+                  border: $modal-btn-border;
+                  font-size: 12px;
+                  border: solid 1px #47b286;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .-wish-lists {
+    .body > .row{
+      .image{
+        text-align: center;
+        height: 70px;
+        line-height: 70px;
+      }
+      > div{
+        line-height: 27px;
+        height: 25px;
+        text-align: left;
+      }
+      .spec {
+        text-align: left;
+      }
+      .price{
+        margin-top: 0;
+      }
+      .stock{
+        line-height: 20px;
+        height: 20px;
+      }
+      .notify:before{
+        float: right;
+        position: relative;
+        top: -10px;
       }
     }
   }

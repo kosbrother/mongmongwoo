@@ -1,0 +1,101 @@
+#errors-modal{
+  color: #4a4a4a;
+  .modal-content{
+    width: 625px;
+    font-size: 16px;
+    .modal-header{
+      font-size: 20px;
+    }
+    .modal-body{
+      .item-bar{
+        margin: 15px 0;
+        >.icon{
+          display: inline-block;
+          margin: 0 15px;
+          > img{
+            width: 60px;
+            height: 60px;
+          }
+        }
+        .text{
+          display: inline-block;
+          vertical-align: middle;
+          > .itemname{
+            margin-left: 0px;
+          }
+          > .spec{
+            text-align: left;
+            padding-left: 0;
+            margin: 3px 0px;
+          }
+          > .quantity, .stock{
+            padding-left: 0;
+            text-align: left;
+            display: inline-block;
+          }
+          > .stock{
+            color: $price-font-color;
+            padding-left: 30px;
+          }
+          > .off-shelf{
+            color: $price-font-color;
+          }
+        }
+      }
+    }
+    .modal-footer{
+      text-align: center;
+    }
+    .btn-confirm{
+      display: block;
+      width: 510px;
+      height: 50px;
+      border-radius: 5px;
+      background-color: $price-font-color;
+      margin: 10px auto;
+      line-height: 40px;
+      font-size: 20px;
+      font-weight: 500;
+      color: #fff;;
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  #errors-modal{
+    .modal-content{
+      font-size: 12px;
+      width: 300px;
+      .modal-header{
+        font-size: 16px;
+      }
+      .modal-body{
+        .item-bar{
+          margin: 10px 0;
+          >.icon{
+            margin: 0px;
+            > img{
+              width: 40px;
+              height: 40px;
+            }
+          }
+          .text{
+            margin-left: 10px;
+            > .stock{
+              padding-left: 10px;
+            }
+          }
+        }
+      }
+      .modal-footer{
+        .btn-confirm{
+          width: 260px;
+          height: 30px;
+          border-radius: 2.5px;
+          line-height: 20px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

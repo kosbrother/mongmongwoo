@@ -47,10 +47,10 @@ class CartsController < ApplicationController
 
   def confirm
     @step = Cart::STEP[:confirm]
-    @info = {ship_name: params[:ship_name],
-             ship_phone: params[:ship_phone],
-             ship_email: params[:ship_email]}
-    @store = Store.find(params[:store_id])
+    @info = {ship_name: cookies[:name],
+             ship_phone: cookies[:phone],
+             ship_email: cookies[:email]}
+    @store = Store.find(cookies[:store_id])
     @items = current_cart.cart_items.includes(:item, :item_spec)
     @total = current_cart.calculate_items_price
     set_meta_tags title: "確認訂單", noindex: true
@@ -61,12 +61,14 @@ class CartsController < ApplicationController
     store = Store.find(params[:store])
     order,errors = create_order(items, params[:info], store)
     if errors.present?
-      # need handle errors here
-      redirect_to checkout_path
+      @unable_to_buy_lists = errors.select{|error| error.key?(:unable_to_buy)}.map{|list| list[:unable_to_buy][0]}
+      @updated_items = destroy_and_return_items(@unable_to_buy_lists)
+      add_to_wish_lists(@unable_to_buy_lists) if current_user
+      render 'error_infos'
     else
       session[:cart_id] = nil
       OrderMailer.delay.notify_order_placed(order)
-      redirect_to success_path
+      render :js => "window.location = '#{success_path}'"
     end
   end
 
@@ -114,5 +116,27 @@ class CartsController < ApplicationController
       raise ActiveRecord::Rollback if errors.present?
     end
     [order,errors]
+  end
+
+  def destroy_and_return_items(unable_to_buy_lists)
+    updated_items = []
+    unable_to_buy_lists.each do |list|
+      cart_item = current_cart.cart_items.find_by(item_spec_id: list[:spec].id)
+      if list[:spec].status == 'off_shelf'
+        cart_item.update(item_quantity: 0)
+      else
+        cart_item.update(item_quantity: list[:spec].stock_amount)
+      end
+      updated_items << {id: cart_item.id, item_quantity: cart_item.item_quantity}
+      cart_item.destroy if cart_item.item_quantity == 0
+    end
+
+    updated_items
+  end
+
+  def add_to_wish_lists(unable_to_buy_lists)
+    unable_to_buy_lists.each do |list|
+      current_user.wish_lists.find_or_create_by(item_id: list["id"] ,item_spec_id: list[:spec].id)
+    end
   end
 end

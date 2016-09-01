@@ -1,0 +1,16 @@
+- @updated_items.each do |id|
+  - if id[:item_quantity] == 0
+    :plain
+      $('#cart-item-#{id[:id]}').remove();
+  - else
+    :plain
+      $('#cart-item-#{id[:id]} > .quantity > div').text('#{id[:item_quantity]}');
+:plain
+  $('#errors-infos').html( '#{j render partial: 'errors_modal'}');
+  $('#errors-modal').modal('show');
+- if current_cart.cart_items.count == 0
+  - flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
+  :plain
+    $('#errors-infos > #errors-modal').on('hidden.bs.modal', function(){
+      window.location = '/'
+    });

@@ -22,7 +22,7 @@ class FavoriteItemsController < ApplicationController
     end
   end
 
-  def remove
+  def destroy
     @item = Item.find(params[:id])
     current_user.favorites.destroy(@item)
   end

@@ -39,14 +39,14 @@ Rails.application.routes.draw do
     end
   end
   resources :orders, only: [:index, :show]
-  resources :favorite_items, only: [:index] do
+  resources :favorite_items, only: [:index, :destroy] do
     member do
       get :favorite
-      get :remove
     end
   end
 
   resources :shopping_point_campaigns, only: [:index]
+  resources :wish_lists, only: [:index, :destroy]
 
   # 助理後台
   namespace :staff do
