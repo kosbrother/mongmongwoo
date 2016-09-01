@@ -47,10 +47,10 @@ class CartsController < ApplicationController
 
   def confirm
     @step = Cart::STEP[:confirm]
-    @info = {ship_name: params[:ship_name],
-             ship_phone: params[:ship_phone],
-             ship_email: params[:ship_email]}
-    @store = Store.find(params[:store_id])
+    @info = {ship_name: cookies[:name],
+             ship_phone: cookies[:phone],
+             ship_email: cookies[:email]}
+    @store = Store.find(cookies[:store_id])
     @items = current_cart.cart_items.includes(:item, :item_spec)
     @total = current_cart.calculate_items_price
     set_meta_tags title: "確認訂單", noindex: true
