@@ -10,8 +10,12 @@
             .text
               .itemname= list["name"]
               .spec= list[:spec].style
-              .quantity= "購買數量：#{list[:quantity_to_buy]}"
-              .stock= "現貨數：#{list[:spec].stock_amount}"
+              - if list[:spec].status == "off_shelf"
+                .off-shelf 商品樣式已下架
+              -else
+                .quantity= "購買數量：#{list[:quantity_to_buy]}"
+                .stock= "現貨數：#{list[:spec].stock_amount}"
+
       .modal-footer
         - if current_user
           已將庫存不足的商品訂購數量更新，待補貨完成會再通知您！請至"補貨清單"查看。

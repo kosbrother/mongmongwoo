@@ -122,7 +122,11 @@ class CartsController < ApplicationController
     updated_items = []
     unable_to_buy_lists.each do |list|
       cart_item = current_cart.cart_items.find_by(item_spec_id: list[:spec].id)
-      cart_item.update(item_quantity: list[:spec].stock_amount)
+      if list[:spec].status == 'off_shelf'
+        cart_item.update(item_quantity: 0)
+      else
+        cart_item.update(item_quantity: list[:spec].stock_amount)
+      end
       updated_items << {id: cart_item.id, item_quantity: cart_item.item_quantity}
       cart_item.destroy if cart_item.item_quantity == 0
     end
