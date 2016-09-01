@@ -201,8 +201,14 @@
       .price{
         margin-top: 0;
       }
+      .stock{
+        line-height: 20px;
+        height: 20px;
+      }
       .notify:before{
         float: right;
+        position: relative;
+        top: -10px;
       }
     }
   }
