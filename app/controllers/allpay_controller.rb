@@ -2,7 +2,7 @@ class AllpayController < ActionController::Base
   def create_from_processing
     fail_messages = []
     Order.status(Order.statuses["處理中"]).nil_logistics_code.each do |order|
-      message = post_order_to_allpay(order)
+      message = post_order_to_allpay_result(order)
       fail_messages << message if !(message.blank?)
     end
 
@@ -16,7 +16,7 @@ class AllpayController < ActionController::Base
   def create_from_order_changed
     fail_messages = []
     order = Order.find(params[:order_id])
-    message = post_order_to_allpay(order)
+    message = post_order_to_allpay_result(order)
     fail_messages << message if !(message.blank?)
 
     if fail_messages.present?
@@ -48,7 +48,7 @@ class AllpayController < ActionController::Base
 
   private
 
-  def post_order_to_allpay(order)
+  def post_order_to_allpay_result(order)
     message = ""
     results = PostToAllpayWorker.new.perform(order.id, create_reply_allpay_index_url, status_update_allpay_index_url)
 
