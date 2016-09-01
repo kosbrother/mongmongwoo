@@ -9,6 +9,7 @@ class Order < ActiveRecord::Base
   OCCUPY_STOCK_STATUS = ["處理中", "訂單變更"]
   CANCELABLE_STATUS = ["新訂單", "處理中"]
   FAIL_STATUS = ["訂單取消", "未取訂單", "退貨"]
+  SHOW_BARCODE_STATUS = ["配送中", "訂單變更"]
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
 
@@ -135,6 +136,12 @@ class Order < ActiveRecord::Base
 
   def shopping_point_spend_amount
     shopping_point_records.where('shopping_point_records.amount < 0').sum(:amount).abs
+  end
+
+  def changed_order_id
+    time = created_at.strftime("%Y%m%d")
+    changed_id = id.to_s + time
+    changed_id.to_i
   end
 
   private

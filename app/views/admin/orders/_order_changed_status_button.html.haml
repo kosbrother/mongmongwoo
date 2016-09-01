@@ -1,0 +1,4 @@
+= link_to '下載EXCEL', "#", class: 'btn btn-default inline-display'
+- if order.note.present?
+  %p.help-block
+  %p 備註：#{order.note}

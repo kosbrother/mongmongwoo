@@ -81,8 +81,14 @@ module Admin::OrdersHelper
     end
   end
 
+  def link_to_allpay_create_changed_order(order)
+    if order.status == "訂單變更"
+      link_to '傳送至歐付寶', create_changed_order_allpay_index_path(order), remote: true, class: 'btn btn-default btn-sm inline-display', method: :post
+    end
+  end
+
   def link_to_allpay_barcode(order)
-    if order.status == "配送中" && order.allpay_transfer_id.present?
+    if Order::SHOW_BARCODE_STATUS.include?(order.status) && order.allpay_transfer_id.present?
       link_to "物流單", barcode_allpay_index_path(order), class: "btn btn-default btn-sm btn-barcode", target: "_blank"
     end
   end

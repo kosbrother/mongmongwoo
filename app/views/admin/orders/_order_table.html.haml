@@ -40,11 +40,11 @@
           = link_to "明細", admin_order_path(order),class: "button btn btn-default btn-sm"
           = link_to "編輯", edit_admin_order_path(order), class: "btn btn-default btn-sm"
           = render "message_notification", order: order
+          = link_to_allpay_create_changed_order(order)
           = link_to_allpay_barcode(order)
           = link_to_restock(order)
           = link_to_send_survey_email(order)
           = link_to_create_refund_shopping_point(order)
-          - if params[:status] == Order.statuses["訂單變更"].to_s && order.note.present?
-            %p.help-block
-            %p 備註：#{order.note}
+          - if params[:status] == Order.statuses["訂單變更"].to_s
+            = render "order_changed_status_button", order: order
 = render_pagination(orders)
