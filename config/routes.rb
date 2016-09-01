@@ -112,6 +112,7 @@ Rails.application.routes.draw do
         post "add"
         post "get_by_id"
         post "import_excel"
+        delete 'delete_all'
       end
       member do
         patch "update_quantity"

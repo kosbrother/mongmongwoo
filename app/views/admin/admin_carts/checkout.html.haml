@@ -4,16 +4,17 @@
       = form_tag import_excel_admin_admin_cart_items_path, :enctype =>'multipart/form-data'  do
         = file_field_tag :excel_file, required: true, class: 'custom-file-input'
         = submit_tag '送出', class: 'btn btn-default'
-    %h2 加入購物車
-    .clearfix.search-input
-      .pull-right
-        = form_tag   get_by_id_admin_admin_cart_items_path, remote: true do
-          = label_tag :item_id, '商品編號'
-          = number_field_tag :item_id, 31, min: Item.first.id, max: Item.last.id, required: true
-          = submit_tag '搜尋', class: 'btn btn-default'
-          %p.help-block
+    .pull-right.file-form
+      = form_tag   get_by_id_admin_admin_cart_items_path, remote: true do
+        = label_tag :item_id, '商品編號'
+        = number_field_tag :item_id, 31, min: Item.first.id, max: Item.last.id, required: true
+        = submit_tag '搜尋', class: 'btn btn-default'
+        %p.help-block
+    .pull-right.file-form
+      = link_to '清空購物車', delete_all_admin_admin_cart_items_path, method: 'delete', class: 'btn btn-default'
+    %h2 購物車
     = render partial: 'search_form', locals: { item: @searched_item }
-    %h2 現有購物車
+    .lead 現有購物車
     %ul.nav.nav-tabs{role: "tablist"}
       - current_admin_carts.each_with_index do |cart, index|
         %li{role: "presentation", class: "#{'active' if index == 0}" }

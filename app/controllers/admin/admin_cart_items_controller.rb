@@ -79,6 +79,11 @@ class Admin::AdminCartItemsController < AdminController
     end
   end
 
+  def delete_all
+    session[:admin_cart_ids] = []
+    redirect_to checkout_admin_admin_carts_path
+  end
+
   private
 
   def create_cart_item(taobao_supplier_id=params[:taobao_supplier_id], item_id=params[:item_id], item_spec_id=params[:item_spec_id], item_quantity=params[:item_quantity])
