@@ -1,22 +1,29 @@
 class AllpayController < ActionController::Base
   def create_from_processing
-    fail_messages = []
+    error_messages = []
     Order.status(Order.statuses["處理中"]).nil_logistics_code.each do |order|
-      results = PostToAllpayWorker.new.perform(order.id, create_reply_allpay_index_url, status_update_allpay_index_url)
-
-      if results[0] == false
-        id =  order.id
-        error = results[1].to_s.force_encoding("UTF-8").delete!("0|")
-        message = "編號：#{id} 傳送到歐付寶失敗\n錯誤訊息：#{error}\n"
-        fail_messages << message
-      end
+      error_message = post_order_to_allpay_result(order)
+      error_messages << error_message if error_message.present?
     end
 
-    if fail_messages.present?
-      @fail_messages = fail_messages.join("\n")
+    if error_messages.present?
+      @error_message = error_messages.join("\n")
     else
       @success_message = "全部處理中訂單已成功傳送到歐付寶"
     end
+  end
+
+  def post_order_to_allpay
+    order = Order.find(params[:order_id])
+    error_message = post_order_to_allpay_result(order)
+
+    if error_message.present?
+      @error_message = error_message
+    else
+      @success_message = "變更的訂單已成功傳送到歐付寶"
+    end
+
+    render "create_from_processing"
   end
 
   def create_reply
@@ -35,5 +42,20 @@ class AllpayController < ActionController::Base
     barcode_html = allpay.create_barcode
 
     render :text => barcode_html
+  end
+
+  private
+
+  def post_order_to_allpay_result(order)
+    error_message = ""
+    result = PostToAllpayWorker.new.perform(order.id, create_reply_allpay_index_url, status_update_allpay_index_url)
+
+    if result[0] == false
+      id =  order.id
+      error = result[1].to_s.force_encoding("UTF-8").delete!("0|")
+      error_message = "編號：#{id} 傳送到歐付寶失敗\n錯誤訊息：#{error}\n"
+    end
+
+    error_message
   end
 end

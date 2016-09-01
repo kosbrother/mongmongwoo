@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   resources :allpay, only:[] do
     collection do
       post "create_from_processing", as: "create"
+      post "/post_order_to_allpay/:order_id", to: "allpay#post_order_to_allpay", as: "post_order_to_allpay"
       post "status_update"
       post "create_reply"
       get "/barcode/:order_id", to: "allpay#barcode", as: "barcode"
@@ -205,6 +206,7 @@ Rails.application.routes.draw do
         patch "update_status"
         patch "restock"
         post "refund_shopping_point"
+        get "export_changed_order"
       end
     end
 
