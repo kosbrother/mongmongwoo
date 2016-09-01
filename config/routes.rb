@@ -206,6 +206,7 @@ Rails.application.routes.draw do
         patch "update_status"
         patch "restock"
         post "refund_shopping_point"
+        get "export_changed_order"
       end
     end
 

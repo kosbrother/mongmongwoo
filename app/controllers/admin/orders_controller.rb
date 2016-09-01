@@ -87,6 +87,11 @@ class Admin::OrdersController < AdminController
     render 'export_order_list'
   end
 
+  def export_changed_order
+    @order = Order.find(params[:id])
+    @sheet_name = '變更訂單轉配送中清單'
+  end
+
   def export_returned_order_list
     @order_list = Order.includes(:user, :items).status(Order.statuses['退貨']).where(restock: false)
     @sheet_name = '退貨訂單清單(尚未入庫)'
