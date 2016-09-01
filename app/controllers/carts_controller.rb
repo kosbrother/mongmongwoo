@@ -62,7 +62,7 @@ class CartsController < ApplicationController
     order,errors = create_order(items, params[:info], store)
     if errors.present?
       @unable_to_buy_lists = errors.select{|error| error.key?(:unable_to_buy)}.map{|list| list[:unable_to_buy][0]}
-      @updated_ids = destroy_and_return_ids(@unable_to_buy_lists)
+      @updated_items = destroy_and_return_items(@unable_to_buy_lists)
       add_to_wish_lists(@unable_to_buy_lists)
       render 'error_infos'
     else
@@ -118,16 +118,16 @@ class CartsController < ApplicationController
     [order,errors]
   end
 
-  def destroy_and_return_ids(unable_to_buy_lists)
-    updated_ids = []
+  def destroy_and_return_items(unable_to_buy_lists)
+    updated_items = []
     unable_to_buy_lists.each do |list|
       cart_item = current_cart.cart_items.find_by(item_spec_id: list[:spec].id)
       cart_item.update(item_quantity: list[:spec].stock_amount)
-      updated_ids << {id: cart_item.id, item_quantity: cart_item.item_quantity}
+      updated_items << {id: cart_item.id, item_quantity: cart_item.item_quantity}
       cart_item.destroy if cart_item.item_quantity == 0
     end
 
-    updated_ids
+    updated_items
   end
 
   def add_to_wish_lists(unable_to_buy_lists)
