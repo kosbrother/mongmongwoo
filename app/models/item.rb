@@ -38,7 +38,7 @@ class Item < ActiveRecord::Base
 
   scope :recent, -> { order(id: :DESC) }
   scope :update_time, -> { order(updated_at: :DESC) }
-  scope :priority, -> { order("item_categories.position ASC") }
+  scope :priority, -> { order(Item.sort_params["popular"]) }
   scope :latest, ->(num){ order(created_at: :asc).limit(num) }
   scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
   scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }

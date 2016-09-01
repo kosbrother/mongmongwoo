@@ -82,7 +82,6 @@
       display: inline-block;
       color: #ffffff;
       cursor: pointer;
-      display: inline-block;
       padding: 0 15px;
       margin: 15px 10px;
     }
@@ -199,8 +198,8 @@
       .dropdown-menu{
         margin: 0 -25px;
       }
-      .user{
-        margin: 0;
+      > .user{
+        margin:0 10px;
       }
     }
   }

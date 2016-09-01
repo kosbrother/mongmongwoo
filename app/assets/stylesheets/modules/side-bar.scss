@@ -18,7 +18,8 @@
       padding: 10px;
       font-size: $sidebar-list-font-size;
       margin: 5px 0;
-      height: 30px;
+      height: 40px;
+      line-height: 22px;
     }
     > .list:before{
       content: $url-diamond;

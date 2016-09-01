@@ -3,7 +3,7 @@
   border-radius: $btn-border-radius;
   background-image: image_url('icons/arrow.png');
   background-repeat: no-repeat;
-  background-position: 220px 12px;
+  background-position: right 30px center;
   padding: 10px 40px;
   text-align: center;
   color: $more-btn-color;
@@ -17,10 +17,4 @@
   background-image: image_url('icons/hover_arrow.png');
   text-decoration: none;
   color: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  .more-btn {
-    background-position: 250px 12px;
-  }
 }
