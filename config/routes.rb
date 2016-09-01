@@ -45,6 +45,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :wish_lists, only: [] do
+    member do
+      get :wish
+    end
+  end
+
   resources :shopping_point_campaigns, only: [:index]
   resources :wish_lists, only: [:index, :destroy]
 

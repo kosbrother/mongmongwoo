@@ -45,8 +45,9 @@
             付款方式：超商付款取貨
         .col-lg-12.col-xs-12.no-padding
           .add-cart
-            = render_favorite_btn(@item, @in_favorite)
-            = render_add_to_cart_btn(@item)
+            = render_favorite_btn(@item)
+            - @specs.each_with_index do |spec, index|
+              = render_off_shelf_or_add_btn(@item, spec, is_hidden: index != 0)
             .customer
               購物遇到問題？
               = link_to '聯繫客服', 'http://line.me/ti/p/%40kya5456n'

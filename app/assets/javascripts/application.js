@@ -43,23 +43,29 @@ ready = function() {
     $('.spec-photos > .icons > .icon').on('click', function(){
         var url = $(this).attr('src'),
             spec_id = $(this).data('id'),
-            stock_amount = $(this).data('stock');
+            stock_amount = $(this).data('stock'),
+            btn_id_name = '#add-btn-' + spec_id;
         $('.spec-photos > .icons > .icon').removeClass('active');
         $(this).addClass('active');
         $('.show').html("<img class='img-responsive' src=" + url + ">");
         $('.spec-select option[value='+ spec_id +']').prop('selected', true);
         $('.stock-amount').text(stock_amount);
+        $('.add-btn').addClass('hidden');
+        $(btn_id_name).removeClass('hidden');
     });
 
     //PRODUCTION DETAIL PAGE: show selected spec image from option
     $('#cart_item_item_spec_id').change(function(){
         var id = '#spec-' + $(this).val(),
             url = $(id).attr('src'),
-            stock_amount = $(id).data('stock');
+            stock_amount = $(id).data('stock'),
+            btn_id_name = '#add-btn-' + $(this).val();
         $('.spec-photos > .icons > .icon').removeClass('active');
         $(id).addClass('active');
         $('.show').html("<img class='img-responsive' src=" + url + ">");
         $('.stock-amount').text(stock_amount);
+        $('.add-btn').addClass('hidden');
+        $(btn_id_name).removeClass('hidden');
     });
 
     //Hover on navbar's user, will show dropdown menu
