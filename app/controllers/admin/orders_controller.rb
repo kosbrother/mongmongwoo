@@ -8,8 +8,8 @@ class Admin::OrdersController < AdminController
   end
 
   def status_index
-    params[:status] ||= Order.statuses["新訂單"].to_s
-    params[:ship_type] ||= OrderInfo.ship_types["store_delivery"].to_s
+    params[:status] ||= Order.statuses["新訂單"]
+    params[:ship_type] ||= OrderInfo.ship_types["store_delivery"]
     query_hash = {status: params[:status], order_infos: { ship_type: params[:ship_type]}}
     includes_array = [:user]
 

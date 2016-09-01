@@ -1,8 +1,8 @@
 %br/
-- if able_render_ship_type_navs?(params[:status])
-  = ship_type_navs(params[:status])
+- if able_render_ship_type_navs?(status: params[:status])
+  = ship_type_navs(status: params[:status])
 - if params[:restock].present?
-  = restock_navs(params[:status])
+  = restock_navs(status: params[:status])
 = render_pagination(orders)
 %table.table.table-bordered.order-table
   %thead

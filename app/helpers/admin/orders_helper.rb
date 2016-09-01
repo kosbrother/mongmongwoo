@@ -101,29 +101,32 @@ module Admin::OrdersHelper
     end
   end
 
-  def restock_navs(status_params)
+  def restock_navs(options = {})
+    options = { status: params[:status] }.merge(options)
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_restock_status_link("未重入庫存", status: status_params, restock: false) +
-      li_restock_status_link("已重入庫存", status: status_params, restock: true)
+      li_restock_status_link("未重入庫存", status: options[:status], restock: false) +
+      li_restock_status_link("已重入庫存", status: options[:status], restock: true)
     end
   end
 
   def li_ship_type_link(link_text, options = {})
     options = { status: params[:status], ship_type: params[:ship_type] }.merge(options)
-    content_tag(:li, class: options[:ship_type].to_s == params[:ship_type] ? 'active' : '' ) do
+    content_tag(:li, class: options[:ship_type] == params[:ship_type].to_i ? 'active' : '' ) do
       link_to link_text, status_index_admin_orders_path(status: options[:status], ship_type: options[:ship_type])
     end
   end
 
-  def ship_type_navs(status_params)
+  def ship_type_navs(options = {})
+    options = { status: params[:status] }.merge(options)
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_ship_type_link("超商取貨", status: status_params, ship_type: OrderInfo.ship_types["store_delivery"]) +
-      li_ship_type_link("宅配", status: status_params, ship_type: OrderInfo.ship_types["home_delivery"])
+      li_ship_type_link("超商取貨", status: options[:status], ship_type: OrderInfo.ship_types["store_delivery"]) +
+      li_ship_type_link("宅配", status: options[:status], ship_type: OrderInfo.ship_types["home_delivery"])
     end
   end
 
-  def able_render_ship_type_navs?(status_text)
-    [Order.statuses["新訂單"].to_s, Order.statuses["處理中"].to_s, Order.statuses["配送中"].to_s].include?(status_text)
+  def able_render_ship_type_navs?(options = {})
+    options = { status: params[:status] }.merge(options)
+    Order::SHOW_SHIP_TYPE_STATUS_CODE.include?(options[:status].to_i)
   end
 
   def set_class_if_repurchased(order)
