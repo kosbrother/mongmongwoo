@@ -338,14 +338,14 @@ ActiveRecord::Schema.define(version: 20160831120805) do
     t.integer  "order_id",        limit: 4
     t.string   "ship_name",       limit: 255
     t.string   "ship_address",    limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "ship_store_code", limit: 255
     t.string   "ship_phone",      limit: 255
     t.integer  "ship_store_id",   limit: 4
     t.string   "ship_store_name", limit: 255
     t.string   "ship_email",      limit: 255
-    t.integer  "ship_type",       limit: 4
+    t.integer  "ship_type",       limit: 4,   default: 0
   end
 
   add_index "order_infos", ["order_id"], name: "index_order_infos_on_order_id", using: :btree
