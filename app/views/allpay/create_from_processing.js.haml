@@ -1,9 +1,9 @@
-- if @fail_messages
+- if @error_message
   :plain
     $(function(){
       new PNotify({
         title: "傳送到歐付寶失敗",
-        text: "#{j(@fail_messages)}",
+        text: "#{j(@error_message)}",
         width: '500px',
         min_height: '400px'
       });

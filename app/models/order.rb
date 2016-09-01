@@ -138,10 +138,9 @@ class Order < ActiveRecord::Base
     shopping_point_records.where('shopping_point_records.amount < 0').sum(:amount).abs
   end
 
-  def changed_order_id
-    time = created_at.strftime("%Y%m%d")
-    changed_id = id.to_s + time
-    changed_id.to_i
+  def allpay_id
+    time = Time.current.strftime("%Y%m%d%H%M%S")
+    id.to_s + "-" + time
   end
 
   private

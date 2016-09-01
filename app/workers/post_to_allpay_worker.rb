@@ -4,7 +4,7 @@ class PostToAllpayWorker
   
   def perform(order_id, create_reply_url, status_update_url)
     order = Order.find(order_id)
-    order_id = (order.status == "訂單變更" ? order.changed_order_id : order.id)
+    order_id = (order.status == "訂單變更" ? order.allpay_id : order.id)
     @params = { 
       "MerchantTradeNo"=> order_id,
       "ServerReplyURL"=> create_reply_url,

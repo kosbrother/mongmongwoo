@@ -81,9 +81,9 @@ module Admin::OrdersHelper
     end
   end
 
-  def link_to_allpay_create_changed_order(order)
+  def link_to_post_order_to_allpay(order)
     if order.status == "訂單變更"
-      link_to '傳送至歐付寶', create_changed_order_allpay_index_path(order), remote: true, class: 'btn btn-default btn-sm inline-display', method: :post
+      link_to '傳送至歐付寶', post_order_to_allpay_allpay_index_path(order), remote: true, class: 'btn btn-default btn-sm inline-display', method: :post
     end
   end
 
