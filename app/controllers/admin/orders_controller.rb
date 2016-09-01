@@ -78,18 +78,7 @@ class Admin::OrdersController < AdminController
   end
 
   def change_status_to_transfer
-    orders = Order.includes(:user, :items).status(Order.statuses['處理中'])
-    query_data = {}
-    joins_array = []
-
-    if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
-      query_data = 'orders.allpay_transfer_id IS NOT NULL'
-    elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
-      query_data = query_data.merge(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] })
-      joins_array << :info
-    end
-
-    @order_list = orders.joins(joins_array).where(query_data).recent
+    @order_list = setting_orders_and_query_condition
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -98,18 +87,7 @@ class Admin::OrdersController < AdminController
   end
 
   def export_processing_order_list
-    orders = Order.includes(:user, :items).status(Order.statuses['處理中'])
-    query_data = {}
-    joins_array = []
-
-    if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
-      query_data = 'orders.allpay_transfer_id IS NOT NULL'
-    elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
-      query_data = query_data.merge(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] })
-      joins_array << :info
-    end
-
-    @order_list = orders.joins(joins_array).where(query_data).recent
+    @order_list = setting_orders_and_query_condition
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -178,5 +156,20 @@ class Admin::OrdersController < AdminController
 
   def search_params
     params.require(:order_search_term).permit(:order_id, :ship_email, :ship_phone)
+  end
+
+  def setting_orders_and_query_condition
+    orders = Order.includes(:user, :items).status(Order.statuses['處理中'])
+    query_data = {}
+    joins_array = []
+
+    if params[:ship_type] == OrderInfo.ship_types["store_delivery"].to_s
+      query_data = 'orders.allpay_transfer_id IS NOT NULL'
+    elsif params[:ship_type] == OrderInfo.ship_types["home_delivery"].to_s
+      query_data = query_data.merge(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] })
+      joins_array << :info
+    end
+
+    orders.joins(joins_array).where(query_data).recent
   end
 end
