@@ -12,21 +12,47 @@
     content: $url-pencil;
     float: right;
   }
-  > a{color: $regular-font-color;
-    vertical-align: 4px;
+  > .dropdown.keep-open.open > .list > .caret{
+    border-bottom: 4px solid;
+    border-top: none;
+  }
+  > .dropdown, >a{
     > .list{
+      cursor: pointer;
+      color: $regular-font-color;
+      vertical-align: 4px;
       padding: 10px;
       font-size: $sidebar-list-font-size;
       margin: 5px 0;
       height: 40px;
       line-height: 22px;
+      font-weight: bold;
     }
     > .list:before{
       content: $url-diamond;
-      vertical-align: text-top;
+      vertical-align: -6px;
+      position: relative;
+      top: -3px;
+      margin-right: 5px;
     }
     > .list:hover{
       background-color: $side-bar-hover-background-color;
+    }
+    > .dropdown-menu{
+      position: static;
+      float: none;
+      border: none;
+      box-shadow: none;
+      margin: 0;
+      background-color: transparent;
+      padding-left: 15px;
+      > a >.list{
+        padding: 5px 0;
+        text-indent: 35px;
+      }
+      > a > .list:hover{
+        background-color: $side-bar-hover-background-color;
+      }
     }
   }
 

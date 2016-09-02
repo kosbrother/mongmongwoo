@@ -3,6 +3,7 @@ class Category < ActiveRecord::Base
 
   ALL_ID = 10
   NEW_ID = 11
+  NO_CHILD_CATEGORIES = [ALL_ID, NEW_ID]
 
   validates_presence_of :name, :image
 
