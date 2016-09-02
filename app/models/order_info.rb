@@ -1,8 +1,6 @@
 class OrderInfo < ActiveRecord::Base
   include InfoInspector
 
-  enum ship_type: { "store_delivery": 0, "home_delivery": 1 }
-
   belongs_to :order
   belongs_to :store, :foreign_key => "ship_store_id"
 

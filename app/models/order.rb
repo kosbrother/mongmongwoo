@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   include CalculatePrice
 
   enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7, "退貨" => 8 }
+  enum ship_type: { "store_delivery": 0, "home_delivery": 1 }
 
   COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
   RESTOCK_STATUS = ["未取訂貨", "退貨"]
@@ -42,7 +43,7 @@ class Order < ActiveRecord::Base
   scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
   scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
-  scope :home_delivery, -> { joins(:info).where(order_infos: { ship_type: OrderInfo.ship_types["home_delivery"] }) }
+  scope :home_delivery, -> { where(ship_type: Order.ship_types["home_delivery"]) }
 
   acts_as_paranoid
 
