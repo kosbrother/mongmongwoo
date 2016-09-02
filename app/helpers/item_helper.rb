@@ -1,12 +1,13 @@
 module ItemHelper
   def render_favorite_btn(item)
-    type = is_in_favorite_items?(item.id) ? "un-favorite" : "favorite"
-    btn_class_name = is_in_favorite_items?(item.id) ? "checked" : "uncheck"
+    is_in_favorite_items = is_in_favorite_items?(item.id)
+    type = is_in_favorite_items ? "un-favorite" : "favorite"
+    btn_class_name = is_in_favorite_items ? "checked" : "uncheck"
     link_to '加入收藏',  toggle_favorite_favorite_item_path(item, type: type), id: 'add-favorite', class: "add -favorites #{btn_class_name} ", remote: true
   end
 
   def is_in_favorite_items?(item_id)
-    current_user.favorite_items.find_by(item_id: item_id) if current_user
+    current_user.favorite_items.exists?(item_id: item_id) if current_user
   end
 
   def render_off_shelf_or_add_btn(item, item_spec, option)
@@ -29,13 +30,14 @@ module ItemHelper
   end
 
   def render_add_wish_lists_btn(item_id, item_spec_id, hidden_class)
-    type = is_in_wish_lists?(item_spec_id) ? "un-wish" : "wish"
-    btn_class_name = is_in_wish_lists?(item_spec_id) ? "checked" : "uncheck"
+    is_in_wish_lists = is_in_wish_lists?(item_spec_id)
+    type = is_in_wish_lists ? "un-wish" : "wish"
+    btn_class_name = is_in_wish_lists ? "checked" : "uncheck"
     link_to "貨到通知我", toggle_wish_wish_list_path(item_id: item_id, item_spec_id: item_spec_id, type: type), class: "add -wishlist add-btn #{btn_class_name} #{hidden_class}", id: "add-btn-#{item_spec_id}", remote: true
   end
 
   def is_in_wish_lists?(item_spec_id)
-    current_user.wish_lists.find_by(item_spec_id: item_spec_id) if current_user
+    current_user.wish_lists.exists?(item_spec_id: item_spec_id) if current_user
   end
 
   def render_item_status_block(status)
