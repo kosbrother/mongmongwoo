@@ -339,14 +339,13 @@ ActiveRecord::Schema.define(version: 20160904102536) do
     t.integer  "order_id",        limit: 4
     t.string   "ship_name",       limit: 255
     t.string   "ship_address",    limit: 255
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "ship_store_code", limit: 255
     t.string   "ship_phone",      limit: 255
     t.integer  "ship_store_id",   limit: 4
     t.string   "ship_store_name", limit: 255
     t.string   "ship_email",      limit: 255
-    t.integer  "ship_type",       limit: 4,   default: 0
   end
 
   add_index "order_infos", ["order_id"], name: "index_order_infos_on_order_id", using: :btree
@@ -387,6 +386,7 @@ ActiveRecord::Schema.define(version: 20160904102536) do
     t.boolean  "restock",                            default: false
     t.boolean  "is_repurchased",                     default: false
     t.boolean  "is_blacklisted",                     default: false
+    t.integer  "ship_type",              limit: 4,   default: 0
   end
 
   add_index "orders", ["logistics_status_code"], name: "index_orders_on_logistics_status_code", using: :btree

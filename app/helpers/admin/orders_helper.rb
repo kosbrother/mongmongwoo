@@ -119,8 +119,8 @@ module Admin::OrdersHelper
   def ship_type_navs(options = {})
     options = { status: params[:status] }.merge(options)
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_ship_type_link("超商取貨", status: options[:status], ship_type: OrderInfo.ship_types["store_delivery"]) +
-      li_ship_type_link("宅配", status: options[:status], ship_type: OrderInfo.ship_types["home_delivery"])
+      li_ship_type_link("超商取貨", status: options[:status], ship_type: Order.ship_types["store_delivery"]) +
+      li_ship_type_link("宅配", status: options[:status], ship_type: Order.ship_types["home_delivery"])
     end
   end
 
