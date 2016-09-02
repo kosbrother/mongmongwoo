@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   CANCELABLE_STATUS = ["新訂單", "處理中"]
   FAIL_STATUS = ["訂單取消", "未取訂單", "退貨"]
   SHOW_BARCODE_STATUS = ["配送中", "訂單變更"]
-  SHOW_SHIP_TYPE_STATUS = ["新訂單", "處理中", "配送中"]
+  SHOW_SHIP_TYPE_STATUS = ["新訂單", "處理中", "配送中", "完成取貨"]
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
   SHOW_SHIP_TYPE_STATUS_CODE = Order::SHOW_SHIP_TYPE_STATUS.map{|status| Order.statuses[status]}

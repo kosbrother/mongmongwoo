@@ -15,6 +15,9 @@
               = link_to '退貨訂單EXCEL(尚未入庫)', export_returned_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-default'
         %h2.header-title 訂單狀態分類列表
       %p.help-block
+      - if able_render_ship_type_navs?(status: params[:status])
+        = ship_type_navs(status: params[:status])
+      %p.help-block
       %ul.nav.nav-tabs
         = li_status_link(status: Order.statuses["新訂單"], ship_type: Order.ship_types["store_delivery"])
         = li_status_link(status: Order.statuses["處理中"], ship_type: Order.ship_types["store_delivery"])
@@ -25,4 +28,7 @@
         = li_status_link(status: Order.statuses["訂單變更"], ship_type: Order.ship_types["store_delivery"])
         = li_status_link(status: Order.statuses["訂單取消"], ship_type: Order.ship_types["store_delivery"])
         = li_status_link(status: Order.statuses["退貨"], ship_type: Order.ship_types["store_delivery"], restock: false)
+      - if params[:restock].present?
+        %p.help-block
+        = restock_navs(status: params[:status])
       = render "order_table", orders: @orders

@@ -20,7 +20,7 @@ class Admin::OrdersController < AdminController
     includes_array << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
     includes_array << :info if params[:status] == Order.statuses["完成取貨"].to_s
 
-    @orders = Order.includes(includes_array).joins(:info).where(query_hash).recent.paginate(page: params[:page])
+    @orders = Order.includes(includes_array).where(query_hash).recent.paginate(page: params[:page])
   end
 
   def edit
@@ -160,15 +160,13 @@ class Admin::OrdersController < AdminController
 
   def setting_orders_and_query_condition
     query_data = {}
-    joins_array = []
 
     if params[:ship_type] == Order.ship_types["store_delivery"].to_s
       query_data = 'orders.allpay_transfer_id IS NOT NULL'
     elsif params[:ship_type] == Order.ship_types["home_delivery"].to_s
       query_data = query_data.merge(ship_type: Order.ship_types["home_delivery"])
-      joins_array << :info
     end
 
-    Order.includes(:user, :items).status(Order.statuses['處理中']).joins(joins_array).where(query_data).recent
+    Order.includes(:user, :items).status(Order.statuses['處理中']).where(query_data).recent
   end
 end

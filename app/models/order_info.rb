@@ -1,6 +1,6 @@
 class OrderInfo < ActiveRecord::Base
   include InfoInspector
-
+  
   belongs_to :order
   belongs_to :store, :foreign_key => "ship_store_id"
 
