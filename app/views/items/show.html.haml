@@ -8,7 +8,7 @@
       .show
         = image_tag(@first_item_spec.style_pic.url, class: 'img-responsive')
       .icons
-        - @specs.each do |item_spec|
+        - @item_specs.each do |item_spec|
           = render_item_spec_icon(item_spec, item_spec.stock_amount, is_active: item_spec.id == @first_item_spec.id)
   .col-lg-6
     .order-box.row
@@ -24,7 +24,7 @@
         .col-lg-3.col-xs-3.no-padding
           .header 樣式名稱
         .col-lg-9.col-xs-9
-          = f.select :item_spec_id, @specs.collect { |spec| [spec.style, spec.id] }, {selected: @first_item_spec.id},  class: 'spec-select'
+          = f.select :item_spec_id, @item_specs.collect { |item_spec| [item_spec.style, item_spec.id] }, {selected: @first_item_spec.id},  class: 'spec-select'
         .col-lg-3.col-xs-3.no-padding
           .header 樣式庫存
         .col-lg-9.col-xs-9
@@ -46,7 +46,7 @@
         .col-lg-12.col-xs-12.no-padding
           .add-cart
             = render_favorite_btn(@item)
-            - @specs.each do |item_spec|
+            - @item_specs.each do |item_spec|
               = render_off_shelf_or_add_btn(@item, item_spec, is_hidden: item_spec.id != @first_item_spec.id)
             .customer
               購物遇到問題？
