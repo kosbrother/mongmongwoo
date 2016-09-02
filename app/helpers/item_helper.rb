@@ -1,8 +1,8 @@
 module ItemHelper
   def render_favorite_btn(item)
     type = is_in_favorite_items?(item.id) ? "un-favorite" : "favorite"
-    class_name = is_in_favorite_items?(item.id) ? "checked" : "uncheck"
-    link_to '加入收藏',  favorite_favorite_item_path(item, type: type), id: 'add-favorite', class: "add -favorites #{class_name} ", remote: true
+    btn_class_name = is_in_favorite_items?(item.id) ? "checked" : "uncheck"
+    link_to '加入收藏',  toggle_favorite_favorite_item_path(item, type: type), id: 'add-favorite', class: "add -favorites #{btn_class_name} ", remote: true
   end
 
   def is_in_favorite_items?(item_id)
@@ -10,13 +10,13 @@ module ItemHelper
   end
 
   def render_off_shelf_or_add_btn(item, item_spec, option)
-    hidden_class = "hidden" if option[:is_hidden]
+    hidden_class_name = "hidden" if option[:is_hidden]
     if item.status == "off_shelf"
-      render_off_shelf_status(item_spec.id, hidden_class)
+      render_off_shelf_status(item_spec.id, hidden_class_name)
     elsif item_spec.stock_amount == 0
-      render_add_wish_lists_btn(item.id, item_spec.id, hidden_class)
+      render_add_wish_lists_btn(item.id, item_spec.id, hidden_class_name)
     else
-      render_add_to_cart_btn(item.name, item_spec.id, hidden_class)
+      render_add_to_cart_btn(item.name, item_spec.id, hidden_class_name)
     end
   end
 
@@ -30,8 +30,8 @@ module ItemHelper
 
   def render_add_wish_lists_btn(item_id, item_spec_id, hidden_class)
     type = is_in_wish_lists?(item_spec_id) ? "un-wish" : "wish"
-    class_name = is_in_wish_lists?(item_spec_id) ? "checked" : "uncheck"
-    link_to "貨到通知我", wish_wish_list_path(item_id: item_id, item_spec_id: item_spec_id, type: type), class: "add -wishlist add-btn #{class_name} #{hidden_class}", id: "add-btn-#{item_spec_id}", remote: true
+    btn_class_name = is_in_wish_lists?(item_spec_id) ? "checked" : "uncheck"
+    link_to "貨到通知我", toggle_wish_wish_list_path(item_id: item_id, item_spec_id: item_spec_id, type: type), class: "add -wishlist add-btn #{btn_class_name} #{hidden_class}", id: "add-btn-#{item_spec_id}", remote: true
   end
 
   def is_in_wish_lists?(item_spec_id)

@@ -1,8 +1,8 @@
 - if @type == 'wish'
   #{ analytic_event('product', 'add_to_wish_lists', "#{@wish_list.item.name}-#{@wish_list.item_spec.style}") }
   $('#add-btn-#{@wish_list.item_spec_id}').addClass('checked').removeClass('uncheck');
-  $('#add-btn-#{@wish_list.item_spec_id}').attr('href', '#{ wish_wish_list_path(item_id: @wish_list.item_id, item_spec_id: @wish_list.item_spec_id, type: 'un-wish')}');
+  $('#add-btn-#{@wish_list.item_spec_id}').attr('href', '#{ toggle_wish_wish_list_path(item_id: @wish_list.item_id, item_spec_id: @wish_list.item_spec_id, type: 'un-wish')}');
 -elsif @type == 'un-wish'
   #{ analytic_event('product', 'remove_from_wish_lists', "#{@wish_list.item.name}-#{@wish_list.item_spec.style}") }
   $('#add-btn-#{@wish_list.item_spec_id}').addClass('uncheck').removeClass('checked');
-  $('#add-btn-#{@wish_list.item_spec_id}').attr('href', '#{ wish_wish_list_path(item_id: @wish_list.item_id, item_spec_id: @wish_list.item_spec_id, type: 'wish')}');
+  $('#add-btn-#{@wish_list.item_spec_id}').attr('href', '#{ toggle_wish_wish_list_path(item_id: @wish_list.item_id, item_spec_id: @wish_list.item_spec_id, type: 'wish')}');

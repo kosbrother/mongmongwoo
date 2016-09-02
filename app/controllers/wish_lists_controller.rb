@@ -16,7 +16,7 @@ class WishListsController < ApplicationController
     @wish_list.destroy
   end
 
-  def wish
+  def toggle_wish
     @type = params[:type]
     case @type
     when 'wish'
