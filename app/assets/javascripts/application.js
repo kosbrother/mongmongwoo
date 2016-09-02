@@ -57,17 +57,19 @@ ready = function() {
     }
 
     function switch_selected_icon(id) {
-        $('.spec-photos > .icons > .icon').removeClass('active');
+        $('.spec-photos > .icons > .icon > .pic').removeClass('active');
         $(id).addClass('active');
     }
 
     $('.spec-photos > .icons > .icon').on('click', function(){
-        var url = $(this).attr('src'),
-            spec_id = $(this).data('id'),
-            stock_status = $(this).data('stock-status'),
-            stock_amount =$(this).data('stock-amount'),
+        var icon_img = $(this).children(),
+            url = icon_img.attr('src'),
+            spec_id = icon_img.data('id'),
+            icon_img_id = '#' + icon_img.attr('id'),
+            stock_status = icon_img.data('stock-status'),
+            stock_amount =icon_img.data('stock-amount'),
             btn_id_name = '#add-btn-' + spec_id;
-        switch_selected_icon(this)
+        switch_selected_icon(icon_img_id);
         $('.show').html("<img class='img-responsive' src=" + url + ">");
         $('.spec-select option[value='+ spec_id +']').prop('selected', true);
         $('.stock-amount').text(stock_status);

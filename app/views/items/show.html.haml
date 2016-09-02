@@ -6,10 +6,10 @@
   .col-lg-6.xs-padding
     .spec-photos
       .show
-        = image_tag(@specs.first.style_pic.url, class: 'img-responsive')
+        = image_tag(@first_item_spec.style_pic.url, class: 'img-responsive')
       .icons
-        - @specs.each_with_index do |spec, index|
-          = image_tag(spec.style_pic.url, class: index == 0 ? 'icon active' : 'icon', id: "spec-#{spec.id}", 'data-id': spec.id, "data-stock-amount": spec.stock_amount, "data-stock-status": render_stock_amount(spec.stock_amount))
+        - @specs.each do |item_spec|
+          = render_item_spec_icon(item_spec, item_spec.stock_amount, is_active: item_spec.id == @first_item_spec.id)
   .col-lg-6
     .order-box.row
       .name
@@ -24,17 +24,17 @@
         .col-lg-3.col-xs-3.no-padding
           .header 樣式名稱
         .col-lg-9.col-xs-9
-          = f.select :item_spec_id, @specs.collect { |spec| [spec.style, spec.id] }, {},  class: 'spec-select'
+          = f.select :item_spec_id, @specs.collect { |spec| [spec.style, spec.id] }, {selected: @first_item_spec.id},  class: 'spec-select'
         .col-lg-3.col-xs-3.no-padding
           .header 樣式庫存
         .col-lg-9.col-xs-9
-          = content_tag(:div, render_stock_amount(@specs.first.stock_amount), class: 'stock-amount')
+          = content_tag(:div, render_stock_amount(@first_item_spec.stock_amount), class: 'stock-amount')
         .col-lg-3.col-xs-3.no-padding
           .header 選擇商品數量
         .col-lg-9.col-xs-9
           .quantity-box
             .quantity-minus -
-            = f.number_field :item_quantity, class: 'quantity', value: '1', min: '1', max: @specs.first.stock_amount
+            = f.number_field :item_quantity, class: 'quantity', value: '1', min: '1', max: @first_item_spec.stock_amount
             .quantity-plus +
         .col-lg-3.col-xs-3.no-padding
           .header 購物須知
@@ -46,8 +46,8 @@
         .col-lg-12.col-xs-12.no-padding
           .add-cart
             = render_favorite_btn(@item)
-            - @specs.each_with_index do |spec, index|
-              = render_off_shelf_or_add_btn(@item, spec, is_hidden: index != 0)
+            - @specs.each do |item_spec|
+              = render_off_shelf_or_add_btn(@item, item_spec, is_hidden: item_spec.id != @first_item_spec.id)
             .customer
               購物遇到問題？
               = link_to '聯繫客服', 'http://line.me/ti/p/%40kya5456n'

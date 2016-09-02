@@ -91,4 +91,13 @@ module ItemHelper
       content_tag(:div,'', class: "special-price-tag")
     end
   end
+
+  def render_item_spec_icon(item_spec, stock_amount, options={})
+    img_class_name = options[:is_active] ? 'pic active' : 'pic'
+    div_class_name = ' mask' if  stock_amount == 0
+    html_options = {class: img_class_name, id: "spec-#{item_spec.id}", 'data-id': item_spec.id, "data-stock-amount": stock_amount, "data-stock-status": render_stock_amount(stock_amount)}
+    content_tag(:div, class: "icon #{div_class_name}") do
+      image_tag(item_spec.style_pic.url, html_options)
+    end
+  end
 end

@@ -14,15 +14,29 @@
     display: inline-block;
     text-align: left;
     > .icon{
-      border: $regular-border;
-      border-radius: $regular-border-radius;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
+      display: inline-block;
       margin: 5px;
+      cursor: pointer;
+      > .pic{
+        border: $regular-border;
+        border-radius: $regular-border-radius;
+        width: 50px;
+        height: 50px;
+      }
+      > .active{
+        border: $active-border;
+      }
     }
-    > .active{
-      border: $active-border;
+    > .mask:before{
+      content: '';
+      width: 48px;
+      height: 48px;
+      background-color: #959198;
+      opacity: 0.5;
+      display: block;
+      margin: -49px 1px;
+      cursor: pointer;
+      border-radius: 4px;
     }
   }
 }
