@@ -11,7 +11,11 @@ class Admin::MyMessagesController < AdminController
   end
 
   def create
-    message = @user.messages.create(message_params)
+    if (@user.anonymous_user?)
+      message = Message.create(message_params)
+    else
+      message = @user.messages.create(message_params)
+    end
     send_message_notify(message)
     redirect_to :back
   end
@@ -30,9 +34,7 @@ class Admin::MyMessagesController < AdminController
     if params[:device_registration_id].blank?
       flash[:notice] = "已成功新增個人訊息"
     else
-      device_id = DeviceRegistration.find(params[:device_registration_id]).registration_id
-      GcmNotifyService.new.send_message_notification(device_id, message)
-      logger.info("Sending notification to device: #{device_id}")
+      GcmNotifyService.new.send_message_notification(params[:device_registration_id], message)
       flash[:notice] = "已成功推播新增的個人訊息"
     end
   end
