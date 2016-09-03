@@ -11,7 +11,7 @@ class FavoriteItemsController < ApplicationController
     set_meta_tags title: "我的收藏", noindex: true
   end
 
-  def favorite
+  def toggle_favorite
     @item = Item.find(params[:id])
     @type = params[:type]
     case @type

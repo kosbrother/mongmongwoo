@@ -15,4 +15,14 @@ class WishListsController < ApplicationController
     @wish_list = current_user.wish_lists.find(params[:id])
     @wish_list.destroy
   end
+
+  def toggle_wish
+    @type = params[:type]
+    case @type
+    when 'wish'
+      @wish_list = current_user.wish_lists.create(item_id: params[:item_id], item_spec_id: params[:item_spec_id])
+    when 'un-wish'
+      @wish_list = current_user.wish_lists.find_by(item_id: params[:item_id], item_spec_id: params[:item_spec_id]).destroy
+    end
+  end
 end

@@ -13,7 +13,7 @@
     .body
       - @wish_lists.each do |list|
         .row{id: "row-item-#{list.id}"}
-          .col-lg-2.col-sm-2.col-xs-3.image= image_tag(list.item.cover.icon.url, class: 'cover')
+          .col-lg-2.col-sm-2.col-xs-3.image= image_tag(list.item_spec.style_pic.url, class: 'cover')
           .col-lg-4.col-sm-3.col-xs-9.no-padding.xs-padding.name= link_to list.item.name, category_item_path(@category_all, list.item)
           .col-lg-2.col-sm-2.col-xs-9.no-padding.xs-padding.spec= list.item_spec.style
           .col-lg-1.col-sm-2.col-xs-3.no-padding.xs-padding.price= price_with_unit(list.item.price)

@@ -11,10 +11,9 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless current_user
-      flash[:info] = "此功能為會員專屬，請先登入或註冊會員。"
       respond_to do |format|
         format.js { render js: "alert('此功能為會員專屬，請先登入或註冊會員。');" }
-        format.html { redirect_to root_path}
+        format.html { redirect_to root_path, notice: "此功能為會員專屬，請先登入或註冊會員。"}
       end
     end
   end

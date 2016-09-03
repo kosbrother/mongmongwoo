@@ -41,7 +41,13 @@ Rails.application.routes.draw do
   resources :orders, only: [:index, :show]
   resources :favorite_items, only: [:index, :destroy] do
     member do
-      get :favorite
+      get :toggle_favorite
+    end
+  end
+
+  resources :wish_lists, only: [] do
+    member do
+      get :toggle_wish
     end
   end
 
