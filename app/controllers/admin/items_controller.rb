@@ -3,7 +3,6 @@ class Admin::ItemsController < AdminController
   before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
 
   def index
-    @categories = Category.parent_categories
     params[:category_id] ||= Category::ALL_ID
     params[:order] ||= 'position'
     query_hash = {item_categories: {category_id: params[:category_id]}}
@@ -17,7 +16,12 @@ class Admin::ItemsController < AdminController
     when 'id'
       order_query = {id: :DESC}
     end
-
+    @categories = Category.parent_categories
+    if @categories.map(&:id).include? params[:category_id].to_i
+      @subcategories = Category.find(params[:category_id]).child_categories
+    else
+      @subcategories = Category.subcategories(Category.find(params[:category_id]).parent_id)
+    end
     @items = Item.joins(:item_categories).select('items.*, item_categories.position').where(query_hash).order(order_query).paginate(page: params[:page])
   end
 
