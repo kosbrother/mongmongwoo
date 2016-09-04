@@ -21,7 +21,7 @@ class ItemSpec < ActiveRecord::Base
   scope :recent, -> {order(id: :DESC)}
   scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}
   scope :with_stock_amount, -> {joins('LEFT JOIN stock_specs on item_specs.id = stock_specs.item_spec_id').select('SUM(stock_specs.amount) as stock_amount').group('item_specs.id')}
-  scope :recommend_stock_empty, -> {where(recommend_stock_num: 0).order(item_id: :ASC)}
+  scope :recommend_stock_empty, -> {where(recommend_stock_num: 0, status: ItemSpec.statuses[:on_shelf], items: {status: Item.statuses["on_shelf"]}).order(item_id: :ASC)}
 
   acts_as_paranoid
   mount_uploader :style_pic, SpecPicUploader

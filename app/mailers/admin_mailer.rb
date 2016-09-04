@@ -1,5 +1,5 @@
 class AdminMailer < ApplicationMailer
-  helper ApplicationHelper
+  helper ApplicationHelper, Admin::ItemsHelper
 
   def notify_recommend_stock
     recommend_stock = ItemSpec.includes(:stock_spec, item: :taobao_supplier, admin_cart_items: :admin_cart).order(item_id: :ASC)

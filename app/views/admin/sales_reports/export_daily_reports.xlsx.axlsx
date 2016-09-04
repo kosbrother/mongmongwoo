@@ -19,7 +19,7 @@ wb.add_worksheet(name: "推薦庫存清單") do |sheet|
       spec.item.cost,
       spec_total_cost,
       spec.item.price,
-      display_date(spec.item.created_at),
+      item_initial_on_shelf_date(spec.item),
       display_date(spec.created_at),
       spec.sales_quantity,
       spec.sales_amount_within_days(30),
@@ -50,7 +50,7 @@ wb.add_worksheet(name: "建議下架清單") do |sheet|
       spec.sales_amount_within_days(30),
       spec.item.cost,
       spec.item.price,
-      display_date(spec.item.created_at),
+      item_initial_on_shelf_date(spec.item),
       display_date(spec.created_at)
     ]
   end

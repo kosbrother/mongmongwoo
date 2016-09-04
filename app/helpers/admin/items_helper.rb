@@ -98,9 +98,15 @@ module Admin::ItemsHelper
     end
   end
 
+  def item_initial_on_shelf_date_text(item)
+    "(首次上架日期:#{item_initial_on_shelf_date(item)})"
+  end
+
   def item_initial_on_shelf_date(item)
     if item.ever_on_shelf
-      "(首次上架日期:#{display_date(item.created_at)})"
+      display_date(item.created_at)
+    else
+      "未上架過"
     end
   end
 
