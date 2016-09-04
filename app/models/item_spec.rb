@@ -47,6 +47,10 @@ class ItemSpec < ActiveRecord::Base
     OrderItem.where(created_at: TimeSupport.within_days(number)).select('COALESCE(SUM(order_items.item_quantity), 0)as sales_amount').find_by(item_spec_id: id).sales_amount
   end
 
+  def sales_between(time_range)
+    OrderItem.where(created_at: time_range, item_spec: self).sum(:item_quantity)
+  end
+
   def wish_lists_num
     wish_lists.size
   end
