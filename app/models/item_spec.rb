@@ -47,6 +47,14 @@ class ItemSpec < ActiveRecord::Base
     OrderItem.where(created_at: TimeSupport.within_days(number)).select('COALESCE(SUM(order_items.item_quantity), 0)as sales_amount').find_by(item_spec_id: id).sales_amount
   end
 
+  def wish_lists_num
+    wish_lists.size
+  end
+
+  def wish_lists_num_within_days(number)
+    wish_lists.where(created_at: TimeSupport.within_days(number)).size
+  end
+
   def requested_quantity
     OrderItem.statuses_total_amount(id, Order::COMBINE_STATUS_CODE)
   end

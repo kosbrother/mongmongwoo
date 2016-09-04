@@ -5,7 +5,7 @@ class TimeSupport
     "month" => Range.new((Time.current - 30.day), Time.current),
     "week" => Range.new((Time.current - 7.day), Time.current),
     "day" => Range.new((Time.current - 1.day), Time.current),
-    "day_by_midnight" => Range.new((Time.current - 1.day).midnight, Time.current.midnight)
+    "day_by_midnight" => Range.new((Time.current - 1.day).beginning_of_day, (Time.current - 1.day).end_of_day)
   }
 
   def self.time_until(time_param)
