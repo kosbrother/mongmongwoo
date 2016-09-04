@@ -5,6 +5,9 @@ drop_down = function() {
         "click":             function() { this.closable = true; },
         "hide.bs.dropdown":  function() { return this.closable; }
     });
+    $('#nav-bar-collapse .dropdown > .list.diamond.dropdown-toggle').on('click', function(){
+        $(this).parent().toggleClass('open');
+    });
 };
 
 $(document).ready(drop_down);

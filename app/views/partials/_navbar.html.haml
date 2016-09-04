@@ -31,13 +31,26 @@
                 %span.glyphicon.glyphicon-search.search-icon{:type => "submit"}
         %li.nav-list.visible-xs-block
           .dropdown
-            .list.diamond.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            .list.diamond.dropdown-toggle
               商品分類
               %span.caret
-            %ul.dropdown-menu
+            %ul.dropdown-menu.parent-categories
               - @categories.each do |category|
-                %li.list
-                  = link_to category.name, category_path(category), class: "link", onClick: analytic_event('navigation_dropdown', 'click', category.name)
+                -if Category::NO_CHILD_CATEGORIES.include?(category.id)
+                  = link_to category_path(category), class: 'list', onClick: analytic_event("category", "click", category.name) do
+                    .list= category.name
+                -else
+                  %li.list
+                    .dropdown
+                      .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                        = category.name
+                        %span.caret
+                      %ul.dropdown-menu.sub-categories
+                        = link_to category_path(category), onClick: analytic_event("category", "click", category.name) do
+                          %li.list 全部
+                        - category.child_categories.each do |child_category|
+                          = link_to category_path(child_category), onClick: analytic_event("category", "click", "#{category.name}-#{child_category.name}") do
+                            %li.list= child_category.name
         %li.nav-list
           = link_to checkout_path, onClick: analytic_event('cart', 'click', '無') do
             .list.cart
