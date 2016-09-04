@@ -25,7 +25,7 @@
             淘寶商家：#{cart.taobao_supplier_name}
             %br
             淘寶訂單編號：#{cart.taobao_order_id}
-          - cart.admin_cart_items.recent.each do |item|
+          - cart.admin_cart_items.by_item.each do |item|
             %tr
               %td= item.item.id
               %td= link_to item.item.name, admin_item_path(item.item), target: "_blank"

@@ -9,10 +9,10 @@
         %th 銷售比例
         %th 月銷售量
         %th 建議庫存
-        %th 現貨數量
-        %th 運送中數量
+        %th 現貨數
+        %th 需求數
+        %th 運送數
         %th 是否補貨
-        %th 訂購
         %th
     %tbody
       - specs.each do |item_spec|
@@ -34,15 +34,10 @@
           %td
             = item_spec.stock_item_quantity
           %td
+            = item_spec.requested_quantity
+          %td
             = item_spec.shipping_item_quantity
           %td{id: "stop-recommend-spec-id-#{item_spec.id}"}
             = link_to_stop_recommend(item, item_spec)
-          %td
-            = form_tag add_admin_admin_cart_items_path, remote: true do
-              = hidden_field_tag :item_id, item_spec.item_id
-              = hidden_field_tag :item_spec_id, item_spec.id
-              = hidden_field_tag :taobao_supplier_id, item_spec.item.taobao_supplier_id
-              = number_field_tag :item_quantity, 1, min: 1, max: 99
-              = submit_tag '訂購', class: "btn btn-primary btn-sm"
           %td
             = link_to "編輯" , edit_admin_item_item_spec_path(item, item_spec), class: "btn btn-default btn-sm"
