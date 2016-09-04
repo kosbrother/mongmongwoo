@@ -17,6 +17,12 @@
             - @categories.each do |category|
               = link_to_items_index(category.id == params[:category_id].to_i, category.name, category_id: category.id)
       .filter-row
+        .filter-dt 次分類
+        .filter-dd
+          %ul.filter-list
+            - @subcategories.each do |category|
+              = link_to_items_index(category.id == params[:category_id].to_i, category.name, category_id: category.id)
+      .filter-row
         .filter-dt 排序
         .filter-dd
           %ul.filter-list
