@@ -27,6 +27,13 @@ zh-TW:
     term:
       name: '可愛'
       description: '日韓'
+  models:
+    item:
+      sort_params:
+        price_desc: '價格由高到低'
+        price_asc: '價格由低到高'
+        popular: '人氣排行'
+        date: '最新商品'
   activerecord:
     errors:
       models:

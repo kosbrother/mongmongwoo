@@ -1,0 +1,35 @@
+.sort{
+  > .header{
+    font-size: 18px;
+    display: inline-block;
+  }
+  > select{
+    width: 199px;
+    height: 32px;
+    border-radius: 4px;
+    border: solid 1px #757575;
+    font-size: 16px;
+    -webkit-appearance: none;
+    background-color: transparent;
+    background-image: image_url('icons/web_dropdown.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    padding-left: 10px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .sort{
+    > .header{
+      font-size: 12px;
+      display: inline-block;
+    }
+    > select{
+      width: 120px;
+      height: 20px;
+      font-size: 12px;
+      background-image: image_url('icons/mobile_dropdown.png');
+      padding-left: 5px;
+    }
+  }
+}

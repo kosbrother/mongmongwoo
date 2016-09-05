@@ -1,5 +1,15 @@
 .show{
+  .sort{
+    margin: 20px 0 10px 0;
+  }
   .product-list{
     margin-top: 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .show{
+    .sort{
+      margin-bottom: 0px;
+    }
   }
 }

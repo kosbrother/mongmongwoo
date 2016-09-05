@@ -10,7 +10,7 @@ class Item < ActiveRecord::Base
 
   CNY_RATING = 5
 
-  enum sort_params: { price_desc: "price desc", price_asc: "price asc", popular: "item_categories.position ASC", date: "items.created_at desc" }
+  enum sort_params: { popular: "item_categories.position ASC", date: "items.created_at desc", price_asc: "price asc", price_desc: "price desc" }
   enum status: { on_shelf: 0, off_shelf: 1 }
 
   validates_presence_of :name, :price, :description
