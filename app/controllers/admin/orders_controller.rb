@@ -61,7 +61,15 @@ class Admin::OrdersController < AdminController
 
   def search
     @search_term = search_params
-    @search_results = Order.includes(:user, info: :store, items: [:item, item_spec: :stock_spec]).search_by_search_terms(@search_term).paginate(:page => params[:page])
+    query_hash = {}
+    query_hash["id"] = search_params["order_id"] if search_params["order_id"].present?
+    if search_params["ship_email"].present? || search_params["ship_phone"].present?
+      query_hash["order_infos"] ={}
+      query_hash["order_infos"]["ship_email"] = search_params["ship_email"] if search_params["ship_email"].present?
+      query_hash["order_infos"]["ship_phone"] = search_params["ship_phone"] if search_params["ship_phone"].present?
+    end
+
+    @search_results = Order.includes(:user, :info).where(query_hash).paginate(:page => params[:page])
   end
 
   def open_barcode_tab
