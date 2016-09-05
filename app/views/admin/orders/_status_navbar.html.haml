@@ -11,4 +11,4 @@
   = li_status_link(ship_type: params[:ship_type], status: Order.statuses["退貨"], restock: false)
 - if params[:restock].present?
   %p.help-block
-  = restock_navs(ship_type: params[:ship_type], status: params[:status])
+  = restock_navs
