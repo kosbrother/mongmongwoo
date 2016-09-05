@@ -125,12 +125,12 @@ class Admin::OrdersController < AdminController
   end
 
   def update_to_processing
-    new_orders = Order.status(Order.statuses["新訂單"])
+    new_orders = Order.status(Order.statuses["新訂單"]).where(ship_type: params[:ship_type])
     new_orders.each do |order|
       order.update_attribute(:status, Order.statuses["處理中"]) if order.all_able_to_pack?
     end
 
-    redirect_to status_index_admin_orders_path(status: Order.statuses["新訂單"])
+    redirect_to :back
   end
 
   def refund_shopping_point
