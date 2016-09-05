@@ -31,10 +31,11 @@ module Admin::OrdersHelper
   end
 
   def li_status_link(options = {})
-    options = { status: params[:status] }.merge(options)
+    options = { ship_type: params[:ship_type], status: params[:status] }.merge(options)
+    ship_type = options[:ship_type]
     status = options[:status]
     content_tag(:li, '' , class: set_class_to_active(status)) do
-      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", status_index_admin_orders_path(options)
+      link_to Order.statuses.key(status) + ": #{Order.count_by_ship_type_and_status(ship_type, status)}", status_index_admin_orders_path(options)
     end
   end
 
@@ -95,17 +96,17 @@ module Admin::OrdersHelper
   end
 
   def li_restock_status_link(link_text, options = {})
-    options = { status: params[:status], restock: params[:restock] }.merge(options)
+    options = { ship_type: params[:ship_type], status: params[:status], restock: params[:restock] }.merge(options)
     content_tag(:li, class: options[:restock].to_s == params[:restock] ? 'active' : '' ) do
-      link_to link_text, status_index_admin_orders_path(status: options[:status], restock: options[:restock])
+      link_to link_text, status_index_admin_orders_path(options)
     end
   end
 
   def restock_navs(options = {})
-    options = { status: params[:status] }.merge(options)
+    options = { ship_type: params[:ship_type], status: params[:status] }.merge(options)
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_restock_status_link("未重入庫存", status: options[:status], restock: false) +
-      li_restock_status_link("已重入庫存", status: options[:status], restock: true)
+      li_restock_status_link("未重入庫存", ship_type: options[:ship_type], status: options[:status], restock: false) +
+      li_restock_status_link("已重入庫存", ship_type: options[:ship_type], status: options[:status], restock: true)
     end
   end
 
@@ -116,17 +117,11 @@ module Admin::OrdersHelper
     end
   end
 
-  def ship_type_navs(options = {})
-    options = { status: params[:status] }.merge(options)
+  def ship_type_navs
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_ship_type_link("超商取貨", status: options[:status], ship_type: Order.ship_types["store_delivery"]) +
-      li_ship_type_link("宅配", status: options[:status], ship_type: Order.ship_types["home_delivery"])
+      li_ship_type_link("超商取貨", ship_type: Order.ship_types["store_delivery"]) +
+      li_ship_type_link("宅配", ship_type: Order.ship_types["home_delivery"])
     end
-  end
-
-  def able_render_ship_type_navs?(options = {})
-    options = { status: params[:status] }.merge(options)
-    Order::SHOW_SHIP_TYPE_STATUS_CODE.include?(options[:status].to_i)
   end
 
   def set_class_if_repurchased(order)

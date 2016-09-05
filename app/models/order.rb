@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
   delegate :orders, to: :user, prefix: true
 
   scope :recent, -> { order(id: :DESC) }
-  scope :count_status, ->(status) { where(status: status).count }
+  scope :count_by_ship_type_and_status, ->(ship_type, status) { where(ship_type: ship_type, status: status).count }
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
   scope :status_count, -> { group(:status).size }
