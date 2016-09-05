@@ -52,9 +52,13 @@ zh-TW:
               blank: "取件人手機電話不可為空白"
             ship_name:
               blank: "取件人姓名不可為空白"
+            ship_address:
+              blank: "收件地址不可空白"
         order:
           attributes:
             total:
               greater_than: "訂單總金額不得為0"
             items_price:
               greater_than: "商品總金額不得為0"
+            ship_type:
+              blank: "配送方式不可空白"
