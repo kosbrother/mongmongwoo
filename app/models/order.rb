@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
 
-  validates_presence_of :user_id, :items_price, :ship_fee, :total
+  validates_presence_of :user_id, :items_price, :ship_fee, :total, :ship_type
   validates_numericality_of :items_price, :total, greater_than: 0
 
 
@@ -75,17 +75,22 @@ class Order < ActiveRecord::Base
     result_order[:total] = total
     result_order[:shopping_point_amount] = shopping_point_spend_amount
     result_order[:note] = note
+    result_order[:ship_type] = ship_type
 
     include_info = {}
     include_info[:id] = info.id
     include_info[:ship_name] = info.ship_name
     include_info[:ship_phone] = info.ship_phone
     include_info[:ship_email] = info.ship_email
-    include_info[:ship_store_code] = info.ship_store_code
-    include_info[:ship_store_id] = info.ship_store_id
-    include_info[:ship_store_name] = info.ship_store_name
-    include_info[:ship_store_address] = info.address
-    include_info[:ship_store_phone] = info.phone
+    if is_store_delivery?
+      include_info[:ship_store_code] = info.ship_store_code
+      include_info[:ship_store_id] = info.ship_store_id
+      include_info[:ship_store_name] = info.ship_store_name
+      include_info[:ship_store_address] = info.address
+      include_info[:ship_store_phone] = info.phone
+    elsif is_home_delivery?
+      include_info[:ship_address] = info.ship_address
+    end
     result_order[:info] = include_info
 
     include_items = []
