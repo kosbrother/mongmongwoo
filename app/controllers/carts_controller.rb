@@ -46,6 +46,10 @@ class CartsController < ApplicationController
   end
 
   def confirm
+    cookies[:name] = params[:ship_name]
+    cookies[:email] = params[:ship_email] 
+    cookies[:phone] = params[:ship_phone]
+
     @step = Cart::STEP[:confirm]
     @info = {ship_name: cookies[:name],
              ship_phone: cookies[:phone],
