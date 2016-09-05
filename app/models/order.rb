@@ -103,6 +103,14 @@ class Order < ActiveRecord::Base
     result_order
   end
 
+  def is_store_delivery?
+    ship_type == Order.ship_types.key(Order.ship_types["store_delivery"])
+  end
+
+  def is_home_delivery?
+    ship_type == Order.ship_types.key(Order.ship_types["home_delivery"])
+  end
+
   def user_status_count(order_status)
     user_orders.where(status: order_status).count
   end
