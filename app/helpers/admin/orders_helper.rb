@@ -82,7 +82,7 @@ module Admin::OrdersHelper
   end
 
   def link_to_post_order_to_allpay(order)
-    if order.status == "訂單變更"
+    if order.status == "訂單變更" || order.status == "處理中"
       link_to '傳送至歐付寶', post_order_to_allpay_allpay_index_path(order), remote: true, class: 'btn btn-default btn-sm inline-display', method: :post
     end
   end
