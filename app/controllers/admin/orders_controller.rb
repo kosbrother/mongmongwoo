@@ -78,7 +78,7 @@ class Admin::OrdersController < AdminController
   end
 
   def change_status_to_transfer
-    @order_list = setting_orders_and_query_condition
+    @order_list = get_orders_by_params
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -87,7 +87,7 @@ class Admin::OrdersController < AdminController
   end
 
   def export_processing_order_list
-    @order_list = setting_orders_and_query_condition
+    @order_list = get_orders_by_params
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -158,11 +158,11 @@ class Admin::OrdersController < AdminController
     params.require(:order_search_term).permit(:order_id, :ship_email, :ship_phone)
   end
 
-  def setting_orders_and_query_condition
+  def get_orders_by_params
     query_data = {}
 
     if params[:ship_type] == Order.ship_types["store_delivery"].to_s
-      query_data = 'orders.allpay_transfer_id IS NOT NULL'
+      query_data = ['orders.allpay_transfer_id IS NOT NULL AND orders.ship_type = :ship_type', ship_type: Order.ship_types["store_delivery"]]
     elsif params[:ship_type] == Order.ship_types["home_delivery"].to_s
       query_data = query_data.merge(ship_type: Order.ship_types["home_delivery"])
     end
