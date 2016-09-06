@@ -30,10 +30,9 @@ module Admin::OrdersHelper
     end
   end
 
-  def li_status_link(options = {status: 0})
-    status = options[:status]
-    content_tag(:li, '' , class: set_class_to_active(status)) do
-      link_to Order.statuses.key(status) + ": #{Order.count_status(status)}", status_index_admin_orders_path(options)
+  def li_status_link(options = {ship_type: ship_type_params, status: status_code})
+    content_tag(:li, '' , class: set_class_to_active(options[:status])) do
+      link_to Order.statuses.key(options[:status]) + ": #{Order.count_by_ship_type_and_status(options[:ship_type], options[:status])}", status_index_admin_orders_path(options)
     end
   end
 
@@ -93,16 +92,29 @@ module Admin::OrdersHelper
     end
   end
 
-  def li_restock_status_link(order_status: 0, restock_status: false, link_text: nil)
-    content_tag(:li, class: restock_status.to_s == params[:restock] ? 'active' : '' ) do
-      link_to link_text, status_index_admin_orders_path(status: order_status, restock: restock_status)
+  def li_restock_status_link(link_text, options = {ship_type: ship_type_params, status: status_params, restock: restock_boolean})
+    content_tag(:li, class: options[:restock].to_s == params[:restock] ? 'active' : '' ) do
+      link_to link_text, status_index_admin_orders_path(options)
     end
   end
 
-  def restock_navs(order_status: 0)
+  def restock_navs
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_restock_status_link(order_status: order_status, restock_status: false, link_text: "未重入庫存") +
-      li_restock_status_link(order_status: order_status, restock_status: true, link_text: "已重入庫存") 
+      li_restock_status_link("未重入庫存", ship_type: params[:ship_type], status: params[:status], restock: false) +
+      li_restock_status_link("已重入庫存", ship_type: params[:ship_type], status: params[:status], restock: true)
+    end
+  end
+
+  def li_ship_type_link(link_text, options = {ship_type: ship_type_code})
+    content_tag(:li, class: options[:ship_type] == params[:ship_type].to_i ? 'active' : '' ) do
+      link_to link_text, status_index_admin_orders_path(ship_type: options[:ship_type])
+    end
+  end
+
+  def ship_type_navs
+    content_tag(:ul, class: 'nav nav-tabs') do
+      li_ship_type_link("超商取貨", ship_type: Order.ship_types["store_delivery"]) +
+      li_ship_type_link("宅配", ship_type: Order.ship_types["home_delivery"])
     end
   end
 

@@ -1,6 +1,4 @@
-%br/
-- if params[:restock].present?
-  = restock_navs(order_status: params[:status])
+%br
 = render_pagination(orders)
 %table.table.table-bordered.order-table
   %thead
@@ -40,7 +38,8 @@
           = link_to "明細", admin_order_path(order),class: "button btn btn-default btn-sm"
           = link_to "編輯", edit_admin_order_path(order), class: "btn btn-default btn-sm"
           = render "message_notification", order: order
-          = link_to_post_order_to_allpay(order)
+          - if params[:ship_type] == Order.ship_types["store_delivery"].to_s
+            = link_to_post_order_to_allpay(order)
           = link_to_allpay_barcode(order)
           = link_to_restock(order)
           = link_to_send_survey_email(order)

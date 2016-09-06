@@ -7,26 +7,15 @@
           %p.help-block
           - if params[:status].to_i == Order.statuses["新訂單"]
             .pull-right
-              = link_to '處理有現貨訂單', update_to_processing_admin_orders_path, class: 'btn btn-default', method: :patch
+              = link_to '處理有現貨訂單', update_to_processing_admin_orders_path(ship_type: params[:ship_type]), class: 'btn btn-default', method: :patch
           - if params[:status].to_i == Order.statuses["處理中"]
-            .pull-right
-              = link_to '轉配送中', change_status_to_transfer_admin_orders_path, class: 'btn btn-default inline-display'
-              = link_to '下載EXCEL', export_processing_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-default inline-display'
-              = link_to '物流單', open_barcode_tab_admin_orders_path, remote: true, class: 'btn btn-default inline-display'
-              = link_to '傳送至歐付寶', create_allpay_index_path, remote: true, class: 'btn btn-default inline-display', method: :post
+            = render "processing_link"
           - if params[:status].to_i == Order.statuses["退貨"]
             .pull-right
               = link_to '退貨訂單EXCEL(尚未入庫)', export_returned_order_list_admin_orders_path(format: 'xlsx'), class: 'btn btn-default'
         %h2.header-title 訂單狀態分類列表
       %p.help-block
-      %ul.nav.nav-tabs
-        = li_status_link(status: Order.statuses["新訂單"])
-        = li_status_link(status: Order.statuses["處理中"])
-        = li_status_link(status: Order.statuses["配送中"])
-        = li_status_link(status: Order.statuses["已到店"])
-        = li_status_link(status: Order.statuses["完成取貨"])
-        = li_status_link(status: Order.statuses["未取訂貨"], restock: false)
-        = li_status_link(status: Order.statuses["訂單變更"])
-        = li_status_link(status: Order.statuses["訂單取消"])
-        = li_status_link(status: Order.statuses["退貨"], restock: false)
+      = ship_type_navs
+      %p.help-block
+      = render "status_navbar"
       = render "order_table", orders: @orders

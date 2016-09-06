@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   include CalculatePrice
 
   enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7, "退貨" => 8 }
+  enum ship_type: { "store_delivery": 0, "home_delivery": 1 }
 
   COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
   RESTOCK_STATUS = ["未取訂貨", "退貨"]
@@ -28,11 +29,11 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :info
 
-  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, to: :info
+  delegate :ship_store_code, :ship_store_name, :address, :ship_phone, :ship_name, :ship_email, :ship_address, to: :info
   delegate :orders, to: :user, prefix: true
 
   scope :recent, -> { order(id: :DESC) }
-  scope :count_status, ->(status) { where(status: status).count }
+  scope :count_by_ship_type_and_status, ->(ship_type, status) { where(ship_type: ship_type, status: status).count }
   scope :created_at_within, -> (time_param) { where(created_at: time_param) }
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
   scope :status_count, -> { group(:status).size }
@@ -40,6 +41,7 @@ class Order < ActiveRecord::Base
   scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
   scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
+  scope :home_delivery, -> { where(ship_type: Order.ship_types["home_delivery"]) }
 
   acts_as_paranoid
 
@@ -99,6 +101,14 @@ class Order < ActiveRecord::Base
     result_order[:items] = include_items
 
     result_order
+  end
+
+  def is_store_delivery?
+    ship_type == Order.ship_types.key(Order.ship_types["store_delivery"])
+  end
+
+  def is_home_delivery?
+    ship_type == Order.ship_types.key(Order.ship_types["home_delivery"])
   end
 
   def user_status_count(order_status)

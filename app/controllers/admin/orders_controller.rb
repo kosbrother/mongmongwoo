@@ -9,7 +9,8 @@ class Admin::OrdersController < AdminController
 
   def status_index
     params[:status] ||= Order.statuses["新訂單"]
-    query_hash = {status: params[:status]}
+    params[:ship_type] ||= Order.ship_types["store_delivery"]
+    query_hash = {status: params[:status], ship_type: params[:ship_type]}
     includes_array = [:user]
 
     if params[:restock]
@@ -77,7 +78,8 @@ class Admin::OrdersController < AdminController
   end
 
   def change_status_to_transfer
-    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+    @order_list = get_orders_by_params
+
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
     end
@@ -85,7 +87,7 @@ class Admin::OrdersController < AdminController
   end
 
   def export_processing_order_list
-    @order_list = Order.includes(:user, :items).status(Order.statuses['處理中']).allpay_transfer_id_present.recent
+    @order_list = get_orders_by_params
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -108,6 +110,13 @@ class Admin::OrdersController < AdminController
     render 'export_order_list'
   end
 
+  def export_home_delivery_order_list
+    order_list = Order.includes(:user).status(Order.statuses['處理中']).home_delivery.recent
+    file_name = "home_delivery_order_list.xls"
+    spreadsheet = OrderDeliveryExcelGenerator.generate_home_delivery_order_xls(order_list)
+    send_data(spreadsheet, type: "application/vnd.ms-excel", filename: file_name)
+  end
+
   def restock
     order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
     order.restock_order_items
@@ -116,12 +125,12 @@ class Admin::OrdersController < AdminController
   end
 
   def update_to_processing
-    new_orders = Order.status(Order.statuses["新訂單"])
+    new_orders = Order.status(Order.statuses["新訂單"]).where(ship_type: params[:ship_type])
     new_orders.each do |order|
       order.update_attribute(:status, Order.statuses["處理中"]) if order.all_able_to_pack?
     end
 
-    redirect_to status_index_admin_orders_path(status: Order.statuses["新訂單"])
+    redirect_to :back
   end
 
   def refund_shopping_point
@@ -147,5 +156,17 @@ class Admin::OrdersController < AdminController
 
   def search_params
     params.require(:order_search_term).permit(:order_id, :ship_email, :ship_phone)
+  end
+
+  def get_orders_by_params
+    query_data = {}
+
+    if params[:ship_type] == Order.ship_types["store_delivery"].to_s
+      query_data = ['orders.allpay_transfer_id IS NOT NULL AND orders.ship_type = :ship_type', ship_type: Order.ship_types["store_delivery"]]
+    elsif params[:ship_type] == Order.ship_types["home_delivery"].to_s
+      query_data = query_data.merge(ship_type: Order.ship_types["home_delivery"])
+    end
+
+    Order.includes(:user, :items).status(Order.statuses['處理中']).where(query_data).recent
   end
 end
