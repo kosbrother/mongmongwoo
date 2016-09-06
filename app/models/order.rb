@@ -109,11 +109,11 @@ class Order < ActiveRecord::Base
   end
 
   def is_store_delivery?
-    ship_type == Order.ship_types.key(Order.ship_types["store_delivery"])
+    ship_type == "store_delivery"
   end
 
   def is_home_delivery?
-    ship_type == Order.ship_types.key(Order.ship_types["home_delivery"])
+    ship_type == "home_delivery"
   end
 
   def user_status_count(order_status)

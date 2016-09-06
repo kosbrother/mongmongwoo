@@ -1,6 +1,6 @@
 class OrderInfo < ActiveRecord::Base
   include InfoInspector
-  
+
   belongs_to :order
   belongs_to :store, :foreign_key => "ship_store_id"
 
@@ -16,6 +16,14 @@ class OrderInfo < ActiveRecord::Base
     super || find_store
   end
 
+  def is_order_store_delivery?
+    order.is_store_delivery?
+  end
+
+  def is_order_home_delivery?
+    order.is_home_delivery?
+  end
+
   private
 
   def set_store_if_store_code_changed
@@ -27,13 +35,5 @@ class OrderInfo < ActiveRecord::Base
 
   def find_store
     Store.with_deleted.find(self.ship_store_id)
-  end
-
-  def is_order_store_delivery?
-    order.is_store_delivery?
-  end
-
-  def is_order_home_delivery?
-    order.is_home_delivery?
   end
 end

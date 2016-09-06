@@ -24,11 +24,11 @@ class Api::V4::OrdersController < ApiController
       info.ship_name = params[:ship_name]
       info.ship_phone = params[:ship_phone]
       info.ship_email = params[:ship_email]
-      if info.order.is_store_delivery?
+      if info.is_order_store_delivery?
         info.ship_store_code = params[:ship_store_code]
         info.ship_store_id = params[:ship_store_id]
         info.ship_store_name = params[:ship_store_name]
-      elsif info.order.is_home_delivery?
+      elsif info.is_order_home_delivery?
         info.ship_address = params[:ship_address]
       end
       errors << info.errors.messages unless info.save
