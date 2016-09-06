@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Api::V4::OrdersController, type: :controller do
   let!(:item) { FactoryGirl.create(:item_with_specs_and_photos) }
   let!(:spec) { item.specs.first }
+  let!(:store_delivery_type) { Order.ship_types.key(Order.ship_types["store_delivery"]) }
+  let!(:home_delivery_type) { Order.ship_types.key(Order.ship_types["home_delivery"]) }
 
   describe "post #create" do
     let!(:user) { FactoryGirl.create(:user_with_registration_device) }
@@ -12,6 +14,7 @@ describe Api::V4::OrdersController, type: :controller do
     let!(:ship_fee) { 60 }
     let!(:total) { items_price + ship_fee }
     let!(:registration_id) { user.devices.first.registration_id }
+    let!(:ship_address) { Faker::Address.street_address }
     let!(:ship_name) { Faker::Name.name }
     let!(:ship_phone) { Faker::PhoneNumber.phone_number }
     let!(:ship_store_code) {store.store_code}
@@ -26,8 +29,7 @@ describe Api::V4::OrdersController, type: :controller do
       context 'when  uid is provided' do
         it "does create correct order" do
           post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-               registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
-               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone, ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
                ship_email: ship_email, products: products
           order_id = JSON.parse(response.body)["data"]['id']
           order = Order.find(order_id)
@@ -36,6 +38,7 @@ describe Api::V4::OrdersController, type: :controller do
           expect(order.ship_fee).to eq(ship_fee)
           expect(order.total).to eq(total)
           expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+          expect(order.ship_type).to eq(store_delivery_type)
           expect(order.info.ship_name).to eq(ship_name)
           expect(order.info.ship_phone).to eq(ship_phone)
           expect(order.info.ship_store_code).to eq(ship_store_code)
@@ -48,7 +51,7 @@ describe Api::V4::OrdersController, type: :controller do
       context 'when  email is provided' do
         it "does create correct order" do
           post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
-               registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
                ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
                ship_email: ship_email, products: products
           order_id = JSON.parse(response.body)["data"]['id']
@@ -57,6 +60,7 @@ describe Api::V4::OrdersController, type: :controller do
           expect(order.ship_fee).to eq(ship_fee)
           expect(order.total).to eq(total)
           expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+          expect(order.ship_type).to eq(store_delivery_type)
           expect(order.info.ship_name).to eq(ship_name)
           expect(order.info.ship_phone).to eq(ship_phone)
           expect(order.info.ship_store_code).to eq(ship_store_code)
@@ -72,7 +76,7 @@ describe Api::V4::OrdersController, type: :controller do
         let!(:spend_amount) { user.shopping_points.valid.sum(:amount) }
         it "does spend user's shopping point" do
           post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
-               registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
                ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
                ship_email: ship_email, products: products, shopping_points_amount: spend_amount
           order_id = JSON.parse(response.body)["data"]["id"]
@@ -81,6 +85,25 @@ describe Api::V4::OrdersController, type: :controller do
             expect(shopping_point.shopping_point_records.last.order_id).to eq(order_id)
           end
           expect(user.shopping_points.valid.sum(:amount)).to eq(0)
+        end
+      end
+
+      context "when ship type is home delivery" do
+        it "does create correct order" do
+          post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_type: home_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
+               ship_address: ship_address, ship_email: ship_email, products: products
+          order_id = JSON.parse(response.body)["data"]['id']
+          order = Order.find(order_id)
+          expect(order.items_price).to eq(items_price)
+          expect(order.ship_fee).to eq(ship_fee)
+          expect(order.total).to eq(total)
+          expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+          expect(order.ship_type).to eq(home_delivery_type)
+          expect(order.info.ship_email).to eq(ship_email)
+          expect(order.info.ship_address).to eq(ship_address)
+          expect(order.items.size).to eq(products.size)
+          expect(order.items[0].item_name).to eq(product[:name])
         end
       end
 
@@ -95,7 +118,7 @@ describe Api::V4::OrdersController, type: :controller do
 
       it "return errors if missing ship params" do
         post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-             registration_id: registration_id, products: products
+             registration_id: registration_id, ship_type: store_delivery_type, products: products
         message = response.body
         expect(message).to be_truthy
         expect(user.orders).to be_empty
@@ -103,7 +126,7 @@ describe Api::V4::OrdersController, type: :controller do
 
       it "return errors if missing products params" do
         post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+             registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
              ship_email: ship_email
         message = response.body
@@ -116,7 +139,7 @@ describe Api::V4::OrdersController, type: :controller do
       let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 0) }
       it "does not create order" do
         post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+             registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
              ship_email: ship_email, products: products
         data = JSON.parse(response.body)["data"]["unable_to_buy"][0]
@@ -137,7 +160,7 @@ describe Api::V4::OrdersController, type: :controller do
       it "does not create order" do
         spec.update(status: ItemSpec.statuses[:off_shelf])
         post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-             registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
+             registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
              ship_email: ship_email, products: products
         data = JSON.parse(response.body)["data"]["unable_to_buy"][0]
@@ -157,16 +180,29 @@ describe Api::V4::OrdersController, type: :controller do
   describe "get #show" do
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
     let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
-    let!(:order_info) { FactoryGirl.create(:order_info) }
-    let!(:order) { FactoryGirl.create(:order, info: order_info, items: [order_item]) }
-    before :each do
-      get :show, id: order.id
-    end
-    context 'when order id provide' do
+
+    context 'when order is store delivery' do
+      let!(:store_delevery_order) { FactoryGirl.create(:order, items: [order_item], ship_type: store_delivery_type) }
+      let!(:store_delivery_order_info) { FactoryGirl.create(:store_delivery_order_info, order: store_delevery_order) }
+
       it 'does generate correct order info' do
+        get :show, id: store_delevery_order.id
         result = JSON.parse(response.body)["data"]
-        the_order = Order.find(order.id)
-        json = the_order.generate_result_order.to_json
+        order = Order.find(store_delevery_order.id)
+        json = order.generate_result_order.to_json
+        expect(result.to_json).to eq(json)
+      end
+    end
+
+    context 'when order is home delivery' do
+      let!(:home_delivery_order) { FactoryGirl.create(:order, items: [order_item], ship_type: home_delivery_type) }
+      let!(:home_delivery_order_info) { FactoryGirl.create(:home_delivery_order_info, order: home_delivery_order) }
+
+      it 'does generate correct order info' do
+        get :show, id: home_delivery_order.id
+        result = JSON.parse(response.body)["data"]
+        order = Order.find(home_delivery_order.id)
+        json = order.generate_result_order.to_json
         expect(result.to_json).to eq(json)
       end
     end
