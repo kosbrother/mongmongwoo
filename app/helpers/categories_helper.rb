@@ -6,4 +6,12 @@ module CategoriesHelper
       'btn btn-default'
     end
   end
+
+  def set_active_by_condition(child_categories, current_category, category_group, index)
+    if child_categories.include?(current_category)
+      'active' if category_group.include?(current_category)
+    else
+      'active' if index == 0
+    end
+  end
 end

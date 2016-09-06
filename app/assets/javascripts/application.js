@@ -110,6 +110,11 @@ ready = function() {
         $(this).children('.glyphicon').toggleClass('glyphicon-menu-up').toggleClass('glyphicon-menu-down');
     });
 
+    //Sort items
+    $('#items_sort').change(function(){
+        var path = '/categories/' + $(this).data('category') + '?' + 'items_sort=' + $(this).val();
+        window.location = path;
+    });
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);

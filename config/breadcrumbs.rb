@@ -7,6 +7,11 @@ crumb :category do |category|
   parent :root
 end
 
+crumb :child_category do |child_category|
+  link child_category.name, category_path(child_category)
+  parent :category, child_category.parent_category
+end
+
 crumb :item do |category, item|
   link item.name, category_item_path(category, item)
   parent :category, category

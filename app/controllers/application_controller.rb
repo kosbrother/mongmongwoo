@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_categories
-    @categories = Category.parent_categories.except_the_all_category
+    @categories = Category.parent_categories.except_the_all_category.includes(:child_categories)
   end
 
   def load_popular_items
