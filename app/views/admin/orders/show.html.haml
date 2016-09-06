@@ -50,7 +50,11 @@
           %td= spec_requested_number(order_item)
           %td= unable_to_buy_status(order_item)
       %tr
-        %td.text-right{colspan: 9}= "訂單總金額：#{@order.total}"
+        %td.text-right{colspan: 9}
+          %p= "訂單總金額：#{@order.items_price}"
+          %p.red-color= "購物金使用金額：- #{@order.shopping_point_spend_amount}"
+          %p= "運費：#{@order.ship_fee}"
+          %p= "訂單總金額：#{@order.total}"
   %table.table.table-bordered
     %thead
       %tr
