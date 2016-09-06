@@ -264,7 +264,9 @@ Rails.application.routes.draw do
         get "render_select_form"
       end
     end
+
     resources :shop_infos, except: [:show]
+    resources :shopping_point_campaigns
   end
 
   # API for App
