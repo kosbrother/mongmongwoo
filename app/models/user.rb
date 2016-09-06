@@ -94,6 +94,10 @@ class User < ActiveRecord::Base
     id == ANONYMOUS
   end
 
+  def wish_list_item_message_present?
+    my_messages.where(messageable_type: "Item").present?
+  end
+
   private
 
   def create_register_shopping_point_and_message
