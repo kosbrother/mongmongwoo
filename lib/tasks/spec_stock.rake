@@ -131,6 +131,8 @@ namespace :specs do
       else
         item.specs.on_shelf.update_all(recommend_stock_num: 5)
       end
+      item.specs.on_shelf.where(is_stop_recommend: true).update_all(recommend_stock_num: 0)
+      item.specs.on_shelf.where(is_stop_recommend: true).update_all(alert_stock_num: 0)
       item.specs.off_shelf.where("recommend_stock_num != 0").update_all(recommend_stock_num: 0)
     end
     
