@@ -13,7 +13,7 @@ class Api::V4::OrdersController < ApiController
       @order.items_price = params[:items_price]
       @order.ship_fee = params[:ship_fee]
       @order.total = params[:total]
-      @order.ship_type = params[:ship_type]
+      @order.ship_type = params[:ship_type] if params[:ship_type]
       device_of_order = DeviceRegistration.find_by(registration_id: params[:registration_id])
       @order.device_registration = device_of_order
       errors << @order.errors.messages unless @order.save

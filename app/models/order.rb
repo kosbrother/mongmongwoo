@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
 
-  validates_presence_of :user_id, :items_price, :ship_fee, :total, :ship_type
+  validates_presence_of :user_id, :items_price, :ship_fee, :total
   validates_numericality_of :items_price, :total, greater_than: 0
 
 
