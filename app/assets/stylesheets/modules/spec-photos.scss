@@ -17,6 +17,7 @@
       display: inline-block;
       margin: 5px;
       cursor: pointer;
+      margin-bottom: 15px;
       > .pic{
         border: $regular-border;
         border-radius: $regular-border-radius;
@@ -26,6 +27,9 @@
       > .active{
         border: $active-border;
       }
+    }
+    > .mask{
+      margin-top: 54px;
     }
     > .mask:before{
       content: '';
