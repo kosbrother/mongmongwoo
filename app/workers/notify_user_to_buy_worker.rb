@@ -1,4 +1,4 @@
-class NotifyWishListWorker
+class NotifyUserToBuyWorker
   include Sidekiq::Worker
   sidekiq_options retry: 3
 
@@ -6,8 +6,8 @@ class NotifyWishListWorker
     @wish_list = WishList.find(wish_list_id)
     @schedule = @wish_list.notify_schedule
     if @wish_list.item_spec.stock_spec.amount > 0
-      UserNotifyService.new(@wish_list.user).wish_list_item_spec_arrival(@wish_list.item_spec)
-      Rails.logger.info("Sending wish list notify")
+      UserNotifyService.new(@wish_list.user).notify_user_to_buy(@wish_list.item_spec)
+      puts "Notify user to buy schedule completed"
     end
     @schedule.update_attribute(:is_execute, true)
   end

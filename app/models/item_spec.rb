@@ -86,12 +86,7 @@ class ItemSpec < ActiveRecord::Base
   end
 
   def notify_wish_list_item_spec_if_on_shelf
-    if status_change_to?("on_shelf")
-      users = UserFinder.find_wish_lists_users(self)
-      users.find_each do |user|
-        UserNotifyService.new(user).wish_list_item_spec_on_shelf(self) unless user.wish_list_item_message_present?
-      end
-    end
+    UserNotifyService.wish_list_on_shelf(self) if status_change_to?("on_shelf")
   end
 
   def update_item_status

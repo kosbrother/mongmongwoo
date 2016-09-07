@@ -94,8 +94,8 @@ class User < ActiveRecord::Base
     id == ANONYMOUS
   end
 
-  def wish_list_item_message_present?
-    my_messages.where(messageable_type: "Item").present?
+  def wish_list_message_present?(item)
+    messages.where(messageable: item).present?
   end
 
   private

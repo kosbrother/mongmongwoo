@@ -34,11 +34,6 @@ class StockSpec < ActiveRecord::Base
   end
 
   def notify_wish_list_item_spec_arrival_if_stock_replenish
-    if amount_changed? && amount > 0
-      users = UserFinder.find_wish_lists_users(item_spec)
-      users.find_each do |user|
-        UserNotifyService.new(user).wish_list_item_spec_arrival(item_spec) unless user.wish_list_item_message_present?
-      end
-    end
+    UserNotifyService.wish_list_arrival(item_spec) if amount_changed? && amount > 0
   end
 end
