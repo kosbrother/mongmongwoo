@@ -1,7 +1,7 @@
 class StockSpec < ActiveRecord::Base
   include AdminCartInformation
 
-  after_update :sef_item_spec_off_shelf_if_stock_empty_and_stop_replenish, :notify_wish_list_item_spec_arrival_if_stock_replenish
+  after_update :sef_item_spec_off_shelf_if_stock_empty_and_stop_replenish, :notify_wish_list_if_stock_replenish
   after_create :set_on_shelf_when_amout_larger_than_zero
 
   scope :recent, -> { order(id: :DESC) }
@@ -33,7 +33,7 @@ class StockSpec < ActiveRecord::Base
     set_item_spec_on_shelf if amount > 0
   end
 
-  def notify_wish_list_item_spec_arrival_if_stock_replenish
+  def notify_wish_list_if_stock_replenish
     UserNotifyService.wish_list_arrival(item_spec) if amount_changed? && amount > 0
   end
 end

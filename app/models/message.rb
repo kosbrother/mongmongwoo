@@ -17,6 +17,10 @@ class Message < ActiveRecord::Base
     message_types.to_a
   end
 
+  def self.wish_list_message_present?(item)
+    where(messageable: item).present?
+  end
+
   def able_path
     case messageable_type
     when ShoppingPointCampaign.name
