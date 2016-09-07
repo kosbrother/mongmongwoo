@@ -1,6 +1,6 @@
 class Admin::ShoppingPointCampaignsController < AdminController
   before_action :require_manager
-  before_action :find_shopping_point_campaign, only: [:show, :edit, :update, :expired]
+  before_action :find_shopping_point_campaign, only: [:show, :edit, :update, :expired, :destroy]
 
   def index
     @is_expired = params[:is_expired] == 'true'
@@ -27,6 +27,12 @@ class Admin::ShoppingPointCampaignsController < AdminController
       flash[:danger] = "請檢查更新內容是否有誤"
       redirect_to :edit
     end
+  end
+
+  def destroy
+    @shopping_point_campaign.destroy
+
+    redirect_to admin_shopping_point_campaigns_path
   end
 
   private

@@ -25,3 +25,4 @@
           = shopping_point_campaign.shopping_points.count
         %td
           = link_to '編輯', edit_admin_shopping_point_campaign_path(shopping_point_campaign),class: 'btn btn-default'
+          = link_to '刪除', admin_shopping_point_campaign_path(shopping_point_campaign),class: 'btn btn-warning', method: :delete
