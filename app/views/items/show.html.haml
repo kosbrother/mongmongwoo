@@ -56,5 +56,5 @@
   = raw @item.description
 .star-header 更多照片
 .photo-list
-  - @item.photos.each do |photo|
+  - @item.photos.sort_by_position.each do |photo|
     = image_tag(photo.image.url, class: 'img-responsive')

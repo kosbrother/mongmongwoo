@@ -1,5 +1,5 @@
-.panel-body
-  %table#example.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+.content-box-large
+  %table.table.table-bordered
     .pull-right
       = link_to "返回上頁", admin_item_path(@item), class: "btn btn-default btn-sm"
       = link_to "新增圖片", new_admin_item_photo_path, class: "btn btn-primary btn-sm"
@@ -16,11 +16,11 @@
         %th 圖片
         %th 圖片敘述
         %th 操作選項
-    %tbody
+    %tbody#photo-sort{"data-photo-sort-url" => photo_sort_admin_item_photos_path(@item)}
       - @photos.each do |photo|
-        %tr
+        %tr{:id => "photo-#{photo.id}"}
           %td
-            = item_photo(photo, "thumb")
+            = item_photo(photo)
           %td= raw photo.photo_intro
           %td
             = button_tag "編輯", data: { toggle: "modal", target: "#photo-#{photo.id}-edit" }, type: "button", class: "btn btn-default btn-xs"

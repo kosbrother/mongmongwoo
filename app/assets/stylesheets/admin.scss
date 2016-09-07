@@ -54,10 +54,11 @@ div.item-cover-words-intro, div.notification-intro {
 }
 
 /*商品排序拖曳按鈕*/
-#items-sort-list .handle {
-  font-size: 12px;
-  color: #777;
-  cursor: move;
+#photo-sort {
+  img {
+    width: 120px;
+    height: 80px;
+  }
 }
 
 .custom-well {
