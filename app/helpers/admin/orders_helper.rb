@@ -18,7 +18,7 @@ module Admin::OrdersHelper
     when "新訂單"
       ["訂單取消"]
     when "處理中"
-      ["訂單取消"]
+      ["訂單變更","訂單取消"]
     when "配送中"
       ["訂單變更"]
     when "完成取貨"
