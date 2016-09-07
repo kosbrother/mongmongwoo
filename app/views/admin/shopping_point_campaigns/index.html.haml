@@ -5,7 +5,7 @@
         = link_to "萌萌屋", admin_root_path
       %li.active 購物金活動列表
   .pull-right
-    = link_to "新增購物金活動", '', class: "btn btn-default"
+    = link_to "新增購物金活動", new_admin_shopping_point_campaign_path, class: "btn btn-default"
   %h2 購物金活動列表
   %ul.nav.nav-tabs
     %li{class: "#{'active' if @is_expired == false}"}= link_to '進行中', admin_shopping_point_campaigns_path
