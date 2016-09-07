@@ -6,7 +6,8 @@ class Admin::ItemsController < AdminController
     params[:category_id] ||= Category::ALL_ID
     params[:order] ||= 'position'
     query_hash = {item_categories: {category_id: params[:category_id]}}
-    query_hash = query_hash.merge({status: params[:status]}) if params[:status]
+    query_hash = query_hash.merge(status: params[:status], ever_on_shelf: true) if params[:status]
+    query_hash =  query_hash.merge(ever_on_shelf: false) if params[:ever_on_shelf] == 'false'
 
     case(params[:order])
     when 'updated_at'
