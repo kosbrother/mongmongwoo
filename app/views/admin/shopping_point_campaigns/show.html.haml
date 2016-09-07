@@ -1,0 +1,16 @@
+.content-box-large
+  %h2
+    購物金活動 - #{@shopping_point_campaign.title}
+  .message-infos.well
+    %p.pull-right
+      = link_to "回上頁", admin_shopping_point_campaigns_path, class: "btn btn-default"
+    %p.lead 訊息資料：
+    %dl.dl-horizontal
+      %dt 活動編號
+      %dd= @shopping_point_campaign.id
+      %dt 贈送金額
+      %dd= @shopping_point_campaign.amount
+      %dt 活動日期
+      %dd= campaign_valid_date_range(@shopping_point_campaign)
+      %dt 活動內容
+      %dd= @shopping_point_campaign.description
