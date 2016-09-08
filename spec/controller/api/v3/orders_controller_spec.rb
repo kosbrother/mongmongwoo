@@ -98,8 +98,8 @@ describe Api::V3::OrdersController, type: :controller do
   describe "get #show" do
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
     let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
-    let!(:order_info) { FactoryGirl.create(:order_info) }
-    let!(:order) { FactoryGirl.create(:order, info: order_info, items: [order_item]) }
+    let!(:order) { FactoryGirl.create(:order, items: [order_item]) }
+    let!(:order_info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
     before :each do
       get :show, id: order.id
     end
@@ -117,8 +117,8 @@ describe Api::V3::OrdersController, type: :controller do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
     let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
-    let!(:order_info) { FactoryGirl.create(:order_info) }
-    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, info: order_info, items: [order_item]) }
+    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, items: [order_item]) }
+    let!(:order_info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
     let!(:orders) { [order] }
     before :each do
       get :user_owned_orders, uid: user.uid, page: '1'
@@ -142,8 +142,8 @@ describe Api::V3::OrdersController, type: :controller do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
     let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
-    let!(:order_info) { FactoryGirl.create(:order_info) }
-    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, info: order_info, items: [order_item]) }
+    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, items: [order_item]) }
+    let!(:order_info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
     let!(:orders) { [order] }
     let!(:email) { orders[0].info.ship_email }
     let!(:phone) { orders[0].info.ship_phone }
@@ -169,8 +169,8 @@ describe Api::V3::OrdersController, type: :controller do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
     let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
-    let!(:order_info) { FactoryGirl.create(:order_info) }
-    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, info: order_info, items: [order_item]) }
+    let!(:order) { FactoryGirl.create(:order, user: user, uid: user.uid, items: [order_item]) }
+    let!(:order_info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
     let!(:orders) { [order] }
     let!(:email) { user.email }
     before :each do
@@ -195,9 +195,9 @@ describe Api::V3::OrdersController, type: :controller do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
     let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
-    let!(:order_info) { FactoryGirl.create(:order_info) }
     context "when order status is new" do
-      let!(:order) { FactoryGirl.create(:order, user_id: user.id, status: Order.statuses["新訂單"], info: order_info, items: [order_item]) }
+      let!(:order) { FactoryGirl.create(:order, user_id: user.id, status: Order.statuses["新訂單"], items: [order_item]) }
+      let!(:order_info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
 
       it "does update the user order to cancel" do
         patch :cancel, user_id: user.id, id: order.id
@@ -210,7 +210,8 @@ describe Api::V3::OrdersController, type: :controller do
     end
 
     context "when order status is processing" do
-      let!(:order) { FactoryGirl.create(:order, user_id: user.id, status: Order.statuses["處理中"], info: order_info, items: [order_item]) }
+      let!(:order) { FactoryGirl.create(:order, user_id: user.id, status: Order.statuses["處理中"], items: [order_item]) }
+      let!(:order_info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
 
       it "does update the user order to cancel" do
         patch :cancel, user_id: user.id, id: order.id
@@ -223,7 +224,8 @@ describe Api::V3::OrdersController, type: :controller do
     end
 
     context "when order status is shipping" do
-      let!(:order) { FactoryGirl.create(:order, user_id: user.id, status: Order.statuses["配送中"], info: order_info, items: [order_item]) }
+      let!(:order) { FactoryGirl.create(:order, user_id: user.id, status: Order.statuses["配送中"], items: [order_item]) }
+      let!(:order_info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
 
       it "does not update the user order to cancel" do
         patch :cancel, user_id: user.id, id: order.id

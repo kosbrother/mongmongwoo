@@ -75,17 +75,22 @@ class Order < ActiveRecord::Base
     result_order[:total] = total
     result_order[:shopping_point_amount] = shopping_point_spend_amount
     result_order[:note] = note
+    result_order[:ship_type] = ship_type
 
     include_info = {}
     include_info[:id] = info.id
     include_info[:ship_name] = info.ship_name
     include_info[:ship_phone] = info.ship_phone
     include_info[:ship_email] = info.ship_email
-    include_info[:ship_store_code] = info.ship_store_code
-    include_info[:ship_store_id] = info.ship_store_id
-    include_info[:ship_store_name] = info.ship_store_name
-    include_info[:ship_store_address] = info.address
-    include_info[:ship_store_phone] = info.phone
+    if is_store_delivery?
+      include_info[:ship_store_code] = info.ship_store_code
+      include_info[:ship_store_id] = info.ship_store_id
+      include_info[:ship_store_name] = info.ship_store_name
+      include_info[:ship_store_address] = info.address
+      include_info[:ship_store_phone] = info.phone
+    elsif is_home_delivery?
+      include_info[:ship_address] = info.ship_address
+    end
     result_order[:info] = include_info
 
     include_items = []
@@ -104,11 +109,11 @@ class Order < ActiveRecord::Base
   end
 
   def is_store_delivery?
-    ship_type == Order.ship_types.key(Order.ship_types["store_delivery"])
+    ship_type == "store_delivery"
   end
 
   def is_home_delivery?
-    ship_type == Order.ship_types.key(Order.ship_types["home_delivery"])
+    ship_type == "home_delivery"
   end
 
   def user_status_count(order_status)

@@ -14,19 +14,37 @@ module Admin::OrdersHelper
   end
 
   def able_change_status_to(order)
-    case order.status
-    when "新訂單"
-      ["訂單取消"]
-    when "處理中"
-      ["訂單變更","訂單取消"]
-    when "配送中"
-      ["訂單變更"]
-    when "完成取貨"
-      ["退貨"]
-    when "訂單變更"
-      ["處理中","配送中", "訂單取消"]
-    else
-      []
+    case order.ship_type
+    when "store_delivery"
+      case order.status
+      when "新訂單"
+        ["訂單取消"]
+      when "處理中"
+        ["訂單變更","訂單取消"]
+      when "配送中"
+        ["訂單變更"]
+      when "完成取貨"
+        ["退貨"]
+      when "訂單變更"
+        ["處理中","配送中", "訂單取消"]
+      else
+        []
+      end
+    when "home_delivery"
+      case order.status
+      when "新訂單"
+        ["訂單取消"]
+      when "處理中"
+        ["訂單變更","訂單取消"]
+      when "配送中"
+        ["訂單變更","完成取貨"]
+      when "完成取貨"
+        ["退貨"]
+      when "訂單變更"
+        ["處理中","配送中", "訂單取消"]
+      else
+        []
+      end
     end
   end
 
@@ -70,7 +88,7 @@ module Admin::OrdersHelper
 
   def link_to_restock(order)
     if Order::RESTOCK_STATUS.include?(order.status) && !(order.restock)
-      link_to "入庫", restock_admin_order_path(order), method: :patch, class: "btn btn-default btn-sm"
+      link_to "入庫", restock_admin_order_path(order, ship_type: params[:ship_type]), method: :patch, class: "btn btn-default btn-sm"
     end
   end
 
