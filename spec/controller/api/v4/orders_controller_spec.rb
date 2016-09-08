@@ -103,7 +103,7 @@ describe Api::V4::OrdersController, type: :controller do
       context "when shopping point is used" do
         let!(:shopping_point_campaign) { FactoryGirl.create(:shopping_point_campaign) }
         let!(:shopping_point) { FactoryGirl.create(:campaign_point, user: user, amount: shopping_point_campaign.amount, shopping_point_campaign: shopping_point_campaign) }
-        let!(:spend_amount) { user.shopping_points.valid.sum(:amount) }
+        let!(:spend_amount) { ShoppingPointManager.new(user).total_amount }
         it "does spend user's shopping point" do
           post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
                registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
@@ -114,7 +114,7 @@ describe Api::V4::OrdersController, type: :controller do
           user.shopping_points.each do |shopping_point|
             expect(shopping_point.shopping_point_records.last.order_id).to eq(order_id)
           end
-          expect(user.shopping_points.valid.sum(:amount)).to eq(0)
+          expect(ShoppingPointManager.new(user).total_amount).to eq(0)
         end
       end
 
