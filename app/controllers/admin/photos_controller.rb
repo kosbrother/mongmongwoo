@@ -41,7 +41,7 @@ class Admin::PhotosController < AdminController
 
   def photo_sort
     params[:photo].each_with_index do |id, index|
-      Photo.where(id: id).update_all(position: (params[:photo].count - (index + 1)))
+      Photo.find(id).update(position: (params[:photo].count - (index + 1)))
     end
     render nothing: true
   end
