@@ -2,7 +2,7 @@
   .info-title.clearfix
     %p.lead.pull-left 編輯商品樣式庫存
     %p.pull-right.inline-display
-      = link_to "返回庫存列表", admin_stocks_path(taobao_supplier_id: @stock.taobao_supplier_id, anchor: "stock-id-#{@stock.id}"), class: "btn btn-default"
+      = link_to "返回庫存列表", admin_stocks_path(taobao_supplier_id: @item.taobao_supplier_id, anchor: "stock-id-#{@item.id}"), class: "btn btn-default"
   %table.table.table-bordered
     %thead
       %tr
@@ -14,8 +14,8 @@
         %th 建議庫存量
     %tbody
       %tr
-        = render "stock_information", stock: @stock
-        - @stock.specs.each do |item_spec|
+        = render "stock_information", item: @item
+        - @item.specs.each do |item_spec|
           %tr
             %td
               = link_to item_spec.style, "#", rel: "popover", data: { "image-url": "#{item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
@@ -30,7 +30,7 @@
                   = f.submit "更新數量", class: "btn btn-primary"
               - else
                 = form_for [:admin, StockSpec.new], html: { id: "create-#{item_spec.id}", class: "form-inline" } do |f|
-                  = f.hidden_field :item_id, value: @stock.id
+                  = f.hidden_field :item_id, value: @item.id
                   = f.hidden_field :item_spec_id, value: item_spec.id
                   .form-group
                     = f.label :amount, "庫存數量", class: "sr-only"

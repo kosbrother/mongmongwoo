@@ -11,9 +11,10 @@
       .filter-dt 商品狀態
       .filter-dd.clearfix
         %ul.filter-list
-          = link_to_stock_index(params[:status] == Item.statuses[:on_shelf].to_s, "#{t(:on_shelf)}", status: Item.statuses[:on_shelf])
-          = link_to_stock_index(params[:status] == Item.statuses[:off_shelf].to_s, "#{t(:off_shelf)}", status: Item.statuses[:off_shelf])
+          = link_to_stock_index(params[:status] == Item.statuses[:on_shelf].to_s, "#{t(:on_shelf)}", ever_on_shelf: nil, status: Item.statuses[:on_shelf])
+          = link_to_stock_index(params[:status] == Item.statuses[:off_shelf].to_s, "#{t(:off_shelf)}", ever_on_shelf: nil, status: Item.statuses[:off_shelf])
+          = link_to_stock_index(params[:ever_on_shelf] == 'false', '新商品未上架', ever_on_shelf: 'false', status: nil)
   = render_pagination(@items)
   %p.help-block
-  = render "stock_table", stocks: @items
+  = render "stock_table", items: @items
   = render_pagination(@items)

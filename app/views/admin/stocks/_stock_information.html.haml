@@ -1,17 +1,17 @@
-%td{id: "stock-id-#{stock.id}", rowspan: stock.specs.count + 1}
+%td{id: "stock-id-#{item.id}", rowspan: item.specs.count + 1}
   .media
     .media-left
-      = image_tag(stock.cover.url, size: "120x90")
+      = image_tag(item.cover.url, size: "120x90")
     .media-body
-      商品編號：#{stock.id}
+      商品編號：#{item.id}
       %p.help-block
       商品名稱：
-      = link_to stock.name, admin_item_path(stock), target: "_blank"
+      = link_to item.name, admin_item_path(item), target: "_blank"
       %p.help-block
-      狀態：#{t(stock.status)}
+      狀態：#{item_status_text(item)}
       %p.help-block
-      淘寶：#{stock.ntd_cost}
+      淘寶：#{item.ntd_cost}
       %p.help-block
-      定價：#{stock.price}
+      定價：#{item.price}
       %p.help-block
-      優惠：#{stock.special_price}
+      優惠：#{item.special_price}
