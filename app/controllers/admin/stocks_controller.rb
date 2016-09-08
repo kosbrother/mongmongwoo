@@ -4,11 +4,13 @@ class Admin::StocksController < AdminController
   def index
     @taobao_suppliers = TaobaoSupplier.all
     params[:taobao_supplier_id] ||= @taobao_suppliers.first.id
-    query_hash = params.permit(:taobao_supplier_id ,:status)
+    query_hash = {taobao_supplier_id: params[:taobao_supplier_id]}
+    query_hash = query_hash.merge(status: params[:status], ever_on_shelf: true) if params[:status]
+    query_hash = query_hash.merge(ever_on_shelf: false) if params[:ever_on_shelf] == 'false'
     @items = Item.includes(:specs).where(query_hash).recent.paginate(page: params[:page])
   end
 
   def edit
-    @stock = Item.includes(specs: :stock_spec).find(params[:id])
+    @item = Item.includes(specs: :stock_spec).find(params[:id])
   end
 end
