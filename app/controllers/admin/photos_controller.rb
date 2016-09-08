@@ -23,11 +23,8 @@ class Admin::PhotosController < AdminController
     end
   end
 
-  def edit
-  end
-
   def update
-    if @photo.update!(update_photo_params)
+    if @photo.update(update_photo_params)
       flash[:notice] = "編輯完成"
       redirect_to admin_item_photos_path(@item)
     else
@@ -37,7 +34,7 @@ class Admin::PhotosController < AdminController
   end
 
   def destroy
-    @photo.destroy!
+    @photo.destroy
     flash[:warning] = "圖片已刪除"
     redirect_to admin_item_photos_path(@item)
   end

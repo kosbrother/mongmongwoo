@@ -151,7 +151,6 @@ Rails.application.routes.draw do
         get "specs"
         patch "on_shelf"
         patch "off_shelf"
-        # post "photo_sort"
       end
 
       resources :photos, only: [:index, :new, :create, :edit, :update, :destroy] do
