@@ -12,7 +12,6 @@ class Admin::PhotosController < AdminController
   end
 
   def create
-    # 多張圖片上傳
     begin
       create_photo_params[:images].each do |image|
         @item.photos.create!(image: image)
@@ -22,24 +21,10 @@ class Admin::PhotosController < AdminController
     rescue Exception => e
       flash.now[:alert] = "請確認上傳圖片是否正確"
     end
-
-    # 單張圖片上傳
-    # @photo = @item.photos.new(photo_params)
-
-    # if @photo.save!
-    #   flash[:notice] = "新增圖片成功"
-    #   redirect_to admin_item_photos_path(@item)
-    # else
-    #   flash.now[:alert] = "請確認上傳圖片是否正確"
-    #   render :edit
-    # end
-  end
-
-  def edit
   end
 
   def update
-    if @photo.update!(update_photo_params)
+    if @photo.update(update_photo_params)
       flash[:notice] = "編輯完成"
       redirect_to admin_item_photos_path(@item)
     else
@@ -49,15 +34,22 @@ class Admin::PhotosController < AdminController
   end
 
   def destroy
-    @photo.destroy!
+    @photo.destroy
     flash[:warning] = "圖片已刪除"
     redirect_to admin_item_photos_path(@item)
+  end
+
+  def photo_sort
+    params[:photo].each_with_index do |id, index|
+      Photo.find(id).update(position: (params[:photo].count - (index + 1)))
+    end
+    render nothing: true
   end
 
   private
 
   def find_item
-    @item = Item.includes(:photos).find(params[:item_id])
+    @item = Item.find(params[:item_id])
   end
 
   def find_photo

@@ -1,0 +1,11 @@
+.col-md-10
+  .content-box-large
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li
+          = link_to @item.name, admin_item_path(@item)
+        %li.active 編輯圖片
+    %h3 編輯圖片
+    = render "form"

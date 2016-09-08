@@ -43,7 +43,7 @@ module Admin::ItemsHelper
       image_url = "http://placehold.it/#{volume}&text=No Pic"
     end
 
-    image_tag(image_url, :class => "thumbnail")
+    image_tag(image_url)
   end
 
   def spec_photo(spec, photo_size=nil)

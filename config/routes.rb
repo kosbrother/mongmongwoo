@@ -153,7 +153,11 @@ Rails.application.routes.draw do
         patch "off_shelf"
       end
 
-      resources :photos, except: [:show]
+      resources :photos, only: [:index, :new, :create, :edit, :update, :destroy] do
+        collection do
+          post "photo_sort"
+        end
+      end
 
       resources :item_specs, only: [:new, :create, :edit, :update] do
         member do
