@@ -1,4 +1,10 @@
 class ShoppingPointManager
+  attr_accessor :user
+
+  def initialize(user)
+    @user = user
+  end
+
   def self.create_refund_shopping_point(order)
     amount = order.items_price
     user_id = order.user_id
@@ -30,6 +36,10 @@ class ShoppingPointManager
   def self.create_register_shopping_point(user_id)
     campaign = ShoppingPointCampaign.find(ShoppingPointCampaign::REGISTER_ID)
     ShoppingPoint.create(user_id: user_id, point_type: ShoppingPoint.point_types["活動購物金"], amount: campaign.amount, shopping_point_campaign_id: campaign.id)
+  end
+
+  def total_amount
+    ShoppingPoint.valid.where(user_id: user.id).sum(:amount)
   end
 
   private

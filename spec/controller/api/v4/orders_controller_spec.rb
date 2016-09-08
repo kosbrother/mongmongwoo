@@ -6,6 +6,36 @@ describe Api::V4::OrdersController, type: :controller do
   let!(:store_delivery_type) { Order.ship_types.key(Order.ship_types["store_delivery"]) }
   let!(:home_delivery_type) { Order.ship_types.key(Order.ship_types["home_delivery"]) }
 
+  describe "post#checkout" do
+    let!(:user) { FactoryGirl.create(:user_with_registration_device) }
+    let!(:items_price) { user_shopping_point_amount*5 }
+    let!(:user_shopping_point_amount) { ShoppingPointManager.new(user).total_amount }
+    context "when 10% of items price is lower than user_shopping_point_amount" do
+      it "only return 10% of items price of shopping_point amount" do
+        post :checkout, user_id: user.id, items_price: items_price
+        data = JSON.parse(response.body)["data"]
+        expect(data["shopping_point_amount"]).to eq((items_price * 0.1).round)
+      end
+    end
+
+    context "when 10% of items price is higher than user_shopping_point_amount" do
+      let!(:items_price) { user_shopping_point_amount*15 }
+      it "only return total shopping_point amount" do
+        post :checkout, user_id: user.id, items_price: items_price
+        data = JSON.parse(response.body)["data"]
+        expect(data["shopping_point_amount"]).to eq(user_shopping_point_amount)
+      end
+    end
+
+    context "when user_id is annoymous user" do
+      it "return 0 shopping_point" do
+        post :checkout, user_id: User::ANONYMOUS, items_price: items_price
+        data = JSON.parse(response.body)["data"]
+        expect(data["shopping_point_amount"]).to eq(0)
+      end
+    end
+  end
+
   describe "post #create" do
     let!(:user) { FactoryGirl.create(:user_with_registration_device) }
     let!(:store) { FactoryGirl.create(:store) }
