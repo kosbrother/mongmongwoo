@@ -57,6 +57,7 @@ class Admin::AdminCartItemsController < AdminController
 
     records.each_with_index do |hash, index|
       next if index == 0
+      next if hash[:item_id].blank?
       item = Item.find(hash[:item_id])
 
       unless item.specs.map(&:id).include?(hash[:item_spec_id])
@@ -71,6 +72,7 @@ class Admin::AdminCartItemsController < AdminController
     else
       records.each_with_index do |hash, index|
         next if index == 0
+        next if hash[:item_id].blank?
         create_cart_item(Item.find(hash[:item_id]).taobao_supplier_id, hash[:item_id], hash[:item_spec_id], hash[:item_quantity])
       end
 
