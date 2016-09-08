@@ -3,6 +3,11 @@
     = f.label :style, "樣式名稱", class: "col-sm-2 control-label"
     .col-sm-5
       = f.text_field :style, class: "form-control", placeholder: "請輸入名稱"
+  - if @item_spec.persisted?
+    .form-group
+      = f.label :shelf_position, "貨架編號", class: "col-sm-2 control-label"
+      .col-sm-5
+        = f.text_field :shelf_position, class: "form-control", placeholder: "請輸入貨架編號"
   .form-group
     = f.label :style_pic, "樣式圖片", class: "col-sm-2 control-label"
     .col-sm-5
