@@ -1,0 +1,28 @@
+%table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %thead
+    %tr
+      %th.xx-small 編號
+      %th.small 標題
+      %th.x-small 金額
+      %th.mid-small 截止日期
+      %th.x-small 可重複領取
+      %th.x-small 已領取數
+      %th.mid-small 操作
+  %tbody
+    - @shopping_point_campaigns.each do |shopping_point_campaign|
+      %tr
+        %td
+          = shopping_point_campaign.id
+        %td
+          = link_to shopping_point_campaign.title, admin_shopping_point_campaign_path(shopping_point_campaign)
+        %td
+          = shopping_point_campaign.amount
+        %td
+          = shopping_point_campaign.valid_until ? display_date_and_time(shopping_point_campaign.valid_until) : '無截止日'
+        %td
+          = shopping_point_campaign.is_reusable ? 'Yes' : 'No'
+        %td
+          = shopping_point_campaign.shopping_points.count
+        %td
+          = link_to '編輯', edit_admin_shopping_point_campaign_path(shopping_point_campaign),class: 'btn btn-default'
+          = link_to '刪除', admin_shopping_point_campaign_path(shopping_point_campaign),class: 'btn btn-warning', method: :delete

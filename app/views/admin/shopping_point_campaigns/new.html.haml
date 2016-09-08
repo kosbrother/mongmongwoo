@@ -1,0 +1,15 @@
+.col-md-10
+  .content-box-large
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li
+          = link_to "購物金活動列表", admin_shopping_point_campaigns_path
+        %li.active 新增活動
+    .panel-heading
+      .panel-title
+        %h3 新增活動
+    .panel-body
+      = form_for [:admin, ShoppingPointCampaign.new], html: { class: "form-horizontal" } do |f|
+        = render "shopping_point_campaign_form", f: f

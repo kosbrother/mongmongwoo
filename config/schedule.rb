@@ -13,6 +13,7 @@ end
 
 every 1.day, :at => Time.zone.parse('12:00 am').utc do
   rake 'shopping_points:check_valid_until',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
+  rake 'shopping_point_camapaigns:check_valid_until',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
 
 case @environment

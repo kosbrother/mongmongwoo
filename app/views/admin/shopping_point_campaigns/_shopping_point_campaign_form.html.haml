@@ -1,0 +1,28 @@
+.form-group
+  = f.label :title, "活動標題", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.text_field :title, { class: "form-control", placeholder: "請輸入標題", required: true }
+.form-group
+  = f.label :description, "活動內容", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.text_area :description, { rows: 6, class: "form-control", placeholder: "請輸入內容", required: true }
+.form-group
+  = f.label :amount, "活動金額", class: "col-sm-2 control-label"
+  .col-sm-5
+    = f.number_field :amount, { class: "form-control", placeholder: "請輸入金額", required: true }
+.form-group
+  = f.label :created_at, "開始日期", class: "col-sm-2 control-label"
+  .col-md-5
+    = f.datetime_field :created_at, { class: "form-control datetimepicker", placeholder: "選擇開始日期(必填)", required: true, value: @shopping_point_campaign ? @shopping_point_campaign.created_at.strftime("%Y-%m-%d %H:%M") : ''}
+.form-group
+  = f.label :valid_until, "截止日期", class: "col-sm-2 control-label"
+  .col-md-5
+    = f.datetime_field :valid_until, { class: "form-control datetimepicker", placeholder: "選擇結束日期", value: @shopping_point_campaign && @shopping_point_campaign.valid_until ? @shopping_point_campaign.valid_until.strftime("%Y-%m-%d %H:%M") : '' }
+.form_group
+  = f.label :is_reusable, "是否可重複領取", class: "col-sm-2 control-label"
+  .col-md-3
+    = f.check_box :is_reusable
+.form-group
+  .col-sm-offset-2.col-sm-10
+    = f.submit "確認送出", class: "btn btn-primary"
+    = link_to "取消離開", admin_shopping_point_campaigns_path, class: "btn btn-warning"
