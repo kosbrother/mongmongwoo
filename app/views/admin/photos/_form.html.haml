@@ -2,7 +2,10 @@
   .form-group
     = f.label "選擇圖片", class: "col-sm-2 control-label"
     .col-sm-8
-      = file_field_tag "images[]", { multiple: true, class: "form-control" }
+      - if @photo.new_record?
+        = file_field_tag "images[]", { multiple: true, class: "form-control" }
+      - else
+        = f.file_field :image, class: "form-control"
   .form-group
     = f.label :photo_intro, "圖片描述", class: "col-sm-2 control-label"
     .col-sm-8
