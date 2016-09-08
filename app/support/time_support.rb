@@ -9,6 +9,11 @@ class TimeSupport
   }
 
   def self.time_until(time_param)
+    puts Time.zone
+    puts (Time.current - 1.day).beginning_of_day..(Time.current - 1.day).end_of_day
+    Time.zone = 'Taipei'
+    puts Time.zone
+    puts (Time.current - 1.day).beginning_of_day..(Time.current - 1.day).end_of_day
     TIME_RANGE[time_param]
   end
 

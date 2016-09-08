@@ -2,12 +2,6 @@ class AdminMailer < ApplicationMailer
   helper ApplicationHelper, Admin::ItemsHelper
 
   def notify_recommend_stock
-    puts Time.zone
-    puts Time.now
-    puts Time.current
-    puts TimeSupport.time_until("day_by_midnight")
-    puts Time.current - 1.day
-    puts (Time.current - 1.day).beginning_of_day
     puts (Time.current - 1.day).beginning_of_day..(Time.current - 1.day).end_of_day
     recommend_stock = ItemSpec.includes(:stock_spec, item: :taobao_supplier, admin_cart_items: :admin_cart).order(item_id: :ASC)
     recommend_off_shelf = ItemSpec.includes(:stock_spec, item: :taobao_supplier).recommend_stock_empty
