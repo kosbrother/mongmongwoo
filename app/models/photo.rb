@@ -1,7 +1,7 @@
 class Photo < ActiveRecord::Base
-  belongs_to :item
+  default_scope { order(position: :DESC) }
 
-  scope :sort_by_position, -> { order(position: :ASC) }
+  belongs_to :item
 
   mount_uploader :image, ImageUploader
 end

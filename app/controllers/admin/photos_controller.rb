@@ -4,7 +4,7 @@ class Admin::PhotosController < AdminController
   before_action :find_photo, only: [:edit, :update, :destroy]
 
   def index
-    @photos = @item.photos.sort_by_position
+    @photos = @item.photos
   end
 
   def new
@@ -41,7 +41,7 @@ class Admin::PhotosController < AdminController
 
   def photo_sort
     params[:photo].each_with_index do |id, index|
-      Photo.where(id: id).update_all(position: index + 1)
+      Photo.where(id: id).update_all(position: (params[:photo].count - (index + 1)))
     end
     render nothing: true
   end
