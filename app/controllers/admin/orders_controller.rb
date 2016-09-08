@@ -83,7 +83,7 @@ class Admin::OrdersController < AdminController
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
     end
-    redirect_to status_index_admin_orders_path(status: Order.statuses["處理中"])
+    redirect_to status_index_admin_orders_path(status: Order.statuses["處理中"], ship_type: params[:ship_type])
   end
 
   def export_processing_order_list
@@ -121,7 +121,7 @@ class Admin::OrdersController < AdminController
     order = Order.includes(items: [item_spec: :stock_spec]).find(params[:id])
     order.restock_order_items
     flash[:notice] = "訂單商品已退回庫存"
-    redirect_to status_index_admin_orders_path(status: Order.statuses[order.status], restock: false)
+    redirect_to status_index_admin_orders_path(status: Order.statuses[order.status], restock: false, ship_type: params[:ship_type])
   end
 
   def update_to_processing
