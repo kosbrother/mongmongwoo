@@ -52,7 +52,7 @@ class Admin::SalesReportsController < AdminController
   end
 
   def search_date_params
-    TimeSupport.dynamic_time_until(params[:start_cost_date], params[:end_cost_date])
+    Range.new(params[:start_cost_date], params[:end_cost_date])
   end
 
   def get_period_total_sales_income_and_cost_of_goods
