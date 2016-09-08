@@ -33,7 +33,6 @@ class Item < ActiveRecord::Base
   has_many :promotions, through: :item_promotions
   has_many :order_items, foreign_key: :source_item_id
   has_many :stock_specs
-  has_many :messages, as: :messageable, dependent: :destroy
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 

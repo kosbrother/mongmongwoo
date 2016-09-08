@@ -1,5 +1,5 @@
 class GcmOptionsGenerator
-  def self.generate_options_from_notification(notification)
+  def self.generate_item_event_options_from_notification(notification)
     result_options = {
       data: {
         content_title: notification.content_title,
@@ -15,7 +15,7 @@ class GcmOptionsGenerator
     }
   end
 
-  def self.generate_options_from_message(message)
+  def self.generate_personal_notify_options_from_message(message)
     result_options = {
       data: {
         content_title: message.title,
@@ -26,12 +26,12 @@ class GcmOptionsGenerator
     }
   end
 
-  def self.generate_options_from_order_id_and_message(order_id, message)
+  def self.generate_pick_up_options_from_message(message)
     result_options = {
       data: {
         content_title: message.title,
         content_text: message.content,
-        order_id: "#{order_id}"
+        order_id: message.messageable_id
         },
       collapse_key: "updated_score"
     }
