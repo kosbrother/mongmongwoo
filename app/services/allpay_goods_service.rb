@@ -14,10 +14,10 @@ class AllpayGoodsService
 
   def create_order
     encrypted_data
-    url = URI.parse("https://logistics.allpay.com.tw/Express/Create")
+    url = URI.parse("https://logistics.ecpay.com.tw/Express/Create")
     resp, data = Net::HTTP.post_form(url, @fields.sort.to_h)
     puts resp.body
-    
+    binding.pry
     if resp.body.include?("AllPayLogisticsID")
       return true, resp.body
     else
@@ -27,7 +27,7 @@ class AllpayGoodsService
 
   def create_barcode
     encrypted_data
-    url = URI.parse("https://logistics.allpay.com.tw/helper/printTradeDocument")
+    url = URI.parse("https://logistics.ecpay.com.tw/helper/printTradeDocument")
     resp, data = Net::HTTP.post_form(url, @fields.sort.to_h)
 
     if resp.body.start_with? '0'

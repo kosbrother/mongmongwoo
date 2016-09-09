@@ -40,7 +40,7 @@ class CartsController < ApplicationController
                  IsCollection: 'Y',
                  ServerReplyURL: store_reply_url}
     url_query = url_query.merge(Device: 1) if mobile?
-    url = generate_url('http://logistics.allpay.com.tw/Express/map', url_query)
+    url = generate_url('http://logistics.ecpay.com.tw/Express/map', url_query)
 
     render json: {url: url}
   end
