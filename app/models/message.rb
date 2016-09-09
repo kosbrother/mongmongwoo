@@ -17,8 +17,8 @@ class Message < ActiveRecord::Base
     message_types.to_a
   end
 
-  def self.wish_list_message_exists_in_user_messages?(user, item_spec)
-    joins(:message_records).where(message_records: { user_id: user.id }, messageable: item_spec).exists?
+  def self.user_has_message?(user, messageable)
+    joins(:message_records).where(message_records: { user_id: user.id }, messageable: messageable).exists?
   end
 
   def able_path

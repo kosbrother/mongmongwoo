@@ -7,9 +7,12 @@ class GcmNotifyService
     @gcm = GCM.new(ENV["GCM_KEY"])
   end
 
-  def send_notification(device_ids, options)
-    DeviceRegistration.where(id: device_ids).find_in_batches do |ids|
-      registration_ids = ids.map(&:registration_id)
+  def send_notification(registration_ids, options)
+    if registration_ids.size > 1000
+      registration_ids.each_slice(1000) do |per_registration_ids|
+        @gcm.send_notification(per_registration_ids, options)
+      end
+    else
       @gcm.send_notification(registration_ids, options)
     end
   end
