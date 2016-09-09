@@ -1,4 +1,17 @@
 class Api::V4::OrdersController < ApiController
+  def checkout
+    if params[:user_id] && params[:user_id].to_i != User::ANONYMOUS
+      user = User.find(params[:user_id])
+      user_shopping_points_amount = ShoppingPointManager.new(user).total_amount
+      items_price_amount = (params[:items_price].to_i * 0.1).round
+      shopping_point_amount = [user_shopping_points_amount, items_price_amount].min
+    else
+      shopping_point_amount = 0
+    end
+
+    render status: 200, json: {data: {shopping_point_amount: shopping_point_amount}}
+  end
+
   def create
     errors = []
 

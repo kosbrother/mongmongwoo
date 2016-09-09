@@ -379,7 +379,11 @@ Rails.application.routes.draw do
     end
 
     namespace :v4 do
-      resources :orders, only: [:create, :show]
+      resources :orders, only: [:create, :show] do
+        collection do
+          post "checkout"
+        end
+      end
       resources :banners, only: [:index]
       resources :oauth_sessions, only: [:create]
       resources :mmw_registrations, only: [:create] do
