@@ -399,7 +399,7 @@ ActiveRecord::Schema.define(version: 20160909011224) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "photo_intro", limit: 255
-    t.integer  "position",    limit: 4,   default: 10
+    t.integer  "position",    limit: 4,   default: 0
   end
 
   add_index "photos", ["deleted_at"], name: "index_photos_on_deleted_at", using: :btree

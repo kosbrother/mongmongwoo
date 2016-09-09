@@ -3,19 +3,6 @@
     .pull-right
       = link_to "運送中商品清單EXCEL", export_shipping_list_admin_confirm_carts_path(format: 'xlsx'), class: 'btn btn-default'
     %h2 確認收貨單列表
-  .filter-area.clearfix
-    .filter-row
-      .filter-dt 收貨狀態
-      .filter-dd.clearfix
-        %ul.filter-list
-          = li_cart_status_link(AdminCart::STATUS[:shipping])
-          = li_cart_status_link(AdminCart::STATUS[:stock])
-    .filter-row
-      .filter-dt 訂單編號
-      .filter-dd.clearfix
-        %ul.filter-list
-          - @carts_id_field.each do |cart|
-            = link_to_cart_index(params[:id] == cart.id.to_s, cart.id, id: cart.id, page: @carts_id_field.current_page)
-      .cart-id-pagination= render_pagination(@carts_id_field)
+    = render "filter_area"
   %p.help-block
   = render "cart_table", carts: @carts

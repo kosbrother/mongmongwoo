@@ -74,10 +74,15 @@ module Admin::AdminCartHelper
     end
   end
 
-  def link_to_cart_index(active_boolean, link_name, options={})
-    options = {status: params[:status], id: params[:id], page: params[:page]}.merge(options)
+  def li_cart_id_index_link(active_boolean, link_name, options={status:  status_params, taobao_supplier_id: taobao_supplier_id_params, id: cart_id})
     content_tag(:li, class: "#{'active' if active_boolean}", id: "cart-link-#{options[:id]}") do
-      link_to link_name, admin_confirm_carts_path(status: options[:status], id: options[:id], page: options[:page])
+      link_to link_name, admin_confirm_carts_path(status:  options[:status], taobao_supplier_id: options[:taobao_supplier_id], id: options[:id])
+    end
+  end
+
+  def li_taobao_supplier_cart_link(active_boolean, link_name, options={status:  status_params, taobao_supplier_id: taobao_supplier_id})
+    content_tag(:li, class: "#{'active' if active_boolean}") do
+      link_to link_name, admin_confirm_carts_path(status:  options[:status], taobao_supplier_id: options[:taobao_supplier_id])
     end
   end
 end
