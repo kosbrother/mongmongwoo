@@ -1,5 +1,5 @@
 module Admin::AdminCartHelper
-  def li_cart_status_link(status)
+  def li_link_to_admin_cart_by_status(status)
     content_tag(:li, '' , class: set_class_to_active(status)) do
       link_to t(AdminCart::STATUS.key(status)), admin_confirm_carts_path(status: status)
     end
@@ -74,15 +74,9 @@ module Admin::AdminCartHelper
     end
   end
 
-  def li_cart_id_index_link(active_boolean, link_name, options={status:  status_params, taobao_supplier_id: taobao_supplier_id_params, id: cart_id})
-    content_tag(:li, class: "#{'active' if active_boolean}", id: "cart-link-#{options[:id]}") do
-      link_to link_name, admin_confirm_carts_path(status:  options[:status], taobao_supplier_id: options[:taobao_supplier_id], id: options[:id])
-    end
-  end
-
-  def li_taobao_supplier_cart_link(active_boolean, link_name, options={status:  status_params, taobao_supplier_id: taobao_supplier_id})
-    content_tag(:li, class: "#{'active' if active_boolean}") do
-      link_to link_name, admin_confirm_carts_path(status:  options[:status], taobao_supplier_id: options[:taobao_supplier_id])
+  def li_link_to_admin_cart_by_options(active_boolean, link_name, options={status: status_params, taobao_supplier_id: nil, id: nil})
+    content_tag(:li, class: "#{'active' if active_boolean}", id: "#{"cart-link-#{options[:id]}" if options[:id]}") do
+      link_to link_name, admin_confirm_carts_path(options)
     end
   end
 end
