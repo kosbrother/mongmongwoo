@@ -67,6 +67,6 @@ class Admin::ItemSpecsController < AdminController
   end
 
   def spec_params
-    params.require(:item_spec).permit(:style, :style_pic)
+    params.require(:item_spec).permit(:style, :style_pic, :shelf_position)
   end
 end
