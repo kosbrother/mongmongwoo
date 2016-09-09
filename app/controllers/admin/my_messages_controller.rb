@@ -34,7 +34,7 @@ class Admin::MyMessagesController < AdminController
     if params[:device_registration_id].blank?
       flash[:notice] = "已成功新增個人訊息"
     else
-      GcmNotifyService.new.send_message_notification(params[:device_registration_id], message)
+      UserNotifyService.send_personal_notification(params[:device_registration_id], message)
       flash[:notice] = "已成功推播新增的個人訊息"
     end
   end

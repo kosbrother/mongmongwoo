@@ -17,6 +17,10 @@ class Message < ActiveRecord::Base
     message_types.to_a
   end
 
+  def self.user_has_message?(user, messageable)
+    joins(:message_records).where(message_records: { user_id: user.id }, messageable: messageable).exists?
+  end
+
   def able_path
     case messageable_type
     when ShoppingPointCampaign.name

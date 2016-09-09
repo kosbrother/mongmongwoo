@@ -9,7 +9,7 @@ class ItemSpec < ActiveRecord::Base
   validates_numericality_of :style_amount, :only_integer => true, :greater_than_or_equal_to => 0, :allow_blank => true
   validates_presence_of :style, :style_pic
 
-  after_update :update_recommend_stock_num, :notify_wish_list, :update_item_status
+  after_update :update_recommend_stock_num, :update_item_status
   after_create :set_defult_recommend_stock_num, :add_shelf_position
 
   belongs_to :item
@@ -17,6 +17,7 @@ class ItemSpec < ActiveRecord::Base
   has_many :order_items
   has_many :admin_cart_items
   has_many :wish_lists
+  has_many :messages, as: :messageable, dependent: :destroy
 
   scope :recent, -> {order(id: :DESC)}
   scope :on_shelf, -> {where(status: ItemSpec.statuses[:on_shelf])}
@@ -83,14 +84,6 @@ class ItemSpec < ActiveRecord::Base
 
   def add_shelf_position
     update_column(:shelf_position, ItemSpec::SHELF_POSITION[item.specs.count - 1])
-  end
-
-  def notify_wish_list
-    if status_change_to?("on_shelf")
-      wish_lists.each do |w|
-        UserNotifyService.new(w.user).notify_wish_list_user(w)
-      end
-    end
   end
 
   def update_item_status
