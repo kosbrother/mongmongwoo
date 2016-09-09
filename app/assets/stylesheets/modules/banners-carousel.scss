@@ -1,0 +1,39 @@
+#banners-carousel{
+  margin-bottom: 30px;
+  > ol.carousel-indicators{
+    bottom: -45px;
+    > li{
+      width: 15px;
+      height: 15px;
+      background-color: #dcdcdc;
+      margin:1px;
+    }
+    > li.active{
+      background-color: #ff8080;
+    }
+  }
+  > .carousel-control{
+    background: none;
+    width: 7%;
+    > .glyphicon{
+      color: #ff8080;
+      font-size: 25px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  #banners-carousel{
+    > ol.carousel-indicators{
+      > li{
+        width: 10px;
+        height: 10px;
+      }
+    }
+    > .carousel-control{
+      > .glyphicon{
+        font-size: 15px;
+      }
+    }
+  }
+}

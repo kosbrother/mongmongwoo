@@ -2,7 +2,21 @@
   %link{href: "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com", rel: "alternate"}
 
 .index
-  = image_tag('carousel/banner.png', class: 'img-responsive center-block')
+  #banners-carousel.carousel.slide{"data-ride": "carousel"}
+    %ol.carousel-indicators
+      - @banners.each_with_index do |banner, index|
+        %li{"data-target": "#banners-carousel",  "data-slide-to": index, class: "#{'active' if index == 0}"}
+    .carousel-inner{roll: "listbox"}
+      - @banners.each_with_index do |banner, index|
+        .item{class: "#{'active' if index == 0}"}
+          = link_to banner.able_path || '#' do
+            = image_tag(banner.image.url, class: 'img-responsive')
+    %a.left.carousel-control{role: "button", "data-slide": "prev", href: "#banners-carousel"}
+      %span.glyphicon.glyphicon-chevron-left
+      %span.sr-only Previous
+    %a.right.carousel-control{role: "button", "data-slide": "next", href: "#banners-carousel"}
+      %span.glyphicon.glyphicon-chevron-right
+      %span.sr-only Next
   - @category_with_items.each do |category_with_items|
     .category-header
       .group
