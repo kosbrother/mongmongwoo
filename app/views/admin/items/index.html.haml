@@ -23,6 +23,13 @@
             - @subcategories.each do |category|
               = link_to_items_index(category.id == params[:category_id].to_i, category.name, category_id: category.id)
       .filter-row
+        .filter-dt 標籤
+        .filter-dd
+          %ul.filter-list
+            = link_to_items_index(params[:tag].nil?, '全部', tag: nil)
+            - @tags.each do |tag|
+              = link_to_items_index(tag.name == params[:tag], tag.name, tag: tag.name)
+      .filter-row
         .filter-dt 排序
         .filter-dd
           %ul.filter-list
