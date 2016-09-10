@@ -109,7 +109,7 @@ class Admin::OrdersController < AdminController
   end
 
   def export_returned_order_list
-    @order_list = Order.includes(:user, :items).status(Order.statuses['退貨']).where(restock: false)
+    @order_list = Order.includes(:user, :items).status(Order.statuses['退貨']).where(ship_type: params[:ship_type], restock: false)
     @picking_list_index = OrderExcelManager.picking_list_index(@order_list.map(&:id))
     @order_list_sheet = '退貨訂單清單(尚未入庫)'
     @item_list_sheet = '退貨商品清單'
