@@ -12,8 +12,8 @@ namespace :items do
       position_cs = []
 
       cs = ItemCategory.where(category_id: category.id).order(created_at: :desc).map(&:id)
-      # select 20 items by item sales times
-      ois = OrderItem.sort_by_sales.limit(50) + OrderItem.sort_by_revenue.limit(50)
+      # each select 50 items by item sales times and revenue, within 30 days
+      ois = OrderItem.sort_by_sales.created_at_within(TimeSupport.within_days(30)).limit(50) + OrderItem.sort_by_revenue.created_at_within(TimeSupport.within_days(30)).limit(50)
       ois.shuffle!
       
       ois.each do |oi|
@@ -42,7 +42,7 @@ namespace :items do
       end
     end
 
-    # 最新上架 only keep 150 items
+    # 最新上架 only keep 200 items
     cs = ItemCategory.where(category_id: 11).order(created_at: :desc)
     cs.each_with_index do |c,index|
       c.delete if index > 199
