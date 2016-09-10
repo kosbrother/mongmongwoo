@@ -1,0 +1,15 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "報關清冊-#{Date.today}") do |sheet|
+  sheet.add_row ['商品名稱', '單價(人民幣)', '商品描述', '商品圖片']
+  wrap_text = wb.styles.add_style({:alignment => {:horizontal => :center, :vertical => :top, :wrap_text => true}}  )
+  @items.each_with_index do |item, index|
+    sheet.add_row [item.name, item.cost, strip_tags(item.description), ''],:height => 100, :style => wrap_text
+    img = File.expand_path(item.cover.icon.path, __FILE__)
+    sheet.add_image(:image_src => img , :noMove => true) do |image|
+      image.width = 150
+      image.height = 100
+      image.start_at 3, (1+1*index)
+    end
+  end
+  sheet.column_widths 10, 10, 30, 20
+end

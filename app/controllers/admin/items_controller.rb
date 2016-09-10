@@ -85,6 +85,10 @@ class Admin::ItemsController < AdminController
     render json: @specs
   end
 
+  def export_customs_clearance_excel
+    @items = Item.on_shelf
+  end
+
   private
 
   def item_params

@@ -145,6 +145,7 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
       collection do
         get "search"
+        get "export_customs_clearance_excel"
       end
 
       member do
