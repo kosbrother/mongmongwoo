@@ -10,4 +10,12 @@ FactoryGirl.define do
       end
     end
   end
+
+  factory :anonymous_user, class: User do
+    id { User::ANONYMOUS }
+    user_name { "匿名購買" }
+    uid { 9999 }
+    email { "anonymous@mmwooo.fake.com" }
+    password { Faker::Internet.password }
+  end
 end
