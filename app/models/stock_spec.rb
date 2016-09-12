@@ -3,6 +3,7 @@ class StockSpec < ActiveRecord::Base
 
   after_update :sef_item_spec_off_shelf_if_stock_empty_and_stop_replenish, :send_wish_list_notification_if_stock_replenish
   after_create :set_on_shelf_and_send_wish_list_notification_when_amout_larger_than_zero
+  before_save :print_changed_record_to_stock_spec_logger
 
   scope :recent, -> { order(id: :DESC) }
 
@@ -38,5 +39,13 @@ class StockSpec < ActiveRecord::Base
 
   def send_wish_list_notification_if_stock_replenish
     UserNotifyService.wish_list_arrival(item_spec) if amount_changed? && amount > 0
+  end
+
+  def print_changed_record_to_stock_spec_logger
+    before_changed_amount = amount_was
+    increments = amount - before_changed_amount
+    operation = increments > 0 ? "+" : "-"
+    message = "stock_spec_id: #{id}, item_spec_id: #{item_spec_id}, style: #{item_spec.style}, item_name: #{item.name}, Action: #{operation}#{increments.abs}, amount：#{amount}"
+    StockSpecLogger.info(message)
   end
 end
