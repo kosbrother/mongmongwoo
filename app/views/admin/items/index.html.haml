@@ -15,27 +15,35 @@
         .filter-dd
           %ul.filter-list
             - @categories.each do |category|
-              = link_to_items_index(category.id == params[:category_id].to_i, category.name, category_id: category.id)
+              = li_link_to_items_index_with_params(category.id == params[:category_id].to_i, category.name, category_id: category.id)
+      - if @subcategories.any?
+        .filter-row
+          .filter-dt 次分類
+          .filter-dd
+            %ul.filter-list
+              - @subcategories.each do |category|
+                = li_link_to_items_index_with_params(category.id == params[:category_id].to_i, category.name, category_id: category.id)
       .filter-row
-        .filter-dt 次分類
+        .filter-dt 標籤
         .filter-dd
           %ul.filter-list
-            - @subcategories.each do |category|
-              = link_to_items_index(category.id == params[:category_id].to_i, category.name, category_id: category.id)
+            = li_link_to_items_index_with_params(params[:tag].nil?, '全部', tag: nil)
+            - @tags.each do |tag|
+              = li_link_to_items_index_with_params(tag.name == params[:tag], tag.name, tag: tag.name)
       .filter-row
         .filter-dt 排序
         .filter-dd
           %ul.filter-list
-            = link_to_items_index(params[:order] == 'position', '依分類排名', order: 'position')
-            = link_to_items_index(params[:order] == 'updated_at', '依更新時間', order: 'updated_at')
-            = link_to_items_index(params[:order] == 'id', '依編號', order: 'id')
+            = li_link_to_items_index_with_params(params[:order] == 'position', '依分類排名', order: 'position')
+            = li_link_to_items_index_with_params(params[:order] == 'updated_at', '依更新時間', order: 'updated_at')
+            = li_link_to_items_index_with_params(params[:order] == 'id', '依編號', order: 'id')
       .filter-row
         .filter-dt 狀態
         .filter-dd
           %ul.filter-list
-            = link_to_items_index(params[:status] == Item.statuses[:on_shelf].to_s, t('on_shelf'), ever_on_shelf: nil, status: Item.statuses[:on_shelf])
-            = link_to_items_index(params[:status] == Item.statuses[:off_shelf].to_s, t('off_shelf'), ever_on_shelf: nil, status: Item.statuses[:off_shelf])
-            = link_to_items_index(params[:ever_on_shelf] == 'false', '新商品未上架', ever_on_shelf: 'false', status: nil)
+            = li_link_to_items_index_with_params(params[:status] == Item.statuses[:on_shelf].to_s, t('on_shelf'), ever_on_shelf: nil, status: Item.statuses[:on_shelf])
+            = li_link_to_items_index_with_params(params[:status] == Item.statuses[:off_shelf].to_s, t('off_shelf'), ever_on_shelf: nil, status: Item.statuses[:off_shelf])
+            = li_link_to_items_index_with_params(params[:ever_on_shelf] == 'false', '新商品未上架', ever_on_shelf: 'false', status: nil)
     = render_pagination(@items)
     %p.help-block
     %table.table.table-striped.table-bordered

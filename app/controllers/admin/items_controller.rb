@@ -23,7 +23,9 @@ class Admin::ItemsController < AdminController
     else
       @subcategories = Category.subcategories(Category.find(params[:category_id]).parent_id)
     end
-    @items = Item.joins(:item_categories).select('items.*, item_categories.position').where(query_hash).order(order_query).paginate(page: params[:page])
+    @tags =  ActsAsTaggableOn::Tag.all
+    items = params[:tag] ? Item.tagged_with(params[:tag]) : Item
+    @items = items.joins(:item_categories).select('items.*, item_categories.position').where(query_hash).order(order_query).paginate(page: params[:page])
   end
 
   def new
