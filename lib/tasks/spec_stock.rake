@@ -71,27 +71,6 @@ namespace :specs do
     end
   end
 
-  def normalize(item)
-    specs = item.specs.on_shelf
-    recommend_array = specs.map(&:recommend_stock_num)
-    normalized_recommend_array = normalize_array(recommend_array)
-    alert_array = specs.map(&:alert_stock_num)
-    normalized_alert_array = normalize_array(alert_array)
-    specs.each_with_index{|spec,index| spec.update_attribute(:recommend_stock_num, normalized_recommend_array[index])}
-    specs.each_with_index{|spec,index| spec.update_attribute(:alert_stock_num, normalized_alert_array[index])}
-  end
-
-  def normalize_array(array)
-    new_array = []
-    median = median(array)
-    array.each do |i|
-      i =  3 * median if i > 3 * median
-      i = (median / 2).ceil if i < (median / 2).ceil
-      new_array << i.to_i
-    end
-    new_array
-  end
-
   # 建議補貨水位recommend_stock_num : 補到這個水位才夠賣　= 樣式賣的量／（賣的天數) * 30
   # 警示水位alert_stock_num : 這個水位再不補，就會出現缺貨 = 樣式賣的量／（賣的天數) * 7
 
@@ -127,7 +106,6 @@ namespace :specs do
         else
           calculate_stock(item)
         end
-        normalize(item)
       else
         item.specs.on_shelf.update_all(recommend_stock_num: 5)
       end
