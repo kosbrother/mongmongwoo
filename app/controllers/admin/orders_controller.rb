@@ -88,6 +88,7 @@ class Admin::OrdersController < AdminController
 
   def export_processing_order_list
     @order_list = get_orders_by_params
+    @picking_list_index_hash = get_picking_list_index_hash(@order_list)
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
@@ -100,12 +101,14 @@ class Admin::OrdersController < AdminController
   def export_changed_order
     order = Order.find(params[:id])
     @order_list = [order]
+    @picking_list_index_hash = get_picking_list_index_hash(@order_list)
     @sheet_name = '變更中訂單'
     render 'export_order_list'
   end
 
   def export_returned_order_list
-    @order_list = Order.includes(:user, :items).status(Order.statuses['退貨']).where(restock: false)
+    @order_list = Order.includes(:user, :items).status(Order.statuses['退貨']).where(ship_type: params[:ship_type], restock: false)
+    @picking_list_index_hash = get_picking_list_index_hash(@order_list)
     @sheet_name = '退貨訂單清單(尚未入庫)'
     render 'export_order_list'
   end
@@ -168,5 +171,9 @@ class Admin::OrdersController < AdminController
     end
 
     Order.includes(:user, :items).status(Order.statuses['處理中']).where(query_data).recent
+  end
+
+  def get_picking_list_index_hash(order_list)
+    Hash[order_list.map.with_index { |order, index| [order.id, (index + 1)] }]
   end
 end
