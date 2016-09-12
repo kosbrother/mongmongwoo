@@ -17,7 +17,7 @@ class AllpayGoodsService
     url = URI.parse("https://logistics.ecpay.com.tw/Express/Create")
     resp, data = Net::HTTP.post_form(url, @fields.sort.to_h)
     puts resp.body
-    binding.pry
+
     if resp.body.include?("AllPayLogisticsID")
       return true, resp.body
     else
