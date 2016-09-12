@@ -1,5 +1,5 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: @order_list_sheet) do |sheet|
+wb.add_worksheet(name: @sheet_name) do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1", :border => Axlsx::STYLE_THIN_BORDER)
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4", border: Axlsx::STYLE_THIN_BORDER)
   bold_font = sheet.styles.add_style(:b => true, border: Axlsx::STYLE_THIN_BORDER)
@@ -7,7 +7,7 @@ wb.add_worksheet(name: @order_list_sheet) do |sheet|
   item_quantity_style = sheet.styles.add_style(:bg_color => "C6E0B4", :border => Axlsx::STYLE_THIN_BORDER, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true})
   @order_list.each_with_index do |order, index|
     sheet.add_row ['訂單編號', '訂購日期與狀態', '訂購用戶', '收件人姓名', '揀貨單序號'], style: border_wrap
-    sheet.add_row [order.id, display_date(order.created_at), order.user.user_name, order.info.ship_name, @picking_list_index[order.id]], style: bold_font
+    sheet.add_row [order.id, display_date(order.created_at), order.user.user_name, order.info.ship_name, @picking_list_index_hash[order.id]], style: bold_font
     sheet.add_row ['商品編號', '名稱', '樣式', '數量', '貨架編號'], style: header_highlight
     order.items.by_shelf_position.each do |item|
       sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position], :height => 25, style: content_highlight
@@ -28,14 +28,14 @@ wb.add_worksheet(name: @order_list_sheet) do |sheet|
   sheet.column_widths 10, 35, 25, 15
 end
 
-wb.add_worksheet(name: @item_list_sheet) do |sheet|
+wb.add_worksheet(name: '商品清單') do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1", :border => Axlsx::STYLE_THIN_BORDER)
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4", border: Axlsx::STYLE_THIN_BORDER)
   @order_list.each_slice(10) do |orders|
     order_ids = orders.map(&:id)
     sheet.add_row ['商品編號', '名稱', '樣式', '數量', '貨架編號', '揀貨單序號'], style: header_highlight
     OrderItem.where(order_id: order_ids).by_shelf_position.each do |item|
-      sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position, @picking_list_index[item.order_id]], :height => 25, style: content_highlight
+      sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position, @picking_list_index_hash[item.order_id]], :height => 25, style: content_highlight
     end
     sheet.add_row
     sheet.add_row

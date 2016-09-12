@@ -88,38 +88,35 @@ class Admin::OrdersController < AdminController
 
   def export_processing_order_list
     @order_list = get_orders_by_params
-    @picking_list_index = OrderExcelManager.picking_list_index(@order_list.map(&:id))
+    @picking_list_index_hash = get_picking_list_index_hash(@order_list)
 
     @order_list.each do |order|
       order.update_attribute(:status, Order.statuses["配送中"])
     end
 
-    @order_list_sheet = '處理中訂單清單'
-    @item_list_sheet = '訂購商品清單'
+    @sheet_name = '處理中訂單清單'
     render 'export_order_list'
   end
 
   def export_changed_order
     order = Order.find(params[:id])
     @order_list = [order]
-    @picking_list_index = OrderExcelManager.picking_list_index(@order_list.map(&:id))
-    @order_list_sheet = '變更中訂單'
-    @item_list_sheet = '變更商品清單'
+    @picking_list_index_hash = get_picking_list_index_hash(@order_list)
+    @sheet_name = '變更中訂單'
     render 'export_order_list'
   end
 
   def export_returned_order_list
     @order_list = Order.includes(:user, :items).status(Order.statuses['退貨']).where(ship_type: params[:ship_type], restock: false)
-    @picking_list_index = OrderExcelManager.picking_list_index(@order_list.map(&:id))
-    @order_list_sheet = '退貨訂單清單(尚未入庫)'
-    @item_list_sheet = '退貨商品清單'
+    @picking_list_index_hash = get_picking_list_index_hash(@order_list)
+    @sheet_name = '退貨訂單清單(尚未入庫)'
     render 'export_order_list'
   end
 
   def export_home_delivery_order_list
     order_list = Order.includes(:user).status(Order.statuses['處理中']).home_delivery.recent
     file_name = "home_delivery_order_list.xls"
-    spreadsheet = OrderExcelManager.generate_home_delivery_order_xls(order_list)
+    spreadsheet = OrderDeliveryExcelGenerator.generate_home_delivery_order_xls(order_list)
     send_data(spreadsheet, type: "application/vnd.ms-excel", filename: file_name)
   end
 
@@ -174,5 +171,9 @@ class Admin::OrdersController < AdminController
     end
 
     Order.includes(:user, :items).status(Order.statuses['處理中']).where(query_data).recent
+  end
+
+  def get_picking_list_index_hash(order_list)
+    Hash[order_list.map.with_index { |order, index| [order.id, (index + 1)] }]
   end
 end
