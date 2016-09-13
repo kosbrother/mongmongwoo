@@ -31,12 +31,14 @@ end
 wb.add_worksheet(name: '商品清單') do |sheet|
   header_highlight = sheet.styles.add_style(:bg_color => "D1D1D1", :border => Axlsx::STYLE_THIN_BORDER)
   content_highlight = sheet.styles.add_style(:bg_color => "C6E0B4", border: Axlsx::STYLE_THIN_BORDER)
-  @order_list.each_slice(10) do |orders|
+  @order_list.each_slice(20) do |orders|
     order_ids = orders.map(&:id)
     sheet.add_row ['商品編號', '名稱', '樣式', '數量', '貨架編號', '揀貨單序號'], style: header_highlight
     OrderItem.where(order_id: order_ids).by_shelf_position.each do |item|
       sheet.add_row [item.source_item_id, item.item_name, item.item_style, item.item_quantity, item.item_spec.item_shelf_position, @picking_list_index_hash[item.order_id]], :height => 25, style: content_highlight
     end
+    sheet.add_row
+    sheet.add_row
     sheet.add_row
     sheet.add_row
   end
