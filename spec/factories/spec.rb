@@ -12,4 +12,6 @@ end
 
 FactoryGirl.define do
   factory :stock_spec, class: StockSpec
+
+  after(:build) { |order_info| order_info.class.skip_callback(:save, :before, :print_changed_record_to_stock_spec_logger) }
 end
