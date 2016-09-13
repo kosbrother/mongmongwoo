@@ -22,6 +22,11 @@ crumb :orders do
   parent :root
 end
 
+crumb :my_messages do
+  link "我的通知", my_messages_path
+  parent :root
+end
+
 crumb :order_detail do |order|
   link "訂單明細", order_path(order)
   parent :orders

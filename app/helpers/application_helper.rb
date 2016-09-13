@@ -75,6 +75,6 @@ module ApplicationHelper
   end
 
   def display_date_and_time(time)
-    time.strftime("%Y-%m-%d %H:%M:%S")
+    time.strftime("%Y/%m/%d %H:%M")
   end
 end
