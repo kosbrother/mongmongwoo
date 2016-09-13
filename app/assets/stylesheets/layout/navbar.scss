@@ -15,6 +15,7 @@
       margin-left: 0;
       padding-top: 3px;
       font-size: $logo-font-size;
+      margin-top: 4px;
       > .logo{
         display: inline-block;
       }
@@ -91,11 +92,13 @@
       padding-right: 5px;
     }
     > a {
-      padding: 0 15px;
+      padding: 0;
       margin: 15px 10px;
       > .list {
         display: inline-block;
         color: #ffffff;
+        height: 25px;
+        line-height: 25px;
       }
       > .cart{
         > .counter{
@@ -115,10 +118,15 @@
         vertical-align: -4px;
         padding-right: 5px;
       }
+      > .notify:before{
+        content: image_url('icons/ic_notification.png');
+        vertical-align: -4px;
+        padding-right: 5px;
+      }
     }
     > .dropdown{
-      padding: 0 15px;
-      margin: 15px 10px;
+      padding: 0;
+      margin: 15px 5px;
       cursor: pointer;
       > .list {
         display: inline-block;
@@ -167,10 +175,34 @@
       #nav-drop{
         border: none;
         margin-right: -10px;
+        margin-top: 6px;
+        margin-bottom: 0px;
+        > .nav-drop-icon:before{
+          content: image_url('icons/ic_nav.png');
+        }
       }
       .logo-block{
         padding: 3px 0;
         font-size: 24px;
+        height: 40px;
+        margin-top: 7px;
+        > .logo{
+          width: 35px;
+          height: 35px;
+        }
+      }
+      > .notify-block{
+        float: right;
+        width: 30px;
+        height: 30px;
+        margin-top: 19px;
+        margin-left: 5px;
+        text-align: center;
+        .notify:before{
+          content: image_url('icons/ic_notification.png');
+          background-position: center;
+          background-repeat: no-repeat;
+        }
       }
     }
     .modal{
@@ -201,6 +233,9 @@
       }
       > .user {
         margin: 0 10px;
+      }
+      > .dropdown{
+        margin-left: 12px;
       }
       > .dropdown > .dropdown-menu.parent-categories {
         margin: 0 -25px;

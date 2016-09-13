@@ -1,0 +1,11 @@
+- breadcrumb :my_messages
+.orders
+  .icon-header.-black-bell 我的通知
+  - @messages.each do |message|
+    = link_to message.able_path do
+      .message-block
+        .header
+          .title= message.title
+          .datetime= display_date_and_time(message.created_at)
+        .content
+          = message.content

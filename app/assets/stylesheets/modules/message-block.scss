@@ -1,0 +1,60 @@
+.message-block{
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: solid 1px #dcdcdc;
+  margin: 10px 0;
+  padding: 20px 30px;
+  >.header{
+    margin-bottom: 10px;
+    >.title{
+      display: inline-block;
+      font-size: 20px;
+      font-weight: 500;
+      color: #5b5b5b;
+      width: 70%;
+    }
+    >.datetime{
+      display: inline-block;
+      font-size: 16px;
+      color: #9b9b9b;
+      float: right;
+    }
+    > .datetime:before{
+      content: image_url('icons/ic_clock.png');
+      margin-right: 10px;
+      vertical-align: -webkit-baseline-middle;
+    }
+  }
+  .content{
+    font-size: 16px;
+    color: #656565;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .message-block{
+    padding: 15px;
+    >.header{
+      margin-bottom: 5px;
+      >.title{
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        width: 100%;
+      }
+      >.datetime{
+        display: block;
+        float: none;
+        font-size: 10px;
+        margin-top: 3px;
+      }
+      > .datetime:before{
+        margin-right: 5px;
+        content: image_url('icons/ic_clock_mobile.png');
+      }
+    }
+    .content{
+      font-size: 10px;
+    }
+  }
+}
