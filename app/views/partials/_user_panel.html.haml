@@ -1,12 +1,17 @@
 .user-panel
-  =image_tag( profile_pic, class: 'profilePic')
-  .name
-    = current_user.user_name
-  .email
-    = current_user.email
+  =image_tag(profile_pic, class: 'profilePic')
+  - if current_user
+    .name
+      = current_user.user_name
+    .email
+      = current_user.email
+  - else
+    .login-btn{"aria-label": "Close", "data-toggle": "modal", "data-target": "#login-page"} 登入 / 註冊
   .divider
   .selectList{ class: current_active_class(orders_path) }
     = link_to '我的訂單', orders_path
+  .selectList{ class: current_active_class(my_messages_path) }
+    = link_to '我的通知', my_messages_path
   .selectList{ class: current_active_class(favorite_items_path) }
     = link_to '我的收藏', favorite_items_path
   .selectList{ class: current_active_class(wish_lists_path) }
