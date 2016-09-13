@@ -33,9 +33,8 @@ RSpec.describe Api::V3::OauthSessionsController, type: :controller do
         expect(Login.where(provider: provider, uid: uid).size).to eq(1)
       end
 
-
       context 'when login from different provider with same email' do
-        let!(:provider) { 'google' }
+        let!(:provider) { 'facebook' }
         it 'does belong to same user and create new provider login' do
           another_login = Login.find_by(provider: provider, uid: uid)
           expect(User.where(email: email).size).to eq(1)

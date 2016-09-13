@@ -46,8 +46,12 @@ module ApplicationHelper
     end
   end
 
-  def fb_picture
-    "https://graph.facebook.com/#{current_user.uid}/picture?width=100&height=100"
+  def profile_pic
+    if current_user && current_user.pic_url
+      current_user.pic_url
+    else
+      "img_annoymous.png"
+    end
   end
 
   def analytic_event(category, action, label)
