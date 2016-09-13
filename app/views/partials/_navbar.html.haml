@@ -4,13 +4,14 @@
     .navbar-header
       %button#nav-drop.navbar-toggle.collapsed{"aria-expanded": "false", "data-target": "#nav-bar-collapse", "data-toggle": "collapse", type: "button"}
         %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
+        %span.nav-drop-icon
       %a.navbar-brand.logo-block{:href => root_path}
         = image_tag('icons/logo.png', class: 'logo')
         .name
           萌萌屋
+      .notify-block.visible-xs-inline-block
+        = link_to my_messages_path do
+          .list.notify
       .search-bars.visible-xs-inline-block
         = form_tag search_items_path, method: :get do
           =text_field_tag :query, params[:query], placeholder: "請輸入關鍵字", class: "search"
@@ -51,27 +52,31 @@
                         - category.child_categories.each do |child_category|
                           = link_to category_path(child_category), onClick: analytic_event("category", "click", "#{category.name}-#{child_category.name}") do
                             %li.list= child_category.name
+        %li.nav-list.hidden-xs
+          = link_to my_messages_path do
+            .list.notify
+              我的通知
         %li.nav-list
           = link_to checkout_path, onClick: analytic_event('cart', 'click', '無') do
             .list.cart
               購物車
               = render_counter
-        - if current_user.nil?
-          %li.nav-list
-            .user{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#login-page"} 登入/註冊
-        -else
-          %li.nav-list#user-nav
-            .dropdown#user
-              .list.user.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                = current_user.user_name
-                %span.caret
-              %ul.dropdown-menu
+        %li.nav-list#user-nav
+          .dropdown#user
+            .list.user.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+              我的帳戶
+              %span.caret
+            %ul.dropdown-menu
+              - if current_user.nil?
                 %li.list
-                  = link_to "我的訂單", orders_path, class: 'link'
-                %li.list
-                  = link_to "我的收藏", favorite_items_path, class: 'link'
-                %li.list
-                  = link_to "補貨清單", wish_lists_path, class: 'link'
+                  = link_to "登入/註冊", "#", {"aria-label": "Close", "data-toggle": "modal", "data-target": "#login-page", class: "link"}
+              %li.list
+                = link_to "我的訂單", orders_path, class: 'link'
+              %li.list
+                = link_to "我的收藏", favorite_items_path, class: 'link'
+              %li.list
+                = link_to "補貨清單", wish_lists_path, class: 'link'
+              - if current_user
                 %li.list
                   = link_to "登出", signout_path, class: 'link'
     - if android?
