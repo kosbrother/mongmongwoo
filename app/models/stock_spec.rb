@@ -44,7 +44,7 @@ class StockSpec < ActiveRecord::Base
   def log_stock_spec_amount_change
     increments = amount - amount_was
     action = increments > 0 ? "+#{increments}" : "#{increments}"
-    message = "stock_spec_id: #{id}, item_spec_id: #{item_spec_id}, style: #{item_spec.style}, item_id: #{item_id}, item_name: #{item.name}, Action: #{action}, amount：#{amount}"
+    message = "stock_spec_id: #{id}, item_spec_id: #{item_spec_id}, style: #{item_spec.style}, item_id: #{item_id}, item_name: #{item.name}, action: #{action}, amount：#{amount}"
     StockSpecLogger.info(message)
   end
 end
