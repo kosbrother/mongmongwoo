@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
       user = find_or_initialize_by(email: info.email)
       user.password = User::FAKE_PASSWORD if  user.password_digest.nil?
       user.user_name = info.name
+      user.pic_url = auth["info"]["image"]
       errors << user.errors.messages unless user.save
 
       login = Login.find_or_initialize_by(provider: auth.provider, uid: auth.uid)

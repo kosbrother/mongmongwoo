@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909011224) do
+ActiveRecord::Schema.define(version: 20160912140943) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -571,6 +571,7 @@ ActiveRecord::Schema.define(version: 20160909011224) do
     t.string   "password_reset_token",   limit: 255
     t.datetime "password_reset_sent_at"
     t.boolean  "is_mmw_registered",                  default: false
+    t.string   "pic_url",                limit: 255
   end
 
   add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree

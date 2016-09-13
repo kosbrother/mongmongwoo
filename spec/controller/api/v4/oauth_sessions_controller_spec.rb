@@ -46,7 +46,7 @@ RSpec.describe Api::V4::OauthSessionsController, type: :controller do
 
 
       context 'when login from different provider with same email' do
-        let!(:provider) { 'google' }
+        let!(:provider) { 'facebook' }
 
         it 'does belong to same user and create new provider login' do
           another_login = Login.find_by(provider: provider, uid: uid)
