@@ -1,0 +1,20 @@
+- if Rails.env == "production"
+  :plain
+    ga('ecommerce:addTransaction', {
+      "id": "#{@order.id}",
+      "revenue": "#{@order.total}",
+      "shipping": "#{@order.ship_fee}",
+    });
+  - @order_items.each do |order_item|
+    :plain
+      ga('ecommerce:addItem', {
+        "id": "#{order_item.order_id}",
+        "name": "#{order_item.item_name}",
+        "category": "#{order_item.item.categories.last.name}",
+        "price": "#{order_item.item_price}",
+        "quantity": "#{order_item.item_quantity}"
+      });
+  :plain
+    ga('ecommerce:send');
+:plain
+  window.location = '#{success_path}';
