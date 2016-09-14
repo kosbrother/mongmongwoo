@@ -34,6 +34,10 @@ zh-TW:
         price_asc: '價格由低到高'
         popular: '人氣排行'
         date: '最新商品'
+    shopping_points:
+      collect: '已領取'
+      un-collect: '未領取'
+      processing: '進行中'
   activerecord:
     errors:
       models:
