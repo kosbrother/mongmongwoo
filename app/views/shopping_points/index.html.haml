@@ -1,0 +1,49 @@
+-breadcrumb :my_shopping_point
+.orders
+  .icon-header.-money 我的購物金
+  = render "partials/shopping_points_tab"
+  .shopping-points-list
+    .list.top
+      .icon
+        = image_tag('icons/shopping_point/ic_moneybag.png')
+      .pull-right
+        .text
+          可用購物金
+        .amount
+          = "$ #{@total}"
+    - @shopping_points.each do |shopping_point|
+      .dropdown
+        .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button", class: "#{'expired' if shopping_point.is_valid == false}"}
+          .icon
+            .coin
+          .content{class: "#{'refund' if shopping_point.point_type == '退貨金'}"}
+            .title
+              = shopping_point.point_type
+            - if shopping_point.valid_until
+              .date
+                = "到期日: #{display_date(shopping_point.valid_until)}"
+            .description
+              = shopping_point.description
+          .pull-right
+            .amount
+              = "$ #{shopping_point.amount}"
+            .dropdown-icon
+        %ul.dropdown-menu
+          %table.table
+            %thead
+              %tr
+                %td.date 日期
+                %td.order 訂單編號
+                %td.amount 額度
+                %td.balance 餘額
+            %tbody
+              - shopping_point.shopping_point_records.each do |shopping_point_record|
+                %tr
+                  %td
+                    = display_date(shopping_point_record.created_at)
+                  %td
+                    = shopping_point_record.order_id || '-'
+                  %td{class: "#{shopping_point_record.amount > 0 ? 'plus' : 'minus'}"}
+                    = "#{shopping_point_record.amount > 0 ? '+' : '-'}$#{shopping_point_record.amount.abs}"
+                  %td
+                    = "$#{shopping_point_record.balance}"

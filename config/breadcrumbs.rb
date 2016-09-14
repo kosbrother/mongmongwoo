@@ -42,6 +42,16 @@ crumb :wish_lists do
   parent :root
 end
 
+crumb :shopping_point_campaigns do
+  link "購物金活動", shopping_point_campaigns_path
+  parent :my_shopping_point
+end
+
+crumb :my_shopping_point do
+  link "我的購物金", shopping_points_path
+  parent :root
+end
+
 crumb :shop_infos do
   link "購物明細", shop_infos_path
   parent :root
