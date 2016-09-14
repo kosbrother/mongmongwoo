@@ -51,5 +51,5 @@
 = form_tag submit_order_path(info: @info, store: @store), method: :post, remote: true do
   .submit-session
     =link_to '上一步', cart_info_path , class: 'btn btn-previous', onClick: analytic_event("checkout_step_3", "click", "previous_step")
-    =submit_tag '送出訂單', class: 'btn', onClick: analytic_event("checkout_step_3", "click", "send_order")
+    =submit_tag '送出訂單', class: 'btn', data: { disable_with: "處理中" }, onClick: analytic_event("checkout_step_3", "click", "send_order")
 #errors-infos
