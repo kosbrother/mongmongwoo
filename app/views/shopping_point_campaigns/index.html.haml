@@ -1,0 +1,22 @@
+-breadcrumb :shopping_point_campaigns
+.orders
+  .icon-header.-money 我的購物金
+  = render "partials/shopping_points_tab"
+  .shopping-points-list.-campaign
+    - @shopping_point_campaigns.each do |shopping_point_campaign, is_collect|
+      .list{class: "#{shopping_point_campaign_status_text(shopping_point_campaign.is_expired, is_collect)}"}
+        .icon
+          .coin= shopping_point_campaign.amount if is_collect == false && shopping_point_campaign.is_expired == false
+        .content
+          .title
+            = shopping_point_campaign.title
+          - if shopping_point_campaign.valid_until
+            .date
+              = "活動日期: #{display_date(shopping_point_campaign.created_at)} ~ #{display_date(shopping_point_campaign.valid_until)}"
+          - if shopping_point_campaign.is_reusable
+            .date *本購物金可重複領取
+          .description
+            = shopping_point_campaign.description
+        .pull-right
+          .status
+            = t("models.shopping_points.#{shopping_point_campaign_status_text(shopping_point_campaign.is_expired, is_collect)}")
