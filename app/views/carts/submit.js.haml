@@ -16,5 +16,9 @@
       });
   :plain
     ga('ecommerce:send');
+    fbq('track', 'Purchase', {
+      value: "#{@order.total}",
+      currency: "NTD"
+    });
 :plain
   window.location = '#{success_path}';

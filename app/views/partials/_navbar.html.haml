@@ -57,7 +57,7 @@
             .list.notify
               我的通知
         %li.nav-list
-          = link_to checkout_path, onClick: analytic_event('cart', 'click', '無') do
+          = link_to checkout_path, class: "fb-track", data: { fb_track: track_name("InitiateCheckout") }, onClick: analytic_event('cart', 'click', '無') do
             .list.cart
               購物車
               = render_counter

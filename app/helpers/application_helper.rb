@@ -60,6 +60,14 @@ module ApplicationHelper
     end
   end
 
+  def track_name(event_name)
+    if Rails.env == "production"
+      event_name
+    else
+      ""
+    end
+  end
+
   def show_image(obj_image, image_size=nil)
     if obj_image.present?
       image_url = obj_image.url
