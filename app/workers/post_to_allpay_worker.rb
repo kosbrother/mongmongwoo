@@ -21,7 +21,12 @@ class PostToAllpayWorker
       "ReceiverStoreID"=> order.info.store.store_code
     }
     allpay = AllpayGoodsService.new(@params)
-    allpay.create_order
+    result = allpay.create_order
+    if result[0]
+      /AllPayLogisticsID=(\d*)/ =~ result[1]
+      order.update_attributes(allpay_transfer_id: $1.to_i)
+    end
+    result
   end
 
 end
