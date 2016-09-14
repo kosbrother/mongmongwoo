@@ -12,6 +12,21 @@ class Api::V4::OrdersController < ApiController
     render status: 200, json: {data: {shopping_point_amount: shopping_point_amount}}
   end
 
+  def check_pickup_record
+    if params[:user_id].to_i == User::ANONYMOUS
+      has_pick_up_records_within_30_days = Order.joins(:info).status(Order.statuses["未取訂貨"]).exists?(['(order_infos.ship_email = :ship_email OR order_infos.ship_phone = :ship_phone) AND orders.created_at > :starting_time', ship_email: params[:ship_email], ship_phone: params[:ship_phone], starting_time: (Time.current - 30.days)])
+    else
+      user = User.find(params[:user_id])
+      has_pick_up_records_within_30_days = user.orders.status(Order.statuses["未取訂貨"]).exists?(['orders.created_at > :starting_time', starting_time: (Time.current - 30.days)])
+    end
+
+    if has_pick_up_records_within_30_days
+      render status: 203, json: {error: {code: 203, message: "抱歉，您於一個月內，已有未取訂貨紀錄，運送方式請選擇宅配。"}}
+    else
+      render status: 200, json: {data: "success"}
+    end
+  end
+
   def create
     errors = []
 

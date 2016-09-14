@@ -382,6 +382,7 @@ Rails.application.routes.draw do
       resources :orders, only: [:create, :show] do
         collection do
           post "checkout"
+          post "check_pickup_record"
         end
       end
       resources :banners, only: [:index]

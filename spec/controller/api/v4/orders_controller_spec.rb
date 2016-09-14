@@ -237,4 +237,78 @@ describe Api::V4::OrdersController, type: :controller do
       end
     end
   end
+
+  describe "post#check_pickup_record" do
+    let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 20) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    context "when anonymous user" do
+      let!(:user) { FactoryGirl.create(:anonymous_user) }
+      context "when not-pickup order does exist" do
+        let!(:order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: store_delivery_type, status: Order.statuses["未取訂貨"]) }
+        let!(:info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
+        context "when not-pickup order's created_at within 30 days" do
+          it "should return status code 203 and message" do
+            post :check_pickup_record, user_id: user.id, ship_email: info.ship_email, ship_phone: info.ship_phone
+            error = JSON.parse(response.body)["error"]
+            expect(error["code"]).to eq(203)
+            expect(error["message"]).to be_present
+          end
+        end
+
+        context "when not-pickup order's created_at over 30 days" do
+          it "should return success" do
+            order.update_column(:created_at, Time.current - 31.days)
+            post :check_pickup_record, user_id: user.id, ship_email: info.ship_email, ship_phone: info.ship_phone
+            data = JSON.parse(response.body)["data"]
+            expect(data).to eq("success")
+          end
+        end
+      end
+
+      context "when not-pickup order does not exist" do
+        let!(:order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: store_delivery_type, status: Order.statuses["完成取貨"]) }
+        let!(:info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
+        it "should return success" do
+          post :check_pickup_record, user_id: user.id, ship_email: info.ship_email, ship_phone: info.ship_phone
+          data = JSON.parse(response.body)["data"]
+          expect(data).to eq("success")
+        end
+      end
+    end
+
+    context "when registered user" do
+      let!(:user) { FactoryGirl.create(:user) }
+      context "when not-pickup order does exist" do
+        let!(:order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: store_delivery_type, status: Order.statuses["未取訂貨"]) }
+        let!(:info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
+        context "when not-pickup order's created_at within 30 days" do
+          it "should return status code 203 and message" do
+            post :check_pickup_record, user_id: user.id, ship_email: info.ship_email, ship_phone: info.ship_phone
+            error = JSON.parse(response.body)["error"]
+            expect(error["code"]).to eq(203)
+            expect(error["message"]).to be_present
+          end
+        end
+
+        context "when not-pickup order's created_at over 30 days" do
+          it "should return success" do
+            order.update_column(:created_at, Time.current - 31.days)
+            post :check_pickup_record, user_id: user.id, ship_email: info.ship_email, ship_phone: info.ship_phone
+            data = JSON.parse(response.body)["data"]
+            expect(data).to eq("success")
+          end
+        end
+      end
+
+      context "when not-pickup order does not exist" do
+        let!(:order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: store_delivery_type, status: Order.statuses["完成取貨"]) }
+        let!(:info) { FactoryGirl.create(:store_delivery_order_info, order: order) }
+        it "should return success" do
+          post :check_pickup_record, user_id: user.id, ship_email: info.ship_email, ship_phone: info.ship_phone
+          data = JSON.parse(response.body)["data"]
+          expect(data).to eq("success")
+        end
+      end
+    end
+  end
 end
