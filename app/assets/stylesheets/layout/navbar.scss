@@ -152,14 +152,21 @@
     > .dropdown-menu {
       > .list {
         text-align: left;
+        height:40px;
+        background-color: #ffffff;
         > .link {
           color: black;
-          background-color: $nav-dropdown-background-color;
           padding-left: 44px;
           display: block;
+          background-color: transparent;
+          height: 35px;
+          line-height: 35px;
         }
-        > .link:hover {
-          background-color: $nav-hover-background-color;
+      }
+      > .list:hover {
+        background-color: #fca3a3;
+        > .link{
+          color: #ffffff;
         }
       }
     }
