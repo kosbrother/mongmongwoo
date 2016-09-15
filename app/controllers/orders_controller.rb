@@ -11,6 +11,8 @@ class OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
     @items = @order.items.includes(:item_spec)
     @info = @order.info
+    @shopping_point_amount = @order.shopping_point_spend_amount
+    @reduced_items_price = @order.calculate_reduced_items_price
     set_meta_tags title: "訂單內容", noindex: true
   end
 
