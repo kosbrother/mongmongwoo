@@ -1,7 +1,7 @@
 = render 'partials/cart_steps', step: @step
 .cart-info
   = form_tag confirm_cart_path, method: :post do
-    .icon-header.-pencil 訂購人資料
+    .icon-header.-people 訂購人資料
     .input-block
       .group
         = label :ship_name, '姓名'
@@ -13,7 +13,7 @@
         = label :ship_email, '電子信箱'
         = text_field_tag :ship_email, '' ,required: true, value: cookies[:email]
         .text *名稱和電話必需正確才能取貨
-    .icon-header.-mark 7-11取貨門市資訊
+    .icon-header.-location 7-11取貨門市資訊
     .input-block.-store
       .group
         %span 選擇7-11寄送門市
