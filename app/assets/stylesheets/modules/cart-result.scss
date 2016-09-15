@@ -2,56 +2,58 @@
   background-color: $form-background-color;
   border: $form-border;
   text-align: center;
+  padding: 0 20px;
+  font-size:16px;
   > .row{
-    margin:  0px;
+    margin:  15px 0;
+    > div{
+      padding: 0;
+    }
   }
   > .divider{
-    width: 95%;
-    margin: 5px auto;
+    width: 100%;
     border-top: $form-border;
   }
-
   > .header{
-    height: 50px;
-
+    height: 60px;
     > div {
-      line-height: 50px;
+      line-height: 60px;
     }
   }
-
   > .item-bar{
-    margin: 10px auto;
-
-    > .icon{
-      img{
-        width: 66px;
-        height: 66px;
-        border: solid 0.8px #979797;
-      }
-    }
     > div{
       height: 66px;
       line-height: 66px;
     }
-
+    > .icon{
+      img{
+        width: 66px;
+        height: 66px;
+        border: solid 1px #979797;
+        vertical-align: top;
+      }
+    }
     .quantity-box{
       line-height: 0;
       .quantity, .quantity-minus, .quantity-plus{
-        height: 35px;
-        width: 30px;
+        height: 25px;
+        width: 25px;
         position: relative;
-        top: 16px;
+        top: 21px;
+        line-height: 22px;
+        text-align: center;
+      }
+      .quantity-minus{
+        left: 3px;
       }
       .quantity{
-        text-align: center ;
-        left: -4px;
+        left: -2px;
       }
       .quantity-plus{
-        left: -8px;
+        left: -6px;
       }
     }
     > .cancel-block{
-      text-align: center;
       .cancel{
         cursor: pointer;
         display: inline-block;
@@ -68,14 +70,25 @@
       .cancel:focus{
         outline: none;
       }
-      .cancel:hover{
-        background-image: $url-cancel-btn;
-      }
     }
   }
   > .totalrow{
-    > div > div{
-      margin: 5px 0;
+    .text > div, .number > div{
+      height: 42px;
+      line-height: 42px;
+    }
+    #spend-shopping-point{
+      height: 25px;
+      color: #ff8080;
+      cursor: pointer;
+      text-align: center;
+    }
+    #spend-shopping-point:before{
+      content: image_url('input_element/uncheck.png');
+      vertical-align: sub;
+    }
+    #spend-shopping-point.checked:before{
+      content: image_url('input_element/check.png');
     }
     #totalprice{
       color: $price-font-color;
@@ -109,115 +122,71 @@
   }
 }
 
-
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1200px){
   .cart-result {
-    > .item-bar{
-      margin: 15px 0;
+    > .item-bar {
       > div{
         height: 18px;
         line-height: 18px;
       }
-      .icon{
-        padding: 0 5px;
-        height: 60px;
-        > img {
-        width: 60px;
-        height: 60px;
-        vertical-align: baseline;
-        }
-      }
-      .select{
-        margin: 5px 0;
-        text-align: left;
-        padding-left: 0px;
-        padding-right: 0px;
-      }
-      > .itemname {
-        text-align: left;
-        padding-left: 0px;
-        padding-right: 0px;
-        margin-left: 0px;
-      }
-      > .unitprice{
-        text-align: left;
-        padding-left: 0px;
-      }
-      > .price, .spec{
-        padding-left: 0px;
-      }
-      .quantity> div:before{
-        content: "數量：";
-      }
-      > .quantity-box {
-        margin-top: 0;
-        .quantity, .quantity-minus, .quantity-plus {
-          height: 20px;
-          width: 20px;
-          font-size: 12px;
-          line-height: 15px;
-          top: 0px;
-        }
-        .quantity {
-          left: -4px;
-        }
-        .quantity-plus {
-          left: -8px;
-        }
-      }
-       > .cancel-block {
-         text-align: right;
-         padding: 0px;
-         > .cancel{
+      > .cancel-block {
+        text-align: right;
+        padding: 0px;
+        > .cancel{
           width: 16px;
           height: 16px;
           top: 22px;
           padding: 0px;
-         }
-         > .modal{
-           > .modal-dialog{
-             > .modal-content{
-               > .modal-body{
-                 font-size: 18px;
-               }
-               .btn-confirm{
-                 width: 45%;
-                 font-size: 14px;
-               }
-               .btn-close{
-                 width: 45%;
-                 font-size: 14px;
-               }
-             }
-           }
-         }
-       }
-    }
-    .totalrow{
-      > div > div{
-        margin: 10px 0;
+        }
+        > .modal{
+          > .modal-dialog{
+            > .modal-content{
+              > .modal-body{
+                font-size: 18px;
+              }
+              .btn-confirm{
+                width: 45%;
+                font-size: 14px;
+              }
+              .btn-close{
+                width: 45%;
+                font-size: 14px;
+              }
+            }
+          }
+        }
       }
-      > .text{
+      .icon{
+        height: 60px;
+        > img {
+          width: 60px;
+          height: 60px;
+        }
+      }
+      > .itemname, > .unitprice, > .select, .spec, .price, .quantity{
         text-align: left;
       }
-      > .number{
+      > .select{
+        margin: 5px 0;
+      }
+      > .quantity> div:before{
+        content: "數量：";
+      }
+      > .subtotal{
         text-align: right;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 1200px) and (min-width: 768px) {
-  .cart-result {
-    > .item-bar {
-      > .itemname {
-        padding-left: 0px;
-      }
-      > .spec, .price, .quantity, .subtotal {
-        text-align: left;
+        padding-right:5px;
       }
       > .subtotal:before{
         content: '小計：'
+      }
+      > .quantity-box {
+        .quantity, .quantity-minus, .quantity-plus {
+          height: 25px;
+          width: 25px;
+          font-size: 14px;
+          line-height: 22px;
+          top: -7px;
+        }
       }
     }
     .totalrow {
@@ -233,19 +202,15 @@
 
 @media screen and (max-width: 768px){
   .cart-result{
+    padding: 0 5px;
+    font-size:12px;
     > .item-bar{
-      > .quantity {
-        padding: 0px;
-      }
-      > .price{
-        padding-right: 0px;
-      }
-      >.unitprice, .price, .quantity > div, .subtotal{
-        font-size: 10px;
-        color: #4a4a4a;
+      > .spec{
+        margin: 3px 0px;
       }
       > .quantity-box {
-        padding: 0;
+        padding-right: 15px;
+        text-align: right;
         .quantity, .quantity-minus, .quantity-plus {
           height: 15px;
           width: 15px;
@@ -255,11 +220,23 @@
         }
       }
       > .subtotal{
-        padding-left: 15px;
-        text-align: right;
+        text-align: center;
       }
-      > .subtotal:before{
-        content: '小計：'
+    }
+    .totalrow {
+      .text > div, .number > div{
+        height: 18px;
+        line-height: 18px;
+      }
+      #spend-shopping-point{
+        height: 20px;
+        line-height: 20px;
+      }
+      #spend-shopping-point:before{
+        content: image_url('input_element/uncheck_mobile.png');
+      }
+      #spend-shopping-point.checked:before{
+        content: image_url('input_element/check_mobile.png');
       }
     }
   }

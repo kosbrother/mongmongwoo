@@ -18,6 +18,15 @@
 .icon-header.-money{
   background-image: image_url('icons/icon-header/ic_money.png');
 }
+.icon-header.-order{
+  background-image: image_url('icons/icon-header/ic_list.png');
+}
+.icon-header.-people {
+  background-image: image_url('icons/icon-header/people.png');
+}
+.icon-header.-location {
+  background-image: image_url('icons/icon-header/location.png');
+}
 
 @media screen and (max-width: 768px) {
   .icon-header{
@@ -29,5 +38,14 @@
   }
   .-money{
     background-image: image_url('icons/icon-header/ic_money_mobile.png');
+  }
+  .icon-header.-order{
+    background-image: image_url('icons/icon-header/ic_list_mobile.png');
+  }
+  .icon-header.-people {
+    background-image: image_url('icons/icon-header/people_mobile.png');
+  }
+  .icon-header.-location {
+    background-image: image_url('icons/icon-header/location_mobile.png');
   }
 }

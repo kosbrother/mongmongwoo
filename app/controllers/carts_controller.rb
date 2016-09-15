@@ -4,6 +4,7 @@ class CartsController < ApplicationController
   layout 'cart'
   skip_before_action :verify_authenticity_token, only: :info
   before_action  :load_categories
+  before_action :calculate_cart_price, only: [:checkout, :confirm]
   include DeviceHelper
 
   def checkout
@@ -13,7 +14,7 @@ class CartsController < ApplicationController
       flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
       redirect_to root_path
     end
-    @total = current_cart.calculate_items_price
+    @user_own_shopping_point = ShoppingPointManager.new(current_user).calculate_available_shopping_point(@items_price) if current_user
     set_meta_tags title: "確認訂單", noindex: true
   end
 
@@ -56,7 +57,6 @@ class CartsController < ApplicationController
              ship_email: cookies[:email]}
     @store = Store.find(cookies[:store_id])
     @items = current_cart.cart_items.includes(:item, :item_spec)
-    @total = current_cart.calculate_items_price
     set_meta_tags title: "確認訂單", noindex: true
   end
 
@@ -70,13 +70,33 @@ class CartsController < ApplicationController
       add_to_wish_lists(@unable_to_buy_lists) if current_user
       render 'error_infos'
     else
+      ShoppingPointManager.spend_shopping_points(order, current_cart.shopping_point_amount)
       session[:cart_id] = nil
       OrderMailer.delay.notify_order_placed(order)
       render :js => "window.location = '#{success_path}'"
     end
   end
 
+  def toggle_shopping_point
+    if current_cart.shopping_point_amount == 0
+      items_price = current_cart.calculate_items_price
+      shopping_point_amount = ShoppingPointManager.new(current_user).calculate_available_shopping_point(items_price)
+      current_cart.update(shopping_point_amount: shopping_point_amount)
+    else
+      current_cart.update(shopping_point_amount: 0)
+    end
+    calculate_cart_price
+  end
+
   private
+
+  def calculate_cart_price
+    @items_price = current_cart.calculate_items_price
+    @reduced_items_price = current_cart.calculate_reduced_items_price
+    @shopping_point_amount = current_cart.shopping_point_amount
+    @ship_fee = current_cart.calculate_ship_fee
+    @total = current_cart.calculate_total
+  end
 
   def generate_url(url, params = {})
     uri = URI(url)

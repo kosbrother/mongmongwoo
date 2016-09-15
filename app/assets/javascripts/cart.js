@@ -18,9 +18,10 @@ cart = function() {
                 success: function (data) {
                     $(id).val(quantity - 1);
                     $('#cart-item-' + cart_item_id + '-subtotal').text(data.subtotal);
+                    $('#cart-sum').text(data.items_price);
+                    $('#updated_cart_sum').text(data.reduced_items_price);
                     $('#ship-fee').text(data.ship_fee);
-                    $('#cart-sum').text(data.total);
-                    $('#totalprice').text(data.total_with_shipping);
+                    $('#totalprice').text(data.total);
                 },
 
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -48,9 +49,10 @@ cart = function() {
                 success: function (data) {
                     $(id).val(quantity + 1);
                     $('#cart-item-' + cart_item_id + '-subtotal').text(data.subtotal);
+                    $('#cart-sum').text(data.items_price);
+                    $('#updated_cart_sum').text(data.reduced_items_price);
                     $('#ship-fee').text(data.ship_fee);
-                    $('#cart-sum').text(data.total);
-                    $('#totalprice').text(data.total_with_shipping);
+                    $('#totalprice').text(data.total);
                 },
 
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -73,9 +75,10 @@ cart = function() {
                 success: function (data) {
                     target.remove();
                     $('#nav-bar-collapse .cart > .counter').text(counter - 1);
+                    $('#cart-sum').text(data.items_price);
+                    $('#updated_cart_sum').text(data.reduced_items_price);
                     $('#ship-fee').text(data.ship_fee);
-                    $('#cart-sum').text(data.total);
-                    $('#totalprice').text(data.total_with_shipping);
+                    $('#totalprice').text(data.total);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert('錯誤發生，如問題持續發生，請聯繫客服人員');
@@ -113,6 +116,16 @@ cart = function() {
         $.get( "/select_store", { name: name, email: email, phone: phone }, function(data){
             window.location = data['url']
         });
+    });
+    //click to use shopping point
+    $('#spend-shopping-point').on("click", function(){
+        $.ajax({
+            url: '/toggle_shopping_point',
+            type: "patch",
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+            }
+        })
     });
 };
 

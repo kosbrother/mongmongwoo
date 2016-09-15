@@ -39,11 +39,10 @@ class CartItemsController < ApplicationController
   end
 
   def subtotal_and_total_with_shipping(item)
-    { subtotal: "NT.#{item.subtotal}", total: "NT.#{current_cart.calculate_items_price}", ship_fee:"NT.#{current_cart.calculate_ship_fee}", total_with_shipping: "NT.#{current_cart.calculate_total}" }
+    { subtotal: "NT$ #{item.subtotal}", items_price: "NT$ #{current_cart.calculate_items_price}", reduced_items_price: "NT$ #{current_cart.calculate_reduced_items_price}", ship_fee:"NT$ #{current_cart.calculate_ship_fee}", total: "NT$ #{current_cart.calculate_total}" }
   end
 
   def total_with_shipping
-    { total: "NT.#{current_cart.calculate_items_price}", ship_fee:"NT.#{current_cart.calculate_ship_fee}", total_with_shipping: "NT.#{current_cart.calculate_total}" }
+    { items_price: "NT$ #{current_cart.calculate_items_price}", reduced_items_price: "NT$ #{current_cart.calculate_reduced_items_price}", ship_fee:"NT$ #{current_cart.calculate_ship_fee}", total: "NT$ #{current_cart.calculate_total}" }
   end
-
 end

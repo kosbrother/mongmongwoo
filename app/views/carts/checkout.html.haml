@@ -1,6 +1,6 @@
 = render 'partials/cart_steps', step: @step
 .cart-show
-  .icon-header.-pencil 訂單明細
+  .icon-header.-order 訂單明細
   - if @cart.cart_items.any?
     .cart-result
       .header.row.visible-lg-block
@@ -31,25 +31,44 @@
           .col-lg-3.col-xs-8.itemname= item.item.name
           .col-lg-2.col-xs-7.select= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'spec-select', id: 'select-specs', 'data-cart-item': item.id, 'data-cart-id': @cart.id
           .col-lg-1.col-xs-2.unitprice= item_current_price(item.item)
-          .col-lg-2.col-sm-4.col-xs-3.quantity-box
+          .col-lg-2.col-lg-offset-0.col-sm-2.col-sm-offset-4.col-xs-3.col-xs-offset-3.quantity-box
             .quantity-minus{ 'data-id': item.id, onClick: analytic_event("checkout_step_1", "click", "number_change") } -
             = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
             .quantity-plus{ 'data-id': item.id, onClick: analytic_event("checkout_step_1", "click", "number_change") } +
-          .col-lg-1.col-sm-2.col-xs-3.subtotal{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+          .col-lg-1.subtotal.visible-lg-block{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
       .divider
       .totalrow.row
         .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
           %div 產品總額
-          %div 運費（711超商取貨付款）
         .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          #cart-sum= price_with_unit(@total)
-          #ship-fee= price_with_unit(ship_fee)
+          #cart-sum= price_with_unit(@items_price)
+      - if  @user_own_shopping_point && @user_own_shopping_point > 0
+        .totalrow.row
+          .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
+            #spend-shopping-point{class: "#{ 'checked' if @shopping_point_amount > 0}"}
+              = "購物金折抵NT $#{@user_own_shopping_point}"
+          .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+            #shopping-point-amount
+              =  '-' + price_with_unit(@shopping_point_amount)
+        .divider
+        .totalrow.row
+          .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
+            %div 折抵後總額
+          .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+            #updated_cart_sum
+              = price_with_unit(@reduced_items_price)
+      .totalrow.row
+        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
+          %div 運費（滿490免運費）
+        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+          #ship-fee
+            = price_with_unit(@ship_fee)
       .divider
       .totalrow.row
         .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-          %div 總計
+          %div 結帳金額
         .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          #totalprice= price_with_unit(@total + ship_fee)
+          #totalprice= price_with_unit(@total)
     .submit-session
       - if current_user
         = link_to '下一步', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_2", "enter", "無")

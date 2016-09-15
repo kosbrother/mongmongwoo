@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :items, only: [:show]
   end
 
+  patch "/toggle_shopping_point", to: "carts#toggle_shopping_point"
   get "/checkout", to: "carts#checkout", as: "checkout"
   get "/cart_info", to: "carts#info", as: "cart_info"
   get "/select_store", to: "carts#select_store", as: "select_store"

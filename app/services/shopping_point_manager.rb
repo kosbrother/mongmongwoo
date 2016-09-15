@@ -42,6 +42,10 @@ class ShoppingPointManager
     ShoppingPoint.valid.where(user_id: user.id).sum(:amount)
   end
 
+  def calculate_available_shopping_point(items_price)
+    [total_amount, (items_price * 0.1).round].min
+  end
+
   private
 
   def self.reduce_shopping_point(shopping_point, reduce_amount, order_id)

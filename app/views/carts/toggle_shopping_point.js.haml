@@ -1,0 +1,10 @@
+-if @shopping_point_amount > 0
+  :plain
+    $('#spend-shopping-point').addClass('checked');
+- else
+  :plain
+    $('#spend-shopping-point').removeClass('checked');
+$('#shopping-point-amount').text('#{ '-' + price_with_unit(@shopping_point_amount)}');
+$('#updated_cart_sum').text('#{price_with_unit(@reduced_items_price)}');
+$('#ship-fee').text('#{price_with_unit(@ship_fee)}');
+$('#totalprice').text('#{price_with_unit(@total)}')

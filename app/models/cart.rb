@@ -10,6 +10,10 @@ class Cart < ActiveRecord::Base
   SHIP_FEE = 90
 
   def m_items
-    cart_items
+    cart_items.includes(:item)
+  end
+
+  def reduced_price_amount
+    shopping_point_amount
   end
 end
