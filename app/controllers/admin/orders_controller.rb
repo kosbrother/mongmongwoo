@@ -114,7 +114,7 @@ class Admin::OrdersController < AdminController
   end
 
   def export_home_delivery_order_list
-    order_list = Order.includes(:user).status(Order.statuses['處理中']).home_delivery.recent
+    order_list = Order.includes(:user).status(Order.statuses['處理中']).home_delivery
     file_name = "home_delivery_order_list.xls"
     spreadsheet = OrderDeliveryExcelGenerator.generate_home_delivery_order_xls(order_list)
     send_data(spreadsheet, type: "application/vnd.ms-excel", filename: file_name)
