@@ -11,4 +11,9 @@ class ItemsController < ApplicationController
     set_meta_tags title: @item.name,
                   description: @item.description
   end
+
+  def catalog
+    @items = Item.on_shelf
+  end
+  
 end

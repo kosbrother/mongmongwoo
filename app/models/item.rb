@@ -2,6 +2,7 @@ class Item < ActiveRecord::Base
   include Elasticsearch::Model
   index_name [Rails.env, self.base_class.to_s.pluralize.underscore].join('_')
   include Bannerable
+  include AndroidApp
 
   mapping do
     indexes :name, type: 'string'
@@ -130,6 +131,10 @@ class Item < ActiveRecord::Base
     else
       "尚未建立資料"
     end
+  end
+
+  def able_path
+    category_item_path(categories.parent_categories.last, self)
   end
 
   private
