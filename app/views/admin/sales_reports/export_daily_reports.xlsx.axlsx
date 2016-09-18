@@ -1,6 +1,6 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "推薦庫存清單") do |sheet|
-  sheet.add_row ['商家', '商品編號', '商品名稱', '商品上/下架','商品樣式編號', '商品樣式', '樣式上/下架', '現貨數量', '運送中數量', '需求量', '建議庫存量','警示水位', '採購量', '成本(RMB)','總成本(RMB)', '售價(NTD)', '商品上架日期', '樣式上架日期','總銷量','30天銷量','10天銷量','5天銷量','總收藏量','30天收藏量','10天收藏量','5天收藏量']
+  sheet.add_row ['商家', '商品編號', '商品名稱', '商品上/下架','商品樣式編號', '商品樣式', '樣式上/下架', '停止建議補貨', '現貨數量', '運送中數量', '需求量', '建議庫存量','警示水位', '採購量', '成本(RMB)','總成本(RMB)', '售價(NTD)', '商品上架日期', '樣式上架日期','總銷量','30天銷量','10天銷量','5天銷量','總收藏量','30天收藏量','10天收藏量','5天收藏量']
   recommend_stock.each do |spec|
     spec_total_cost = (spec.item.cost.present?) ? spec.item.cost * spec.purchase_quantity : 0
     sheet.add_row [
@@ -11,6 +11,7 @@ wb.add_worksheet(name: "推薦庫存清單") do |sheet|
       spec.id,
       spec.style,
       t(spec.status),
+      spec.is_stop_recommend,
       spec.stock_item_quantity,
       spec.shipping_item_quantity,
       spec.requested_quantity,
