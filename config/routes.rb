@@ -193,6 +193,7 @@ Rails.application.routes.draw do
         get "export_user_list"
       end
       resources :my_messages, only: [:index, :new, :create]
+      resources :shopping_points, only: [:new, :create]
     end
 
     get "users/show_uid/:uid", to: "users#show_uid", as: "uid_user"
@@ -221,7 +222,6 @@ Rails.application.routes.draw do
       member do
         patch "update_status"
         patch "restock"
-        post "refund_shopping_point"
         get "export_changed_order"
       end
     end

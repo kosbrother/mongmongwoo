@@ -132,17 +132,6 @@ class Admin::OrdersController < AdminController
     redirect_to :back
   end
 
-  def refund_shopping_point
-    if @order.user_id == User::ANONYMOUS
-      flash[:danger] = "該訂單為匿名購買，因此無法產生購物金"
-    else
-      ShoppingPointManager.create_refund_shopping_point(@order)
-      flash[:notice] = "訂單編號#{@order.id} 退貨購物金已產生"
-    end
-
-    redirect_to :back
-  end
-
   private
 
   def find_order

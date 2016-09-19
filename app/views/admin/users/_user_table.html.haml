@@ -1,6 +1,4 @@
-.apple_pagination
-  = will_paginate users, :container => false
-%br/
+= render_pagination(users)
 .panel-body
   %table.table.table-striped.table-bordered
     %thead
@@ -18,15 +16,8 @@
           %td= user.user_name
           %td= user.gender
           %td
-            .dropdown
-              %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                按此選擇
-                %span.caret
-              %ul.dropdown-menu.list-group
-                %li
-                  = link_to "個人訊息", admin_user_my_messages_path(user)
-                %li
-                  = link_to "查看使用者", admin_user_path(user)
-.apple_pagination
-  = will_paginate users, :container => false
-%br/
+            = link_to "查看使用者", admin_user_path(user), class: "btn btn-default"
+            = link_to "個人訊息", admin_user_my_messages_path(user), class: "btn btn-default"
+            - if user.id != User::ANONYMOUS
+              = link_to "發送購物金", new_admin_user_shopping_point_path(user), class: "btn btn-default"
+= render_pagination(users)
