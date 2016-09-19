@@ -5,7 +5,7 @@ class Admin::OrderItemsController < AdminController
     @order_item = OrderItem.find(params[:id])
     @order_item.destroy
     order = @order_item.order
-    order.update_attributes(items_price: order.calculate_items_price, total: order.calculate_total)
+    order.update_attributes(items_price: order.calculate_items_price, ship_fee: order.calculate_ship_fee, total: order.calculate_total)
     flash[:notice] = "訂購商品已移除"
     redirect_to edit_admin_order_path(order)
   end

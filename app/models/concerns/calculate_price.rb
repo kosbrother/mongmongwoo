@@ -7,8 +7,12 @@ module CalculatePrice
     end
   end
 
+  def calculate_reduced_items_price
+    calculate_items_price - reduced_price_amount
+  end
+
   def calculate_ship_fee
-    if calculate_items_price > Cart::FREE_SHIPPING_PRICE
+    if calculate_reduced_items_price > Cart::FREE_SHIPPING_PRICE
       0
     else
       Cart::SHIP_FEE
@@ -16,10 +20,14 @@ module CalculatePrice
   end
 
   def calculate_total
-    calculate_items_price + calculate_ship_fee
+    calculate_reduced_items_price + calculate_ship_fee
   end
 
   def m_items
+    raise NotImplementedError
+  end
+
+  def reduced_price_amount
     raise NotImplementedError
   end
 end
