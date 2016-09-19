@@ -6,18 +6,28 @@
   color: #000;
   padding-left: 40px;
 }
-
-.-pencil{
+.icon-header.-pencil{
   background-image: image_url('icons/pencil.png');
 }
-
-.-mark{
+.icon-header.-mark{
   background-image: image_url('icons/ic_711.png');
+}
+.icon-header.-black-bell {
+  background-image: image_url('icons/icon-header/ic_black_bell.png');
+}
+.icon-header.-money{
+  background-image: image_url('icons/icon-header/ic_money.png');
 }
 
 @media screen and (max-width: 768px) {
   .icon-header{
     font-size: 14px;
     padding-left: 25px;
+  }
+  .icon-header.-black-bell {
+    background-image: image_url('icons/icon-header/ic_black_bell_mobile.png');
+  }
+  .-money{
+    background-image: image_url('icons/icon-header/ic_money_mobile.png');
   }
 }

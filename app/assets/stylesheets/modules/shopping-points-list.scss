@@ -1,0 +1,329 @@
+.nav.nav-tabs.shopping-point-tab{
+  border-bottom: solid 1px #dcdcdc;
+  font-size: 20px;
+  > .active > a{
+    color: #ff8080;
+  }
+}
+
+.shopping-points-list{
+  border: solid 1px #dcdcdc;
+  border-top: none;
+  background-color: #ffffff;
+  .dropdown .pull-right .dropdown-icon{
+    display: inline-block;
+    background-image: image_url('icons/dropdown/ic_more_show.png');
+    width: 30px;
+    height: 30px;
+    vertical-align: sub;
+  }
+  .dropdown.open .pull-right .dropdown-icon{
+    background-image: image_url('icons/dropdown/ic_more_hide.png');
+  }
+  .list{
+    height:auto;
+    min-height: 100px;
+    background-color: #ffffff;
+    padding: 15px;
+    cursor: pointer;
+    >.icon{
+      display: inline-block;
+      margin-top: 7px;
+      > .coin{
+        background-image: image_url('icons/shopping_point/ic_money_yellow.png');
+        background-size: 44px 44px;
+        width: 44px;
+        height: 44px;
+      }
+    }
+    .content{
+      position: relative;
+      left: 30px;
+      display: inline-block;
+      width: 70%;
+      vertical-align: top;
+      > .title{
+        font-size: 20px;
+        font-weight: 500;
+        color: #4a4a4a;
+        height: 30px;
+      }
+      > .date{
+        font-size: 16px;
+        font-weight: 500;
+        color: #ff3d53;
+        min-height: 25px;
+        height:auto;
+      }
+      >.description{
+        font-size: 16px;
+        color: #4a4a4a;
+        height: auto;
+      }
+    }
+    .content.refund{
+      vertical-align: 10px;
+    }
+    .pull-right{
+      display: inline-block;
+      float: right;
+      margin-top: 15px;
+      margin-right: 0px;
+      width: 15%;
+      .text{
+        font-size: 16px;
+      }
+      .amount{
+        width: 70%;
+        display: inline-block;
+        font-size: 30px;
+        font-weight: 500;
+        color: #ff8080;
+        text-align: right;
+      }
+      .status{
+        font-size: 20px;
+        font-weight: 500;
+        margin-top: 10px;
+      }
+    }
+  }
+  .list.top{
+    >.pull-right{
+      margin-right: 10px;
+      margin-top: 0;
+      text-align: right;
+      > .amount{
+        width: 100%;
+      }
+    }
+    border-bottom: solid 1px #dcdcdc;
+  }
+  .list.expired{
+    >.icon > .coin{
+      background-image: image_url('icons/shopping_point/ic_money_gray.png');
+    }
+    .pull-right{
+      .amount{
+        color: #b5b5b5;
+      }
+    }
+  }
+  .dropdown-menu{
+    position: static;
+    float: none;
+    box-shadow: none;
+    margin: 0 20px;
+    background-color: #ffffff;
+    border-radius: 0;
+    border: none;
+    border-top: solid 1px #dcdcdc;
+    border-bottom: solid 1px #dcdcdc;
+    height: auto;
+    padding: 0 50px;
+    > .table{
+      td{
+        text-align: center;
+        border: none;
+      }
+      > thead{
+        .date{
+          width: 30%;
+        }
+        .order{
+          width: 20%;
+        }
+        .amount, .balance{
+          width: 25%;
+        }
+        td{
+          font-weight: 700;
+        }
+      }
+      .minus{
+        color: #47b286;
+      }
+      .plus{
+        color: #ff8080;
+      }
+    }
+  }
+}
+
+.shopping-points-list.-campaign{
+  .list{
+    border-bottom: solid 1px #dcdcdc;
+  }
+  .list.processing{
+    >.icon{
+      margin-top: 15px;
+    }
+    > .icon > .coin{
+      background-image: image_url('icons/shopping_point/ic_money_number.png');
+      text-align: center;
+      line-height: 45px;
+      font-size: 17px;
+      color: #e3a503;
+    }
+    > .pull-right{
+      > .status{
+        color: #47b286;
+      }
+    }
+  }
+  .list.collect{
+    >.icon{
+      margin-top: 15px;
+      > .coin{
+        background-image: image_url('icons/shopping_point/ic_money_check.png');
+      }
+    }
+    > .pull-right{
+      > .status{
+        color: #b5b5b5;
+      }
+    }
+  }
+  .list.un-collect{
+    >.icon{
+      margin-top: 15px;
+      > .coin{
+        background-image: image_url('icons/shopping_point/ic_money_unhappy.png');
+      }
+    }
+    > .content{
+      > .title, .date, .description {
+        color: #b5b5b5;
+      }
+    }
+    > .pull-right{
+      > .status{
+        color: #b5b5b5;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .nav.nav-tabs.shopping-point-tab{
+    font-size: 12px;
+  }
+  .shopping-points-list{
+    .dropdown{
+      .pull-right{
+        width: 25%;
+        margin-top:10px;
+        .dropdown-icon{
+          display: inline-block;
+          background-image: image_url('icons/dropdown/ic_more_show_mobile.png');
+          width: 15px;
+          height: 15px;
+          vertical-align: sub;
+        }
+      }
+    }
+    .dropdown.open{
+      .pull-right{
+        .dropdown-icon{
+          background-image: image_url('icons/dropdown/ic_more_hide_mobile.png');
+        }
+      }
+    }
+    .list{
+      min-height: 50px;
+      padding: 10px;
+      .icon {
+        > img{
+          width: 25px;
+          height: 25px;
+       }
+       >  .coin{
+         background-size: 25px 25px;
+         width: 25px;
+         height: 25px;
+       }
+      }
+      .content{
+        width: 60%;
+        left: 5px;
+        .title{
+          font-size: 12px;
+          height: 16px;
+        }
+        > .date, .description{
+          font-size: 10px;
+          min-height: 15px;
+        }
+      }
+      .content.refund{
+        vertical-align: 7px;
+      }
+      .pull-right{
+        .text{
+          font-size: 10px;
+        }
+        .amount{
+          font-size: 14px;
+        }
+        .status{
+          font-size: 12px;
+        }
+      }
+    }
+    .list.top{
+      .pull-right{
+        margin-right:5px;
+        width: 30%;
+      }
+    }
+    .dropdown-menu{
+      margin: 0 10px;
+      border-top: solid 1px #dcdcdc;
+      border-bottom: solid 1px #dcdcdc;
+      height: auto;
+      padding: 0 5px;
+      > .table{
+        td{
+          font-size: 12px;
+        }
+        > thead{
+          .date{
+            width: 30%;
+          }
+          .order{
+            width: 30%;
+          }
+          .amount, .balance{
+            width: 20%;
+          }
+        }
+      }
+    }
+  }
+  .shopping-points-list.-campaign{
+    .list.processing{
+      > .icon > .coin{
+        line-height: 27px;
+        font-size: 10px;
+      }
+    }
+    .list.collect{
+      >.icon{
+        margin-top: 15px;
+      }
+    }
+    .list.un-collect{
+      >.icon{
+        margin-top: 15px;
+        > .coin:before{
+          background-image: image_url('icons/shopping_point/ic_money_unhappy.png');
+        }
+      }
+      > .content{
+        > .title, .date, .description {
+          color: #b5b5b5;
+        }
+      }
+    }
+  }
+}

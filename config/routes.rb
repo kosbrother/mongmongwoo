@@ -39,7 +39,6 @@ Rails.application.routes.draw do
       patch "cancel"
     end
   end
-  resources :orders, only: [:index, :show]
   resources :favorite_items, only: [:index, :destroy] do
     member do
       get :toggle_favorite
@@ -53,7 +52,9 @@ Rails.application.routes.draw do
   end
 
   resources :shopping_point_campaigns, only: [:index]
+  resources :shopping_points, only: [:index]
   resources :wish_lists, only: [:index, :destroy]
+  resources :my_messages, only: [:index]
 
   # 助理後台
   namespace :staff do

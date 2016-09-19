@@ -1,0 +1,5 @@
+%ul.nav.nav-tabs.shopping-point-tab{role: "tablist"}
+  %li{role: "presentation", class: "#{ 'active' if @shopping_points}"}
+    = link_to "購物金明細", shopping_points_path
+  %li{role: "presentation", class: "#{ 'active' if @shopping_point_campaigns}"}
+    = link_to "購物金活動", shopping_point_campaigns_path

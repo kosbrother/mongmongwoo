@@ -1,5 +1,5 @@
 .user-panel{
-  height: 431px;
+  height: auto;
   border-radius: 4px;
   background-color: #ffffff;
   border: solid 1px #dcdcdc;
@@ -20,6 +20,19 @@
   .email{
     font-size: 16px;
     color: #262626;
+  }
+  .login-btn{
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 220px;
+    height: 29px;
+    border-radius: 2px;
+    background-color: #ff8080;
   }
   .divider{
     width: 217px;

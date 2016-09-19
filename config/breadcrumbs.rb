@@ -22,6 +22,11 @@ crumb :orders do
   parent :root
 end
 
+crumb :my_messages do
+  link "我的通知", my_messages_path
+  parent :root
+end
+
 crumb :order_detail do |order|
   link "訂單明細", order_path(order)
   parent :orders
@@ -34,6 +39,16 @@ end
 
 crumb :wish_lists do
   link "補貨清單", wish_lists_path
+  parent :root
+end
+
+crumb :shopping_point_campaigns do
+  link "購物金活動", shopping_point_campaigns_path
+  parent :my_shopping_point
+end
+
+crumb :my_shopping_point do
+  link "我的購物金", shopping_points_path
   parent :root
 end
 
