@@ -90,10 +90,6 @@ class Admin::OrdersController < AdminController
     @order_list = get_orders_by_params
     @picking_list_index_hash = get_picking_list_index_hash(@order_list)
 
-    @order_list.each do |order|
-      order.update_attribute(:status, Order.statuses["配送中"])
-    end
-
     @sheet_name = '處理中訂單清單'
     render 'export_order_list'
   end
