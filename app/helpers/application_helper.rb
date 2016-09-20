@@ -38,7 +38,7 @@ module ApplicationHelper
   end
 
   def render_float_cart
-    link_to checkout_path, onClick: analytic_event('float_cart', 'click', '無') do
+    link_to checkout_path, id: "float-cart" do
       content_tag(:div, class: current_cart.cart_items.count > 0  ? 'float-box' : 'float-box hidden', id: 'cart-info') do
         image_tag('float_cart.png') +
         render_counter
@@ -51,20 +51,6 @@ module ApplicationHelper
       current_user.pic_url
     else
       "img_annoymous.png"
-    end
-  end
-
-  def analytic_event(category, action, label)
-    if Rails.env == "production"
-      "ga('send', 'event', '#{category}', '#{action}', '#{label}');"
-    end
-  end
-
-  def track_name(event_name)
-    if Rails.env == "production"
-      event_name
-    else
-      ""
     end
   end
 

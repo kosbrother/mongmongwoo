@@ -1,0 +1,33 @@
+- cart_items.each do |cart_item|
+  - if fb_event == "InitiateCheckout" || fb_event == "Purchase"
+    :javascript
+      fbq('track', '#{fb_event}', {
+        content_ids: ['#{cart_item.item_id}'],
+        content_name: '#{cart_item.item.name}',
+        content_type: 'product',
+        value: '#{cart_item.item.price}',
+        currency: 'TWD',
+        num_items: '#{cart_item.item_quantity}'
+      });
+  - elsif fb_event == "AddPaymentInfo"
+    :javascript
+      fbq('track', '#{fb_event}', {
+        content_ids: ['#{cart_item.item_id}'],
+        content_type: 'product',
+        value: '#{cart_item.item.price}',
+        currency: 'TWD'
+      });
+
+  :javascript
+    ga('ec:addProduct', {
+      'id': '#{cart_item.item_id}',
+      'name': '#{cart_item.item.name}',
+      'variant':  '#{cart_item.item_spec.style}',
+      'price': '#{cart_item.item.price}',
+      'quantity': '#{cart_item.item_quantity}'
+    });
+
+:javascript
+  ga('ec:setAction','checkout', {
+    'step': '#{step}'
+  });

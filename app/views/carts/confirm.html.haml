@@ -69,6 +69,8 @@
       = render "home_delivery_info", ship_address: @ship_address
 = form_tag submit_order_path(info: @info), method: :post, remote: true do
   .submit-session
-    =link_to '上一步', cart_info_path , class: 'btn btn-previous', onClick: analytic_event("checkout_step_3", "click", "previous_step")
-    =submit_tag '送出訂單', class: 'btn', data: { disable_with: "處理中" }, onClick: analytic_event("checkout_step_3", "click", "send_order")
+    =link_to '上一步', cart_info_path , class: 'btn btn-previous'
+    =submit_tag '送出訂單', class: 'btn', data: { disable_with: "處理中" }
 #errors-infos
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "Purchase", cart_items: @items
+= render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_3", action: "enter", label: "無"

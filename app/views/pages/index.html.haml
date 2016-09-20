@@ -27,6 +27,6 @@
     = render "partials/product_list", category: category_with_items[:category], items: category_with_items[:items]
     .row
       .col-lg-offset-4.col-lg-4
-        = link_to category_path(category_with_items[:category]), onClick: analytic_event("more_category", "click", category_with_items[:category].name) do
+        = link_to category_path(category_with_items[:category]) do
           .more-btn
             觀看更多

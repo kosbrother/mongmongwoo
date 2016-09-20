@@ -1,0 +1,15 @@
+:javascript
+  fbq('track', 'ViewContent', {
+    content_name: '#{item.name}',
+    content_ids: ['#{item.id}'],
+    content_type: 'product',
+    value: '#{item.price}',
+    currency: 'TWD'
+  });
+
+  ga('ec:addImpression', {
+    'id': '#{item.id}',
+    'name': '#{item.name}',
+    'price': '#{item.price}'
+  });
+  ga('ec:setAction', 'detail');

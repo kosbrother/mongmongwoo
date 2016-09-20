@@ -4,7 +4,7 @@
       商品清單
     - @categories.each do |category|
       -if Category::NO_CHILD_CATEGORIES.include?(category.id)
-        = link_to category_path(category), onClick: analytic_event("category", "click", category.name) do
+        = link_to category_path(category) do
           .list= category.name
       -else
         .dropdown.keep-open
@@ -12,16 +12,16 @@
             = category.name
             %span.caret
           %ul.dropdown-menu
-            = link_to category_path(category), onClick: analytic_event("category", "click", category.name) do
+            = link_to category_path(category) do
               %li.list 全部
             - category.child_categories.each do |child_category|
-              = link_to category_path(child_category), onClick: analytic_event("category", "click", "#{category.name}-#{child_category.name}") do
+              = link_to category_path(child_category) do
                 %li.list= child_category.name
   .side-bar
     .header
       熱門商品
     - @pop_items.each do |item|
-      = link_to category_item_path(@category_all, item), onClick: analytic_event("popular_product", "view", item.name) do
+      = link_to category_item_path(@category_all, item) do
         .pop-list
           .image
             = render_special_price_icon(item)

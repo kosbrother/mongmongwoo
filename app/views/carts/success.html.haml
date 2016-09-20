@@ -24,4 +24,5 @@
       萌萌屋全體期待您再次光臨！！
 
   .submit-session
-    =link_to '繼續購物', root_path , class: 'btn', onClick: analytic_event("checkout_step_4", "click", "finish_purchase")
+    =link_to '繼續購物', root_path , class: 'btn'
+= render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_4", action: "enter", label: "finish_purchase"

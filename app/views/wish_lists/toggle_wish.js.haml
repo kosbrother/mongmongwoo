@@ -1,8 +1,48 @@
 - if @type == 'wish'
-  #{ analytic_event('product', 'add_to_wish_lists', "#{@wish_list.item.name}-#{@wish_list.item_spec.style}") }
+  :plain
+    var id = '#{@wish_list.item_id}';
+    var name = '#{@wish_list.item.name}-#{@wish_list.item_spec.style}';
+    var price = '#{@wish_list.item.price}';
+
+    fbq('track', 'AddToWishlist', {
+      content_name: name,
+      content_ids: [id],
+      content_type: 'product',
+      value: price,
+      currency: 'TWD'
+    });
+
+    ga('ec:addProduct', {
+      'id': id,
+      'name': name,
+      'price': price
+    });
+    ga('ec:setAction', 'add');
+    ga('send', 'event', 'add_to_wish_lists', 'click', name);
+
   $('#add-btn-#{@wish_list.item_spec_id}').addClass('checked').removeClass('uncheck');
   $('#add-btn-#{@wish_list.item_spec_id}').attr('href', '#{ toggle_wish_wish_list_path(item_id: @wish_list.item_id, item_spec_id: @wish_list.item_spec_id, type: 'un-wish')}');
 -elsif @type == 'un-wish'
-  #{ analytic_event('product', 'remove_from_wish_lists', "#{@wish_list.item.name}-#{@wish_list.item_spec.style}") }
+  :plain
+    var id = '#{@wish_list.item_id}';
+    var name = '#{@wish_list.item.name}-#{@wish_list.item_spec.style}';
+    var price = '#{@wish_list.item.price}';
+
+    fbq('trackCustom', 'RemoveFromWishlist', {
+      content_name: name,
+      content_ids: [id],
+      content_type: 'product',
+      value: price,
+      currency: 'TWD'
+    });
+
+    ga('ec:addProduct', {
+      'id': id,
+      'name': name,
+      'price': price
+    });
+    ga('ec:setAction', 'remove');
+    ga('send', 'event', 'remove_from_wish_lists', 'click', name);
+
   $('#add-btn-#{@wish_list.item_spec_id}').addClass('uncheck').removeClass('checked');
   $('#add-btn-#{@wish_list.item_spec_id}').attr('href', '#{ toggle_wish_wish_list_path(item_id: @wish_list.item_id, item_spec_id: @wish_list.item_spec_id, type: 'wish')}');
