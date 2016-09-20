@@ -93,6 +93,14 @@
     #totalprice{
       color: $price-font-color;
     }
+    #select-ship-type{
+      border-radius: 0;
+      border: $order-box-quantity-border;
+      background-color: transparent;
+      color: $order-box-quantity-font-color;
+      position: relative;
+      left: -15px;
+    }
   }
   .modal{
     > .modal-dialog{

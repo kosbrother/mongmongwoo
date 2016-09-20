@@ -1,6 +1,8 @@
 class Cart < ActiveRecord::Base
   include CalculatePrice
 
+  enum ship_type: { "store_delivery": 0, "home_delivery": 1 }
+
   has_many :cart_items, dependent: :destroy
   has_one :cart_info, dependent: :destroy
   belongs_to :user

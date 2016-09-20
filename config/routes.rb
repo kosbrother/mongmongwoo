@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get "/checkout", to: "carts#checkout", as: "checkout"
   get "/cart_info", to: "carts#info", as: "cart_info"
   get "/select_store", to: "carts#select_store", as: "select_store"
+  patch "/update_ship_type", to: "carts#update_ship_type", as: "update_ship_type"
+  get "/get_towns", to: "carts#get_towns", as: "get_towns"
   post "/store_reply", to: "carts#info", as: "store_reply"
   post "/confirm_cart", to: "carts#confirm", as: "confirm_cart"
   get "/confirm_cart", to: "carts#confirm"

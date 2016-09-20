@@ -127,6 +127,30 @@ cart = function() {
             }
         })
     });
+    //select ship_type
+    $('#select-ship-type').change(function(){
+       $.ajax({
+           url: '/update_ship_type',
+           data: {ship_type: $(this).val()},
+           type: "patch",
+           error: function (xhr, ajaxOptions, thrownError) {
+               alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+           }
+       })
+    });
+
+    //select county
+    $('#select-county').change(function(){
+        var county_id = $(this).val();
+        $.ajax({
+            url: '/get_towns',
+            data: {county_id: county_id},
+            type: 'get',
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('錯誤發生，如問題持續發生，請聯繫客服人員');
+            }
+        })
+    });
 };
 
 $(document).ready(cart);

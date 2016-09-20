@@ -51,20 +51,23 @@
         #totalprice= price_with_unit(@total)
 .row
   .col-lg-6
-    .icon-header.-people 訂購人資料
+    - if current_cart.ship_type == "store_delivery"
+      .icon-header.-people 取貨人資訊
+    - elsif  current_cart.ship_type == "home_delivery"
+      .icon-header.-people 收件人資訊
     .input-block.-info
       .group
         %div= "姓名：#{@info[:ship_name]}"
+      .group
         %div= "電話：#{@info[:ship_phone]}"
+      .group
         %div= "連絡信箱：#{@info[:ship_email]}"
   .col-lg-6
-    .icon-header.-location 取貨門市資訊
-    .input-block.-store
-      .group
-        = hidden_field_tag :store_id, '' ,value: @store.id
-        %div= "門市名稱： #{@store.name}"
-        %div= "地址： #{@store.address}"
-= form_tag submit_order_path(info: @info, store: @store), method: :post, remote: true do
+    - if current_cart.ship_type == "store_delivery"
+      = render "store_delivery_info", store: @store
+    -elsif  current_cart.ship_type == "home_delivery"
+      = render "home_delivery_info", ship_address: @ship_address
+= form_tag submit_order_path(info: @info), method: :post, remote: true do
   .submit-session
     =link_to '上一步', cart_info_path , class: 'btn btn-previous', onClick: analytic_event("checkout_step_3", "click", "previous_step")
     =submit_tag '送出訂單', class: 'btn', data: { disable_with: "處理中" }, onClick: analytic_event("checkout_step_3", "click", "send_order")

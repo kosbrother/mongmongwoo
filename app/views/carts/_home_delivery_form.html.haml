@@ -1,0 +1,11 @@
+.icon-header.-location 宅配寄送資訊
+.input-block
+  .group
+    = label :county_id, '縣市'
+    = select_tag :county_id, options_from_collection_for_select(counties, :id, :name, cookies[:county_id]), id: "select-county"
+  .group
+    = label :town_id, '區域'
+    = select_tag :town_id, options_from_collection_for_select(towns, :id, :name, cookies[:town_id]), id: "select-town"
+  .group
+    = label :road, '路段'
+    = text_field_tag :road, '', required: true, value: cookies[:road], placeholder: "請輸入詳細地址"
