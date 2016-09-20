@@ -2,6 +2,22 @@
   .icon-header{
     margin-bottom: 20px;
   }
+  .cart-result.-header{
+    > .header{
+      font-size: 18px;
+      height: 40px;
+      line-height: 43px;
+      > div{
+        line-height: 45px;
+      }
+      .order-status{
+        font-size: 20px;
+      }
+      .btn.btn-success{
+        background-color: #47b286;
+      }
+    }
+  }
   .cart-result{
     margin-bottom: 20px;
     > .header{
@@ -51,6 +67,24 @@
 
 @media screen and (max-width: 768px) {
   .orders{
+    .cart-result.-header{
+      > .header{
+        font-size: 12px;
+        height: 28px;
+        line-height: 28px;
+        > div{
+          line-height: 28px;
+        }
+        .order-status{
+          font-size: 12px;
+        }
+        .btn.btn-success{
+          width: 56px;
+          height: 20px;
+          line-height: 10px;
+        }
+      }
+    }
     .cart-result {
       > .header{
         font-size: 12px;

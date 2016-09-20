@@ -1,15 +1,15 @@
 - breadcrumb :order_detail, @order
 .orders
   .icon-header.-order 訂單明細
-  .cart-result
+  .cart-result.-header
     .header.row
       .col-lg-2.col-sm-2.hidden-xs.no-padding= display_date(@order.created_at)
       .col-lg-2.col-sm-2.col-xs-4.no-padding= "訂單編號：#{@order.id}"
-      .col-lg-2.col-sm-3.col-xs-5.no-padding
+      .col-lg-4.col-sm-3.col-xs-5.no-padding
         %span 訂單狀態：
         = order_status(@order.status)
       -if @order.cancel_able?
-        .col-lg-2.col-lg-offset-4.col-sm-2.col-sm-offset-3.col-xs-3.no-padding= content_tag(:div, '取消訂單', class: 'btn btn-success', 'data-toggle': "modal", 'data-target': "#cancel-modal")
+        .col-lg-2.col-lg-offset-2.col-sm-2.col-sm-offset-3.col-xs-3.no-padding= content_tag(:div, '取消訂單', class: 'btn btn-success', 'data-toggle': "modal", 'data-target': "#cancel-modal")
         = render 'orders/cancel_modal', order: @order
   .cart-result
     .header.row.visible-lg-block
@@ -61,15 +61,19 @@
         #totalprice= price_with_unit(@order.total)
   .row
     .col-lg-6
-      .icon-header.-people 訂購人資料
+      - if @order.ship_type == "store_delivery"
+        .icon-header.-people 取貨人資訊
+      - elsif @order.ship_type == "home_delivery"
+        .icon-header.-people 收件人資訊
       .input-block.-info
         .group
           %div= "姓名：#{@info.ship_name}"
+        .group
           %div= "電話：#{@info.ship_phone}"
+        .group
           %div= "連絡信箱：#{@info.ship_email}"
     .col-lg-6
-      .icon-header.-location 取貨門市資訊
-      .input-block.-store
-        .group
-          %div= "門市名稱： #{@info.ship_store_name}"
-          %div= "地址： #{@info.store.address}"
+      - if @order.ship_type  == "store_delivery"
+        = render "carts/store_delivery_info", store: @info.store
+      -elsif  @order.ship_type  == "home_delivery"
+        = render "carts/home_delivery_info", ship_address: @info.ship_address
