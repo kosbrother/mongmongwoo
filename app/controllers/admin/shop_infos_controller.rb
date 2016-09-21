@@ -1,5 +1,7 @@
 class Admin::ShopInfosController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   before_action :find_shop_info, only: [:edit, :update, :destroy]
 
   def index

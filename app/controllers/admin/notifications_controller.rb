@@ -1,5 +1,7 @@
 class Admin::NotificationsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   before_action :find_notification, only: [:show, :destroy]
 
   def index

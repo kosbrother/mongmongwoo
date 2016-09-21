@@ -1,6 +1,7 @@
 class Admin::UsersController < AdminController
-  layout "admin"
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   skip_before_action :verify_authenticity_token, only: [:import_user]
 
   def index

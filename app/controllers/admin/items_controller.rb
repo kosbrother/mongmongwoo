@@ -1,5 +1,10 @@
 class Admin::ItemsController < AdminController
-  before_action :require_manager
+  before_action only: [:on_shelf, :off_shelf] do
+    accept_role(:manager)
+  end
+  before_action except: [:on_shelf, :off_shelf] do
+    accept_role(:manager, :staff)
+  end
   before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
 
   def index

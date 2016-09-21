@@ -4,7 +4,7 @@
       =link_to '管理者後台', admin_root_path
 .col-md-2
   .user
-    .user-name Hi #{current_manager.username}
+    .user-name Hi #{current_admin.username}
     = link_to '登出' ,admin_signout_path, class: 'sign-out', method: :delete
 .col-md-4
   .search-bar

@@ -1,5 +1,7 @@
 class Admin::PhotosController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager, :staff)
+  end
   before_action :find_item
   before_action :find_photo, only: [:edit, :update, :destroy]
 
