@@ -18,13 +18,26 @@ class CartsController < ApplicationController
     set_meta_tags title: "確認訂單", noindex: true
   end
 
+  def update_ship_type
+    current_cart.update_column(:ship_type, params[:ship_type])
+    render nothing: true
+  end
+
+  def get_towns
+    @towns = Town.where(county_id: params[:county_id])
+  end
+
   def info
     @step = Cart::STEP[:info]
-    if params['CVSStoreID']
+    if current_cart.ship_type == "store_delivery" && params['CVSStoreID']
       @store = Store.find_by(store_code: params['CVSStoreID'])
       cookies[:store_id] = @store.id
-    elsif cookies[:store_id]
+    elsif current_cart.ship_type == "store_delivery" && cookies[:store_id]
       @store = Store.find_by(id: cookies[:store_id])
+    elsif current_cart.ship_type == "home_delivery"
+      @counties = County.where(store_type: 4)
+      @county = @counties.find_by(id: cookies[:county_id]) || @counties.first
+      @towns = @county.towns
     end
     set_meta_tags title: "訂購資料", noindex: true
   end
@@ -47,23 +60,32 @@ class CartsController < ApplicationController
   end
 
   def confirm
-    cookies[:name] = params[:ship_name]
-    cookies[:email] = params[:ship_email] 
-    cookies[:phone] = params[:ship_phone]
-
     @step = Cart::STEP[:confirm]
+
+    cookies[:name] = params[:ship_name]
+    cookies[:email] = params[:ship_email]
+    cookies[:phone] = params[:ship_phone]
     @info = {ship_name: cookies[:name],
              ship_phone: cookies[:phone],
              ship_email: cookies[:email]}
-    @store = Store.find(cookies[:store_id])
+    if current_cart.ship_type == "home_delivery"
+      cookies[:county_id] = params[:county_id]
+      cookies[:town_id] = params[:town_id]
+      cookies[:road] = params[:road]
+      @ship_address = generate_address(cookies[:county_id], cookies[:town_id], cookies[:road])
+      @info = @info.merge(ship_address: @ship_address)
+    elsif current_cart.ship_type == "store_delivery"
+      @store = Store.find(cookies[:store_id])
+      @info = @info.merge(store_id: @store.id)
+    end
+
     @items = current_cart.cart_items.includes(:item, :item_spec)
     set_meta_tags title: "確認訂單", noindex: true
   end
 
   def submit
     items = current_cart.cart_items.includes(:item, :item_spec)
-    store = Store.find(params[:store])
-    order,errors = create_order(items, params[:info], store)
+    order,errors = create_order(items, params[:info])
     if errors.present?
       @unable_to_buy_lists = errors.select{|error| error.key?(:unable_to_buy)}.map{|list| list[:unable_to_buy][0]}
       @updated_items = destroy_and_return_items(@unable_to_buy_lists)
@@ -104,7 +126,7 @@ class CartsController < ApplicationController
     uri.to_s
   end
 
-  def create_order(cart_items, cart_info, store)
+  def create_order(cart_items, cart_info)
     errors = []
     order = nil
     ActiveRecord::Base.transaction do
@@ -113,6 +135,7 @@ class CartsController < ApplicationController
       order.user_id = current_cart.user_id
       order.items_price = current_cart.calculate_items_price
       order.ship_fee = current_cart.calculate_ship_fee
+      order.ship_type = current_cart.ship_type
       order.total = current_cart.calculate_total
       order.save
 
@@ -120,10 +143,15 @@ class CartsController < ApplicationController
       info.order_id = order.id
       info.ship_name = cart_info[:ship_name]
       info.ship_phone = cart_info[:ship_phone]
-      info.ship_store_code = store.store_code
-      info.ship_store_id = store.id
-      info.ship_store_name = store.name
       info.ship_email = cart_info[:ship_email]
+      if current_cart.ship_type == "home_delivery"
+        info.ship_address = cart_info[:ship_address]
+      elsif current_cart.ship_type == "store_delivery"
+        store = Store.find(cart_info[:store_id])
+        info.ship_store_code = store.store_code
+        info.ship_store_id = store.id
+        info.ship_store_name = store.name
+      end
       info.save
 
       cart_items.each do |cart_item|
@@ -162,5 +190,11 @@ class CartsController < ApplicationController
     unable_to_buy_lists.each do |list|
       current_user.wish_lists.find_or_create_by(item_id: list["id"] ,item_spec_id: list[:spec].id)
     end
+  end
+
+  def generate_address(county_id, town_id, road)
+    county = County.find(county_id)
+    town = Town.find(town_id)
+    county.name + town.name + road
   end
 end

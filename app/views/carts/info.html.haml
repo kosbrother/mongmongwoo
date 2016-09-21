@@ -1,7 +1,10 @@
 = render 'partials/cart_steps', step: @step
 .cart-info
   = form_tag confirm_cart_path, method: :post do
-    .icon-header.-people 訂購人資料
+    - if current_cart.ship_type == "store_delivery"
+      .icon-header.-people 取貨人資訊
+    - elsif  current_cart.ship_type == "home_delivery"
+      .icon-header.-people 收件人資訊
     .input-block
       .group
         = label :ship_name, '姓名'
@@ -13,16 +16,10 @@
         = label :ship_email, '電子信箱'
         = text_field_tag :ship_email, '' ,required: true, value: cookies[:email]
         .text *名稱和電話必需正確才能取貨
-    .icon-header.-location 7-11取貨門市資訊
-    .input-block.-store
-      .group
-        %span 選擇7-11寄送門市
-        =link_to '選擇門市', '',  class: 'btn regular-btn select-store', remote: true
-      .divider
-      .group
-        = hidden_field_tag :store_id, '' ,value: @store ? @store.id : nil, required: true
-        %div= @store ?  "門市名稱： #{@store.name}" : '請選擇送達門市'
-        %div= @store ?  "地址： #{@store.address}" : ""
+    - if current_cart.ship_type == "store_delivery"
+      = render "store_delivery_form", store: @store
+    -elsif  current_cart.ship_type == "home_delivery"
+      = render "home_delivery_form", counties: @counties, towns: @towns
     .submit-session
       =link_to '上一步', checkout_path, class: 'btn btn-previous', onClick: analytic_event("checkout_step_2", "click", "previous_step")
       =submit_tag '下一步', class: 'btn', onClick: analytic_event("checkout_step_3", "enter", "無")

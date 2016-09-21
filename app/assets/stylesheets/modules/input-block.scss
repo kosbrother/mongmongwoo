@@ -4,20 +4,23 @@
   background-color: $form-background-color;
   margin: 0 auto;
   text-align: left;
-  padding: 5px 30px;
+  padding: 20px 30px;
+  font-size: 16px;
   >.group{
     > label{
-      width: 100px;
-      font-size: 14px;
+      width: 80px;
       color: #262626;
     }
-    > input{
-      margin: 15px;
+    > input, select{
+      margin: 15px 5px;
       width: 248px;
       height: 34px;
       border-radius: 2px;
       border: $form-input-border;
       padding-left: 10px;
+    }
+    > select{
+      width: 100px;
     }
     > .text{
       text-align: right;
@@ -27,28 +30,37 @@
       width: 120px;
       height: 30px;
       line-height: 18px;
-      margin-left: 20px;
+      margin-left: 30px;
+      vertical-align: initial;
     }
   }
 }
 
 .-store, .-info{
-  min-height: 100px;
-  padding: 10px 15px 0 15px;
+  min-height: 130px;
+  padding: 10px 20px;
   > .group {
-    > div{
-      margin-bottom: 10px;
+    margin: 10px 0;
+    > input, select{
+      margin: 5px;
     }
     > .btn{
       margin-top: 10px;
-      margin-bottom: 10px;
     }
+    > .title{
+      margin-right: 30px;
+    }
+  }
+  > .divider{
+    border: solid 1px #b5b5b5;
+    margin: 25px auto;
   }
 }
 
 @media screen and (max-width: 768px) {
   .input-block{
-    padding: 5px 5px 0 5px;
+    font-size: 12px;
+    padding: 10px;
     >.group{
       > div{
         margin-bottom: 5px;
@@ -56,11 +68,17 @@
       > label{
         text-align: center;
         width: 23%;
-        font-size: 12px;
       }
       > input{
-        width: 73%;
-        margin: 5px 0;
+        width: 60%;
+      }
+      > input, select{
+        margin: 5px;
+        height: 25px;
+        padding-left: 10px;
+      }
+      > select{
+        width: 80px;
       }
       > .text{
         width: 95%;
@@ -68,7 +86,6 @@
       > .regular-btn{
         width: 100px;
         height: 30px;
-        font-size: 12px;
       }
     }
   }
@@ -77,5 +94,15 @@
   }
   .-info{
     min-height: 80px;
+  }
+  .-store, .-info {
+    min-height: auto;
+    padding: 10px;
+    > .group {
+      margin: 5px 0;
+      > .title {
+        margin-right: 15px;
+      }
+    }
   }
 }
