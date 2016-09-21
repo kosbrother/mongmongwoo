@@ -59,26 +59,6 @@ Rails.application.routes.draw do
   resources :wish_lists, only: [:index, :destroy]
   resources :my_messages, only: [:index]
 
-  # 助理後台
-  namespace :staff do
-    root "categories#index"
-    get "/signin", to: "sessions#new"
-    post "/signin", to: "sessions#create"
-    delete "/signout", to: "sessions#destroy"
-
-    resources :categories, only: [:show, :index] do
-      member do
-        get "subcategory"
-      end
-    end
-
-    resources :items, only: [:new, :create, :show, :edit, :update, :destroy] do
-      resources :photos, except: [:show]
-
-      resources :item_specs, except: [:show]
-    end
-  end
-
   resources :allpay, only:[] do
     collection do
       post "create_from_processing", as: "create"
@@ -89,7 +69,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # 管理員後台
   namespace :admin do
     root "pages#home"
     get "/signin", to: "sessions#new"
