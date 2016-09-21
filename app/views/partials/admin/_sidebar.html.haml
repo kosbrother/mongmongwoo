@@ -1,27 +1,28 @@
 .sidebar.content-box
   %ul.nav
-    %li.submenu
-      %a{:href => "#"}
-        %i.fa.fa-shopping-bag
-        訂單管理
-        %span.caret.pul-right
-      %ul
-        %li
-          = link_to "狀態分類列表", status_index_admin_orders_path
-        %li
-          = link_to "所有訂單列表", admin_orders_path
-    %li.submenu
-      %a{:href => "#"}
-        %i.fa.fa-inbox
-        倉庫管理
-        %span.caret.pull-right
-      %ul
-        %li
-          =  link_to "現貨管理", admin_stocks_path
-        %li
-          = link_to "進貨管理", admin_confirm_carts_path
-        %li
-          = link_to "淘寶商家", admin_taobao_suppliers_path
+    - if current_admin.manager?
+      %li.submenu
+        %a{:href => "#"}
+          %i.fa.fa-shopping-bag
+          訂單管理
+          %span.caret.pul-right
+        %ul
+          %li
+            = link_to "狀態分類列表", status_index_admin_orders_path
+          %li
+            = link_to "所有訂單列表", admin_orders_path
+      %li.submenu
+        %a{:href => "#"}
+          %i.fa.fa-inbox
+          倉庫管理
+          %span.caret.pull-right
+        %ul
+          %li
+            =  link_to "現貨管理", admin_stocks_path
+          %li
+            = link_to "進貨管理", admin_confirm_carts_path
+          %li
+            = link_to "淘寶商家", admin_taobao_suppliers_path
     %li.submenu
       %a{:href => "#"}
         %i.glyphicon.glyphicon-list-alt
@@ -34,44 +35,45 @@
           = link_to "商品列表", admin_items_path
         %li
           = link_to "標籤列表", admin_tags_path
-    %li
-      = link_to admin_notifications_path(is_execute: Schedule.execute_statuses[:false]) do
-        %i.fa.fa-bell
-        推播訊息
-    %li.submenu
-      %a{:href => "#"}
-        %i.glyphicon.glyphicon-stats>]
-        銷售統計
-        %span.caret.pul-right
-      %ul
-        %li
-          = link_to "商品銷量與金額", item_sales_result_admin_sales_reports_path
-        %li
-          = link_to "成本與毛利數據", cost_statistics_index_admin_sales_reports_path
-    %li.submenu
-      %a{:href => "#"}
-        %i.fa.fa-inbox
-        其他
-        %span.caret.pull-right
-      %ul
-        %li
-          = link_to admin_users_path do
-            用戶資料列表
-        %li
-          = link_to admin_promotions_path do
-            優惠列表
-        %li
-          = link_to admin_banners_path do
-            廣告列表
-        %li
-          = link_to admin_messages_path do
-            官方訊息列表
-        %li
-          = link_to admin_shop_infos_path do
-            購物須知列表
-        %li
-          = link_to admin_stores_path do
-            查看門市列表
-        %li
-          = link_to admin_shopping_point_campaigns_path do
-            購物金活動列表
+    - if current_admin.manager?
+      %li
+        = link_to admin_notifications_path(is_execute: Schedule.execute_statuses[:false]) do
+          %i.fa.fa-bell
+          推播訊息
+      %li.submenu
+        %a{:href => "#"}
+          %i.glyphicon.glyphicon-stats
+          銷售統計
+          %span.caret.pul-right
+        %ul
+          %li
+            = link_to "商品銷量與金額", item_sales_result_admin_sales_reports_path
+          %li
+            = link_to "成本與毛利數據", cost_statistics_index_admin_sales_reports_path
+      %li.submenu
+        %a{:href => "#"}
+          %i.fa.fa-inbox
+          其他
+          %span.caret.pull-right
+        %ul
+          %li
+            = link_to admin_users_path do
+              用戶資料列表
+          %li
+            = link_to admin_promotions_path do
+              優惠列表
+          %li
+            = link_to admin_banners_path do
+              廣告列表
+          %li
+            = link_to admin_messages_path do
+              官方訊息列表
+          %li
+            = link_to admin_shop_infos_path do
+              購物須知列表
+          %li
+            = link_to admin_stores_path do
+              查看門市列表
+          %li
+            = link_to admin_shopping_point_campaigns_path do
+              購物金活動列表

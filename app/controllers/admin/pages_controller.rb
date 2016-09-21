@@ -1,8 +1,8 @@
 class Admin::PagesController < AdminController
   def home
-    if current_admin && current_admin.role == 'manager'
+    if current_admin && current_admin.manager?
       redirect_to status_index_admin_orders_path
-    elsif current_admin && current_admin.role == 'staff'
+    elsif current_admin && current_admin.staff?
       redirect_to admin_items_path
     else
       flash[:alert] = "請先登入後台"

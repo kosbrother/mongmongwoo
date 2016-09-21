@@ -1,8 +1,4 @@
 module Admin::ItemsHelper
-  def item_title
-    action_name == "new" ? "新增商品" : "編輯商品"
-  end
-
   def item_icon(photo)
     if photo.present?
       image_url = photo.icon.url
@@ -56,16 +52,12 @@ module Admin::ItemsHelper
     photo_size ? image_tag(image_url, size: photo_size, :class => "thumbnail") : image_tag(image_url, :class => "thumbnail")
   end
 
-  def show_item_stock(amount)
-    amount == 0 ? "無庫存" : amount
-  end
-
-  def update_shelf_path(item)
-    (item.on_shelf? && item.ever_on_shelf) ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item)
-  end
-
   def link_to_supplier(item)
-    link_to item.supplier_name, admin_taobao_supplier_path(@item.taobao_supplier, status: Item.statuses[:on_shelf]), target: "_blank" rescue "沒有商家資料"
+    if current_admin.manager?
+      link_to item.supplier_name, admin_taobao_supplier_path(@item.taobao_supplier, status: Item.statuses[:on_shelf]), target: "_blank" rescue "沒有商家資料"
+    else
+      item.supplier_name
+    end
   end
 
   def li_item_status_link(taobao_supplier, status)
@@ -83,11 +75,23 @@ module Admin::ItemsHelper
   end
 
   def link_to_update_item_status(item)
-    link_to item_status_text(item), update_shelf_path(item), method: :patch, remote: true, class: item_status_class(item)
+    if current_admin.manager?
+      link_to item_status_text(item), update_item_shelf_path(item), method: :patch, remote: true, class: btn_class_by_shelf_status(item.status)
+    else
+      content_tag(:span, item_status_text(item), class: label_class_by_shelf_status(item.status))
+    end
   end
 
-  def item_status_class(item)
-    (item.on_shelf? && item.ever_on_shelf) ? "btn btn-success" : "btn btn-danger"
+  def update_item_shelf_path(item)
+    item.on_shelf? ? off_shelf_admin_item_path(item) : on_shelf_admin_item_path(item)
+  end
+
+  def btn_class_by_shelf_status(status)
+    status == "on_shelf" ? "btn btn-success" : "btn btn-danger"
+  end
+
+  def label_class_by_shelf_status(status)
+    status == "on_shelf" ? "label label-success" : "label label-danger"
   end
 
   def item_status_text(item)
@@ -108,18 +112,6 @@ module Admin::ItemsHelper
     else
       "未上架過"
     end
-  end
-
-  def link_to_update_item_spec(item_spec)
-    if item_spec.status == "off_shelf"
-      link_to t('off_shelf'), on_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
-    else
-      link_to t('on_shelf'), off_shelf_admin_item_item_spec_path(item_spec.item, item_spec), method: :patch, remote: true, class: status_button_class(item_spec.status)
-    end
-  end
-
-  def status_button_class(status)
-    (status == "on_shelf") ? "btn btn-success" : "btn btn-danger"
   end
 
   def link_to_item(item)

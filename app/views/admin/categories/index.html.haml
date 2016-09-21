@@ -1,7 +1,8 @@
 .content-box-large.box-with-header
   .header-btn
-    .pull-right
-      =link_to '新增', new_admin_category_path, class: 'btn btn-default'
+    - if current_admin.manager?
+      .pull-right
+        =link_to '新增', new_admin_category_path, class: 'btn btn-default'
     %h2 母分類列表
     %p.help-block
     = render_pagination(@categories)
