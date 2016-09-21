@@ -1,0 +1,8 @@
+%head
+  %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %title 萌萌屋 - 管理後台
+  %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+  %link{:href => "https://cdn.jsdelivr.net/sweetalert2/4.0.8/sweetalert2.min.css", :rel => "stylesheet", :type => "text/css"}/
+  = stylesheet_link_tag "admin", media: "all"
+  = javascript_include_tag "admin"
+  = csrf_meta_tags
