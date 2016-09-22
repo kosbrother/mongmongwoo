@@ -72,5 +72,5 @@
     =link_to '上一步', cart_info_path , class: 'btn btn-previous'
     =submit_tag '送出訂單', class: 'btn', data: { disable_with: "處理中" }
 #errors-infos
-= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "Purchase", cart_items: @items
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "ReviewCart", cart_items: @items
 = render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_3", action: "enter", label: "無"

@@ -84,5 +84,5 @@
         .group
           = link_to '免註冊匿名購買', cart_info_path , class: 'btn'
           .text*適合一次性購買，無法管理訂單資料
-= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "InitiateCheckout", cart_items: @items
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "StartCheckout", cart_items: @items
 = render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_1", action: "enter", label: "無"

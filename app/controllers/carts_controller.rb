@@ -96,8 +96,13 @@ class CartsController < ApplicationController
       ShoppingPointManager.spend_shopping_points(order, current_cart.shopping_point_amount)
       session[:cart_id] = nil
       OrderMailer.delay.notify_order_placed(order)
-      render :js => "window.location = '#{success_path}'"
+      render :js => "window.location = '#{success_path(order_id: order.id)}'"
     end
+  end
+
+  def success
+    @order = Order.find(params[:order_id])
+    @step = Cart::STEP[:finish]
   end
 
   def toggle_shopping_point

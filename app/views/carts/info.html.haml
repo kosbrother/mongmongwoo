@@ -23,5 +23,5 @@
     .submit-session
       =link_to '上一步', checkout_path, class: 'btn btn-previous'
       =submit_tag '下一步', class: 'btn'
-= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "AddPaymentInfo", cart_items: @items
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "AddShipInfo", cart_items: @items
 = render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_2", action: "enter", label: "無"

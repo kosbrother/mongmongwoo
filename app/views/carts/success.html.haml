@@ -25,4 +25,5 @@
 
   .submit-session
     =link_to '繼續購物', root_path , class: 'btn'
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "Purchase", order: @order
 = render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_4", action: "enter", label: "finish_purchase"
