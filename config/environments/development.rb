@@ -53,12 +53,11 @@ Rails.application.configure do
     :authentication => :plain 
   }
 
-  # Bullet 檢查 N + 1 Query 問題(對資料庫額外執行多個查詢子句而影響效能)
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
     Bullet.alert = true
     Bullet.console = true
-    # Bullet.raise = true
+    Pay2go.integration_mode = :development
   end
 end

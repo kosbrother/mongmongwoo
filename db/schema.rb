@@ -367,6 +367,7 @@ ActiveRecord::Schema.define(version: 20160920085856) do
     t.boolean  "is_repurchased",                     default: false
     t.boolean  "is_blacklisted",                     default: false
     t.integer  "ship_type",              limit: 4,   default: 0
+    t.boolean  "is_paid",                            default: false
   end
 
   add_index "orders", ["logistics_status_code"], name: "index_orders_on_logistics_status_code", using: :btree

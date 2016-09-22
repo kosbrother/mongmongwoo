@@ -69,6 +69,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pay2go, only:[] do
+    collection do
+      post "notify"
+    end
+  end
+
   namespace :admin do
     root "pages#home"
     get "/signin", to: "sessions#new"

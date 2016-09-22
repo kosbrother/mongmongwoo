@@ -460,6 +460,7 @@ GEM
       activerecord (~> 4.0)
     parser (2.3.0.7)
       ast (~> 2.2)
+    pay2go (0.1.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -672,6 +673,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   paranoia (~> 2.0)
+  pay2go
   pry
   rails (= 4.2.5)
   roadie-rails (~> 1.0)

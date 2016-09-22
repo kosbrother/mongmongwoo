@@ -60,7 +60,7 @@
         .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
           %div 取貨方式
         .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          %div= select_tag :ship_type, options_for_select([["超商取貨付款", Cart.ship_types["store_delivery"]],["宅配到貨付款", Cart.ship_types["home_delivery"]]], [Cart.ship_types[current_cart.ship_type]]), id: "select-ship-type"
+          %div= select_tag :ship_type, options_for_select([["超商取貨付款", Cart.ship_types["store_delivery"]],["宅配到貨付款", Cart.ship_types["home_delivery"]], ["宅配刷卡付款", Cart.ship_types["home_delivery_by_credit_card"]]], [Cart.ship_types[current_cart.ship_type]]), id: "select-ship-type"
       .totalrow.row
         .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
           %div 運費（滿490免運費）

@@ -3,7 +3,7 @@ class Order < ActiveRecord::Base
   include CalculatePrice
 
   enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7, "退貨" => 8 }
-  enum ship_type: { "store_delivery": 0, "home_delivery": 1 }
+  enum ship_type: { "store_delivery": 0, "home_delivery": 1, "home_delivery_by_credit_card": 2 }
 
   COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
   RESTOCK_STATUS = ["未取訂貨", "退貨"]

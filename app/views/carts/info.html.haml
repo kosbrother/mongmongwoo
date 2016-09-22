@@ -18,7 +18,7 @@
         .text *名稱和電話必需正確才能取貨
     - if current_cart.ship_type == "store_delivery"
       = render "store_delivery_form", store: @store
-    -elsif  current_cart.ship_type == "home_delivery"
+    -elsif  current_cart.ship_type == "home_delivery" || current_cart.ship_type == "home_delivery_by_credit_card"
       = render "home_delivery_form", counties: @counties, towns: @towns
     .submit-session
       =link_to '上一步', checkout_path, class: 'btn btn-previous'
