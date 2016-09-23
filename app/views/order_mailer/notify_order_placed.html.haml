@@ -9,7 +9,8 @@
     %p
       您的訂單已經成立，商品將於
       %span.strong "3個工作天"
-      內寄送至指定門市。詳細資訊與購物內容可於萌萌屋App
+      內寄送至#{@order.store_delivery? ? "指定門市" : "宅配地址" }。
+      詳細資訊與購物內容可於萌萌屋App
       %span.strong 「我的訂單」
       裡查詢。若有任何問題，請聯繫萌萌屋客服。
     %p
@@ -64,9 +65,15 @@
         .info 姓名：#{@order_info.ship_name}
         .info 電話：#{@order_info.ship_phone}
         .info 連絡信箱：#{@order_info.ship_email}
-    .group
-      .icon-header{style: "background-image: url(#{email_scss_image_tag('icons/ic_711.png')})"} 7-11取貨門市資訊
-      .info-block
-        .info 門市名稱： #{@order_info.ship_store_name}
-        .info 地址： #{@order_info.store.address}
-        .info 門市電話： #{@order_info.store.phone}
+    - if @order.store_delivery?
+      .group
+        .icon-header{style: "background-image: url(#{email_scss_image_tag('icons/ic_711.png')})"} 7-11取貨門市資訊
+        .info-block
+          .info 門市名稱： #{@order_info.ship_store_name}
+          .info 地址： #{@order_info.store.address}
+          .info 門市電話： #{@order_info.store.phone}
+    - else
+      .group
+        .icon-header{style: "background-image: url(#{email_scss_image_tag('icons/ic_711.png')})"} 宅配寄送資訊
+        .info-block
+          .info 收件地址： #{@order_info.ship_address}
