@@ -37,7 +37,7 @@ class CartsController < ApplicationController
       cookies[:store_id] = @store.id
     elsif current_cart.ship_type == "store_delivery" && cookies[:store_id]
       @store = Store.find_by(id: cookies[:store_id])
-    elsif current_cart.ship_type == "home_delivery" || current_cart.ship_type == "home_delivery_by_credit_card"
+    elsif Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
       @counties = County.where(store_type: 4)
       @county = @counties.find_by(id: cookies[:county_id]) || @counties.first
       @towns = @county.towns
@@ -71,7 +71,7 @@ class CartsController < ApplicationController
     @info = {ship_name: cookies[:name],
              ship_phone: cookies[:phone],
              ship_email: cookies[:email]}
-    if current_cart.ship_type == "home_delivery" || current_cart.ship_type == "home_delivery_by_credit_card"
+    if Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
       cookies[:county_id] = params[:county_id]
       cookies[:town_id] = params[:town_id]
       cookies[:road] = params[:road]
@@ -151,7 +151,7 @@ class CartsController < ApplicationController
       info.ship_name = cart_info[:ship_name]
       info.ship_phone = cart_info[:ship_phone]
       info.ship_email = cart_info[:ship_email]
-      if current_cart.ship_type == "home_delivery" || current_cart.ship_type == "home_delivery_by_credit_card"
+      if Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
         info.ship_address = cart_info[:ship_address]
       elsif current_cart.ship_type == "store_delivery"
         store = Store.find(cart_info[:store_id])

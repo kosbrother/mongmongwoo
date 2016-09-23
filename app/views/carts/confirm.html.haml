@@ -53,7 +53,7 @@
   .col-lg-6
     - if current_cart.ship_type == "store_delivery"
       .icon-header.-people 取貨人資訊
-    - elsif  current_cart.ship_type == "home_delivery" || current_cart.ship_type == "home_delivery_by_credit_card"
+    - elsif Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
       .icon-header.-people 收件人資訊
     .input-block.-info
       .group
@@ -65,7 +65,7 @@
   .col-lg-6
     - if current_cart.ship_type == "store_delivery"
       = render "store_delivery_info", store: @store
-    -elsif  current_cart.ship_type == "home_delivery" || current_cart.ship_type == "home_delivery_by_credit_card"
+    - elsif Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
       = render "home_delivery_info", ship_address: @ship_address
 .submit-session-form
   = form_tag submit_order_path(info: @info), method: :post, remote: true do

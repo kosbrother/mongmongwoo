@@ -1,22 +1,22 @@
 class Pay2goController < ActionController::Base
   def return
-    result = ActiveSupport::JSON.decode(params["Result"])
+    result = JSON.parse(params["Result"])
     order_id = result["MerchantOrderNo"]
     order = Order.find(order_id)
-
-    if params["Status"] == "SUCCESS"
-      order.update_attribute(:is_paid, true)
-      redirect_to success_path
-    else
-      render text: "信用卡交易失敗，請聯絡客服人員"
-    end
+    redirect_to success_path(order_id: order.id)
   end
 
   def notify
-    if params["Status"] == "SUCCESS"
+    data = JSON.parse(params["JSONData"])
+
+    if data["Status"] == "SUCCESS"
+      result = JSON.parse(data["Result"])
+      order_id = result["MerchantOrderNo"]
+      order = Order.find(order_id)
+      order.update_attribute(:is_paid, true)
       render status: 200, json: {data: "success"}
     else
-      Rails.logger.error(params["Status"] + ":" + params["Message "])
+      Rails.logger.error(data["Status"] + " : " + data["Message"])
       render status: 400, json: {error: "信用卡交易失敗"}
     end
   end

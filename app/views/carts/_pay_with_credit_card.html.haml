@@ -5,12 +5,12 @@
   = hidden_field_tag "LoginType",       "0"
   = hidden_field_tag "RespondType",     "JSON"
   = hidden_field_tag "Version",         "1.1"
-  = hidden_field_tag "ItemDesc",        "萌萌屋商品"
+  = hidden_field_tag "ItemDesc",        "萌萌屋訂單(#{@order.id})"
   = hidden_field_tag "MerchantOrderNo", "#{@order.id}"
   = hidden_field_tag "TimeStamp",       @order.created_at.to_i
   = hidden_field_tag "Amt",             @order.total
-  = hidden_field_tag "Email ",          @order.ship_email
+  = hidden_field_tag "Email",           @order.ship_email
   = hidden_field_tag "CREDIT",          "1"
   = hidden_field_tag "CheckValue",      PaytogoService.new(@order).check_value
   .submit-session
-    = submit_tag "填寫信用卡資料", class: "btn", id: "credit-card-payment"
+    = submit_tag "請填寫信用卡資料", class: "btn", id: "credit-card-payment"

@@ -10,6 +10,7 @@ class Cart < ActiveRecord::Base
   STEP = { checkout: 1, info: 2, confirm: 3, finish: 4}
   FREE_SHIPPING_PRICE = 490
   SHIP_FEE = 90
+  HOME_DELIVERY_TYPES = ["home_delivery", "home_delivery_by_credit_card"]
 
   def m_items
     cart_items.includes(:item)
