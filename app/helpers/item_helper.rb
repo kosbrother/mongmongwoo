@@ -15,9 +15,9 @@ module ItemHelper
     if item.status == "off_shelf"
       render_off_shelf_status(item_spec.id, hidden_class_name)
     elsif item_spec.stock_amount == 0
-      render_add_wish_lists_btn(item.id, item_spec.id, hidden_class_name)
+      render_add_wish_lists_btn(item, item_spec.id, hidden_class_name)
     else
-      render_add_to_cart_btn(item.name, item_spec.id, hidden_class_name)
+      render_add_to_cart_btn(item, item_spec.id, hidden_class_name)
     end
   end
 
@@ -25,15 +25,15 @@ module ItemHelper
     submit_tag "商品已下架", class: "add -forbidden #{hidden_class} add-btn", disabled: "disabled", id: "add-btn-#{item_spec_id}"
   end
 
-  def render_add_to_cart_btn(item_name, item_spec_id, hidden_class)
-    submit_tag "加入購物車", class: "add #{hidden_class} add-btn", id: "add-btn-#{item_spec_id}", onClick: analytic_event("product", "add_to_cart", item_name)
+  def render_add_to_cart_btn(item, item_spec_id, hidden_class)
+    submit_tag "加入購物車", class: "add #{hidden_class} add-btn add-to-cart-track", id: "add-btn-#{item_spec_id}", data: { item_id: item.id, item_name: item.name, item_price: item.price }
   end
 
-  def render_add_wish_lists_btn(item_id, item_spec_id, hidden_class)
+  def render_add_wish_lists_btn(item, item_spec_id, hidden_class)
     is_in_wish_lists = is_in_wish_lists?(item_spec_id)
     type = is_in_wish_lists ? "un-wish" : "wish"
     btn_class_name = is_in_wish_lists ? "checked" : "uncheck"
-    link_to "貨到通知我", toggle_wish_wish_list_path(item_id: item_id, item_spec_id: item_spec_id, type: type), class: "add -wishlist add-btn #{btn_class_name} #{hidden_class}", id: "add-btn-#{item_spec_id}", remote: true
+    link_to "貨到通知我", toggle_wish_wish_list_path(item_id: item.id, item_spec_id: item_spec_id, type: type), class: "add -wishlist add-btn #{btn_class_name} #{hidden_class}", id: "add-btn-#{item_spec_id}", remote: true
   end
 
   def is_in_wish_lists?(item_spec_id)

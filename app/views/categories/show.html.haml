@@ -32,3 +32,4 @@
   = render "partials/product_list", category: @category, items: @items
   .text-align
     = pagination_links(@items)
+= render "partials/tracking_events/send_event_to_google_analytics", category: "category", action: "view", label: @category.parent_id ? "#{@category.parent_category.name}-#{@category.name}" : @category.name

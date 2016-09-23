@@ -58,3 +58,5 @@
 .photo-list
   - @item.photos.each do |photo|
     = image_tag(photo.image.url, class: 'img-responsive')
+= render "partials/tracking_events/view_item_content", item: @item
+= render "partials/tracking_events/send_event_to_google_analytics", category: @pop_items.include?(@item) ? "popular_product" : "product", action: "view", label: @item.name

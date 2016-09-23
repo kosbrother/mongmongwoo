@@ -1,0 +1,59 @@
+- if step == Cart::STEP[:finish]
+  - order.items.each do |order_item|
+    :javascript
+      fbq('track', 'Purchase', {
+        content_name: '#{order_item.item_name}',
+        content_ids:  ['#{order_item.source_item_id}'],
+        content_type: 'product',
+        value:        '#{order_item.item_price}',
+        currency:     'TWD'
+      });
+
+      ga('ec:addProduct', {
+        'id':       '#{order_item.source_item_id}',
+        'name':     '#{order_item.item_name}',
+        'variant':  '#{order_item.item_style}',
+        'price':    '#{order_item.item_price}',
+        'quantity': '#{order_item.item_quantity}'
+      });
+
+  :javascript
+    ga('ec:setAction', 'purchase', {
+      'id':       '#{order.id}',
+      'revenue':  '#{order.total}',
+      'shipping': '#{order.ship_fee}'
+    });
+- else
+  - cart_items.each do |cart_item|
+    - if fb_event == "StartCheckout" || fb_event == "ReviewCart"
+      :javascript
+        fbq('trackCustom', '#{fb_event}', {
+          content_ids:  ['#{cart_item.item_id}'],
+          content_name: '#{cart_item.item.name}',
+          content_type: 'product',
+          value:        '#{cart_item.item.price}',
+          currency:     'TWD',
+          num_items:    '#{cart_item.item_quantity}'
+        });
+    - elsif fb_event == "AddShipInfo"
+      :javascript
+        fbq('trackCustom', '#{fb_event}', {
+          content_ids:  ['#{cart_item.item_id}'],
+          content_type: 'product',
+          value:        '#{cart_item.item.price}',
+          currency:     'TWD'
+        });
+
+    :javascript
+      ga('ec:addProduct', {
+        'id':       '#{cart_item.item_id}',
+        'name':     '#{cart_item.item.name}',
+        'variant':  '#{cart_item.item_spec.style}',
+        'price':    '#{cart_item.item.price}',
+        'quantity': '#{cart_item.item_quantity}'
+      });
+
+  :javascript
+    ga('ec:setAction','checkout', {
+      'step': '#{step}'
+    });

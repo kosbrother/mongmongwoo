@@ -28,6 +28,7 @@ class CartsController < ApplicationController
   end
 
   def info
+    @items = current_cart.cart_items.includes(:item, :item_spec)
     @step = Cart::STEP[:info]
     if current_cart.ship_type == "store_delivery" && params['CVSStoreID']
       @store = Store.find_by(store_code: params['CVSStoreID'])
@@ -95,8 +96,13 @@ class CartsController < ApplicationController
       ShoppingPointManager.spend_shopping_points(order, current_cart.shopping_point_amount)
       session[:cart_id] = nil
       OrderMailer.delay.notify_order_placed(order)
-      render :js => "window.location = '#{success_path}'"
+      render :js => "window.location = '#{success_path(order_id: order.id)}'"
     end
+  end
+
+  def success
+    @order = Order.find(params[:order_id])
+    @step = Cart::STEP[:finish]
   end
 
   def toggle_shopping_point

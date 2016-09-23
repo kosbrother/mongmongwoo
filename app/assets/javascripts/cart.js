@@ -8,7 +8,9 @@ cart = function() {
             quantity = parseInt($(id).val()),
             min = parseInt($(id).attr('min'));
 
-        if (quantity > min)
+        if (quantity > min) {
+            ga('send', 'event', 'checkout_step_1', "click", "quantity_minus");
+
             $.ajax({
                 url: '/cart_items/' + cart_item_id + '/update_quantity',
                 data: {type: 'quantity-minus'},
@@ -28,8 +30,9 @@ cart = function() {
                     alert('錯誤發生，如問題持續發生，請聯繫客服人員');
                 }
             });
-        else
+        } else {
             $("#modal-" + cart_item_id).modal('show');
+        }
     });
 
     //shopping cart page: plus 1 order quantity
@@ -41,6 +44,8 @@ cart = function() {
             max = parseInt($(id).attr('max'));
 
         if (quantity < max)
+            ga('send', 'event', 'checkout_step_1', "click", "quantity_plus");
+
             $.ajax({
                 url: '/cart_items/' + cart_item_id + '/update_quantity',
                 data: {type: 'quantity-plus'},
@@ -66,7 +71,10 @@ cart = function() {
 
         var id = $(this).attr('data-id'),
             target = $('#cart-item-' + id),
-            counter = parseInt($('#nav-bar-collapse .cart > .counter').text());
+            counter = parseInt($('#nav-bar-collapse .cart > .counter').text()),
+            item_id = $(this).data('item-id'),
+            item_name = $(this).data('item-name'),
+            item_price = $(this).data('item-price');
 
         setTimeout(function(){
             $.ajax({
@@ -85,6 +93,22 @@ cart = function() {
                 }
             })
         }, 200);
+
+        fbq('trackCustom', 'RemoveFromCart', {
+            content_name: item_name,
+            content_ids: [item_id],
+            content_type: 'product',
+            value: item_price,
+            currency: 'TWD'
+        });
+
+        ga('ec:addProduct', {
+            'id': item_id,
+            'name': item_name,
+            'price': item_price
+        });
+        ga('ec:setAction', 'remove');
+        ga('send', 'event', 'remove_from_cart', 'click', item_name);
     });
 
 

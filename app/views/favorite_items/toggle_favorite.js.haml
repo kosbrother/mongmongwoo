@@ -1,8 +1,48 @@
 - if @type == 'favorite'
-    #{ analytic_event('product', 'add_to_collection', "#{@item.name}") }
-    $('#add-favorite').addClass('checked').removeClass('uncheck');
-    $('#add-favorite').attr('href', '#{ toggle_favorite_favorite_item_path(@item.id, type: 'un-favorite' ) }');
+  :plain
+    var id = '#{@item.id}';
+    var name = '#{@item.name}';
+    var price = '#{@item.price}';
+
+    fbq('trackCustom', 'AddToCollection', {
+      content_name: name,
+      content_ids: [id],
+      content_type: 'product',
+      value: price,
+      currency: 'TWD'
+    });
+
+    ga('ec:addProduct', {
+      'id': id,
+      'name': name,
+      'price': price
+    });
+    ga('ec:setAction', 'add');
+    ga('send', 'event', 'add_to_collection', 'click', name);
+
+  $('#add-favorite').addClass('checked').removeClass('uncheck');
+  $('#add-favorite').attr('href', '#{ toggle_favorite_favorite_item_path(@item.id, type: 'un-favorite' ) }');
 -elsif @type == 'un-favorite'
-    #{ analytic_event('product', 'remove_from_collection', "#{@item.name}") }
-    $('#add-favorite').addClass('uncheck').removeClass('checked');
-    $('#add-favorite').attr('href', '#{ toggle_favorite_favorite_item_path(@item.id, type: 'favorite' ) }');
+  :plain
+    var id = '#{@item.id}';
+    var name = '#{@item.name}';
+    var price = '#{@item.price}';
+
+    fbq('trackCustom', 'RemoveFromCollection', {
+      content_name: name,
+      content_ids: [id],
+      content_type: 'product',
+      value: price,
+      currency: 'TWD'
+    });
+
+    ga('ec:addProduct', {
+      'id': id,
+      'name': name,
+      'price': price
+    });
+    ga('ec:setAction', 'remove');
+    ga('send', 'event', 'remove_from_collection', 'click', name);
+
+  $('#add-favorite').addClass('uncheck').removeClass('checked');
+  $('#add-favorite').attr('href', '#{ toggle_favorite_favorite_item_path(@item.id, type: 'favorite' ) }');

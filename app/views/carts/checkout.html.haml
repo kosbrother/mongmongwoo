@@ -25,16 +25,15 @@
                     您確定要刪除此產品？
                   .modal-footer
                     %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 關閉視窗
-                    %button.btn.btn-confirm.cart-item-delete{type: "button", "data-dismiss": "modal", 'data-id': item.id,
-                      'data-cart-id': @cart.id, onClick: analytic_event("checkout_step_1", "click", "product_delete")} 刪除
+                    %button.btn.btn-confirm.cart-item-delete{ type: "button", data: { dismiss: "modal", id: item.id, cart_id: @cart.id, item_id: item.item_id, item_name: item.item.name,item_price: item.item.price } } 刪除
           .col-lg-2.col-xs-3.icon= image_tag(item.item_spec.style_pic.url, id: "item-spec-pic-#{item.id}")
           .col-lg-3.col-xs-8.itemname= item.item.name
           .col-lg-2.col-xs-7.select= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'spec-select', id: 'select-specs', 'data-cart-item': item.id, 'data-cart-id': @cart.id
           .col-lg-1.col-xs-2.unitprice= item_current_price(item.item)
           .col-lg-2.col-lg-offset-0.col-sm-2.col-sm-offset-4.col-xs-3.col-xs-offset-3.quantity-box
-            .quantity-minus{ 'data-id': item.id, onClick: analytic_event("checkout_step_1", "click", "number_change") } -
+            .quantity-minus{ 'data-id': item.id } -
             = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
-            .quantity-plus{ 'data-id': item.id, onClick: analytic_event("checkout_step_1", "click", "number_change") } +
+            .quantity-plus{ 'data-id': item.id } +
           .col-lg-1.subtotal.visible-lg-block{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
       .divider
       .totalrow.row
@@ -76,12 +75,14 @@
           #totalprice= price_with_unit(@total)
     .submit-session
       - if current_user
-        = link_to '下一步', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_2", "enter", "無")
+        = link_to '下一步', cart_info_path , class: 'btn'
       -else
         .group
           .btn.login-btn{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#login-page"}
             登入購買
           .text*使用登入購買更方便您查詢及管理訂單
         .group
-          = link_to '免註冊匿名購買', cart_info_path , class: 'btn', onClick: analytic_event("checkout_step_1", "click", "anonymous_purchase")
+          = link_to '免註冊匿名購買', cart_info_path , class: 'btn'
           .text*適合一次性購買，無法管理訂單資料
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "StartCheckout", cart_items: @items
+= render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_1", action: "enter", label: "無"
