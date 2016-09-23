@@ -46,6 +46,10 @@ class ShoppingPointManager
     [total_amount, (items_price * 0.1).round].min
   end
 
+  def able_to_refund_shopping_point_orders
+    user.orders.status(Order.statuses["退貨"]).select{|order| !(ShoppingPointManager.has_refund_shopping_point?(order))}
+  end
+
   private
 
   def self.reduce_shopping_point(shopping_point, reduce_amount, order_id)

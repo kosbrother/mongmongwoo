@@ -94,7 +94,7 @@ module Admin::OrdersHelper
 
   def link_to_create_refund_shopping_point(order)
     if order.status == "退貨" && ShoppingPointManager.has_refund_shopping_point?(order) == false && order.user_id != User::ANONYMOUS
-      link_to "退購物金", new_admin_user_shopping_point_path(order.user, order_items_price_amount: order.items_price), class: "btn btn-default btn-sm"
+      link_to "退購物金", new_admin_user_shopping_point_path(order.user, order_id: order.id), class: "btn btn-default btn-sm"
     end
   end
 

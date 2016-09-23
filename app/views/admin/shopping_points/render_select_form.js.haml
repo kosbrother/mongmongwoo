@@ -1,0 +1,5 @@
+$('#select-point-type-field').children().remove();
+- if @shopping_point_type == "退貨金"
+  $('#select-point-type-field').append('#{j(render 'select_order')}');
+- elsif @shopping_point_type == "活動購物金"
+  $('#select-point-type-field').append('#{j(render 'select_shopping_point_campaign')}');

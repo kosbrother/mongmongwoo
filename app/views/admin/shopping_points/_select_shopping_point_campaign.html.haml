@@ -1,0 +1,4 @@
+.form-group
+  = label_tag "shopping_point[shopping_point_campaign_id]", "購物金活動", class: "col-sm-2 control-label"
+  .col-sm-10
+    = select_tag "shopping_point[shopping_point_campaign_id]", options_for_select(ShoppingPointCampaign.where(is_expired: false).map { |campaign| [campaign.title, campaign.id] }), include_blank: "請選擇購物金活動", class: "form-control"

@@ -1,21 +1,32 @@
 class Admin::ShoppingPointsController < AdminController
   before_action :require_manager
-  before_action :find_user, only: [:new, :create]
+  before_action :find_user
+
+  def index
+    @is_valid = params[:is_valid] ||= true
+    @shopping_points = @user.shopping_points.includes(:shopping_point_campaign).where(is_valid: @is_valid).recent.paginate(:page => params[:page])
+  end
 
   def new
     @shopping_point = @user.shopping_points.new
+    @order = Order.find(params[:order_id]) if params[:order_id]
   end
 
   def create
     @shopping_point = @user.shopping_points.new(shopping_point_params)
 
     if @shopping_point.save
+      @shopping_point.shopping_point_records.first.update_column(:order_id, params[:order_id]) if params[:order_id]
       flash[:notice] = "成功發送購物金給使用者"
-      redirect_to :back
+      redirect_to admin_user_shopping_points_path(@user)
     else
-      flash[:danger] = "請檢查購物金內容是否有誤"
+      flash[:danger] = "請檢查內容是否有誤"
       render :new
     end
+  end
+
+  def render_select_form
+    @shopping_point_type = params[:shopping_point_type]
   end
 
   private

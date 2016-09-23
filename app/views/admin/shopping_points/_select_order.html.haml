@@ -1,0 +1,4 @@
+.form-group
+  = label_tag "order_id", "退貨訂單編號", class: "col-sm-2 control-label"
+  .col-sm-10
+    = select_tag "order_id", options_for_select(ShoppingPointManager.new(@user).able_to_refund_shopping_point_orders.map{ |order| ["訂單編號：#{order.id}(商品總額：#{order.items_price})", order.id] }), include_blank: "請選擇訂單編號", class: "form-control"

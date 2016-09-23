@@ -193,7 +193,11 @@ Rails.application.routes.draw do
         get "export_user_list"
       end
       resources :my_messages, only: [:index, :new, :create]
-      resources :shopping_points, only: [:new, :create]
+      resources :shopping_points, only: [:index, :new, :create] do
+        collection do
+          get "render_select_form"
+        end
+      end
     end
 
     get "users/show_uid/:uid", to: "users#show_uid", as: "uid_user"

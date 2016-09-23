@@ -17,7 +17,7 @@
           %td= user.gender
           %td
             = link_to "查看使用者", admin_user_path(user), class: "btn btn-default"
-            = link_to "個人訊息", admin_user_my_messages_path(user), class: "btn btn-default"
+            = link_to "查看個人訊息", admin_user_my_messages_path(user), class: "btn btn-default"
             - if user.id != User::ANONYMOUS
-              = link_to "發送購物金", new_admin_user_shopping_point_path(user), class: "btn btn-default"
+              = link_to "查看購物金", admin_user_shopping_points_path(user), class: "btn btn-default"
 = render_pagination(users)

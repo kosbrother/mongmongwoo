@@ -1,23 +1,12 @@
 module Admin::ShoppingPointsHelper
-  def point_type_select_options
-    options_for_select(ShoppingPoint.point_types.keys, "退貨金")
-  end
-
-  def shopping_point_campaign_id_select_options
-    options_for_select(ShoppingPointCampaign.where(is_expired: false).map { |c| [c.title, c.id] })
-  end
-
-  def amount_from_order_items_price
-    params[:order_items_price_amount].present? ? params[:order_items_price_amount] : 0
-  end
-
-  def link_to_previous_path
-    if amount_from_order_items_price != 0
-      previous_path = status_index_admin_orders_path(status: Order.statuses["退貨"])
+  def shopping_point_type(shopping_point)
+    if shopping_point.point_type == "退貨金"
+      shopping_point_record = ShoppingPointRecord.find_by(shopping_point_id: shopping_point.id)
+      "#{shopping_point.point_type}(單號：#{shopping_point_record.order_id})"
+    elsif shopping_point.point_type == "活動購物金"
+      "#{shopping_point.point_type}(標題：#{shopping_point.shopping_point_campaign.title})"
     else
-      previous_path = admin_users_path
+      shopping_point.point_type
     end
-
-    link_to "返回前頁", previous_path, class: "btn btn-warning"
   end
 end
