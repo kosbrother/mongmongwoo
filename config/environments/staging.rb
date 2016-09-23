@@ -89,4 +89,8 @@ Rails.application.configure do
     :domain         => 'mmwoo.com',
     :authentication => :plain
   }
+
+  config.after_initialize do
+    Pay2go.integration_mode = :development
+  end
 end

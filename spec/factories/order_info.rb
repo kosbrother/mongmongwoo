@@ -22,4 +22,14 @@ FactoryGirl.define do
     after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :check_blacklisted) }
     after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :check_repurchased) }
   end
+
+  factory :home_delivery_by_credit_card_order_info, class: OrderInfo do
+    ship_name Faker::Name.name
+    ship_address Faker::Address.street_address
+    ship_email Faker::Internet.email
+    ship_phone Faker::PhoneNumber.phone_number
+
+    after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :check_blacklisted) }
+    after(:build) { |order_info| order_info.class.skip_callback(:save, :after, :check_repurchased) }
+  end
 end

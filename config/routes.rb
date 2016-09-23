@@ -72,6 +72,7 @@ Rails.application.routes.draw do
   resources :pay2go, only:[] do
     collection do
       post "notify"
+      post "return"
     end
   end
 

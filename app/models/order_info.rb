@@ -8,7 +8,7 @@ class OrderInfo < ActiveRecord::Base
 
   validates_presence_of :ship_name, :ship_phone, :ship_email
   validates_presence_of :ship_store_code, :ship_store_id, :ship_store_name, if: :is_order_store_delivery?
-  validates_presence_of :ship_address, if: :is_order_home_delivery?
+  validates_presence_of :ship_address, if: :is_home_delivery?
 
   after_update :set_store_if_store_code_changed
 
@@ -17,11 +17,11 @@ class OrderInfo < ActiveRecord::Base
   end
 
   def is_order_store_delivery?
-    order.is_store_delivery?
+    order.store_delivery?
   end
 
-  def is_order_home_delivery?
-    order.is_home_delivery?
+  def is_home_delivery?
+    order.home_delivery? || order.home_delivery_by_credit_card?
   end
 
   private
