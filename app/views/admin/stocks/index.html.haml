@@ -2,12 +2,6 @@
   %h2 庫存列表
   .filter-area.clearfix
     .filter-row
-      .filter-dt 商家名稱
-      .filter-dd.clearfix
-        %ul.filter-list
-          - @taobao_suppliers.each do |taobao|
-            = link_to_stock_index(params[:taobao_supplier_id].to_i == taobao.id, taobao.name, taobao_supplier_id: taobao.id)
-    .filter-row
       .filter-dt 商品狀態
       .filter-dd.clearfix
         %ul.filter-list

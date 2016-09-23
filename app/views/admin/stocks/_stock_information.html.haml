@@ -3,12 +3,12 @@
     .media-left
       = image_tag(item.cover.url, size: "120x90")
     .media-body
+      %p{id: "status-#{item.id}"}
+        = link_to_update_item_status(item)
       商品編號：#{item.id}
       %p.help-block
       商品名稱：
       = link_to item.name, admin_item_path(item), target: "_blank"
-      %p.help-block
-      狀態：#{item_status_text(item)}
       %p.help-block
       淘寶：#{item.ntd_cost}
       %p.help-block
