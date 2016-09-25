@@ -403,6 +403,8 @@ Rails.application.routes.draw do
         resources :shopping_points, only: [:index]
         resources :shopping_point_campaigns, only: [:index]
       end
+
+      resources :categories, only: [:index]
     end
   end
 end
