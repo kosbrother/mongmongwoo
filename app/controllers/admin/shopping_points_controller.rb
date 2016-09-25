@@ -3,8 +3,8 @@ class Admin::ShoppingPointsController < AdminController
   before_action :find_user
 
   def index
-    @is_valid = params[:is_valid] ||= true
-    @shopping_points = @user.shopping_points.includes(:shopping_point_campaign).where(is_valid: @is_valid).recent.paginate(:page => params[:page])
+    params[:is_valid] ||= true
+    @shopping_points = @user.shopping_points.includes(:shopping_point_campaign).where(is_valid: params[:is_valid]).recent.paginate(:page => params[:page])
   end
 
   def new
@@ -23,10 +23,6 @@ class Admin::ShoppingPointsController < AdminController
       flash[:danger] = "請檢查內容是否有誤"
       render :new
     end
-  end
-
-  def render_select_form
-    @shopping_point_type = params[:shopping_point_type]
   end
 
   private

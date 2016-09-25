@@ -5,13 +5,6 @@ class ShoppingPointManager
     @user = user
   end
 
-  def self.create_refund_shopping_point(order)
-    amount = order.items_price
-    user_id = order.user_id
-    shopping_point = ShoppingPoint.create(user_id: user_id, point_type: ShoppingPoint.point_types["退貨金"], amount: amount)
-    shopping_point.shopping_point_records.first.update_column(:order_id, order.id)
-  end
-
   def self.spend_shopping_points(order, spend_amount)
     return if spend_amount <= 0
     user = order.user
@@ -38,6 +31,10 @@ class ShoppingPointManager
     ShoppingPoint.create(user_id: user_id, point_type: ShoppingPoint.point_types["活動購物金"], amount: campaign.amount, shopping_point_campaign_id: campaign.id)
   end
 
+  def self.find_refund_record(shopping_point)
+    shopping_point.shopping_point_records.where('amount > :amount', amount: 0).first
+  end
+
   def total_amount
     ShoppingPoint.valid.where(user_id: user.id).sum(:amount)
   end
@@ -47,7 +44,7 @@ class ShoppingPointManager
   end
 
   def able_to_refund_shopping_point_orders
-    user.orders.status(Order.statuses["退貨"]).select{|order| !(ShoppingPointManager.has_refund_shopping_point?(order))}
+    user.orders.status(Order.statuses["退貨"]).select{|order| ShoppingPointManager.has_refund_shopping_point?(order) == false}
   end
 
   private
