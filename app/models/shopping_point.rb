@@ -1,5 +1,5 @@
 class ShoppingPoint < ActiveRecord::Base
-  enum point_type: { "退貨金" => 0, "活動購物金" => 1 }
+  enum point_type: { "退貨金" => 0, "活動購物金" => 1, "送購物金" => 2 }
 
   after_create :create_record
   after_update :set_not_valid_if_amount_zero
@@ -9,6 +9,7 @@ class ShoppingPoint < ActiveRecord::Base
   has_many :shopping_point_records
 
   scope :valid, ->{where(is_valid: true)}
+  scope :recent, ->{order(id: :desc)}
 
   def description
     shopping_point_campaign.description if shopping_point_campaign_id

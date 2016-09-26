@@ -1,0 +1,12 @@
+.col-md-10
+  .content-box-large
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li.active 新增消費者購物金
+    .panel-heading
+      .panel-title
+        %h3 新增 #{@user.user_name} 的購物金
+    .panel-body
+      = render "form"

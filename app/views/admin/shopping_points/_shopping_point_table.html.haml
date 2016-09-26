@@ -1,0 +1,21 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th 編號
+      %th 購物金類型
+      %th 金額
+      %th 發送日期
+      %th 截止日期
+  %tboady
+    - shopping_points.each do |shopping_point|
+      %tr
+        %td
+          = shopping_point.id
+        %td
+          = shopping_point_type(shopping_point)
+        %td
+          = shopping_point.amount
+        %td
+          = display_date(shopping_point.created_at)
+        %td
+          = shopping_point.valid_until ? display_date(shopping_point.valid_until) : "無"

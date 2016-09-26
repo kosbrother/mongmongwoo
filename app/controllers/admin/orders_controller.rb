@@ -17,7 +17,6 @@ class Admin::OrdersController < AdminController
       restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
       query_hash = query_hash.merge(restock: restock)
     end
-    includes_array << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
     includes_array << :info if params[:status] == Order.statuses["完成取貨"].to_s
 
     @orders = Order.includes(includes_array).where(query_hash).recent.paginate(page: params[:page])
@@ -127,17 +126,6 @@ class Admin::OrdersController < AdminController
     new_orders = Order.status(Order.statuses["新訂單"]).where(ship_type: params[:ship_type])
     new_orders.each do |order|
       order.update_attribute(:status, Order.statuses["處理中"]) if order.all_able_to_pack?
-    end
-
-    redirect_to :back
-  end
-
-  def refund_shopping_point
-    if @order.user_id == User::ANONYMOUS
-      flash[:danger] = "該訂單為匿名購買，因此無法產生購物金"
-    else
-      ShoppingPointManager.create_refund_shopping_point(@order)
-      flash[:notice] = "訂單編號#{@order.id} 退貨購物金已產生"
     end
 
     redirect_to :back

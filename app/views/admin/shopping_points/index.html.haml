@@ -1,0 +1,19 @@
+.content-box-large
+  .category-all-items
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li
+          = link_to "使用者列表", admin_users_path
+        %li.active 購物金列表
+    .pull-right
+      = link_to "新增購物金", new_admin_user_shopping_point_path(@user), class: "btn btn-default"
+    %h2 #{@user.user_name}的購物金列表
+    %ul.nav.nav-tabs
+      %li{class: "#{'active' if params[:is_valid] == true}"}= link_to '進行中', admin_user_shopping_points_path(@user)
+      %li{class: "#{'active' if params[:is_valid] == false.to_s}"}= link_to '已失效', admin_user_shopping_points_path(@user, is_valid: false)
+    .panel-body
+      = render_pagination(@shopping_points)
+      = render "shopping_point_table", shopping_points: @shopping_points
+      = render_pagination(@shopping_points)

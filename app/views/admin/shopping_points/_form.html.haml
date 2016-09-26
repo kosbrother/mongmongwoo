@@ -1,0 +1,23 @@
+= form_for [:admin, @user, @shopping_point], html: { class: "form-horizontal" } do |f|
+  .form-group
+    = f.label :point_type, "購物金類型", class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.select :point_type, options_for_select(ShoppingPoint.point_types.keys, "#{'退貨金' if @order}"), { include_blank: "請選擇購物金類型" }, class: "form-control", id: "shopping-point-type", data: { user_id: @user.id }, required: true
+  #select-point-type-field
+    - if @order
+      .form-group
+        = label_tag "order_id", "退貨訂單編號", class: "col-sm-2 control-label"
+        .col-sm-10
+          = select_tag "order_id", raw("<option value='#{@order.id}'>訂單編號：#{@order.id}(商品總額：#{@order.items_price})</option>"), class: "form-control"
+  .form-group
+    = f.label :amount, "購物金額度", class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.number_field :amount, class: "form-control", min: 0, placeholder: "請輸入購物金額度", required: true
+  .form-group
+    = f.label :valid_until, "截止日期", class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.datetime_field :valid_until, class: "form-control datetimepicker", placeholder: "選擇截止日期"
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit "確認送出", class: "btn btn-primary"
+      = link_to "返回上頁", :back, class: "btn btn-warning"
