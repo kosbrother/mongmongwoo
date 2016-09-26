@@ -14,7 +14,9 @@ xml.rss :version => "2.0", "xmlns:g" => "http://base.google.com/ns/1.0" do
         xml.tag!("applink", nil, property: "android_package", content: "com.kosbrother.mongmongwoo")
         xml.tag!("applink", nil, property: "android_app_name", content: "萌萌屋 - 走在青年流行前線")
         xml.tag!("g:description", strip_tags(item.description).gsub("\r\n\r\n"," "))
-        xml.tag!("g:google_product_category", "Apparel & Accessories > Handbags, Wallets & Cases > Handbags")
+        item.categories.each do |category|
+          xml.tag!("g:google_product_category", category.name)
+        end
         xml.tag!("g:link", category_item_url(item.categories.parent_categories.last, item))
         xml.tag!("g:image_link", item.specs[0].style_pic.url)
         xml.tag!("g:condition", "new")
