@@ -23,7 +23,7 @@ class ShoppingPointManager
   end
 
   def self.has_refund_shopping_point?(order)
-    order.shopping_point_records.any?{|record| record.amount > 0}
+    order.shopping_point_records.exists?(['amount > :amount', amount: 0])
   end
 
   def self.create_register_shopping_point(user_id)

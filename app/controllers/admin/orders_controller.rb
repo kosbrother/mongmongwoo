@@ -17,7 +17,6 @@ class Admin::OrdersController < AdminController
       restock = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(params[:restock])
       query_hash = query_hash.merge(restock: restock)
     end
-    includes_array << :shopping_point_records if params[:status] == Order.statuses["退貨"].to_s
     includes_array << :info if params[:status] == Order.statuses["完成取貨"].to_s
 
     @orders = Order.includes(includes_array).where(query_hash).recent.paginate(page: params[:page])
