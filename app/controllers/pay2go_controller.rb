@@ -14,6 +14,7 @@ class Pay2goController < ActionController::Base
       order_id = result["MerchantOrderNo"]
       order = Order.find(order_id)
       order.update_attribute(:is_paid, true)
+      OrderMailer.delay.notify_order_placed(order)
       render status: 200, json: {data: "success"}
     else
       Rails.logger.error(data["Status"] + " : " + data["Message"])

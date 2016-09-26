@@ -97,7 +97,7 @@ class CartsController < ApplicationController
     else
       ShoppingPointManager.spend_shopping_points(@order, current_cart.shopping_point_amount)
       session[:cart_id] = nil
-      OrderMailer.delay.notify_order_placed(@order)
+      OrderMailer.delay.notify_order_placed(@order) if (@order.store_delivery? || @order.home_delivery?)
     end
   end
 

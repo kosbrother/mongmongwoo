@@ -13,6 +13,7 @@ class Order < ActiveRecord::Base
   SHOW_BARCODE_STATUS = ["配送中", "訂單變更"]
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
+  HOME_DELIVERY_CODE = [Order.ship_types["home_delivery"], Order.ship_types["home_delivery_by_credit_card"]]
 
   validates_presence_of :user_id, :items_price, :ship_fee, :total
   validates_numericality_of :items_price, :total, greater_than: 0
@@ -42,7 +43,7 @@ class Order < ActiveRecord::Base
   scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
   scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
-  scope :home_delivery, -> { where(ship_type: Order.ship_types["home_delivery"]) }
+  scope :home_delivery, -> { where(ship_type: Order::HOME_DELIVERY_CODE) }
 
   acts_as_paranoid
 

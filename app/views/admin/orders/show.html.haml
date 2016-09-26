@@ -47,7 +47,7 @@
           %td= order_item.item_price
           %td.stock-amount= order_item.stock_amount
           %td= order_item.shipping_amount
-          %td= spec_requested_number(order_item)
+          %td= span_spec_requested_number(order_item)
           %td= unable_to_buy_status(order_item)
       %tr
         %td.text-right{colspan: 9}
