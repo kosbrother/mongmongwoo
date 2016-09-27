@@ -1,5 +1,7 @@
 class Admin::BannersController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def index
     @banners = Banner.includes(:bannerable).recent.paginate(page: params[:page])

@@ -1,5 +1,10 @@
 class Admin::ItemSpecsController < AdminController
-  before_action :require_manager
+  before_action only: [:on_shelf, :off_shelf] do
+    accept_role(:manager)
+  end
+  before_action except: [:on_shelf, :off_shelf] do
+    accept_role(:manager, :staff)
+  end
   before_action :find_item
   before_action :find_spec, only: [:edit, :update, :destroy, :on_shelf, :off_shelf, :style_pic, :stop_recommend, :start_recommend]
 

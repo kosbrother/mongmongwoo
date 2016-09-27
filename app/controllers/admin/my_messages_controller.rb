@@ -1,5 +1,7 @@
 class Admin::MyMessagesController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   before_action :find_user, only: [:index, :new, :create]
 
   def index

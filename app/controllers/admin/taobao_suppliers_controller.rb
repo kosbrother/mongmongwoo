@@ -1,5 +1,7 @@
 class Admin::TaobaoSuppliersController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   before_action :find_taobao_supplier, only: [:edit, :update, :destroy, :items, :show]
 
   def index

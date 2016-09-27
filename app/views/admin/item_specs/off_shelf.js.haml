@@ -1,4 +1,4 @@
-$("#status-#{@item_spec.id}").html('#{link_to_update_item_spec(@item_spec)}')
+$("#status-#{@item_spec.id}").html('#{link_to_update_item_spec_status(@item_spec)}')
 - if (@set_item_off_shelf)
   $("#status-#{@item_spec.item.id}").html('#{link_to_update_item_status(@item)}') 
   :plain

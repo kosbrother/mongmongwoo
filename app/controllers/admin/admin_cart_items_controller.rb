@@ -1,5 +1,7 @@
 class Admin::AdminCartItemsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   before_action :find_cart_item, only: [:update_spec, :update_quantity,:destroy, :update_actual_quantity]
   before_action :create_cart_item, only: [:create, :add]
 

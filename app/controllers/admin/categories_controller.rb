@@ -1,6 +1,11 @@
 class Admin::CategoriesController < AdminController
   include Admin::CategoriesHelper
-  before_action :require_manager
+  before_action only: [:new, :create, :import_excel] do
+    accept_role(:manager)
+  end
+  before_action except: [:new, :create, :import_excel] do
+    accept_role(:manager, :staff)
+  end
   before_action :find_category, only: [:show, :edit, :update, :destroy, :subcategory]
 
   def index

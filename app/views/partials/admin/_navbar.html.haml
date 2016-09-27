@@ -4,7 +4,7 @@
       =link_to '管理者後台', admin_root_path
 .col-md-2
   .user
-    .user-name Hi #{current_manager.username}
+    .user-name Hi #{current_admin.username}
     = link_to '登出' ,admin_signout_path, class: 'sign-out', method: :delete
 .col-md-4
   .search-bar
@@ -13,6 +13,7 @@
       %span.input-group-btn
         = button_tag "搜尋", class: "btn btn-primary"
 .col-md-2.col-md-offset-2
-  .cart
-    = link_to checkout_admin_admin_carts_path do
-      %span.glyphicon.glyphicon-shopping-cart 購物車
+  - if current_admin.manager?
+    .cart
+      = link_to checkout_admin_admin_carts_path do
+        %span.glyphicon.glyphicon-shopping-cart 購物車

@@ -1,10 +1,11 @@
 .checkout
   .content-box-large
-    .pull-right.file-form
-      = form_tag import_excel_admin_categories_path, :enctype =>'multipart/form-data'  do
-        = label_tag '匯入商品分類'
-        = file_field_tag :excel_file, required: true, class: 'custom-file-input'
-        = submit_tag '送出', class: 'btn btn-default'
+    - if current_admin.manager?
+      .pull-right.file-form
+        = form_tag import_excel_admin_categories_path, :enctype =>'multipart/form-data'  do
+          = label_tag '匯入商品分類'
+          = file_field_tag :excel_file, required: true, class: 'custom-file-input'
+          = submit_tag '送出', class: 'btn btn-default'
     %h2 商品列表
     .pull-right
       =link_to '新增商品', new_admin_item_path, class: 'btn btn-default'

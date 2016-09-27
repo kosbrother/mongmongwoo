@@ -1,5 +1,7 @@
 class Admin::TagsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager, :staff)
+  end
   before_action :find_tag, only: [:show, :edit, :update, :destroy]
 
   def index

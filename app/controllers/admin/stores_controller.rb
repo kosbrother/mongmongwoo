@@ -1,5 +1,7 @@
 class Admin::StoresController < AdminController
-  before_action :require_manager, except: [:get_store_options]
+  before_action except: [:get_store_options] do
+    accept_role(:manager)
+  end
   before_action :find_store, only: [:edit, :update, :destroy]
 
   def index

@@ -1,5 +1,7 @@
 class Admin::MailRecordsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def sending_survey_email
     @order = Order.find(params[:order_id])

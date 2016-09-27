@@ -1,5 +1,7 @@
 class Admin::ShoppingPointCampaignsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   before_action :find_shopping_point_campaign, only: [:show, :edit, :update, :expired, :destroy]
 
   def index

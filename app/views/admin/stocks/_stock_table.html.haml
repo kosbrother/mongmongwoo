@@ -20,7 +20,7 @@
             %td
               = link_to item_spec.style, "#", rel: "popover", data: { "image-url": "#{item_spec.style_pic_url}", "placement": "left" }, class: "btn btn-default preview"
             %td{:id => "status-#{item_spec.id}"}
-              = link_to_update_item_spec(item_spec)
+              = link_to_update_item_spec_status(item_spec)
             %td
               = item_spec.stock_item_quantity
             %td

@@ -1,5 +1,7 @@
 class Admin::SalesReportsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def item_sales_result
     params[:start_date] ||=  Time.current.to_date.prev_day(7)

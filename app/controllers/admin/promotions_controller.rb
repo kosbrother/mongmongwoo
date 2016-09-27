@@ -1,5 +1,7 @@
 class Admin::PromotionsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def index
     @promotions = Promotion.recent.paginate(:page => params[:page]) 

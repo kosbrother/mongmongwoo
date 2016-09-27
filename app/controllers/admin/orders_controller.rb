@@ -1,5 +1,7 @@
 class Admin::OrdersController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
   before_action :find_order, only: [:update, :update_status, :refund_shopping_point]
   skip_before_filter  :verify_authenticity_token, only: [:allpay_create, :allpay_status]
 

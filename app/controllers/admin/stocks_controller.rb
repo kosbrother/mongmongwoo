@@ -1,5 +1,7 @@
 class Admin::StocksController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def index
     query_hash = {}

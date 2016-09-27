@@ -1,5 +1,7 @@
 class Admin::StockSpecsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def create
     @stock_spec = StockSpec.create(stock_spec_params)

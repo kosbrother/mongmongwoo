@@ -1,5 +1,7 @@
 class Admin::AdminCartsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def checkout
     @searched_item = Item.find(params[:item_id]) if params[:item_id]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919133839) do
+ActiveRecord::Schema.define(version: 20160920085856) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -41,24 +41,17 @@ ActiveRecord::Schema.define(version: 20160919133839) do
   add_index "admin_carts", ["taobao_order_id"], name: "index_admin_carts_on_taobao_order_id", using: :btree
   add_index "admin_carts", ["taobao_supplier_id"], name: "index_admin_carts_on_taobao_supplier_id", using: :btree
 
+  create_table "admins", force: :cascade do |t|
+    t.string  "username",        limit: 255
+    t.string  "password_digest", limit: 255
+    t.integer "role",            limit: 4
+  end
+
   create_table "android_versions", force: :cascade do |t|
     t.string  "version_name",   limit: 255
     t.integer "version_code",   limit: 4
     t.text    "update_message", limit: 65535
   end
-
-  create_table "assistants", force: :cascade do |t|
-    t.string   "username",        limit: 255
-    t.string   "email",           limit: 255
-    t.string   "password_digest", limit: 255
-    t.integer  "status",          limit: 4,   default: 0
-    t.integer  "position",        limit: 4,   default: 0
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "assistants", ["deleted_at"], name: "index_assistants_on_deleted_at", using: :btree
 
   create_table "banners", force: :cascade do |t|
     t.integer  "bannerable_id",   limit: 4
@@ -275,20 +268,6 @@ ActiveRecord::Schema.define(version: 20160919133839) do
   add_index "mail_records", ["mail_type"], name: "index_mail_records_on_mail_type", using: :btree
   add_index "mail_records", ["recordable_id"], name: "index_mail_records_on_recordable_id", using: :btree
   add_index "mail_records", ["recordable_type"], name: "index_mail_records_on_recordable_type", using: :btree
-
-  create_table "managers", force: :cascade do |t|
-    t.string   "username",        limit: 255
-    t.string   "email",           limit: 255
-    t.string   "password_digest", limit: 255
-    t.integer  "status",          limit: 4,   default: 0
-    t.integer  "position",        limit: 4,   default: 0
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "remember_token",  limit: 255
-  end
-
-  add_index "managers", ["deleted_at"], name: "index_managers_on_deleted_at", using: :btree
 
   create_table "message_records", force: :cascade do |t|
     t.integer  "user_id",    limit: 4

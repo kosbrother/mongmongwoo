@@ -1,5 +1,7 @@
 class Admin::OrderItemsController < AdminController
-  before_action :require_manager
+  before_action do
+    accept_role(:manager)
+  end
 
   def destroy
     @order_item = OrderItem.find(params[:id])
