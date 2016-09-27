@@ -45,6 +45,7 @@ class Order < ActiveRecord::Base
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
   scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
   scope :home_delivery, -> { where(ship_type: Order::HOME_DELIVERY_CODE) }
+  scope :exclude_unpaid_credit_card_orders, -> { where.not('orders.ship_type = :ship_type AND orders.is_paid = :is_paid', ship_type: Order::ship_types["home_delivery_by_credit_card"], is_paid: false) }
 
   acts_as_paranoid
 

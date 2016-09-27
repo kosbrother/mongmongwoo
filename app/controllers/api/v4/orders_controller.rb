@@ -108,4 +108,18 @@ class Api::V4::OrdersController < ApiController
     result_order = order.generate_result_order
     render status: 200, json: {data: result_order}
   end
+
+  def by_user_email
+    orders = Order.joins(:user).where('users.email = :email', email: params[:email]).exclude_unpaid_credit_card_orders.recent
+    data = orders.as_json(only: [:id, :total, :created_at, :status, :user_id])
+    data.each{|data| data["created_on"] = data["created_at"].strftime("%Y-%m-%d")}
+    render status: 200, json: {data: data}
+  end
+
+  def by_email_phone
+    orders = Order.joins(:info).where("order_infos.ship_email = :ship_email AND order_infos.ship_phone = :ship_phone", ship_email: params[:ship_email], ship_phone: params[:ship_phone]).exclude_unpaid_credit_card_orders.recent
+    data = orders.as_json(only: [:id, :total, :created_at, :status, :user_id])
+    data.each{|data| data["created_on"] = data["created_at"].strftime("%Y-%m-%d")}
+    render status: 200, json: {data: data}
+  end
 end
