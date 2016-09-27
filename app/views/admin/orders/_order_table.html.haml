@@ -32,8 +32,7 @@
         %td
           = order.total
         %td.user-id-cell
-          = span_already_paid_notice(order)
-          = span_unpaid_credit_card_order_notice(order)
+          = span_credit_card_order_paid_notice(order)
           = span_blacklist_notice(order)
           = span_repurchased_notice(order)
         %td

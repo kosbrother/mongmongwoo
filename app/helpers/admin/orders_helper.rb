@@ -146,15 +146,13 @@ module Admin::OrdersHelper
     end
   end
 
-  def span_already_paid_notice(order)
-    if order.is_paid == true
-      content_tag(:span, "已付款", class: "label label-success")
-    end
-  end
-
-  def span_unpaid_credit_card_order_notice(order)
-    if order.home_delivery_by_credit_card? && (order.is_paid == false)
-      content_tag(:span, "未付款", class: "label label-warning")
+  def span_credit_card_order_paid_notice(order)
+    if order.home_delivery_by_credit_card?
+      if order.is_paid == true
+        content_tag(:span, "已付款", class: "label label-success")
+      elsif order.is_paid == false
+        content_tag(:span, "未付款", class: "label label-warning")
+      end
     end
   end
 
