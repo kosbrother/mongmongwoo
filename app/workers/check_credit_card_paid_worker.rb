@@ -1,4 +1,4 @@
-class CancelUnpaidOrderWorker
+class CheckCreditCardPaidWorker
   include Sidekiq::Worker
   sidekiq_options retry: 3
 

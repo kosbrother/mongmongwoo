@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
 
   enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7, "退貨" => 8 }
   enum ship_type: { "store_delivery": 0, "home_delivery": 1, "home_delivery_by_credit_card": 2 }
+  enum schedule_type: { check_credit_card_paid: "check_credit_card_paid" }
 
   COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
   RESTOCK_STATUS = ["未取訂貨", "退貨"]
@@ -20,7 +21,7 @@ class Order < ActiveRecord::Base
   validates_numericality_of :items_price, :total, greater_than: 0
 
   after_update :reduce_stock_amount_if_status_shipping, :restock_if_status_changed_from_shipping
-  after_create :put_in_schedule_if_unpaid_credit_card_order
+  after_create :put_in_check_order_paid_schedule_if_by_credit_card
 
   belongs_to :user
   has_many :items, class_name: "OrderItem", dependent: :destroy
@@ -151,10 +152,6 @@ class Order < ActiveRecord::Base
     id.to_s + "-" + time
   end
 
-  def schedule_type
-    "cancel_unpaid_order"
-  end
-
   private
 
   def status_changed_to?(changed_status)
@@ -184,11 +181,10 @@ class Order < ActiveRecord::Base
       end
     end
   end
-
-  def put_in_schedule_if_unpaid_credit_card_order
-    if home_delivery_by_credit_card? && (is_paid == false)
-      schedule = Schedule.create(scheduleable: self, execute_time: (created_at + 30.minutes), schedule_type: schedule_type)
-      job_id = CancelUnpaidOrderWorker.perform_at(schedule.execute_time, id)
+  def put_in_check_order_paid_schedule_if_by_credit_card
+    if home_delivery_by_credit_card?
+      schedule = Schedule.create(scheduleable: self, execute_time: (created_at + 30.minutes), schedule_type: "check_credit_card_paid")
+      job_id = CheckCreditCardPaidWorker.perform_at(schedule.execute_time, id)
       schedule.update_attribute(:job_id, job_id)
     end
   end
