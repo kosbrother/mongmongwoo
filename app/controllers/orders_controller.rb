@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action  :load_categories, :require_user
 
   def index
-    @orders = current_user.orders.recent
+    @orders = current_user.orders.exclude_unpaid_credit_card_orders.recent
     set_meta_tags title: "我的訂單", noindex: true
   end
 
