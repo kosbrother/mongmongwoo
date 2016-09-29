@@ -69,6 +69,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pay2go, only:[] do
+    collection do
+      post "notify"
+      post "return"
+    end
+  end
+
   namespace :admin do
     root "pages#home"
     get "/signin", to: "sessions#new"
@@ -371,6 +378,8 @@ Rails.application.routes.draw do
         collection do
           post "checkout"
           post "check_pickup_record"
+          get "by_user_email"
+          get "by_email_phone"
         end
       end
       resources :banners, only: [:index]

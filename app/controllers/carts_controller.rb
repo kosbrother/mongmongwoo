@@ -2,9 +2,11 @@ require "uri"
 
 class CartsController < ApplicationController
   layout 'cart'
-  skip_before_action :verify_authenticity_token, only: :info
+
+  skip_before_action :verify_authenticity_token, only: [:info]
   before_action  :load_categories
   before_action :calculate_cart_price, only: [:checkout, :confirm]
+
   include DeviceHelper
 
   def checkout
@@ -35,7 +37,7 @@ class CartsController < ApplicationController
       cookies[:store_id] = @store.id
     elsif current_cart.ship_type == "store_delivery" && cookies[:store_id]
       @store = Store.find_by(id: cookies[:store_id])
-    elsif current_cart.ship_type == "home_delivery"
+    elsif Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
       @counties = County.where(store_type: 4)
       @county = @counties.find_by(id: cookies[:county_id]) || @counties.first
       @towns = @county.towns
@@ -69,7 +71,7 @@ class CartsController < ApplicationController
     @info = {ship_name: cookies[:name],
              ship_phone: cookies[:phone],
              ship_email: cookies[:email]}
-    if current_cart.ship_type == "home_delivery"
+    if Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
       cookies[:county_id] = params[:county_id]
       cookies[:town_id] = params[:town_id]
       cookies[:road] = params[:road]
@@ -86,17 +88,16 @@ class CartsController < ApplicationController
 
   def submit
     items = current_cart.cart_items.includes(:item, :item_spec)
-    order,errors = create_order(items, params[:info])
+    @order,errors = create_order(items, params[:info])
     if errors.present?
       @unable_to_buy_lists = errors.select{|error| error.key?(:unable_to_buy)}.map{|list| list[:unable_to_buy][0]}
       @updated_items = destroy_and_return_items(@unable_to_buy_lists)
       add_to_wish_lists(@unable_to_buy_lists) if current_user
       render 'error_infos'
     else
-      ShoppingPointManager.spend_shopping_points(order, current_cart.shopping_point_amount)
+      ShoppingPointManager.spend_shopping_points(@order, current_cart.shopping_point_amount)
       session[:cart_id] = nil
-      OrderMailer.delay.notify_order_placed(order)
-      render :js => "window.location = '#{success_path(order_id: order.id)}'"
+      OrderMailer.delay.notify_order_placed(@order) if (@order.store_delivery? || @order.home_delivery?)
     end
   end
 
@@ -150,7 +151,7 @@ class CartsController < ApplicationController
       info.ship_name = cart_info[:ship_name]
       info.ship_phone = cart_info[:ship_phone]
       info.ship_email = cart_info[:ship_email]
-      if current_cart.ship_type == "home_delivery"
+      if Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
         info.ship_address = cart_info[:ship_address]
       elsif current_cart.ship_type == "store_delivery"
         store = Store.find(cart_info[:store_id])

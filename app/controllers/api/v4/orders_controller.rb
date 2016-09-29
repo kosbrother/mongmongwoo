@@ -56,7 +56,7 @@ class Api::V4::OrdersController < ApiController
         info.ship_store_code = params[:ship_store_code]
         info.ship_store_id = params[:ship_store_id]
         info.ship_store_name = params[:ship_store_name]
-      elsif info.is_order_home_delivery?
+      elsif info.is_home_delivery?
         info.ship_address = params[:ship_address]
       end
       errors << info.errors.messages unless info.save
@@ -98,7 +98,7 @@ class Api::V4::OrdersController < ApiController
       render status: 203, json: {data: {unable_to_buy: products_errors}}
     else
       ShoppingPointManager.spend_shopping_points(@order, params[:shopping_points_amount].to_i)
-      OrderMailer.delay.notify_order_placed(@order)
+      OrderMailer.delay.notify_order_placed(@order) if (@order.store_delivery? || @order.home_delivery?)
       render status: 200, json: {data: @order.as_json(only: [:id])}
     end
   end
@@ -107,5 +107,19 @@ class Api::V4::OrdersController < ApiController
     order = Order.includes(:user, :info, :items).find(params[:id])
     result_order = order.generate_result_order
     render status: 200, json: {data: result_order}
+  end
+
+  def by_user_email
+    orders = Order.joins(:user).where('users.email = :email', email: params[:email]).exclude_unpaid_credit_card_orders.recent
+    data = orders.as_json(only: [:id, :total, :created_at, :status, :user_id])
+    data.each{|data| data["created_on"] = data["created_at"].strftime("%Y-%m-%d")}
+    render status: 200, json: {data: data}
+  end
+
+  def by_email_phone
+    orders = Order.joins(:info).where("order_infos.ship_email = :ship_email AND order_infos.ship_phone = :ship_phone", ship_email: params[:ship_email], ship_phone: params[:ship_phone]).exclude_unpaid_credit_card_orders.recent
+    data = orders.as_json(only: [:id, :total, :created_at, :status, :user_id])
+    data.each{|data| data["created_on"] = data["created_at"].strftime("%Y-%m-%d")}
+    render status: 200, json: {data: data}
   end
 end

@@ -1,14 +1,14 @@
 %ul.nav.nav-tabs
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["新訂單"])
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["處理中"])
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["配送中"])
-  - if params[:ship_type].to_i == Order.ship_types["store_delivery"]
-    = li_status_link(ship_type: params[:ship_type], status: Order.statuses["已到店"])
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["完成取貨"])
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["未取訂貨"], restock: false)
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["訂單變更"])
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["訂單取消"])
-  = li_status_link(ship_type: params[:ship_type], status: Order.statuses["退貨"], restock: false)
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["新訂單"])
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["處理中"])
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["配送中"])
+  - if params[:ship_type] == Order.ship_types["store_delivery"].to_s
+    = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["已到店"])
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["完成取貨"])
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["未取訂貨"], restock: false)
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["訂單變更"])
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["訂單取消"])
+  = li_link_to_status_orders(ship_type: params[:ship_type], status: Order.statuses["退貨"], restock: false)
 - if params[:restock].present?
   %p.help-block
   = restock_navs

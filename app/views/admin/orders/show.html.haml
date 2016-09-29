@@ -13,14 +13,14 @@
         聯絡電話： #{@order.ship_phone}
       %li.list-group-item
         Email： #{@order.ship_email}
-      - if @order.is_store_delivery?
+      - if @order.store_delivery?
         %li.list-group-item
           門市店號： #{@order.ship_store_code}
         %li.list-group-item
           門市名稱： #{@order.ship_store_name}
         %li.list-group-item
           門市地址： #{@order.address}
-      - elsif @order.is_home_delivery?
+      - elsif @order.home_delivery? || @order.home_delivery_by_credit_card?
         %li.list-group-item
           收件地址： #{@order.ship_address}
   %h4 商品明細
@@ -47,7 +47,7 @@
           %td= order_item.item_price
           %td.stock-amount= order_item.stock_amount
           %td= order_item.shipping_amount
-          %td= spec_requested_number(order_item)
+          %td= span_spec_requested_number(order_item)
           %td= unable_to_buy_status(order_item)
       %tr
         %td.text-right{colspan: 9}

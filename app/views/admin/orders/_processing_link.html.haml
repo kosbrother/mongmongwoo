@@ -4,5 +4,5 @@
   - if params[:ship_type] == Order.ship_types["store_delivery"].to_s
     = link_to '物流單', open_barcode_tab_admin_orders_path, remote: true, class: 'btn btn-default inline-display'
     = link_to '傳送至歐付寶', create_allpay_index_path, remote: true, class: 'btn btn-default inline-display', method: :post
-  - elsif params[:ship_type] == Order.ship_types["home_delivery"].to_s
+  - elsif params[:ship_type] == Order::HOME_DELIVERY_CODE.map(&:to_s)
     = link_to "下載宅配訂單EXCEL", export_home_delivery_order_list_admin_orders_path(format: :xls), class: "btn btn-default"

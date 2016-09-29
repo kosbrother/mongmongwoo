@@ -3,8 +3,9 @@ require 'spec_helper'
 describe Api::V4::OrdersController, type: :controller do
   let!(:item) { FactoryGirl.create(:item_with_specs_and_photos) }
   let!(:spec) { item.specs.first }
-  let!(:store_delivery_type) { Order.ship_types.key(Order.ship_types["store_delivery"]) }
-  let!(:home_delivery_type) { Order.ship_types.key(Order.ship_types["home_delivery"]) }
+  let!(:store_delivery_type) { "store_delivery" }
+  let!(:home_delivery_type) { "home_delivery" }
+  let!(:home_delivery_by_credit_card_type) { "home_delivery_by_credit_card" }
 
   describe "post#checkout" do
     let!(:user) { FactoryGirl.create(:user_with_registration_device) }
@@ -137,6 +138,25 @@ describe Api::V4::OrdersController, type: :controller do
         end
       end
 
+      context "when ship type is home delivery by credit card" do
+        it "does create correct order" do
+          post :create, email: user.email, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_type: home_delivery_by_credit_card_type, ship_name: ship_name, ship_phone: ship_phone,
+               ship_address: ship_address, ship_email: ship_email, products: products
+          order_id = JSON.parse(response.body)["data"]['id']
+          order = Order.find(order_id)
+          expect(order.items_price).to eq(items_price)
+          expect(order.ship_fee).to eq(ship_fee)
+          expect(order.total).to eq(total)
+          expect(order.device_registration_id).to eq(DeviceRegistration.find_by(registration_id: registration_id).id)
+          expect(order.ship_type).to eq(home_delivery_by_credit_card_type)
+          expect(order.info.ship_email).to eq(ship_email)
+          expect(order.info.ship_address).to eq(ship_address)
+          expect(order.items.size).to eq(products.size)
+          expect(order.items[0].item_name).to eq(product[:name])
+        end
+      end
+
       it "return errors if missing order params" do
         post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
@@ -236,6 +256,19 @@ describe Api::V4::OrdersController, type: :controller do
         expect(result.to_json).to eq(json)
       end
     end
+
+    context 'when order is home delivery by credit card' do
+      let!(:home_delivery_by_credit_card_order) { FactoryGirl.create(:order, items: [order_item], ship_type: home_delivery_by_credit_card_type) }
+      let!(:home_delivery_by_credit_card_order_info) { FactoryGirl.create(:home_delivery_by_credit_card_order_info, order: home_delivery_by_credit_card_order) }
+
+      it 'does generate correct order info' do
+        get :show, id: home_delivery_by_credit_card_order.id
+        result = JSON.parse(response.body)["data"]
+        order = Order.find(home_delivery_by_credit_card_order.id)
+        json = order.generate_result_order.to_json
+        expect(result.to_json).to eq(json)
+      end
+    end
   end
 
   describe "post#check_pickup_record" do
@@ -308,6 +341,86 @@ describe Api::V4::OrdersController, type: :controller do
           data = JSON.parse(response.body)["data"]
           expect(data).to eq("success")
         end
+      end
+    end
+  end
+
+  describe "get#by_user_email" do
+    let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 40) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:store_delivery_order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: store_delivery_type) }
+    let!(:store_delivery_info) { FactoryGirl.create(:store_delivery_order_info, order: store_delivery_order) }
+    context "when orders contain paid credit card order" do
+      let!(:paid_credit_card_order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: home_delivery_by_credit_card_type, is_paid: true) }
+      let!(:paid_credit_card_info) { FactoryGirl.create(:home_delivery_by_credit_card_order_info, order: paid_credit_card_order) }
+      let!(:orders) { user.orders.exclude_unpaid_credit_card_orders.recent }
+      it 'does generate correct order list' do
+        get :by_user_email, email: user.email
+        data = JSON.parse(response.body)["data"]
+        expect(data.size).to eq(orders.size)
+        expect(data[0]['id']).to eq(orders[0].id)
+        expect(data[0]['user_id']).to eq(orders[0].user_id)
+        expect(data[0]['total']).to eq(orders[0].total)
+        expect(data[0]['status']).to eq(orders[0].status)
+        expect(data[0]['created_on']).to eq(orders[0].created_at.strftime("%Y-%m-%d"))
+      end
+    end
+
+    context "when orders contain unpaid credit card order" do
+      let!(:unpaid_credit_card_order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: home_delivery_by_credit_card_type) }
+      let!(:unpaid_credit_card_info) { FactoryGirl.create(:home_delivery_by_credit_card_order_info, order: unpaid_credit_card_order) }
+      let!(:orders) { user.orders.exclude_unpaid_credit_card_orders }
+      it 'does generate correct order list' do
+        get :by_user_email, email: user.email
+        data = JSON.parse(response.body)["data"]
+        expect(data.size).to eq(orders.size)
+        expect(data[0]['id']).to eq(orders[0].id)
+        expect(data[0]['user_id']).to eq(orders[0].user_id)
+        expect(data[0]['total']).to eq(orders[0].total)
+        expect(data[0]['status']).to eq(orders[0].status)
+        expect(data[0]['created_on']).to eq(orders[0].created_at.strftime("%Y-%m-%d"))
+      end
+    end
+  end
+
+  describe "get#by_email_phone" do
+    let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 40) }
+    let!(:order_item) { FactoryGirl.create(:order_item, item_spec: spec, item: spec.item) }
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:email) { "example@domain.com" }
+    let!(:phone) { "0912346789" }
+    let!(:store_delivery_order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: store_delivery_type) }
+    let!(:store_delivery_info) { FactoryGirl.create(:store_delivery_order_info, order: store_delivery_order, ship_email: email, ship_phone: phone) }
+    context "when orders contain paid credit card order" do
+      let!(:paid_credit_card_order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: home_delivery_by_credit_card_type, is_paid: true) }
+      let!(:paid_credit_card_info) { FactoryGirl.create(:home_delivery_by_credit_card_order_info, order: paid_credit_card_order, ship_email: email, ship_phone: phone) }
+      let!(:orders) { Order.joins(:info).where("order_infos.ship_email = :ship_email AND order_infos.ship_phone = :ship_phone", ship_email: email, ship_phone: phone).exclude_unpaid_credit_card_orders.recent }
+      it 'does generate correct order list' do
+        get :by_email_phone, ship_email: email, ship_phone: phone
+        data = JSON.parse(response.body)["data"]
+        expect(data.size).to eq(orders.size)
+        expect(data[0]['id']).to eq(orders[0].id)
+        expect(data[0]['user_id']).to eq(orders[0].user_id)
+        expect(data[0]['total']).to eq(orders[0].total)
+        expect(data[0]['status']).to eq(orders[0].status)
+        expect(data[0]['created_on']).to eq(orders[0].created_at.strftime("%Y-%m-%d"))
+      end
+    end
+
+    context "when orders contain unpaid credit card order" do
+      let!(:unpaid_credit_card_order) { FactoryGirl.create(:order, user: user, items: [order_item], ship_type: home_delivery_by_credit_card_type) }
+      let!(:unpaid_credit_card_info) { FactoryGirl.create(:home_delivery_by_credit_card_order_info, order: unpaid_credit_card_order, ship_email: email, ship_phone: phone) }
+      let!(:orders) { Order.joins(:info).where("order_infos.ship_email = :ship_email AND order_infos.ship_phone = :ship_phone", ship_email: email, ship_phone: phone).exclude_unpaid_credit_card_orders.recent }
+      it 'does generate correct order list' do
+        get :by_email_phone, ship_email: email, ship_phone: phone
+        data = JSON.parse(response.body)["data"]
+        expect(data.size).to eq(orders.size)
+        expect(data[0]['id']).to eq(orders[0].id)
+        expect(data[0]['user_id']).to eq(orders[0].user_id)
+        expect(data[0]['total']).to eq(orders[0].total)
+        expect(data[0]['status']).to eq(orders[0].status)
+        expect(data[0]['created_on']).to eq(orders[0].created_at.strftime("%Y-%m-%d"))
       end
     end
   end

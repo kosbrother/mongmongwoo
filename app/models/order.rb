@@ -1,9 +1,11 @@
 class Order < ActiveRecord::Base
   include OrderConcern
   include CalculatePrice
+  include Scheduleable
 
   enum status: { "新訂單" => 0, "處理中" => 1, "配送中" => 2, "完成取貨" => 3, "訂單取消" => 4, "已到店" => 5, "訂單變更" => 6 ,"未取訂貨" => 7, "退貨" => 8 }
-  enum ship_type: { "store_delivery": 0, "home_delivery": 1 }
+  enum ship_type: { "store_delivery": 0, "home_delivery": 1, "home_delivery_by_credit_card": 2 }
+  enum schedule_type: { check_credit_card_paid: "check_credit_card_paid" }
 
   COMBINE_STATUS = ["新訂單", "處理中", "訂單變更"]
   RESTOCK_STATUS = ["未取訂貨", "退貨"]
@@ -13,12 +15,13 @@ class Order < ActiveRecord::Base
   SHOW_BARCODE_STATUS = ["配送中", "訂單變更"]
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
+  HOME_DELIVERY_CODE = [Order.ship_types["home_delivery"], Order.ship_types["home_delivery_by_credit_card"]]
 
   validates_presence_of :user_id, :items_price, :ship_fee, :total
   validates_numericality_of :items_price, :total, greater_than: 0
 
-
   after_update :reduce_stock_amount_if_status_shipping, :restock_if_status_changed_from_shipping
+  after_create :put_in_check_order_paid_schedule_if_by_credit_card
 
   belongs_to :user
   has_many :items, class_name: "OrderItem", dependent: :destroy
@@ -42,7 +45,8 @@ class Order < ActiveRecord::Base
   scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
   scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
-  scope :home_delivery, -> { where(ship_type: Order.ship_types["home_delivery"]) }
+  scope :home_delivery, -> { where(ship_type: Order::HOME_DELIVERY_CODE) }
+  scope :exclude_unpaid_credit_card_orders, -> { where.not('orders.ship_type = :ship_type AND orders.is_paid = :is_paid', ship_type: Order::ship_types["home_delivery_by_credit_card"], is_paid: false) }
 
   acts_as_paranoid
 
@@ -77,19 +81,20 @@ class Order < ActiveRecord::Base
     result_order[:shopping_point_amount] = shopping_point_spend_amount
     result_order[:note] = note
     result_order[:ship_type] = ship_type
+    result_order[:is_paid] = is_paid
 
     include_info = {}
     include_info[:id] = info.id
     include_info[:ship_name] = info.ship_name
     include_info[:ship_phone] = info.ship_phone
     include_info[:ship_email] = info.ship_email
-    if is_store_delivery?
+    if store_delivery?
       include_info[:ship_store_code] = info.ship_store_code
       include_info[:ship_store_id] = info.ship_store_id
       include_info[:ship_store_name] = info.ship_store_name
       include_info[:ship_store_address] = info.address
       include_info[:ship_store_phone] = info.phone
-    elsif is_home_delivery?
+    elsif home_delivery? || home_delivery_by_credit_card?
       include_info[:ship_address] = info.ship_address
     end
     result_order[:info] = include_info
@@ -107,14 +112,6 @@ class Order < ActiveRecord::Base
     result_order[:items] = include_items
 
     result_order
-  end
-
-  def is_store_delivery?
-    ship_type == "store_delivery"
-  end
-
-  def is_home_delivery?
-    ship_type == "home_delivery"
   end
 
   def user_status_count(order_status)
@@ -182,6 +179,13 @@ class Order < ActiveRecord::Base
           stock_spec.save
         end
       end
+    end
+  end
+  def put_in_check_order_paid_schedule_if_by_credit_card
+    if home_delivery_by_credit_card?
+      schedule = Schedule.create(scheduleable: self, execute_time: (created_at + 30.minutes), schedule_type: "check_credit_card_paid")
+      job_id = CheckCreditCardPaidWorker.perform_at(schedule.execute_time, id)
+      schedule.update_attribute(:job_id, job_id)
     end
   end
 end

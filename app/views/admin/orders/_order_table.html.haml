@@ -24,7 +24,7 @@
               %span{id: "current-#{order.id}-status"}= order.status
               %span.caret
             %ul.dropdown-menu.list-group
-              = link_to_update_order_status(order)
+              = li_link_to_update_order_status(order)
         %td
           %span{id: "logistis-#{order.id}"}= logistics_status(order)
         %td
@@ -32,8 +32,9 @@
         %td
           = order.total
         %td.user-id-cell
-          = repurchased_notice(order)
-          = blacklist_notice(order)
+          = span_credit_card_order_paid_notice(order)
+          = span_blacklist_notice(order)
+          = span_repurchased_notice(order)
         %td
           = link_to "明細", admin_order_path(order),class: "button btn btn-default btn-sm"
           = link_to "編輯", edit_admin_order_path(order), class: "btn btn-default btn-sm"

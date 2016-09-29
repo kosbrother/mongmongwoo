@@ -152,8 +152,8 @@ class Admin::OrdersController < AdminController
 
     if params[:ship_type] == Order.ship_types["store_delivery"].to_s
       query_data = ['orders.allpay_transfer_id IS NOT NULL AND orders.ship_type = :ship_type', ship_type: Order.ship_types["store_delivery"]]
-    elsif params[:ship_type] == Order.ship_types["home_delivery"].to_s
-      query_data = query_data.merge(ship_type: Order.ship_types["home_delivery"])
+    elsif params[:ship_type] == Order::HOME_DELIVERY_CODE.map(&:to_s)
+      query_data = query_data.merge(ship_type: Order::HOME_DELIVERY_CODE)
     end
 
     Order.includes(:user, :items).status(Order.statuses['處理中']).where(query_data).recent

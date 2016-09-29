@@ -3,7 +3,7 @@ module Admin::OrdersHelper
     order.info.ship_phone
   end
 
-  def link_to_update_order_status(order)
+  def li_link_to_update_order_status(order)
     status_text_list = able_change_status_to(order)
 
     status_text_list.collect do |status_text|
@@ -30,7 +30,7 @@ module Admin::OrdersHelper
       else
         []
       end
-    when "home_delivery"
+    when "home_delivery", "home_delivery_by_credit_card"
       case order.status
       when "新訂單"
         ["訂單取消"]
@@ -48,7 +48,7 @@ module Admin::OrdersHelper
     end
   end
 
-  def li_status_link(options = {ship_type: ship_type_params, status: status_code})
+  def li_link_to_status_orders(options = {ship_type: ship_type_params, status: status_code})
     content_tag(:li, '' , class: set_class_to_active(options[:status])) do
       link_to Order.statuses.key(options[:status]) + ": #{Order.count_by_ship_type_and_status(options[:ship_type], options[:status])}", status_index_admin_orders_path(options)
     end
@@ -74,13 +74,13 @@ module Admin::OrdersHelper
     end
   end
 
-  def blacklist_notice(order)
+  def span_blacklist_notice(order)
     if order.is_blacklisted
       content_tag(:span, "問題訂單", class: "label label-danger")
     end
   end
 
-  def spec_requested_number(order_item)
+  def span_spec_requested_number(order_item)
     stock_amount = order_item.stock_amount + order_item.shipping_amount
     requested_amount = OrderItem.statuses_total_amount(order_item.item_spec_id, Order::COMBINE_STATUS_CODE)
     content_tag(:span, requested_amount, class: "#{ stock_amount < requested_amount ? 'warning' : '' }")
@@ -110,7 +110,7 @@ module Admin::OrdersHelper
     end
   end
 
-  def li_restock_status_link(link_text, options = {ship_type: ship_type_params, status: status_params, restock: restock_boolean})
+  def li_link_to_restock_status_orders(link_text, options = {ship_type: ship_type_params, status: status_params, restock: restock_boolean})
     content_tag(:li, class: options[:restock].to_s == params[:restock] ? 'active' : '' ) do
       link_to link_text, status_index_admin_orders_path(options)
     end
@@ -118,21 +118,41 @@ module Admin::OrdersHelper
 
   def restock_navs
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_restock_status_link("未重入庫存", ship_type: params[:ship_type], status: params[:status], restock: false) +
-      li_restock_status_link("已重入庫存", ship_type: params[:ship_type], status: params[:status], restock: true)
+      li_link_to_restock_status_orders("未重入庫存", ship_type: params[:ship_type], status: params[:status], restock: false) +
+      li_link_to_restock_status_orders("已重入庫存", ship_type: params[:ship_type], status: params[:status], restock: true)
     end
   end
 
-  def li_ship_type_link(link_text, options = {ship_type: ship_type_code})
-    content_tag(:li, class: options[:ship_type] == params[:ship_type].to_i ? 'active' : '' ) do
-      link_to link_text, status_index_admin_orders_path(ship_type: options[:ship_type])
+  def li_store_delivery_type_class
+    [Order.ship_types["store_delivery"], Order.ship_types["store_delivery"].to_s].include?(params[:ship_type]) ? 'active' : ''
+  end
+
+  def li_link_to_store_delivery_orders
+    content_tag(:li, class: li_store_delivery_type_class) do
+      link_to "超商取貨", status_index_admin_orders_path(ship_type: Order.ship_types["store_delivery"])
+    end
+  end
+
+  def li_link_to_home_delivery_orders
+    content_tag(:li, class: params[:ship_type] == Order::HOME_DELIVERY_CODE.map(&:to_s) ? 'active' : '') do
+      link_to "宅配", status_index_admin_orders_path(ship_type: Order::HOME_DELIVERY_CODE)
     end
   end
 
   def ship_type_navs
     content_tag(:ul, class: 'nav nav-tabs') do
-      li_ship_type_link("超商取貨", ship_type: Order.ship_types["store_delivery"]) +
-      li_ship_type_link("宅配", ship_type: Order.ship_types["home_delivery"])
+      li_link_to_store_delivery_orders +
+      li_link_to_home_delivery_orders
+    end
+  end
+
+  def span_credit_card_order_paid_notice(order)
+    if order.home_delivery_by_credit_card?
+      if order.is_paid == true
+        content_tag(:span, "信用卡已付款", class: "label label-success")
+      elsif order.is_paid == false
+        content_tag(:span, "信用卡未付款", class: "label label-warning")
+      end
     end
   end
 
@@ -142,9 +162,9 @@ module Admin::OrdersHelper
     end
   end
 
-  def repurchased_notice(order)
+  def span_repurchased_notice(order)
     if order.is_repurchased
-      content_tag(:span, "回購訂單", class: "label label-success")
+      content_tag(:span, "回購訂單", class: "label label-primary")
     end
   end
 end

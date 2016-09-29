@@ -1,0 +1,9 @@
+- if @order.ship_type == "home_delivery_by_credit_card"
+  :plain
+    $('.submit-session-form').empty();
+    $('.submit-session-form').append('#{j(render "pay_with_credit_card")}');
+    $('#credit-card-payment').click();
+    $('.cart').ploading({action: 'show'});
+- else
+  $('.cart').ploading({action: 'show'});
+  window.location = '#{success_path(order_id: @order.id)}';
