@@ -13,6 +13,15 @@
 
 ActiveRecord::Schema.define(version: 20161011132046) do
 
+  create_table "additional_purchase_items", force: :cascade do |t|
+    t.integer  "item_id",    limit: 4
+    t.integer  "price",      limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "additional_purchase_items", ["item_id"], name: "index_additional_purchase_items_on_item_id", using: :btree
+
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
     t.integer  "item_id",              limit: 4

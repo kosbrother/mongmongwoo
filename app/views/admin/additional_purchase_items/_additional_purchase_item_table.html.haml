@@ -1,0 +1,22 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      %th.xx-small 編號
+      %th.small 指定商品
+      %th.xx-small 加購金額
+      %th.xx-small 降價金額
+      %th.x-small 操作
+  %tbody
+    - additional_purchase_items.each do |additional_purchase_item|
+      %tr
+        %td
+          = additional_purchase_item.id
+        %td
+          = link_to "#{additional_purchase_item.item.name}(原價：#{additional_purchase_item.item.price})", admin_item_path(additional_purchase_item.item), target: "_blank"
+        %td
+          = additional_purchase_item.price
+        %td
+          = additional_purchase_item.price_reduction
+        %td
+          = link_to '編輯', edit_admin_additional_purchase_item_path(additional_purchase_item),class: 'btn btn-default'
+          = link_to '刪除', admin_additional_purchase_item_path(additional_purchase_item),class: 'btn btn-warning', method: :delete

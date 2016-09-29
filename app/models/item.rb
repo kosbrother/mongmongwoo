@@ -35,6 +35,7 @@ class Item < ActiveRecord::Base
   has_many :order_items, foreign_key: :source_item_id
   has_many :stock_specs
   has_many :price_records
+  has_one :additional_purchase_item, dependent: :destroy
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
