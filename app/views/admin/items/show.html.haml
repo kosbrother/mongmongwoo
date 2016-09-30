@@ -1,6 +1,8 @@
 .content-box-large
   .info-title
-    %p.lead.pull-left 商品資訊#{item_initial_on_shelf_date_text(@item)}
+    %p.lead.pull-left
+      商品資訊
+    = render "update_initial_on_shelf_date_form"
     %p.pull-right.inline-display
       = link_to "編輯商品", edit_admin_item_path(@item), class: "btn btn-default"
     - if current_admin.manager?

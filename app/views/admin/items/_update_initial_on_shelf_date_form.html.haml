@@ -1,0 +1,7 @@
+- if @item.ever_on_shelf
+  = form_tag update_initial_on_shelf_date_admin_item_path(@item), method: :patch, class: "form-inline", id: "update-item_initial_on_shelf_date" do
+    = label_tag "datetime", "- 首次上架日期:"
+    = datetime_field_tag "datetime", @item.created_at.strftime("%Y-%m-%d"), class: "form-control datetimepicker"
+    = submit_tag '更新', class: "btn btn-default"
+- else
+  %p.lead.pull-left (新商品未上架)

@@ -271,3 +271,12 @@ div.item-cover-words-intro, div.notification-intro {
 .header-title {
   margin-top: 10px;
 }
+#update-item_initial_on_shelf_date {
+  display: inline-block;
+
+  > label {
+    margin-left: 5px;
+    font-size: 18px;
+    font-weight: 300;
+  }
+}
