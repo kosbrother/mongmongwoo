@@ -264,6 +264,8 @@ Rails.application.routes.draw do
 
     resources :shop_infos, except: [:show]
     resources :shopping_point_campaigns
+    resources :campaign_rules
+    resources :campaigns, only: :destroy
   end
 
   # API for App
