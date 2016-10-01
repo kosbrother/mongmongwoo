@@ -255,7 +255,6 @@ Rails.application.routes.draw do
     end
 
     resources :messages, only: [:index, :new, :create, :show, :destroy]
-    resources :promotions, only: [:index, :new, :create, :destroy]
     resources :banners, only: [:index, :new, :create, :destroy] do
       collection do
         get "render_select_form"
