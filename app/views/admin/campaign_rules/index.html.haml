@@ -1,0 +1,11 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 優惠活動列表
+  .pull-right
+    = link_to "新增優惠活動", new_admin_campaign_rule_path, class: "btn btn-default"
+  %h2 優惠活動列表
+  .panel-body
+    = render "campaign_rules_table"

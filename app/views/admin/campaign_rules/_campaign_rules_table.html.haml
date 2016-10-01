@@ -1,0 +1,25 @@
+%table.table.table-striped.table-bordered{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %thead
+    %tr
+      %th.large-small 描述
+      %th.small 規則
+      %th.x-small 門檻
+      %th.x-small 優惠方式
+      %th.mid-small 優惠金額/優惠折扣
+      %th.mid-small 操作
+  %tbody
+    - @campaign_rules.each do |campaign_rule|
+      %tr
+        %td
+          = render "campaigns_list", campaign_rule: campaign_rule
+        %td
+          = t("models.campaign_rules.rule_type.#{campaign_rule.rule_type}")
+        %td
+          = campaign_rule.threshold
+        %td
+          = t("models.campaign_rules.discount_type.#{campaign_rule.discount_type}")
+        %td
+          = campaign_rule.discount_money || campaign_rule.discount_percentage
+        %td
+          = link_to '編輯', edit_admin_campaign_rule_path(campaign_rule),class: 'btn btn-default'
+          = link_to '刪除', admin_campaign_rule_path(campaign_rule),class: 'btn btn-warning', method: :delete

@@ -1,0 +1,38 @@
+.form-group
+  = f.label :description, "描述", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.text_field :description, { class: "form-control", placeholder: "請輸入規則描述", required: true }
+.form-group
+  = f.label :rule_type, "規則類型", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.select :rule_type, options_for_campaign_rule_types, {}, class: "form-control"
+.form-group
+  = f.label :threshold, "門檻", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.number_field :threshold, { class: "form-control", placeholder: "請輸入金額或數量", required: true, min: 0}
+.form-group
+  = f.label :discount_type, "優惠類型", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.select :discount_type, options_for_campaign_discount_types, {}, class: "form-control"
+.form-group.discount-type{"data-type": "money_off", class: "#{'hidden' if discount_type != "money_off"}"}
+  = f.label :discount_money, "優惠金額", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.number_field :discount_money, { class: "form-control", placeholder: "請輸入金額", required:  discount_type == 'money_off' , min: 0}
+.form-group.discount-type{class: "#{'hidden' if CampaignRule::PERCENTAGE_OFF_TYPE.exclude?(discount_type)}", "data-type": "percentage_off"}
+  = f.label :discount_percentage, "優惠折扣", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.number_field :discount_percentage, { class: "form-control", placeholder: "請輸入折扣百分比", required:  discount_type == 'percentage_off', min: 0.01, max: 1, step: 0.01}
+%h4.text-center 優惠商品選擇
+.form-group
+  .row
+    .col-lg-12
+      = check_box_tag "campaign_rule[has_campaign_order]", true, @campaign_ids.include?(nil)
+      = label_tag "campaign_rule[has_campaign_order]", "全館不分商品"
+    = f.collection_check_boxes :campaign_items, Item.on_shelf, :id, :name do |cb|
+      .col-lg-4
+        = cb.label(class: "checkbox-inline") do
+          = cb.check_box(checked:"#{'checked' if @campaign_ids.include? cb.value}")
+          = truncate("#{cb.value}: #{cb.text}", length: 20)
+.form-group
+  = f.submit "確認送出", class: "btn btn-primary"
+  = link_to "取消離開",  admin_campaign_rules_path, class: "btn btn-warning"
