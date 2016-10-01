@@ -4,8 +4,8 @@ class AdminCartItem < ActiveRecord::Base
   validates_presence_of :admin_cart_id, :item_id, :item_spec_id
 
   belongs_to :admin_cart
-  belongs_to :item
-  belongs_to :item_spec
+  belongs_to :item, -> { with_deleted}
+  belongs_to :item_spec, -> { with_deleted}
 
   scope :recent, -> { order(id: :desc) }
   scope :shipping_status, -> { joins(:admin_cart).where(admin_carts: { status: AdminCart::STATUS[:shipping] }) }

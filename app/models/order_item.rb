@@ -4,8 +4,8 @@ class OrderItem < ActiveRecord::Base
   validates_numericality_of :item_quantity, greater_than: 0
 
   belongs_to :order
-  belongs_to :item, :foreign_key => "source_item_id"
-  belongs_to :item_spec
+  belongs_to :item, -> { with_deleted}, :foreign_key => "source_item_id"
+  belongs_to :item_spec, -> { with_deleted}
 
   delegate :categories, :taobao_supplier, to: :item
 

@@ -1,8 +1,8 @@
 class CartItem < ActiveRecord::Base
 
   belongs_to :cart
-  belongs_to :item
-  belongs_to :item_spec
+  belongs_to :item, -> { with_deleted}
+  belongs_to :item_spec, -> { with_deleted}
 
   MAX_QUANTITY = 99
   MIN_QUANTITY = 1

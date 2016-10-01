@@ -5,7 +5,7 @@ class FavoriteItem < ActiveRecord::Base
   default_scope { where(favorite_type:  FavoriteItem.favorite_types["my_favorite"]) }
 
   belongs_to :user
-  belongs_to :item
+  belongs_to :item, -> { with_deleted}
 
   acts_as_paranoid
 end

@@ -3,7 +3,7 @@ class WishList < FavoriteItem
 
   enum schedule_type: { notify_to_buy: "notify_to_buy", delete_wish_list: "delete_wish_list" }
 
-  belongs_to :item_spec
+  belongs_to :item_spec, -> { with_deleted}
   has_one :notify_to_buy_schedule, -> { where(schedule_type: "notify_to_buy") }, class_name: "Schedule", foreign_key: :scheduleable_id
   has_one :delete_wish_list_schedule, -> { where(schedule_type: "delete_wish_list") }, class_name: "Schedule", foreign_key: :scheduleable_id
 
