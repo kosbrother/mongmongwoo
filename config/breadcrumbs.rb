@@ -7,6 +7,11 @@ crumb :category do |category|
   parent :root
 end
 
+crumb :new_category do |category, momths_ago_params|
+  link "#{Time.current.ago(momths_ago_params.to_i.month).month}月份#{category.name}", category_path(category)
+  parent :root
+end
+
 crumb :child_category do |child_category|
   link child_category.name, category_path(child_category)
   parent :category, child_category.parent_category

@@ -37,9 +37,16 @@
               %span.caret
             %ul.dropdown-menu.parent-categories
               - @categories.each do |category|
-                -if Category::NO_CHILD_CATEGORIES.include?(category.id)
-                  = link_to category_path(category) do
-                    .list= category.name
+                - if category.id == Category::NEW_ID
+                  %li.list
+                    .dropdown
+                      .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                        = category.name
+                        %span.caret
+                      %ul.dropdown-menu.sub-categories
+                        - 5.times do |index|
+                          = link_to category_path(category, months_ago: index) do
+                            %li.list #{Time.current.ago(index.month).month}月份#{category.name}
                 -else
                   %li.list
                     .dropdown

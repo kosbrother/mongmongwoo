@@ -3,6 +3,8 @@
 
 -if @category.parent_id
   - breadcrumb :child_category, @category
+- elsif @category.id == Category::NEW_ID
+  - breadcrumb :new_category, @category, params[:months_ago]
 -else
   - breadcrumb :category, @category
 .show

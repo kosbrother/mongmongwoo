@@ -3,9 +3,15 @@
     .header
       商品清單
     - @categories.each do |category|
-      -if Category::NO_CHILD_CATEGORIES.include?(category.id)
-        = link_to category_path(category) do
-          .list= category.name
+      - if category.id == Category::NEW_ID
+        .dropdown.keep-open
+          .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+            = category.name
+            %span.caret
+          %ul.dropdown-menu
+            - 5.times do |index|
+              = link_to category_path(category, months_ago: index) do
+                %li.list #{Time.current.ago(index.month).month}月份#{category.name}
       -else
         .dropdown.keep-open
           .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
