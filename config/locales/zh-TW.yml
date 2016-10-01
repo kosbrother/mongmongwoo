@@ -37,6 +37,15 @@ zh-TW:
       collect: '已領取'
       un-collect: '未領取'
       processing: '進行中'
+    campaign_rules:
+      rule_type:
+        exceed_amount: '購買超過指定金額'
+        exceed_quantity: '購買超過指定商品數'
+      discount_type:
+        money_off: '現金'
+        percentage_off: '打折'
+        percentage_off_next: '第二件打折'
+        shopping_point: '購物金'
   activerecord:
     errors:
       models:
