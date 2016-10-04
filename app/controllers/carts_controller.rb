@@ -95,7 +95,7 @@ class CartsController < ApplicationController
       add_to_wish_lists(@unable_to_buy_lists) if current_user
       render 'error_infos'
     else
-      ShoppingPointManager.spend_shopping_points(@order, current_cart.shopping_point_amount)
+      ShoppingPointManager.new(@order.user).spend_shopping_points(@order, current_cart.shopping_point_amount)
       session[:cart_id] = nil
       OrderMailer.delay.notify_order_placed(@order) if (@order.store_delivery? || @order.home_delivery?)
     end
