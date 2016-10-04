@@ -5,7 +5,7 @@ class PriceManagerForCartItem
   def initialize(cart_item)
     @item = cart_item.item
     @quantity = cart_item.item_quantity
-    @origin_price = cart_item.item.final_price
+    @origin_price = cart_item.item.price
     @discounted_price = @origin_price
     @subtotal = @origin_price * @quantity
     @campaigns_info = []

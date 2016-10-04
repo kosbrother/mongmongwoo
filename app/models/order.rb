@@ -31,6 +31,7 @@ class Order < ActiveRecord::Base
   has_many :mail_records, as: :recordable
   has_many :shopping_point_records
   has_many :messages, as: :messageable, dependent: :destroy
+  has_many :discount_records, as: :discountable, dependent: :destroy
 
   accepts_nested_attributes_for :info
 
