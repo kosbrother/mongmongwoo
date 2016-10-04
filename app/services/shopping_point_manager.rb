@@ -40,11 +40,26 @@ class ShoppingPointManager
   end
 
   def calculate_available_shopping_point(items_price)
-    [total_amount, (items_price * 0.1).round].min
+    if user.id == User::ANONYMOUS
+      0
+    else
+      [total_amount, (items_price * 0.1).round].min
+    end
   end
 
   def able_to_refund_shopping_point_orders
     user.orders.status(Order.statuses["退貨"]).select{|order| ShoppingPointManager.has_refund_shopping_point?(order) == false}
+  end
+
+  def create_shopping_point_if_applicable(order, spend_shopping_point_amount=0)
+    if user.id != User::ANONYMOUS
+      ShoppingPointCampaign.with_campaign_rule.each do |shopping_point_campaign|
+        if shopping_point_campaign.campaign_rule.exceed_threshold?(amount: order.items_price - spend_shopping_point_amount)
+          shopping_point = user.shopping_points.create(point_type: ShoppingPoint.point_types["活動購物金"], amount: shopping_point_campaign.amount, shopping_point_campaign_id: shopping_point_campaign.id)
+          shopping_point.shopping_point_records.first.update_column(:order_id, order.id)
+        end
+      end
+    end
   end
 
   private

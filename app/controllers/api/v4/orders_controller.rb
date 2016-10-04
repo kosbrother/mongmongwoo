@@ -76,6 +76,9 @@ class Api::V4::OrdersController < ApiController
       device_of_order = DeviceRegistration.find_by(registration_id: params[:registration_id])
       @order.device_registration = device_of_order
       errors << @order.errors.messages unless @order.save
+      DiscountRecordCreator.create_by_type_if_applicable(@order)
+      ShoppingPointManager.new(@order.user).create_shopping_point_if_applicable(@order, params[:shopping_points_amount].to_i)
+      ShoppingPointManager.spend_shopping_points(@order, params[:shopping_points_amount].to_i)
       raise ActiveRecord::Rollback if @order.invalid?
 
       info = OrderInfo.new
@@ -105,6 +108,7 @@ class Api::V4::OrdersController < ApiController
           item.item_quantity = product[:quantity]
           item.item_price = product[:price]
           errors << item.errors.messages unless item.save
+          DiscountRecordCreator.create_by_type_if_applicable(item)
         end
       end
 
@@ -128,7 +132,6 @@ class Api::V4::OrdersController < ApiController
     elsif products_errors.present?
       render status: 203, json: {data: {unable_to_buy: products_errors}}
     else
-      ShoppingPointManager.spend_shopping_points(@order, params[:shopping_points_amount].to_i)
       OrderMailer.delay.notify_order_placed(@order) if (@order.store_delivery? || @order.home_delivery?)
       render status: 200, json: {data: @order.as_json(only: [:id])}
     end
