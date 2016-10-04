@@ -1,48 +1,127 @@
 require 'spec_helper'
 
 describe Api::V4::OrdersController, type: :controller do
-  let!(:item) { FactoryGirl.create(:item_with_specs_and_photos) }
+  let!(:user) { FactoryGirl.create(:user_with_registration_device) }
+  let!(:user_shopping_point_amount) { ShoppingPointManager.new(user).total_amount }
+  let!(:item) { FactoryGirl.create(:item_with_specs_and_photos, price: 100) }
   let!(:spec) { item.specs.first }
+  let!(:quantity) { 5 }
+  let!(:items_price){ quantity*item.price }
   let!(:store_delivery_type) { "store_delivery" }
   let!(:home_delivery_type) { "home_delivery" }
   let!(:home_delivery_by_credit_card_type) { "home_delivery_by_credit_card" }
 
   describe "post#checkout" do
-    let!(:user) { FactoryGirl.create(:user_with_registration_device) }
-    let!(:items_price) { user_shopping_point_amount*5 }
-    let!(:user_shopping_point_amount) { ShoppingPointManager.new(user).total_amount }
-    context "when 10% of items price is lower than user_shopping_point_amount" do
-      it "only return 10% of items price of shopping_point amount" do
-        post :checkout, user_id: user.id, items_price: items_price
+    let!(:products) { [{item_id: item.id, item_spec_id: spec.id, quantity: quantity}] }
+
+    context "when user has shopping points" do
+      it "does show aviailable shopping point amount" do
+        post :checkout, user_id: user.id, products: products
         data = JSON.parse(response.body)["data"]
-        expect(data["shopping_point_amount"]).to eq((items_price * 0.1).round)
+        expect(data["spendable_shopping_point"]).to be > 0
       end
     end
 
-    context "when 10% of items price is higher than user_shopping_point_amount" do
-      let!(:items_price) { user_shopping_point_amount*15 }
-      it "only return total shopping_point amount" do
-        post :checkout, user_id: user.id, items_price: items_price
-        data = JSON.parse(response.body)["data"]
-        expect(data["shopping_point_amount"]).to eq(user_shopping_point_amount)
+    context "when missing products params" do
+      it "return errors if missing products params" do
+        post :checkout, user_id: user.id
+        message = response.body
+        expect(message).to be_truthy
       end
     end
 
-    context "when user_id is annoymous user" do
-      it "return 0 shopping_point" do
-        post :checkout, user_id: User::ANONYMOUS, items_price: items_price
+    context "when products params is provided" do
+      it "does calculate correct data for checkout" do
+        post :checkout, user_id: user.id, products: products
         data = JSON.parse(response.body)["data"]
-        expect(data["shopping_point_amount"]).to eq(0)
+
+        expect(data['products'].size).to eq(products.size)
+        expect(data['products'][0]['item_id'].to_i).to eq(item.id)
+        expect(data['products'][0]['item_spec_id'].to_i).to eq(spec.id)
+        expect(data['products'][0]['quantity'].to_i).to eq(quantity)
+        expect(data['products'][0]['origin_price']).to eq(item.price)
+        expect(data['products'][0]['discounted_price']).to eq(item.price)
+        expect(data['products'][0]['subtotal']).to eq(items_price)
+        expect(data['products'][0]).to have_key('campaigns')
+
+        expect(data).to have_key('order')
+        expect(data['order']['origin_items_price']).to eq(items_price)
+        expect(data['order']['reduced_items_price']).to eq(items_price)
+        expect(data['order']['discount_amount']).to eq(0)
+        expect(data['order']).to have_key('campaigns')
+        expect(data['order']['obtain_shopping_point_amount']).to eq(0)
+        expect(data['order']).to have_key('shopping_point_campaigns')
+        expect(data['order']['ship_fee']).to eq(PriceManager.count_ship_fee(items_price))
+        expect(data['order']['total']).to eq(items_price + PriceManager.count_ship_fee(items_price))
+      end
+    end
+
+    context "when product have asigned campaign and could be discounted" do
+      let!(:campaign_rule){ FactoryGirl.create(:exceed_quantity_percentage_off_campaign_rule, threshold: 3, discount_percentage: 0.9) }
+      let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item) }
+      it "does apply discount and return product campaign info" do
+        post :checkout, user_id: user.id, products: products
+        data = JSON.parse(response.body)["data"]
+
+        expect(data['products'][0]['origin_price']).to eq(item.price)
+        expect(data['products'][0]['discounted_price']).to eq((item.price * 0.9).round)
+        expect(data['products'][0]['subtotal']).to eq(campaign_rule.apply_discount(amount: items_price))
+        expect(data['products'][0]['campaigns'][0]['is_applied']).to be_truthy
+        expect(data['products'][0]['campaigns'][0]['title']).to eq(campaign_rule.title)
+        expect(data['products'][0]['campaigns'][0]['left_to_apply']).to eq(0)
+      end
+    end
+
+    context "when order have asigned campaign and could be discount" do
+      let!(:campaign_rule){ FactoryGirl.create(:exceed_amount_money_off_campaign_rule, threshold: 500, discount_money: 100) }
+      let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule) }
+      it "does apply discount and return campaign info" do
+        post :checkout, user_id: user.id, products: products
+        data = JSON.parse(response.body)["data"]
+
+        expect(data['order']['origin_items_price']).to eq(items_price)
+        expect(data['order']['reduced_items_price']).to eq(items_price)
+        expect(data['order']['discount_amount']).to eq(100)
+        expect(data['order']['campaigns'][0]['is_applied']).to be_truthy
+        expect(data['order']['campaigns'][0]['title']).to eq(campaign_rule.title)
+        expect(data['order']['campaigns'][0]['left_to_apply']).to eq(0)
+      end
+    end
+
+    context "when order have asigned shopping point campaign" do
+      let!(:campaign_rule){ FactoryGirl.create(:exceed_amount_money_off_shopping_point_campaign_rule, threshold: 500) }
+      let!(:shopping_point_campaign) { FactoryGirl.create(:shopping_point_campaign, campaign_rule: campaign_rule, amount: 100) }
+      it "does apply get shopping point and return shopping point campaign info" do
+        post :checkout, user_id: user.id, products: products
+        data = JSON.parse(response.body)["data"]
+        expect(data['order']['obtain_shopping_point_amount']).to eq(100)
+        expect(data['order']['shopping_point_campaigns'][0]['is_applied']).to be_truthy
+        expect(data['order']['shopping_point_campaigns'][0]['title']).to eq(campaign_rule.title)
+        expect(data['order']['shopping_point_campaigns'][0]['left_to_apply']).to eq(0)
+      end
+    end
+
+    context "when user chose tp spend shopping point" do
+      let!(:campaign_rule){ FactoryGirl.create(:exceed_amount_money_off_campaign_rule, threshold: 500, discount_money: 100) }
+      let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule) }
+      it "dows reduce items_price and all_items campaigns will apply on that price" do
+        post :checkout, user_id: user.id, products: products, spend_shopping_point_amount: 100
+        data = JSON.parse(response.body)["data"]
+
+        expect(data['order']['origin_items_price']).to eq(items_price)
+        expect(data['order']['reduced_items_price']).to eq(items_price - 100)
+        expect(data['order']['discount_amount']).to eq(0)
+        expect(data['order']['campaigns'][0]['is_applied']).to be_falsy
+        expect(data['order']['campaigns'][0]['title']).to eq(campaign_rule.title)
+        expect(data['order']['campaigns'][0]['left_to_apply']).to eq(campaign_rule.left_to_apply(amount: items_price - 100))
       end
     end
   end
 
   describe "post #create" do
-    let!(:user) { FactoryGirl.create(:user_with_registration_device) }
     let!(:store) { FactoryGirl.create(:store) }
     let!(:uid) { user.uid }
-    let!(:items_price) { item.price }
-    let!(:ship_fee) { 60 }
+    let!(:ship_fee) { 0 }
     let!(:total) { items_price + ship_fee }
     let!(:registration_id) { user.devices.first.registration_id }
     let!(:ship_address) { Faker::Address.street_address }
@@ -52,11 +131,11 @@ describe Api::V4::OrdersController, type: :controller do
     let!(:ship_store_id) { store.id }
     let!(:ship_store_name) { store.name }
     let!(:ship_email) { Faker::Internet.email }
-    let!(:product) { {product_id: item.id, name: item.name, spec_id: spec.id, style: spec.style, quantity: 1, price: item.price} }
+    let!(:product) { {product_id: item.id, name: item.name, spec_id: spec.id, style: spec.style, quantity: quantity, price: item.price} }
     let!(:products) { [product] }
 
     context 'when item spec is on shelf and stock spec is sufficient' do
-      let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 2) }
+      let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 5) }
       context 'when  uid is provided' do
         it "does create correct order" do
           post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
@@ -154,6 +233,49 @@ describe Api::V4::OrdersController, type: :controller do
           expect(order.info.ship_address).to eq(ship_address)
           expect(order.items.size).to eq(products.size)
           expect(order.items[0].item_name).to eq(product[:name])
+        end
+      end
+
+      context "when product has applied campaign" do
+        let!(:campaign_rule){ FactoryGirl.create(:exceed_quantity_percentage_off_campaign_rule, threshold: 3, discount_percentage: 0.9) }
+        let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item) }
+        it "does create order_item discount_record" do
+          post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
+               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+               ship_email: ship_email, products: products
+          order_id = JSON.parse(response.body)["data"]['id']
+          order = Order.find(order_id)
+          expect(order.items[0].discount_records[0].campaign_rule_id).to eq(campaign_rule.id)
+        end
+      end
+
+      context "when order has applied campaign" do
+        let!(:campaign_rule){ FactoryGirl.create(:exceed_amount_money_off_campaign_rule, threshold: 300, discount_money: 100) }
+        let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule) }
+        it "does create order_discount_record" do
+          post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
+               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+               ship_email: ship_email, products: products
+          order_id = JSON.parse(response.body)["data"]['id']
+          order = Order.find(order_id)
+          expect(order.discount_records[0].campaign_rule_id).to eq(campaign_rule.id)
+        end
+      end
+
+      context "when order has applied shopping point campaign" do
+        let!(:campaign_rule){ FactoryGirl.create(:exceed_amount_money_off_shopping_point_campaign_rule, threshold: 500) }
+        let!(:shopping_point_campaign) { FactoryGirl.create(:shopping_point_campaign, campaign_rule: campaign_rule, amount: 100) }
+        it "does create order discount_record" do
+          post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
+               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+               ship_email: ship_email, products: products
+
+          order_id = JSON.parse(response.body)["data"]['id']
+          order = Order.find(order_id)
+          expect(user.shopping_points.last.shopping_point_campaign_id).to eq(shopping_point_campaign.id)
         end
       end
 
