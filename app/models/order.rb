@@ -16,6 +16,7 @@ class Order < ActiveRecord::Base
   COMBINE_STATUS_CODE = Order::COMBINE_STATUS.map{|status| Order.statuses[status]}
   OCCUPY_STOCK_STATUS_CODE = Order::OCCUPY_STOCK_STATUS.map{|status| Order.statuses[status]}
   HOME_DELIVERY_CODE = [Order.ship_types["home_delivery"], Order.ship_types["home_delivery_by_credit_card"]]
+  HOME_DELIVERY_TYPES = ["home_delivery", "home_delivery_by_credit_card"]
 
   validates_presence_of :user_id, :items_price, :ship_fee, :total
   validates_numericality_of :items_price, :total, greater_than: 0

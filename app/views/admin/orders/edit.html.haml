@@ -38,11 +38,17 @@
         = info_f.label :ship_phone, "聯絡電話", class: "col-sm-2 control-label"
         .col-sm-6
           = info_f.text_field :ship_phone, class: 'form-control', required: true
-      .form-group
-        = info_f.label :ship_store_code, "門市店號與名稱", class: "col-sm-2 control-label"
-        .col-sm-6
-          = info_f.text_field :ship_store_code, class: 'form-control ship-store-code', id: "store-code-#{@order.id}", data: {order_id: @order.id}, required: true
+      - if @order.store_delivery?
+        .form-group
+          = info_f.label :ship_store_code, "門市店號與名稱", class: "col-sm-2 control-label"
+          .col-sm-6
+            = info_f.text_field :ship_store_code, class: 'form-control ship-store-code', id: "store-code-#{@order.id}", data: {order_id: @order.id}, required: true
+      - elsif Cart::HOME_DELIVERY_TYPES.include?(@order.ship_type)
+        .form-group
+          = info_f.label :ship_address, "收件地址", class: "col-sm-2 control-label"
+          .col-sm-6
+            = info_f.text_field :ship_address, class: 'form-control', required: true
     .form-group
       .col-sm-offset-2.col-sm-6
         = f.submit "送出變更", class: "btn btn-primary", id: "submit-#{@order.id}"
-        = link_to "返回狀態分類列表", status_index_admin_orders_path(status: Order.statuses[@order.status], anchor: "order-id-#{@order.id}"), class: "btn btn-default"
+        = link_to "返回狀態分類列表", status_index_admin_orders_path(status: Order.statuses[@order.status], anchor: "order-id-#{@order.id}", ship_type: @order.store_delivery? ? Order.ship_types["store_delivery"] : Order::HOME_DELIVERY_CODE), class: "btn btn-default"
