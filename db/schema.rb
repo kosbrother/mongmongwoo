@@ -64,6 +64,32 @@ ActiveRecord::Schema.define(version: 20161006121838) do
 
   add_index "banners", ["bannerable_type", "bannerable_id"], name: "index_banners_on_bannerable_type_and_bannerable_id", using: :btree
 
+  create_table "campaign_rules", force: :cascade do |t|
+    t.string   "title",               limit: 255
+    t.string   "description",         limit: 255
+    t.integer  "discount_type",       limit: 4
+    t.float    "discount_percentage", limit: 24
+    t.integer  "discount_money",      limit: 4
+    t.integer  "rule_type",           limit: 4
+    t.integer  "threshold",           limit: 4
+    t.string   "banner_cover",        limit: 255
+    t.string   "card_icon",           limit: 255
+    t.string   "list_icon",           limit: 255
+    t.datetime "created_at"
+    t.datetime "valid_until"
+    t.datetime "deleted_at"
+    t.boolean  "is_valid",                        default: true
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.integer "campaign_rule_id",  limit: 4
+    t.integer "discountable_id",   limit: 4
+    t.string  "discountable_type", limit: 255
+  end
+
+  add_index "campaigns", ["campaign_rule_id"], name: "index_campaigns_on_campaign_rule_id", using: :btree
+  add_index "campaigns", ["discountable_type", "discountable_id"], name: "index_campaigns_on_discountable_type_and_discountable_id", using: :btree
+
   create_table "cart_items", force: :cascade do |t|
     t.integer  "cart_id",       limit: 4
     t.integer  "item_id",       limit: 4
@@ -147,6 +173,16 @@ ActiveRecord::Schema.define(version: 20161006121838) do
 
   add_index "device_registrations", ["registration_id"], name: "index_device_registrations_on_registration_id", using: :btree
   add_index "device_registrations", ["user_id"], name: "index_device_registrations_on_user_id", using: :btree
+
+  create_table "discount_records", force: :cascade do |t|
+    t.integer  "campaign_rule_id",  limit: 4
+    t.integer  "discountable_id",   limit: 4
+    t.string   "discountable_type", limit: 255
+    t.datetime "created_at"
+  end
+
+  add_index "discount_records", ["campaign_rule_id"], name: "index_discount_records_on_campaign_rule_id", using: :btree
+  add_index "discount_records", ["discountable_type", "discountable_id"], name: "index_discount_records_on_discountable_type_and_discountable_id", using: :btree
 
   create_table "favorite_items", force: :cascade do |t|
     t.integer  "user_id",       limit: 4
@@ -432,16 +468,18 @@ ActiveRecord::Schema.define(version: 20161006121838) do
   end
 
   create_table "shopping_point_campaigns", force: :cascade do |t|
-    t.string   "description", limit: 255
-    t.integer  "amount",      limit: 4
+    t.string   "description",      limit: 255
+    t.integer  "amount",           limit: 4
     t.datetime "valid_until"
-    t.boolean  "is_expired",              default: false
+    t.boolean  "is_expired",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "title",       limit: 255
-    t.boolean  "is_reusable",             default: false
+    t.string   "title",            limit: 255
+    t.boolean  "is_reusable",                  default: false
+    t.integer  "campaign_rule_id", limit: 4
   end
 
+  add_index "shopping_point_campaigns", ["campaign_rule_id"], name: "index_shopping_point_campaigns_on_campaign_rule_id", using: :btree
   add_index "shopping_point_campaigns", ["is_expired"], name: "index_shopping_point_campaigns_on_is_expired", using: :btree
   add_index "shopping_point_campaigns", ["valid_until"], name: "index_shopping_point_campaigns_on_valid_until", using: :btree
 
