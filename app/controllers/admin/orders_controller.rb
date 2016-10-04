@@ -140,7 +140,7 @@ class Admin::OrdersController < AdminController
   end
 
   def order_params
-    params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id, :ship_store_code])
+    params.require(:order).permit(:total, :note, info_attributes: [:ship_phone, :ship_email, :id, :ship_store_code, :ship_address])
   end
 
   def search_params
