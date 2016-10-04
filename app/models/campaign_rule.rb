@@ -8,6 +8,10 @@ class CampaignRule< ActiveRecord::Base
 
   scope :valid, ->{ where(is_valid: true)}
 
+  mount_uploader :banner_cover, OriginalPicUploader
+  mount_uploader :card_icon, OriginalPicUploader
+  mount_uploader :list_icon, OriginalPicUploader
+
   acts_as_paranoid
 
   def exceed_threshold?(options={})
