@@ -1,15 +1,41 @@
 class Api::V4::OrdersController < ApiController
   def checkout
-    if params[:user_id] && params[:user_id].to_i != User::ANONYMOUS
-      user = User.find(params[:user_id])
-      user_shopping_points_amount = ShoppingPointManager.new(user).total_amount
-      items_price_amount = (params[:items_price].to_i * 0.1).round
-      shopping_point_amount = [user_shopping_points_amount, items_price_amount].min
+    if params[:products].blank?
+      Rails.logger.error("empty_params: params[products] is blank")
+      render status: 400, json: "empty_params: params[products] is blank"
     else
-      shopping_point_amount = 0
-    end
+      products = params[:products].map do |product|
+        cart_item = CartItem.new(item_id: product[:item_id], item_spec_id: product[:item_spec_id], item_quantity: product[:quantity])
+        p = PriceManagerForCartItem.new(cart_item)
+        p.apply_item_campaign
+        product[:origin_price] = p.origin_price
+        product[:discounted_price] = p.discounted_price
+        product[:subtotal] = p.subtotal
+        product[:campaigns] = p.campaigns_info
+        product
+      end
 
-    render status: 200, json: {data: {shopping_point_amount: shopping_point_amount}}
+      user = User.find(params[:user_id])
+      order = {}
+      order[:origin_items_price] = products.sum{|product| product[:subtotal]}
+      order[:reduced_items_price] = order[:origin_items_price] - params[:spend_shopping_point_amount].to_i
+      order[:discount_amount] = PriceManager.discount_amount(order[:reduced_items_price])
+      order[:campaigns] = PriceManager.get_campaigns_for_order(order[:reduced_items_price])
+      if params[:user_id].to_i != User::ANONYMOUS
+        order[:obtain_shopping_point_amount] = PriceManager.obtain_shopping_point_amount(order[:reduced_items_price])
+        order[:shopping_point_campaigns] = PriceManager.return_shopping_point_campaigns(order[:reduced_items_price])
+      else
+        order[:obtain_shopping_point_amount] = nil
+        order[:shopping_point_campaigns] = []
+      end
+
+      order[:ship_fee] = PriceManager.count_ship_fee(order[:reduced_items_price])
+      order[:total] = order[:reduced_items_price] - order[:discount_amount] + order[:ship_fee]
+
+      spendable_shopping_point =  ShoppingPointManager.new(user).calculate_available_shopping_point(order[:origin_items_price])
+
+      render status: 200, json: {data: {spendable_shopping_point: spendable_shopping_point, products: products, order: order}}
+    end
   end
 
   def check_pickup_record
