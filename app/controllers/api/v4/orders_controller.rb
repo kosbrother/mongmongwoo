@@ -80,8 +80,9 @@ class Api::V4::OrdersController < ApiController
         raise ActiveRecord::Rollback
       else
         DiscountRecordCreator.create_by_type_if_applicable(@order)
-        ShoppingPointManager.new(@order.user).create_shopping_point_if_applicable(@order, params[:shopping_points_amount].to_i)
-        ShoppingPointManager.spend_shopping_points(@order, params[:shopping_points_amount].to_i)
+        user = @order.user
+        ShoppingPointManager.new(user).create_shopping_point_if_applicable(@order, params[:shopping_points_amount].to_i)
+        ShoppingPointManager.new(user).spend_shopping_points(@order, params[:shopping_points_amount].to_i)
       end
 
       info = OrderInfo.new
