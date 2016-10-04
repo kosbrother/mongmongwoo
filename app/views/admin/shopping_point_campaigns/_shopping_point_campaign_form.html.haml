@@ -13,11 +13,11 @@
 .form-group
   = f.label :created_at, "開始日期", class: "col-sm-2 control-label"
   .col-md-5
-    = f.datetime_field :created_at, { class: "form-control datetimepicker", placeholder: "選擇開始日期(必填)", required: true, value: @shopping_point_campaign ? @shopping_point_campaign.created_at.strftime("%Y-%m-%d %H:%M") : ''}
+    = f.datetime_field :created_at, { class: "form-control datetimepicker", placeholder: "選擇開始日期(必填)", required: true, value:  f.object.created_at.present? ? f.object.created_at.strftime("%Y-%m-%d %H:%M") : ''}
 .form-group
   = f.label :valid_until, "截止日期", class: "col-sm-2 control-label"
   .col-md-5
-    = f.datetime_field :valid_until, { class: "form-control datetimepicker", placeholder: "選擇結束日期", value: @shopping_point_campaign && @shopping_point_campaign.valid_until ? @shopping_point_campaign.valid_until.strftime("%Y-%m-%d %H:%M") : '' }
+    = f.datetime_field :valid_until, { class: "form-control datetimepicker", placeholder: "選擇結束日期", value:  f.object.valid_until.present? ? f.object.valid_until.strftime("%Y-%m-%d %H:%M") : '' }
 .form_group
   = f.label :is_reusable, "是否可重複領取", class: "col-sm-2 control-label"
   .col-md-3

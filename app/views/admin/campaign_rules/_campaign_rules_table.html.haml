@@ -19,7 +19,7 @@
         %td
           = t("models.campaign_rules.discount_type.#{campaign_rule.discount_type}")
         %td
-          = campaign_rule.discount_money || campaign_rule.discount_percentage
+          = campaign_rule.discount_money || campaign_rule.discount_percentage || campaign_rule.shopping_point_campaign.amount
         %td
           = link_to '編輯', edit_admin_campaign_rule_path(campaign_rule),class: 'btn btn-default'
           = link_to '刪除', admin_campaign_rule_path(campaign_rule),class: 'btn btn-warning', method: :delete
