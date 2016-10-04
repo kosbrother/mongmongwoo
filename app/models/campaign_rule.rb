@@ -8,6 +8,9 @@ class CampaignRule< ActiveRecord::Base
 
   has_many :campaigns, dependent: :destroy
   has_many :items, through: :campaigns, source: :discountable, source_type: "Item"
+  has_one :shopping_point_campaign
+
+  accepts_nested_attributes_for :shopping_point_campaign
 
   scope :valid, ->{ where(is_valid: true)}
 

@@ -5,21 +5,29 @@ class Admin::CampaignRulesController <AdminController
   before_action :find_campaign_rule, only: [:edit, :destroy, :update]
 
   def index
-    @campaign_rules = CampaignRule.includes(campaigns: :discountable).joins(:campaigns).where.not(campaigns: {id: nil} ).distinct
+    @is_valid = params['is_valid'] == 'true'
+    @campaign_rules = CampaignRule.includes(:shopping_point_campaign, campaigns: :discountable).where(is_valid: @is_valid)
   end
 
   def new
     @campaign_rule = CampaignRule.new
+    @campaign_rule.shopping_point_campaign = ShoppingPointCampaign.new
     @campaign_ids = []
   end
 
   def create
     campaign_rule = CampaignRule.create(campaign_rule_params)
-    campaign_rule.campaigns.create(campaign_items_params)
-    if has_campaign_order?
-      campaign_rule.campaigns.create(discountable_type: nil, discountable_id: nil)
+    if campaign_rule.discount_type == "shopping_point"
+      campaign_rule.update(shopping_point_campaign_params)
+      redirect_to admin_shopping_point_campaigns_path
+    else
+      if has_campaign_order?
+        campaign_rule.campaigns.create(discountable_type: nil, discountable_id: nil)
+      else
+        campaign_rule.campaigns.create(campaign_items_params)
+      end
+      redirect_to admin_campaign_rules_path
     end
-    redirect_to admin_campaign_rules_path
   end
 
   def destroy
@@ -55,7 +63,7 @@ class Admin::CampaignRulesController <AdminController
   private
 
   def campaign_rule_params
-    params.require("campaign_rule").permit(:description, :rule_type, :threshold, :discount_type, :discount_percentage, :discount_money)
+    params.require("campaign_rule").permit(:title, :description, :rule_type, :threshold, :discount_type, :discount_percentage, :discount_money)
   end
 
   def campaign_items_params
@@ -69,6 +77,10 @@ class Admin::CampaignRulesController <AdminController
 
   def campaign_item_ids
     params.require("campaign_rule").permit(campaign_items: [])['campaign_items'].select{|id| id.present?}.map{|id| id.to_i}
+  end
+
+  def shopping_point_campaign_params
+    params.require("campaign_rule").permit(shopping_point_campaign_attributes: [:title, :description, :amount, :created_at, :valid_until, :is_reusable])
   end
 
   def find_campaign_rule
