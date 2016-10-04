@@ -35,6 +35,8 @@ class Item < ActiveRecord::Base
   has_many :order_items, foreign_key: :source_item_id
   has_many :stock_specs
   has_many :price_records
+  has_one :campaign, as: :discountable
+  has_one :campaign_rule, ->{where(is_valid: true)}, through: :campaign
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
