@@ -11,6 +11,13 @@ campaign_rule = function(){
     $('.discount-type').addClass('hidden');
     $(selector).removeClass('hidden');
     $(selector + ' input').attr('required', true);
+    if(type === 'shopping_point'){
+      $('.check-box-group input').attr('checked', false);
+      $('.check-box-group').hide();
+      $(selector + ' .shopping-point-campaign-title').val($('#campaign_rule_title').val());
+      $(selector + ' .shopping-point-campaign-description').val($('#campaign_rule_description').val());
+      $(selector + ' .un-required input').attr('required', false);
+    }
   });
 };
 $(document).ready(campaign_rule);

@@ -1,7 +1,11 @@
 .form-group
-  = f.label :description, "描述", class: "col-sm-2 control-label"
+  = f.label :title, "活動標題", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.text_field :description, { class: "form-control", placeholder: "請輸入規則描述", required: true }
+    = f.text_field :title, { class: "form-control", placeholder: "請輸入活動標題", required: true }
+.form-group
+  = f.label :description, "活動描述", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.text_field :description, { class: "form-control", placeholder: "請輸入活動描述", required: true }
 .form-group
   = f.label :rule_type, "規則類型", class: "col-sm-2 control-label"
   .col-sm-10
@@ -22,17 +26,45 @@
   = f.label :discount_percentage, "優惠折扣", class: "col-sm-2 control-label"
   .col-sm-10
     = f.number_field :discount_percentage, { class: "form-control", placeholder: "請輸入折扣百分比", required:  discount_type == 'percentage_off', min: 0.01, max: 1, step: 0.01}
-%h4.text-center 優惠商品選擇
-.form-group
+.discount-type{"data-type": "shopping_point", class: "#{'hidden' if discount_type != "shopping_point"}"}
+  = f.fields_for :shopping_point_campaign do |ff|
+    .form-group
+      = ff.label :title, "活動標題", class: "col-sm-2 control-label"
+      .col-sm-10
+        = ff.text_field :title, { class: "form-control shopping-point-campaign-title", placeholder: "請輸入標題"}
+    .form-group
+      = ff.label :description, "活動內容", class: "col-sm-2 control-label"
+      .col-sm-10
+        = ff.text_area :description, { rows: 6, class: "form-control shopping-point-campaign-description", placeholder: "請輸入內容"}
+    .form-group
+      = ff.label :amount, "活動金額", class: "col-sm-2 control-label"
+      .col-sm-5
+        = ff.number_field :amount, { class: "form-control", placeholder: "請輸入金額"}
+    .form-group
+      = ff.label :created_at, "開始日期", class: "col-sm-2 control-label"
+      .col-md-5
+        = ff.datetime_field :created_at, { class: "form-control datetimepicker", placeholder: "選擇開始日期(必填)", value:  ff.object.created_at.present? ? ff.object.created_at.strftime("%Y-%m-%d %H:%M") : ''}
+    .form-group.un-required
+      = ff.label :valid_until, "截止日期", class: "col-sm-2 control-label"
+      .col-md-5
+        = ff.datetime_field :valid_until, { class: "form-control datetimepicker un-required", placeholder: "選擇結束日期", value:  ff.object.valid_until.present? ? ff.object.valid_until.strftime("%Y-%m-%d %H:%M") : '' }
+    .form_group.un-required.checkbox
+      .col-sm-2
+      = ff.label :is_reusable, class: "control-label un-required" do
+        = ff.check_box :is_reusable
+        是否可重複領取
+.form-group.check-box-group{class: "#{'hidden' if discount_type == "shopping_point"}"}
+  %h4.text-center 優惠商品選擇
   .row
     .col-lg-12
       = check_box_tag "campaign_rule[has_campaign_order]", true, @campaign_ids.include?(nil)
       = label_tag "campaign_rule[has_campaign_order]", "全館不分商品"
-    = f.collection_check_boxes :campaign_items, Item.on_shelf, :id, :name do |cb|
-      .col-lg-4
-        = cb.label(class: "checkbox-inline") do
-          = cb.check_box(checked:"#{'checked' if @campaign_ids.include? cb.value}")
-          = truncate("#{cb.value}: #{cb.text}", length: 20)
-.form-group
+    .item-check-box
+      = f.collection_check_boxes :campaign_items, Item.on_shelf, :id, :name do |cb|
+        .col-lg-4
+          = cb.label(class: "checkbox-inline") do
+            = cb.check_box(checked:"#{'checked' if @campaign_ids.include? cb.value}")
+            = truncate("#{cb.value}: #{cb.text}", length: 20)
+.form-group.pull-right
   = f.submit "確認送出", class: "btn btn-primary"
   = link_to "取消離開",  admin_campaign_rules_path, class: "btn btn-warning"
