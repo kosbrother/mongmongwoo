@@ -8,7 +8,7 @@
     = link_to "新增優惠活動", new_admin_campaign_rule_path, class: "btn btn-default"
   %h2 優惠活動列表
   %ul.nav.nav-tabs
-    %li{class: "#{'active' if @is_valid == true}"}= link_to '進行中', admin_campaign_rules_path(is_valid: true)
-    %li{class: "#{'active' if @is_valid == false}"}= link_to '已失效', admin_campaign_rules_path(is_valid: false)
+    %li{class: "#{'active' if @is_valid == 'true'}"}= link_to '進行中', admin_campaign_rules_path(is_valid: true)
+    %li{class: "#{'active' if @is_valid == 'false'}"}= link_to '已失效', admin_campaign_rules_path(is_valid: false)
   .panel-body
     = render "campaign_rules_table"

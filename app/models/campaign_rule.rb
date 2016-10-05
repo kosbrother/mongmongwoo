@@ -8,7 +8,7 @@ class CampaignRule< ActiveRecord::Base
 
   has_many :campaigns, dependent: :destroy
   has_many :items, through: :campaigns, source: :discountable, source_type: "Item"
-  has_one :shopping_point_campaign
+  has_one :shopping_point_campaign, dependent: :destroy
 
   accepts_nested_attributes_for :shopping_point_campaign
 

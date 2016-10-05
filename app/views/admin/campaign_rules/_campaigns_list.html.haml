@@ -11,6 +11,23 @@
         %table.table.table-bordered
           %thead
             %tr.active
+              %th 廣告圖片
+              %th 標籤圖示
+              %th 優惠列表圖示
+          %tbody
+            %tr
+              %td
+                - if campaign_rule.banner_cover
+                  = show_image(campaign_rule.banner_cover, "120x80")
+              %td
+                - if campaign_rule.card_icon
+                  = show_image(campaign_rule.card_icon, "50x50")
+              %td
+                - if campaign_rule.list_icon
+                  = show_image(campaign_rule.list_icon, "50x50")
+        %table.table.table-bordered
+          %thead
+            %tr.active
               %th 商品編號
               %th 商品名稱
               %th 操作
