@@ -7,25 +7,41 @@
   .col-sm-10
     = f.text_field :description, { class: "form-control", placeholder: "請輸入活動描述", required: true }
 .form-group
+  = f.label :banner_cover, "廣告圖片", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.file_field :banner_cover, { class: "form-control" }
+.form-group
+  = f.label :card_icon, "標籤圖示", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.file_field :card_icon, { class: "form-control" }
+.form-group
+  = f.label :list_icon, "優惠列表圖示", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.file_field :list_icon, { class: "form-control" }
+.form-group
   = f.label :rule_type, "規則類型", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.select :rule_type, options_for_campaign_rule_types, {}, class: "form-control"
+    = f.select :rule_type, options_for_campaign_rule_types, {}, { class: "form-control", disabled: f.object.persisted? }
 .form-group
   = f.label :threshold, "門檻", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.number_field :threshold, { class: "form-control", placeholder: "請輸入金額或數量", required: true, min: 0}
+    = f.number_field :threshold, { class: "form-control", placeholder: "請輸入金額或數量", required: true, min: 0, disabled: f.object.persisted? }
 .form-group
   = f.label :discount_type, "優惠類型", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.select :discount_type, options_for_campaign_discount_types, {}, class: "form-control"
+    = f.select :discount_type, options_for_campaign_discount_types, {}, { class: "form-control", disabled: f.object.persisted? }
 .form-group.discount-type{"data-type": "money_off", class: "#{'hidden' if discount_type != "money_off"}"}
   = f.label :discount_money, "優惠金額", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.number_field :discount_money, { class: "form-control", placeholder: "請輸入金額", required:  discount_type == 'money_off' , min: 0}
+    = f.number_field :discount_money, { class: "form-control", placeholder: "請輸入金額", required:  discount_type == 'money_off' , min: 0, disabled: f.object.persisted? }
 .form-group.discount-type{class: "#{'hidden' if CampaignRule::PERCENTAGE_OFF_TYPE.exclude?(discount_type)}", "data-type": "percentage_off"}
   = f.label :discount_percentage, "優惠折扣", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.number_field :discount_percentage, { class: "form-control", placeholder: "請輸入折扣百分比", required:  discount_type == 'percentage_off', min: 0.01, max: 1, step: 0.01}
+    = f.number_field :discount_percentage, { class: "form-control", placeholder: "請輸入折扣百分比", required:  discount_type == 'percentage_off', min: 0.01, max: 1, step: 0.01, disabled: f.object.persisted? }
+.form-group.un-required#campaign-rule-datetime{class: "#{'hidden' if discount_type == "shopping_point"}"}
+  = f.label :valid_until, "截止日期", class: "col-sm-2 control-label"
+  .col-md-5
+    = f.datetime_field :valid_until, { class: "form-control datetimepicker un-required", placeholder: "選擇結束日期(選填)", value:  f.object.valid_until.present? ? f.object.valid_until.strftime("%Y-%m-%d %H:%M") : '' }
 .discount-type{"data-type": "shopping_point", class: "#{'hidden' if discount_type != "shopping_point"}"}
   = f.fields_for :shopping_point_campaign do |ff|
     .form-group
@@ -40,26 +56,20 @@
       = ff.label :amount, "活動金額", class: "col-sm-2 control-label"
       .col-sm-5
         = ff.number_field :amount, { class: "form-control", placeholder: "請輸入金額"}
-    .form-group
-      = ff.label :created_at, "開始日期", class: "col-sm-2 control-label"
-      .col-md-5
-        = ff.datetime_field :created_at, { class: "form-control datetimepicker", placeholder: "選擇開始日期(必填)", value:  ff.object.created_at.present? ? ff.object.created_at.strftime("%Y-%m-%d %H:%M") : ''}
     .form-group.un-required
       = ff.label :valid_until, "截止日期", class: "col-sm-2 control-label"
       .col-md-5
         = ff.datetime_field :valid_until, { class: "form-control datetimepicker un-required", placeholder: "選擇結束日期", value:  ff.object.valid_until.present? ? ff.object.valid_until.strftime("%Y-%m-%d %H:%M") : '' }
-    .form_group.un-required.checkbox
-      .col-sm-2
-      = ff.label :is_reusable, class: "control-label un-required" do
-        = ff.check_box :is_reusable
-        是否可重複領取
+    .form_group
+      .is_reusable
+        = ff.hidden_field :is_reusable, value: 1
 .form-group.check-box-group{class: "#{'hidden' if discount_type == "shopping_point"}"}
-  %h4.text-center 優惠商品選擇
   .row
-    .col-lg-12
-      = check_box_tag "campaign_rule[has_campaign_order]", true, @campaign_ids.include?(nil)
-      = label_tag "campaign_rule[has_campaign_order]", "全館不分商品"
-    .item-check-box
+    .col-lg-12.campaign-for-order{class: "#{'hidden' if rule_type == "exceed_quantity"}"}
+      %h4.text-center 全館不分商品
+      = hidden_field_tag "campaign_rule[campaign_for_order]", rule_type == "exceed_amount"
+    .campaign-for-items{class: "#{'hidden' if rule_type == "exceed_amount"}"}
+      %h4.text-center 優惠商品選擇
       = f.collection_check_boxes :campaign_items, Item.on_shelf, :id, :name do |cb|
         .col-lg-4
           = cb.label(class: "checkbox-inline") do
