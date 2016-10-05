@@ -12,4 +12,4 @@
         %h3 新增優惠活動
     .panel-body
       = form_for @campaign_rule, url: admin_campaign_rules_path, html: { class: "form-horizontal"} do |f|
-        = render "campaign_rule_form", f: f, discount_type: "money_off"
+        = render "campaign_rule_form", f: f, discount_type: "money_off", rule_type: "exceed_amount"
