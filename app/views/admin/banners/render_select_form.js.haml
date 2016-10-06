@@ -1,5 +1,10 @@
 $('.select-type-field').children().remove()
-- if @banner_type == Category.name
+- if @banner_type == Campaign.name
+  $('#banner_image').addClass('hidden');
+  $('.select-type-field').append('#{j(render 'select_campaign')}');
+- elsif @banner_type == Category.name
   $('.select-type-field').append('#{j(render 'select_category')}');
+  $('#banner_image').removeClass('hidden');
 - elsif @banner_type == Item.name
   $('.select-type-field').append('#{j(render 'select_item')}');
+  $('#banner_image').removeClass('hidden');

@@ -1,7 +1,7 @@
 class Banner < ActiveRecord::Base
   include AndroidApp
 
-  BANNER_TYPES = [nil, Category.name, Item.name]
+  BANNER_TYPES = [nil, Category.name, Item.name, Campaign.name]
 
   belongs_to :bannerable, polymorphic: true
 
