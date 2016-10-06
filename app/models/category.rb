@@ -3,11 +3,10 @@ class Category < ActiveRecord::Base
 
   ALL_ID = 10
   NEW_ID = 11
-  NO_CHILD_CATEGORIES = [ALL_ID, NEW_ID]
 
   validates_presence_of :name, :image
 
-  has_many :item_categories
+  has_many :item_categories, dependent: :destroy
   has_many :items, through: :item_categories
   belongs_to :parent_category, class_name: "Category", foreign_key: "parent_id"
   has_many :child_categories, class_name: "Category", foreign_key: "parent_id"

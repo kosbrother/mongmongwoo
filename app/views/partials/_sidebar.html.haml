@@ -3,24 +3,15 @@
     .header
       商品清單
     - @categories.each do |category|
-      - if category.id == Category::NEW_ID
-        .dropdown.keep-open
-          .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-            = category.name
-            %span.caret
-          %ul.dropdown-menu
-            - 5.times do |index|
-              = link_to category_path(category, months_ago: index) do
-                %li.list #{Time.current.ago(index.month).month}月份#{category.name}
-      -else
-        .dropdown.keep-open
-          .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-            = category.name
-            %span.caret
-          %ul.dropdown-menu
-            = link_to category_path(category) do
-              %li.list 全部
-            - category.child_categories.each do |child_category|
+      .dropdown.keep-open
+        .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          = category.name
+          %span.caret
+        %ul.dropdown-menu
+          = link_to category_path(category) do
+            %li.list 全部
+          - category.child_categories.each do |child_category|
+            - if child_category.items.exists?
               = link_to category_path(child_category) do
                 %li.list= child_category.name
   .side-bar

@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require p-loading.min
-//= require url.min
 //= require turbolinks
 //= require_tree .
 
@@ -113,13 +112,8 @@ ready = function() {
     });
 
     //Sort items
-    $('#items_sort').on('change', function() {
-        var path = '';
-        if (url('?months_ago') !== undefined) {
-            path = '/categories/' + $(this).data('category') + '?months_ago=' + url('?months_ago') + '&items_sort=' + $(this).val();
-        } else {
-            path = '/categories/' + $(this).data('category') + '?' + 'items_sort=' + $(this).val();
-        }
+    $('#items_sort').change(function(){
+        var path = '/categories/' + $(this).data('category') + '?' + 'items_sort=' + $(this).val();
         window.location = path;
     });
 };

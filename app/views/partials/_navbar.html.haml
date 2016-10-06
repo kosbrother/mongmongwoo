@@ -37,26 +37,16 @@
               %span.caret
             %ul.dropdown-menu.parent-categories
               - @categories.each do |category|
-                - if category.id == Category::NEW_ID
-                  %li.list
-                    .dropdown
-                      .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                        = category.name
-                        %span.caret
-                      %ul.dropdown-menu.sub-categories
-                        - 5.times do |index|
-                          = link_to category_path(category, months_ago: index) do
-                            %li.list #{Time.current.ago(index.month).month}月份#{category.name}
-                -else
-                  %li.list
-                    .dropdown
-                      .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                        = category.name
-                        %span.caret
-                      %ul.dropdown-menu.sub-categories
-                        = link_to category_path(category) do
-                          %li.list 全部
-                        - category.child_categories.each do |child_category|
+                %li.list
+                  .dropdown
+                    .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                      = category.name
+                      %span.caret
+                    %ul.dropdown-menu.sub-categories
+                      = link_to category_path(category) do
+                        %li.list 全部
+                      - category.child_categories.each do |child_category|
+                        - if child_category.items.exists?
                           = link_to category_path(child_category) do
                             %li.list= child_category.name
         %li.nav-list.hidden-xs

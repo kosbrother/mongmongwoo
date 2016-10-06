@@ -78,11 +78,14 @@ class Admin::ItemsController < AdminController
       @item.update_attributes(status: Item.statuses["on_shelf"], ever_on_shelf: true, created_at: Time.current)
     else
       @item.update_attribute(:status, Item.statuses["on_shelf"])
+      @item.remove_existed_new_on_shelf_categories
     end
+    @item.reload.set_new_on_shelf_categories
   end
 
   def off_shelf
     @item.update_attribute(:status, Item.statuses["off_shelf"])
+    @item.remove_existed_new_on_shelf_categories
   end
 
   def search
@@ -95,6 +98,8 @@ class Admin::ItemsController < AdminController
 
   def update_initial_on_shelf_date
     @item.update_attribute(:created_at, params[:datetime])
+    @item.remove_existed_new_on_shelf_categories
+    @item.reload.set_new_on_shelf_categories
     flash[:notice] = "已更新首次上架日期"
     redirect_to admin_item_path(@item)
   end

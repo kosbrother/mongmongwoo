@@ -14,4 +14,8 @@ module CategoriesHelper
       'active' if index == 0
     end
   end
+
+  def month_sub_category_link_text(sub_category)
+    mobile? ? sub_category.name.split('年')[1] : sub_category.name
+  end
 end
