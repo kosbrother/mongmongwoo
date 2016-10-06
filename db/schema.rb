@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927081546) do
+ActiveRecord::Schema.define(version: 20161006020832) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -470,6 +470,7 @@ ActiveRecord::Schema.define(version: 20160927081546) do
     t.string   "title",            limit: 255
     t.boolean  "is_reusable",                  default: false
     t.integer  "campaign_rule_id", limit: 4
+    t.datetime "deleted_at"
   end
 
   add_index "shopping_point_campaigns", ["campaign_rule_id"], name: "index_shopping_point_campaigns_on_campaign_rule_id", using: :btree
