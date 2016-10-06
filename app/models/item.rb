@@ -17,8 +17,8 @@ class Item < ActiveRecord::Base
   validates_presence_of :name, :price, :description
   validates_numericality_of :price, only_integer: true, greater_than: 0
 
-  after_create :index_document
-  after_update :update_document
+  after_create :index_document, :track_price_if_changed
+  after_update :update_document, :track_price_if_changed
   after_destroy :delete_document
 
   has_many :photos, dependent: :destroy
@@ -34,6 +34,7 @@ class Item < ActiveRecord::Base
   has_many :promotions, through: :item_promotions
   has_many :order_items, foreign_key: :source_item_id
   has_many :stock_specs
+  has_many :price_records
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
@@ -135,6 +136,17 @@ class Item < ActiveRecord::Base
 
   def able_path
     category_item_path(categories.parent_categories.last, self)
+  end
+
+  def track_price_if_changed
+    if price_changed? || special_price_changed?
+      pr = PriceRecord.new
+      pr.item = self
+      pr.changed_at = self.created_at
+      pr.price = self.price
+      pr.special_price = self.special_price
+      pr.save
+    end
   end
 
   private

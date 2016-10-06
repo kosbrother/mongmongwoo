@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920085856) do
+ActiveRecord::Schema.define(version: 20161006121838) do
 
   create_table "admin_cart_items", force: :cascade do |t|
     t.integer  "admin_cart_id",        limit: 4
@@ -384,6 +384,13 @@ ActiveRecord::Schema.define(version: 20160920085856) do
   end
 
   add_index "photos", ["deleted_at"], name: "index_photos_on_deleted_at", using: :btree
+
+  create_table "price_records", force: :cascade do |t|
+    t.integer  "item_id",       limit: 4
+    t.integer  "price",         limit: 4
+    t.integer  "special_price", limit: 4
+    t.datetime "changed_at"
+  end
 
   create_table "promotions", force: :cascade do |t|
     t.string   "title",      limit: 255
