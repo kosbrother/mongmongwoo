@@ -7,6 +7,9 @@
         = link_to "用戶名稱列表", admin_users_path
       %li.active 用戶詳細資料
   .pull-right
+    = link_to "查看個人訊息", admin_user_my_messages_path(@user), class: "btn btn-default"
+    - if @user.id != User::ANONYMOUS
+      = link_to "查看購物金", admin_user_shopping_points_path(@user), class: "btn btn-default"
     = link_to "返回訂單列表", status_index_admin_orders_path, class: "btn btn-success"
   %h2
     用戶名稱：#{@user.user_name}
