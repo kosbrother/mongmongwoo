@@ -5,4 +5,6 @@ class ShoppingPointCampaign < ActiveRecord::Base
   belongs_to :campaign_rule
 
   scope :with_campaign_rule, ->{where.not(campaign_rule_id: nil).where(is_expired: false)}
+
+  acts_as_paranoid
 end
