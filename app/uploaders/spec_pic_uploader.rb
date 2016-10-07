@@ -8,7 +8,7 @@ class SpecPicUploader < CarrierWave::Uploader::Base
   end
   
   # 預設圖片尺寸
-  process resize_to_fit: [500, 500]
+  process resize_to_fit: [600, 600]
 
   version :small do
     process resize_to_fit: [150, 150]
