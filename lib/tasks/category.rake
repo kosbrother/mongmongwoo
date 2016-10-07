@@ -15,9 +15,8 @@ namespace :categories do
     recent_5_months_subcategory_ids = []
     5.times do |index|
       subcategory = the_new_category.child_categories.find_by(name: "#{Time.current.year}年#{Time.current.month - index}月")
-      recent_5_months_subcategory_ids << subcategory.id
+      recent_5_months_subcategory_ids << subcategory.id if subcategory
     end
-    not_recent_5_months_subcategories = the_new_category.child_categories.where.not(id: recent_5_months_subcategory_ids)
-    not_recent_5_months_subcategories.destroy_all if not_recent_5_months_subcategories.exists?
+    the_new_category.child_categories.where.not(id: recent_5_months_subcategory_ids).destroy_all
   end
 end
