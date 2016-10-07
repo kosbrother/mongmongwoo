@@ -1,10 +1,13 @@
 class CampaignRule< ActiveRecord::Base
+  include AndroidApp
+
   enum discount_type: {money_off: 0, percentage_off: 1, percentage_off_next:2, shopping_point: 3}
   enum rule_type: {exceed_amount: 0, exceed_quantity: 1}
 
   PERCENTAGE_OFF_TYPE = ["percentage_off", "percentage_off_next"]
 
   has_many :campaigns, dependent: :destroy
+  has_many :items, through: :campaigns, source: :discountable, source_type: "Item"
 
   scope :valid, ->{ where(is_valid: true)}
 
@@ -39,6 +42,15 @@ class CampaignRule< ActiveRecord::Base
       unit_price= options[:amount]/options[:quantity]
       total = unit_price + (options[:quantity]-1)*discount_percentage*unit_price
       total.round
+    end
+  end
+
+  def able_path
+    case discount_type
+    when "shopping_point"
+      shopping_point_campaigns_path
+    else
+      campaign_rule_path(self)
     end
   end
 end
