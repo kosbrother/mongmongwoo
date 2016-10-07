@@ -37,19 +37,16 @@
               %span.caret
             %ul.dropdown-menu.parent-categories
               - @categories.each do |category|
-                -if Category::NO_CHILD_CATEGORIES.include?(category.id)
-                  = link_to category_path(category) do
-                    .list= category.name
-                -else
-                  %li.list
-                    .dropdown
-                      .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                        = category.name
-                        %span.caret
-                      %ul.dropdown-menu.sub-categories
-                        = link_to category_path(category) do
-                          %li.list 全部
-                        - category.child_categories.each do |child_category|
+                %li.list
+                  .dropdown
+                    .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                      = category.name
+                      %span.caret
+                    %ul.dropdown-menu.sub-categories
+                      = link_to category_path(category) do
+                        %li.list 全部
+                      - category.child_categories.each do |child_category|
+                        - if child_category.items.exists?
                           = link_to category_path(child_category) do
                             %li.list= child_category.name
         %li.nav-list.hidden-xs

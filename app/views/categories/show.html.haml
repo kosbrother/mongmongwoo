@@ -19,7 +19,10 @@
                 .img
                   = image_tag(category.image.url, class: 'img-responsive')
                 .text{class: "#{'-current' if category.id == @category.id}"}
-                  = category.name
+                  - if category.parent_id == Category::NEW_ID
+                    = month_sub_category_link_text(category)
+                  -else
+                    = category.name
       %a.left.carousel-control{role: "button", "data-slide": "prev", href: "#categories-carousel"}
         %span.glyphicon.glyphicon-chevron-left
         %span.sr-only Previous

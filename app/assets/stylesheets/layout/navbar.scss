@@ -247,6 +247,7 @@
         background-color: $nav-dropdown-background-color;
         > .list {
           margin-top: 10px;
+          height: auto;
           > .dropdown {
             > .list {
               color: black;

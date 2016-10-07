@@ -149,6 +149,23 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def set_new_on_shelf_categories
+    the_new_category = Category.find(Category::NEW_ID)
+    categories << the_new_category if categories.exclude?(the_new_category)
+    child_category = the_new_category.child_categories.find_or_create_by(name: "#{created_at.year}年#{created_at.month}月")
+    if child_category.image.file.nil?
+      child_category.image = Rails.root.join("app/assets/images/icons/months/month_#{created_at.month}.png").open
+      child_category.save
+    end
+    categories << child_category if categories.exclude?(child_category)
+  end
+
+  def remove_existed_new_on_shelf_categories
+    the_new_categories = categories.where("category_id = :id OR parent_id = :id", id: Category::NEW_ID)
+    categories.delete(the_new_categories)
+    the_new_categories.each{|category| category.destroy if category.items.on_shelf.blank?}
+  end
+
   private
 
   def as_indexed_json(options={})

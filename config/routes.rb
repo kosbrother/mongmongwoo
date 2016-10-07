@@ -142,6 +142,7 @@ Rails.application.routes.draw do
         get "specs"
         patch "on_shelf"
         patch "off_shelf"
+        patch "update_initial_on_shelf_date"
       end
 
       resources :photos, only: [:index, :new, :create, :edit, :update, :destroy] do

@@ -1,8 +1,12 @@
 require 'active_support/all'
 Time.zone = "Taipei"
-  
+
 every 3.hours do
   rake 'items:item_position',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
+end
+
+every 1.month do
+  rake 'categories:delete_subcategory_if_excluded_recent_5_months',:output => {:error => 'log/error.log', :standard => 'log/cron.log'}
 end
 
 every 1.day, :at => Time.zone.parse('5:00 am').utc do

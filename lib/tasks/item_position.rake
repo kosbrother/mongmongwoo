@@ -42,11 +42,6 @@ namespace :items do
       end
     end
 
-    # 最新上架 only keep 200 items
-    cs = ItemCategory.where(category_id: 11).order(created_at: :desc)
-    cs.each_with_index do |c,index|
-      c.delete if index > 199
-    end
     cs = ItemCategory.where(category_id: 11).order('rand()')
     cs.each_with_index do |c,index|
       c.position = index + 1

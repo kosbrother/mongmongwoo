@@ -32,7 +32,7 @@
         = number_to_currency(item.cost, unit: "¥ ")
     %tr
       %td.label-cell 分類
-      %td{colspan: "7"}= parent_and_child_categories_name(item.categories)
+      %td{colspan: "7"}= parent_and_child_categories_name(@categories)
       %td.label-cell 商品標籤
       %td{colspan: "11"}
         = item.tag_list

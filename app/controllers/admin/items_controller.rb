@@ -5,7 +5,7 @@ class Admin::ItemsController < AdminController
   before_action except: [:on_shelf, :off_shelf] do
     accept_role(:manager, :staff)
   end
-  before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs]
+  before_action :find_item, only: [:show, :edit, :update, :destroy, :on_shelf, :off_shelf, :specs, :update_initial_on_shelf_date]
 
   def index
     params[:category_id] ||= Category::ALL_ID
@@ -54,6 +54,7 @@ class Admin::ItemsController < AdminController
     @sales_volume = @item.sales_quantity
     @sales_volume_monthly = @item.sales_quantity_within_date(TimeSupport.time_until("month"))
     @sales_volume_weekly = @item.sales_quantity_within_date(TimeSupport.time_until("week"))
+    @categories = @item.categories.includes(:parent_category)
   end
 
   def update
@@ -77,11 +78,14 @@ class Admin::ItemsController < AdminController
       @item.update_attributes(status: Item.statuses["on_shelf"], ever_on_shelf: true, created_at: Time.current)
     else
       @item.update_attribute(:status, Item.statuses["on_shelf"])
+      @item.remove_existed_new_on_shelf_categories
     end
+    @item.reload.set_new_on_shelf_categories
   end
 
   def off_shelf
     @item.update_attribute(:status, Item.statuses["off_shelf"])
+    @item.remove_existed_new_on_shelf_categories
   end
 
   def search
@@ -90,6 +94,14 @@ class Admin::ItemsController < AdminController
 
   def specs
     render json: @specs
+  end
+
+  def update_initial_on_shelf_date
+    @item.update_attribute(:created_at, params[:datetime])
+    @item.remove_existed_new_on_shelf_categories
+    @item.reload.set_new_on_shelf_categories
+    flash[:notice] = "已更新首次上架日期"
+    redirect_to admin_item_path(@item)
   end
 
   private
