@@ -35,6 +35,8 @@ class Item < ActiveRecord::Base
   has_many :order_items, foreign_key: :source_item_id
   has_many :stock_specs
   has_many :price_records
+  has_many :campaigns, as: :discountable
+  has_many :campaign_rules, through: :campaigns
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
@@ -164,6 +166,10 @@ class Item < ActiveRecord::Base
     the_new_categories = categories.where("category_id = :id OR parent_id = :id", id: Category::NEW_ID)
     categories.delete(the_new_categories)
     the_new_categories.each{|category| category.destroy if category.items.on_shelf.blank?}
+  end
+
+  def discount_icon
+    campaign_rules.valid.first.card_icon if campaign_rules.valid.exists?
   end
 
   private
