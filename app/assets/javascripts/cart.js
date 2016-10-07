@@ -175,6 +175,16 @@ cart = function() {
             }
         })
     });
+
+    //validate ship name format
+    $('#submit-info').on('click', function () {
+        var format = /^[一-\u9fa5]*$/;
+        var name = $('#ship-name').val();
+        if (format.test(name) === false) {
+            $('#ship-name').val('');
+            $('#errors-modal').modal('show');
+        }
+    });
 };
 
 $(document).ready(cart);

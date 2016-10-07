@@ -8,13 +8,13 @@
     .input-block
       .group
         = label :ship_name, '姓名'
-        = text_field_tag :ship_name, '' ,required: true, value: cookies[:name]
+        = text_field_tag :ship_name, '', placeholder: "請輸入中文姓名", required: true, value: cookies[:name], id: "ship-name"
       .group
         = label :ship_phone, '電話'
-        = text_field_tag :ship_phone, '' ,required: true, value: cookies[:phone]
+        = text_field_tag :ship_phone, '', placeholder: "請輸入聯絡電話", required: true, value: cookies[:phone]
       .group
         = label :ship_email, '電子信箱'
-        = text_field_tag :ship_email, '' ,required: true, value: cookies[:email]
+        = text_field_tag :ship_email, '', placeholder: "請輸入Email信箱",required: true, value: cookies[:email]
         .text *名稱和電話必需正確才能取貨
     - if current_cart.ship_type == "store_delivery"
       = render "store_delivery_form", store: @store
@@ -22,6 +22,13 @@
       = render "home_delivery_form", counties: @counties, towns: @towns
     .submit-session
       =link_to '上一步', checkout_path, class: 'btn btn-previous'
-      =submit_tag '下一步', class: 'btn'
+      =submit_tag '下一步', class: 'btn', id: "submit-info"
+.modal.fade{:role => "dialog", :tabindex => "-1", id: "errors-modal"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h3 收件人姓名請輸入中文姓名!
+      .modal-footer
+        %button.btn.btn-confirm{"data-dismiss" => "modal", :type => "button"} 確定
 = render 'partials/tracking_events/checkout_step', step: @step, fb_event: "AddShipInfo", cart_items: @items
 = render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_2", action: "enter", label: "無"
