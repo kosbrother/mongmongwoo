@@ -9,7 +9,14 @@ class ItemsController < ApplicationController
     @first_item_spec = @item_specs.first if @first_item_spec.blank?
 
     set_meta_tags title: @item.name,
-                  description: @item.description
+                  description: @item.description,
+                  og: {
+                    title:       @item.name,
+                    type:        "product.item",
+                    url:         category_item_url(@category, @item),
+                    image:       view_context.asset_url(@item.photos.first.image_url),
+                    description: view_context.strip_tags(@item.description).gsub("\r\n", " ")
+                  }
   end
 
   def catalog

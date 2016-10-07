@@ -2,6 +2,9 @@
   %link{href: "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{category_item_path(@category,@item)}", rel: "alternate"}
   %link{href: "android-app://com.kosbrother.mongmongwoo/mmwooo/www.mmwooo.com#{category_item_path(@category,@item)}", rel: "alternate"}
 
+- content_for :item_head do
+  %meta{property: "product:price:amount", content: "#{@item.final_price}"}
+
 - breadcrumb :item, @category, @item
 .product-block.row
   .col-lg-6.xs-padding

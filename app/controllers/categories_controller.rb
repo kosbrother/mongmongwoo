@@ -10,6 +10,13 @@ class CategoriesController < ApplicationController
     @items = @category.items.on_shelf.order(Item.sort_params[@items_sort]).paginate(page: params['page'], per_page: 18)
 
     set_meta_tags title: @category.name,
-                  keywords: @category.name
+                  keywords: @category.name,
+                  og: {
+                    title:       @category.name,
+                    type:        "product.group",
+                    url:         category_url(@category),
+                    image:       view_context.asset_url(@category.image_url),
+                    description: @category.name
+                  }
   end
 end
