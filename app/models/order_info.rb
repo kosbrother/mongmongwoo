@@ -9,6 +9,7 @@ class OrderInfo < ActiveRecord::Base
   validates_presence_of :ship_name, :ship_phone, :ship_email
   validates_presence_of :ship_store_code, :ship_store_id, :ship_store_name, if: :is_order_store_delivery?
   validates_presence_of :ship_address, if: :is_home_delivery?
+  validates_format_of :ship_name, with: /\p{Han}/, message: "請輸入中文姓名"
 
   after_update :set_store_if_store_code_changed
 
