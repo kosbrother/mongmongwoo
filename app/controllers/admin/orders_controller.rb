@@ -127,7 +127,7 @@ class Admin::OrdersController < AdminController
   def update_to_processing
     new_orders = Order.status(Order.statuses["新訂單"]).where(ship_type: params[:ship_type])
     new_orders.each do |order|
-      order.update_attribute(:status, Order.statuses["處理中"]) if order.all_able_to_pack?
+      order.update_attribute(:status, Order.statuses["處理中"]) if order.all_able_to_pack? && order.is_paid_if_by_credit_card
     end
 
     redirect_to :back

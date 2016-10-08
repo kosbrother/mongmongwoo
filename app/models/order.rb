@@ -153,6 +153,14 @@ class Order < ActiveRecord::Base
     id.to_s + "-" + time
   end
 
+  def is_paid_if_by_credit_card
+    if home_delivery_by_credit_card?
+      is_paid
+    else
+      true
+    end
+  end
+
   private
 
   def status_changed_to?(changed_status)
@@ -182,6 +190,7 @@ class Order < ActiveRecord::Base
       end
     end
   end
+
   def put_in_check_order_paid_schedule_if_by_credit_card
     if home_delivery_by_credit_card?
       schedule = Schedule.create(scheduleable: self, execute_time: (created_at + 30.minutes), schedule_type: "check_credit_card_paid")
