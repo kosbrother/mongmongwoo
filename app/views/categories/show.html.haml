@@ -1,5 +1,6 @@
 - content_for :head do
   %link{href: "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{category_path(@category)}", rel: "alternate"}
+  %link{href: "android-app://com.kosbrother.mongmongwoo/mmwooo/www.mmwooo.com#{category_path(@category)}", rel: "alternate"}
 
 -if @category.parent_id
   - breadcrumb :child_category, @category
