@@ -3,7 +3,7 @@ namespace :items do
   task :item_position  => :environment do
 
     # put all goods in 所有商品
-    category = Category.first
+    category = Category.find(Category::ALL_ID)
     Item.all.each do |i|
       category.items << i unless category.items.include?(i)
     end
@@ -42,7 +42,7 @@ namespace :items do
       end
     end
 
-    cs = ItemCategory.where(category_id: 11).order('rand()')
+    cs = ItemCategory.where(category_id: Category::NEW_ID).order('rand()')
     cs.each_with_index do |c,index|
       c.position = index + 1
       c.save
