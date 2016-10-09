@@ -58,7 +58,7 @@ class Admin::CategoriesController < AdminController
   def import_excel
     xlsx = Roo::Spreadsheet.open(params['excel_file'], extension: :xlsx)
     sheet = xlsx.sheet(0)
-    records = sheet.parse(item_id: '商品編號', class_1: '商品分類1', class_2: '商品分類2', class_3: '商品分類3', sub_class_1: '子分類1', sub_class_2: '子分類2', sub_class_3: '子分類3')
+    records = sheet.parse(item_id: '商品編號', class_1: '商品類別1', class_2: '商品類別2', class_3: '商品類別3', sub_class_1: '子分類1', sub_class_2: '子分類2', sub_class_3: '子分類3')
     records.each_with_index do |hash, index|
       next if index < 1
       set_item_category(hash)
@@ -84,9 +84,9 @@ class Admin::CategoriesController < AdminController
       else
         new_categories = Category.where("name = ?",value)
       end
-      categories += new_categories   
+      categories += new_categories
     end
-    item.categories << categories
+    item.categories << categories.uniq{|x| x.id}
   end
 
   def category_params
