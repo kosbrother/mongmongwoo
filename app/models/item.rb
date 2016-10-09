@@ -152,8 +152,9 @@ class Item < ActiveRecord::Base
   def set_new_on_shelf_categories
     the_new_category = Category.find(Category::NEW_ID)
     categories << the_new_category if categories.exclude?(the_new_category)
-    child_category = the_new_category.child_categories.find_or_create_by(name: "#{created_at.year}年#{created_at.month}月")
-    if child_category.image.file.nil?
+    child_category = the_new_category.child_categories.find_or_initialize_by(name: "#{created_at.year}年#{created_at.month}月")
+    if child_category.new_record?
+      child_category.position = Category.where(parent_id: Category::NEW_ID).maximum("position") + 1 unless Category.where(parent_id: Category::NEW_ID).blank?
       child_category.image = Rails.root.join("app/assets/images/icons/months/month_#{created_at.month}.png").open
       child_category.save
     end
