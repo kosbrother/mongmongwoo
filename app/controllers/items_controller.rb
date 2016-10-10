@@ -8,8 +8,11 @@ class ItemsController < ApplicationController
     @first_item_spec = @item_specs.detect{|spec| spec.stock_amount > 0}
     @first_item_spec = @item_specs.first if @first_item_spec.blank?
 
+    parent_id = @category.parent_id || @category.id
+    meta_keywords = Category.where("id = :id OR parent_id = :id", id: parent_id).select("name").map(&:name)
     set_meta_tags title: @item.name,
-                  description: @item.description,
+                  description: view_context.strip_tags(@item.description).gsub("\r\n", " "),
+                  keywords: meta_keywords,
                   og: {
                     title:       @item.name,
                     type:        "product.item",
