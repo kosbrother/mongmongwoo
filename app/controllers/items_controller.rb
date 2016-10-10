@@ -18,13 +18,6 @@ class ItemsController < ApplicationController
                     type:        "product.item",
                     url:         category_item_url(@category, @item, protocol: 'https'),
                     description: view_context.strip_tags(@item.description).gsub("\r\n", " ")
-                  },
-                  product: {
-                    retailer_item_id: @item.id,
-                    price: {amount: @item.price, currency: "TWD"},
-                    sale_price: {amount: @item.special_price, currency: "TWD"},
-                    availability: "in stock",
-                    condition: "new"
                   }
   end
 

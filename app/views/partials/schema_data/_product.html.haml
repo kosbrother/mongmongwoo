@@ -1,4 +1,12 @@
-%meta{property: "product:price:amount", content: "#{item.final_price}"}
+%meta{property: "product:retailer_item_id", content: "#{item.id}"}
+%meta{property: "product:price:amount", content: "#{item.price}"}
+%meta{property: "product:price:currency", content: "TWD"}
+%meta{property: "product:availability", content: "in stock"}
+%meta{property: "product:condition", content: "new"}
+-if item.special_price
+  %meta{property: "product:sale_price:amount", content: "#{item.special_price}"}
+  %meta{property: "product:sale_price:currency", content: "TWD"}
+
 %script{:type => "application/ld+json"}
   :plain
     {
