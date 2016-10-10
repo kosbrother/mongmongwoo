@@ -17,7 +17,7 @@ xml.rss :version => "2.0", "xmlns:g" => "http://base.google.com/ns/1.0" do
         item.categories.each do |category|
           xml.tag!("g:google_product_category", category.name)
         end
-        xml.tag!("g:link", category_item_url(item.categories.parent_categories.last, item))
+        xml.tag!("g:link", category_item_url(item.categories.parent_categories.last, item, protocol: 'https'))
         xml.tag!("g:image_link", item.specs[0].style_pic.url)
         xml.tag!("g:condition", "new")
         xml.tag!("g:availability", (item.status == "on_shelf") ? "in stock" : "out of stock")
