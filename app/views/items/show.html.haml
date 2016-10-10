@@ -1,8 +1,7 @@
 - content_for :head do
   %link{href: "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{category_item_path(@category,@item)}", rel: "alternate"}
   %link{href: "android-app://com.kosbrother.mongmongwoo/mmwooo/www.mmwooo.com#{category_item_path(@category,@item)}", rel: "alternate"}
-
-= render "partials/schema_data/product", item: @item, category: @category
+  = render "partials/schema_data/product", item: @item, category: @category
 
 - breadcrumb :item, @category, @item
 .product-block.row
