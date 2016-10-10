@@ -18,14 +18,14 @@
     .header
       熱門商品
     - @pop_items.each do |item|
-      = link_to category_item_path(@category_all, item) do
-        .pop-list
+      = link_to category_item_path(@category_all, item), property: "url" do
+        .pop-list{vocab: "http://schema.org/", typeof: "Product"}
           .image
             = render_special_price_icon(item)
-            = image_tag(item.cover.icon.url)
+            = image_tag(item.cover.icon.url, property: "image")
           .group
             .list
-              = item.name
+              %span{property: "name"}= item.name
             = side_item_current_price(item)
   .app-banner
     .logo

@@ -1,0 +1,25 @@
+%meta{property: "product:retailer_item_id", content: "#{item.id}"}
+%meta{property: "product:price:amount", content: "#{item.price}"}
+%meta{property: "product:price:currency", content: "TWD"}
+%meta{property: "product:availability", content: "in stock"}
+%meta{property: "product:condition", content: "new"}
+-if item.special_price
+  %meta{property: "product:sale_price:amount", content: "#{item.special_price}"}
+  %meta{property: "product:sale_price:currency", content: "TWD"}
+
+%script{:type => "application/ld+json"}
+  :plain
+    {
+      "@context": "http://schema.org",
+      "@type": "Product",
+      "description": "#{strip_tags(item.description).gsub("\r\n", " ")}",
+      "name": "#{item.name}",
+      "image": "#{asset_url(item.photos.first.image_url)}",
+      "url": "#{category_item_url(category, item)}",
+      "offers": {
+        "@type": "Offer",
+        "availability": "http://schema.org/InStock",
+        "price": "#{item.final_price}",
+        "priceCurrency": "TWD"
+      }
+    }
