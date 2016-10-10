@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
                   og: {
                     title:       "#{@category.name}-萌萌屋(校園生活補給站)",
                     type:        "product.group",
-                    url:         category_url(@category),
+                    url:         category_url(@category, protocol: 'https'),
                     image:       view_context.asset_url(@category.image_url),
                     description: meta_description
                   }

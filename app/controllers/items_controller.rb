@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
                   og: {
                     title:       @item.name,
                     type:        "product.item",
-                    url:         category_item_url(@category, @item),
+                    url:         category_item_url(@category, @item, protocol: 'https'),
                     description: view_context.strip_tags(@item.description).gsub("\r\n", " ")
                   }
   end
