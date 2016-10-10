@@ -17,7 +17,6 @@ class ItemsController < ApplicationController
                     title:       @item.name,
                     type:        "product.item",
                     url:         category_item_url(@category, @item),
-                    image:       view_context.asset_url(@item.photos.first.image_url),
                     description: view_context.strip_tags(@item.description).gsub("\r\n", " ")
                   }
   end
