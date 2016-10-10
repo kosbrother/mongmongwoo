@@ -46,20 +46,26 @@ module ItemHelper
 
   def side_item_current_price(item)
     if item.special_price
-      content_tag(:div, "原價#{price_with_unit(item.price)}", class: "special -delete") +
-      content_tag(:div, price_with_unit(item.special_price), class: "price")
+      content_tag(:div, class: "special -delete", property: "offers", typeof: "Offer") do
+        content_tag(:span, content_tag(:span, "原價#{price_with_unit(item.price)}", property: "price", content: "#{item.price}.00"), property: "priceCurrency", content: "TWD")
+      end +
+      content_tag(:div, class: "price", property: "offers", typeof: "Offer") do
+        content_tag(:span, content_tag(:span, price_with_unit(item.special_price), property: "price", content: "#{item.special_price}.00"), property: "priceCurrency", content: "TWD")
+      end
     else
       content_tag(:div, "", class: "special -delete") +
-      content_tag(:div, price_with_unit(item.price), class: "price")
+      content_tag(:div, class: "price", property: "offers", typeof: "Offer") do
+        content_tag(:span, content_tag(:span, price_with_unit(item.price), property: "price", content: "#{item.price}.00"), property: "priceCurrency", content: "TWD")
+      end
     end
   end
 
   def list_item_current_price(item)
     if item.special_price
-      content_tag(:span, price_with_unit(item.special_price))+
-      content_tag(:span, "原價#{price_with_unit(item.price)}", class: "special -delete")
+      content_tag(:span, content_tag(:span, price_with_unit(item.special_price), property: "lowPrice", content: "#{item.special_price}.00"), property: "priceCurrency", content: "TWD")+
+      content_tag(:span, content_tag(:span, "原價#{price_with_unit(item.price)}", property: "highPrice", content: "#{item.price}.00"), class: "special -delete", property: "priceCurrency", content: "TWD")
     else
-      content_tag(:span, price_with_unit(item.price))
+      content_tag(:span, content_tag(:span, price_with_unit(item.price), property: "price", content: "#{item.price}.00"), property: "priceCurrency", content: "TWD")
     end
   end
 

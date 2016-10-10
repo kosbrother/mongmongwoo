@@ -1,12 +1,12 @@
 .row
   - items.each do |item|
-    .col-lg-4.col-xs-6.xs-padding
+    .col-lg-4.col-xs-6.xs-padding{vocab: "http://schema.org/", typeof: "Product"}
       .product-list
-        = link_to category_item_path(category, item) do
+        = link_to category_item_path(category, item), property: "url" do
           .image
             = render_special_price_icon(item)
-            = image_tag(item.cover.url, class: 'img-responsive center-block')
-          .price
+            = image_tag(item.cover.url, class: 'img-responsive center-block', property: "image")
+          .price{property: "offers", typeof: "#{item.special_price ? 'AggregateOffer' : 'Offer'}"}
             = list_item_current_price(item)
           .text
-            = truncate(item.name, length: 17)
+            %span{property: "name"}= truncate(item.name, length: 17)
