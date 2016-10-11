@@ -6,7 +6,7 @@ class OrderItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :item, -> { with_deleted}, :foreign_key => "source_item_id"
   belongs_to :item_spec, -> { with_deleted}
-  has_many :discount_records, as: :discountable, dependent: :destroy
+  has_one :discount_record, as: :discountable, dependent: :destroy
 
   delegate :categories, :taobao_supplier, to: :item
 
