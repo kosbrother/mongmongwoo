@@ -255,7 +255,7 @@ describe Api::V4::OrdersController, type: :controller do
                ship_email: ship_email, products: products
           order_id = JSON.parse(response.body)["data"]['id']
           order = Order.find(order_id)
-          expect(order.items[0].discount_records[0].campaign_rule_id).to eq(campaign_rule.id)
+          expect(order.items[0].discount_record.campaign_rule_id).to eq(campaign_rule.id)
         end
       end
 
@@ -398,6 +398,47 @@ describe Api::V4::OrdersController, type: :controller do
         order = Order.find(home_delivery_by_credit_card_order.id)
         json = order.generate_result_order.to_json
         expect(result.to_json).to eq(json)
+      end
+    end
+
+    context "when order has discount_record" do
+      let!(:campaign_rule) {FactoryGirl.create(:exceed_amount_money_off_campaign_rule, discount_money: 100, threshold: 1000)}
+      let!(:campaign) {FactoryGirl.create(:campaign, campaign_rule: campaign_rule)}
+      let!(:home_delivery_order) { FactoryGirl.create(:order, items: [order_item], ship_type: home_delivery_type) }
+      let!(:discount_record) {FactoryGirl.create(:discount_record, campaign_rule: campaign_rule, discountable: home_delivery_order)}
+      let!(:home_delivery_order_info) { FactoryGirl.create(:home_delivery_order_info, order: home_delivery_order) }
+      it 'does generate correct order info' do
+        get :show, id: home_delivery_order.id
+        result = JSON.parse(response.body)["data"]
+        expect(result['campaigns'][0]['title']).to eq campaign_rule.title
+        expect(result['campaigns'][0]['discount_amount']).to eq campaign_rule.discount_money
+      end
+    end
+
+    context "when order has shpping point record" do
+      let!(:campaign_rule) {FactoryGirl.create(:exceed_amount_money_off_shopping_point_campaign_rule, threshold: 1000)}
+      let!(:shopping_point_campaign) {FactoryGirl.create(:shopping_point_campaign, title: campaign_rule.title, campaign_rule: campaign_rule, amount: 100)}
+      let!(:shopping_point) {FactoryGirl.create(:campaign_point, shopping_point_campaign: shopping_point_campaign, user: user, amount: 100)}
+      let!(:home_delivery_order) { FactoryGirl.create(:order, items: [order_item], ship_type: home_delivery_type) }
+      let!(:home_delivery_order_info) { FactoryGirl.create(:home_delivery_order_info, order: home_delivery_order) }
+      it 'does generate correct order info' do
+        shopping_point.shopping_point_records.first.update_column(:order_id, home_delivery_order.id)
+        get :show, id: home_delivery_order.id
+        result = JSON.parse(response.body)["data"]
+        expect(result['shopping_point_campaigns'][0]['title']).to eq shopping_point_campaign.title
+      end
+    end
+
+    context "when order item has discount record" do
+      let!(:campaign_rule) {FactoryGirl.create(:exceed_quantity_percentage_off_campaign_rule, discount_percentage: 0.5, threshold: 3)}
+      let!(:campaign) {FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item)}
+      let!(:home_delivery_order) { FactoryGirl.create(:order, items: [order_item], ship_type: home_delivery_type) }
+      let!(:discount_record) {FactoryGirl.create(:discount_record, campaign_rule: campaign_rule, discountable: order_item)}
+      let!(:home_delivery_order_info) { FactoryGirl.create(:home_delivery_order_info, order: home_delivery_order) }
+      it 'does generate correct order info' do
+        get :show, id: home_delivery_order.id
+        result = JSON.parse(response.body)["data"]
+        expect(result['items'][0]['campaign']['title']).to eq campaign_rule.title
       end
     end
   end
