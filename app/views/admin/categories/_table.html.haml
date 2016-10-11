@@ -14,4 +14,4 @@
         %td
           =link_to '子分類',  admin_category_path(category), class: 'btn btn-default'
           =link_to '編輯', edit_admin_category_path(category), class: 'btn btn-default'
-          =link_to '刪除', admin_category_path(category), class: 'btn btn-warning', method: :delete
+          =link_to '刪除', admin_category_path(category), class: 'btn btn-warning', method: :delete, data: { confirm: "確定要刪除嗎?" }
