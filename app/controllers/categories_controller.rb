@@ -2,8 +2,10 @@ class CategoriesController < ApplicationController
   before_action :load_popular_items, :load_categories
 
   def show
-    @category = Category.find(params['id'])
+    category_id = params[:subcategory_id] || params[:id]
+    @category = Category.find(category_id)
     parent_id = @category.parent_id || @category.id
+    @parent_category = Category.find(parent_id)
     @child_categories = Category.where(parent_id: parent_id)
     @sort_options = Item.sort_params.keys.map {|key| [t("models.item.sort_params.#{key}"), key]}
     @items_sort = params[:items_sort] || @sort_options.first[1]

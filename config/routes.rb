@@ -13,6 +13,10 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:show] do
     resources :items, only: [:show]
+
+    member do
+      get "/:subcategory_id", to: "categories#show", as: "subcategory"
+    end
   end
 
   patch "/toggle_shopping_point", to: "carts#toggle_shopping_point"

@@ -2,37 +2,36 @@
   %link{href: "android-app://com.kosbrother.mongmongwoo/https/www.mmwooo.com#{category_path(@category)}", rel: "alternate"}
   %link{href: "android-app://com.kosbrother.mongmongwoo/mmwooo/www.mmwooo.com#{category_path(@category)}", rel: "alternate"}
 
--if @category.parent_id
+- if @category.parent_id
   - breadcrumb :child_category, @category
 -else
   - breadcrumb :category, @category
 .show
-  - if @child_categories.any?
-    #categories-carousel.carousel.slide{"data-ride": "carousel"}
-      %ol.carousel-indicators
-        - @child_categories.each_slice(mobile? ? 5 : 8).with_index do |group, index|
-          %li{"data-target": "#categories-carousel",  "data-slide-to": index, class: "#{set_active_by_condition(@child_categories, @category, group, index)}"}
-      .carousel-inner{roll: "listbox"}
-        - @child_categories.each_slice(mobile? ? 5 : 8).with_index do |group, index|
-          .item{class: "#{set_active_by_condition(@child_categories, @category, group, index)}"}
-            - group.each do |category|
-              =link_to category_path(category), class: 'category' do
-                .img
-                  = image_tag(category.image.url, class: 'img-responsive')
-                .text{class: "#{'-current' if category.id == @category.id}"}
-                  - if category.parent_id == Category::NEW_ID
-                    = month_sub_category_link_text(category)
-                  -else
-                    = category.name
-      %a.left.carousel-control{role: "button", "data-slide": "prev", href: "#categories-carousel"}
-        %span.glyphicon.glyphicon-chevron-left
-        %span.sr-only Previous
-      %a.right.carousel-control{role: "button", "data-slide": "next", href: "#categories-carousel"}
-        %span.glyphicon.glyphicon-chevron-right
-        %span.sr-only Next
+  #categories-carousel.carousel.slide{"data-ride": "carousel"}
+    %ol.carousel-indicators
+      - @child_categories.each_slice(mobile? ? 5 : 8).with_index do |group, index|
+        %li{"data-target": "#categories-carousel",  "data-slide-to": index, class: "#{set_active_by_condition(@child_categories, @category, group, index)}"}
+    .carousel-inner{roll: "listbox"}
+      - @child_categories.each_slice(mobile? ? 5 : 8).with_index do |group, index|
+        .item{class: "#{set_active_by_condition(@child_categories, @category, group, index)}"}
+          - group.each do |category|
+            = link_to subcategory_category_path(@parent_category, category), class: 'category' do
+              .img
+                = image_tag(category.image.url, class: 'img-responsive')
+              .text{class: "#{'-current' if (category.id == @category.id)}"}
+                - if category.parent_id == Category::NEW_ID
+                  = month_sub_category_link_text(category)
+                - else
+                  = category.name
+    %a.left.carousel-control{role: "button", "data-slide": "prev", href: "#categories-carousel"}
+      %span.glyphicon.glyphicon-chevron-left
+      %span.sr-only Previous
+    %a.right.carousel-control{role: "button", "data-slide": "next", href: "#categories-carousel"}
+      %span.glyphicon.glyphicon-chevron-right
+      %span.sr-only Next
   .sort
     .header 商品排序：
-    = select_tag :items_sort, options_for_select(@sort_options, @items_sort), "data-category": @category.name
+    = select_tag :items_sort, options_for_select(@sort_options, @items_sort), data: {category: @parent_category.name ,subcategory: @category.parent_id ? @category.name : nil}
   = render "partials/product_list", category: @category, items: @items
   .text-align
     = pagination_links(@items)

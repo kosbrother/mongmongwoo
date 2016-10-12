@@ -112,8 +112,17 @@ ready = function() {
     });
 
     //Sort items
-    $('#items_sort').change(function(){
-        var path = '/categories/' + $(this).data('category') + '?' + 'items_sort=' + $(this).val();
+    $('#items_sort').on('change', function(){
+        var path = '';
+        var category = $(this).data('category');
+        var subcategory = $(this).data('subcategory');
+        var sort = $(this).val();
+
+        if (subcategory !== null) {
+            path = '/categories/' + category + '/' + subcategory + '?' + 'items_sort=' + sort;
+        } else {
+            path = '/categories/' + category + '?' + 'items_sort=' + sort;
+        }
         window.location = path;
     });
 };
