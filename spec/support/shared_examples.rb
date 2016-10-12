@@ -22,11 +22,3 @@ shared_examples "return JSON 400 status code with error message" do
     expect(message).not_to be_nil
   end
 end
-
-shared_examples "when registration_id is empty" do
-  it 'return error meessage ' do
-    action
-    message = response.body
-    expect(message).to eq(I18n.t('controller.error.message.no_regitration_id'))
-  end
-end
