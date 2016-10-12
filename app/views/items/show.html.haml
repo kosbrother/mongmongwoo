@@ -63,27 +63,9 @@
   - @item.photos.each do |photo|
     = image_tag(photo.image.url, class: 'img-responsive')
 
-:javascript
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1101896056521102',
-      xfbml      : true,
-      version    : 'v2.8'
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/zh_TW/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-   
-.fb-like{"data-action" => "like", "data-href" => request.original_url, "data-layout" => "standard", "data-share" => "true", "data-show-faces" => "true", "data-size" => "small"}
-.fb-save{"data-size" => "large", "data-uri" => request.original_url}
-.fb-comment-embed{"data-href" => request.original_url, "data-include-parent" => "false", "data-width" => "560"}
-
+.fb-like{"data-action" => "like", "data-href" => category_item_url(@the_all_category, @item), "data-layout" => "standard", "data-share" => "true", "data-show-faces" => "true", "data-size" => "small"}
+.fb-save{"data-size" => "large", "data-uri" => category_item_url(@the_all_category, @item)}
+.fb-comments{"data-href" => category_item_url(@the_all_category, @item), "data-include-parent" => "false", "data-width" => "560"}
 
 = render "partials/tracking_events/view_item_content", item: @item
 = render "partials/tracking_events/send_event_to_google_analytics", category: @pop_items.include?(@item) ? "popular_product" : "product", action: "view", label: @item.name

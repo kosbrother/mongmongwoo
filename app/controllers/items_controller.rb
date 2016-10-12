@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
 
   def show
     @category = Category.find(params['category_id'])
+    @the_all_category = Category.find(Category::ALL_ID)
     @item = Item.find(params['id'])
     @item.specs.on_shelf.size == 0 ? @item_specs = @item.specs : @item_specs = @item.specs.on_shelf
     @first_item_spec = @item_specs.detect{|spec| spec.stock_amount > 0}
