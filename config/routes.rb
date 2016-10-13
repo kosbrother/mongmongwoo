@@ -381,6 +381,8 @@ Rails.application.routes.draw do
     end
 
     namespace :v4 do
+      get '/search_items', to: "search#search_items"
+
       resources :orders, only: [:create, :show] do
         collection do
           post "checkout"
