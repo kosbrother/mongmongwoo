@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   resources :shopping_points, only: [:index]
   resources :wish_lists, only: [:index, :destroy]
   resources :my_messages, only: [:index]
+  resources :campaign_rules, only: [:show]
 
   resources :allpay, only:[] do
     collection do
@@ -402,7 +403,10 @@ Rails.application.routes.draw do
         resources :shopping_point_campaigns, only: [:index]
       end
 
-      resources :categories, only: [:index]
+      resources :categories, only: [:index] do
+        resources :items, only: [:index]
+      end
+      resources :campaign_rules, only: [:index, :show]
     end
   end
 end
