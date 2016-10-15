@@ -72,8 +72,8 @@
       %h4.text-center 優惠商品選擇
       = f.collection_check_boxes :campaign_items, Item.on_shelf, :id, :name do |cb|
         .col-lg-4
-          = cb.label(class: "checkbox-inline") do
-            = cb.check_box(checked:"#{'checked' if @campaign_ids.include? cb.value}")
+          = cb.label(class: "checkbox-inline #{'disabled' if @unselectable_ids.include?(cb.value)}") do
+            = cb.check_box(checked:"#{'checked' if @campaign_ids.include? cb.value}", disabled: @unselectable_ids.include?(cb.value))
             = truncate("#{cb.value}: #{cb.text}", length: 20)
 .form-group.pull-right
   = f.submit "確認送出", class: "btn btn-primary"
