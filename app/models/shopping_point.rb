@@ -5,7 +5,7 @@ class ShoppingPoint < ActiveRecord::Base
   after_update :set_not_valid_if_amount_zero, :set_valid_if_amount_greater_than_zero_and_not_valid
 
   belongs_to :user
-  belongs_to :shopping_point_campaign
+  belongs_to :shopping_point_campaign, -> { with_deleted}
   has_many :shopping_point_records
 
   scope :valid, ->{where(is_valid: true)}
