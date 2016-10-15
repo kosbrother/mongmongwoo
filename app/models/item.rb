@@ -169,6 +169,10 @@ class Item < ActiveRecord::Base
     the_new_categories.each{|category| category.destroy if category.items.on_shelf.blank?}
   end
 
+  def discount_icon_url
+    campaign_rule.present? ? campaign_rule.card_icon.url : nil
+  end
+
   private
 
   def as_indexed_json(options={})
