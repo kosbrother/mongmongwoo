@@ -13,6 +13,7 @@ class Admin::CampaignRulesController <AdminController
     @campaign_rule = CampaignRule.new
     @campaign_rule.shopping_point_campaign = ShoppingPointCampaign.new
     @campaign_ids = []
+    @unselectable_ids = Item.has_campaign.map(&:id)
   end
 
   def create
@@ -38,6 +39,7 @@ class Admin::CampaignRulesController <AdminController
 
   def edit
     @campaign_ids = @campaign_rule.campaigns.map(&:discountable_id)
+    @unselectable_ids = Item.has_campaign.map(&:id) - @campaign_ids
   end
 
   def update
