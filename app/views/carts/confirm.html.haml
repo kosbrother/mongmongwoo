@@ -43,10 +43,10 @@
       .col-lg-1.col-lg-offset-8.col-xs-8.text
         %div 折抵後總額
       .col-lg-1.col-lg-offset-2.col-xs-4.number
-        %div= price_with_unit(@reduced_items_price)
+        #reduced-items-price= price_with_unit(@reduced_items_price)
     -  @campaigns_for_order.each do |campaign|
       - if campaign[:is_applied]
-        .totalrow.row
+        .totalrow.row{id: "campaign-rule-#{campaign[:campaign_rule_id]}"}
           .col-lg-1.col-lg-offset-8.col-xs-3.text
             %div 活動折扣
           .col-lg-2.col-xs-6.text
@@ -57,7 +57,7 @@
               = "-#{price_with_unit(campaign[:discount_amount])}"
     -  @shopping_point_campaigns.each do |campaign|
       - if campaign[:is_applied]
-        .totalrow.row
+        .totalrow.row{id: "shopping-point-campaign-#{campaign[:campaign_rule_id]}"}
           .col-lg-1.col-lg-offset-8.col-xs-3.text
             %div 購物金活動
           .col-lg-2.col-xs-6.text
