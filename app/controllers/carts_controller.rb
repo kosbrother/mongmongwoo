@@ -11,8 +11,7 @@ class CartsController < ApplicationController
 
   def checkout
     @step = Cart::STEP[:checkout]
-    @items = current_cart.cart_items.includes({item: :specs}, :item_spec)
-    if @items.empty?
+    if @cart_items.empty?
       flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
       redirect_to root_path
     end
@@ -108,24 +107,19 @@ class CartsController < ApplicationController
 
   def toggle_shopping_point
     if current_cart.shopping_point_amount == 0
-      items_price = current_cart.calculate_items_price
+      cart = PriceManagerForCart.new(current_cart)
+      items_price = cart.items_price
       shopping_point_amount = ShoppingPointManager.new(current_user).calculate_available_shopping_point(items_price)
       current_cart.update(shopping_point_amount: shopping_point_amount)
     else
       current_cart.update(shopping_point_amount: 0)
     end
     calculate_cart_price
+    render "cart_items/update_cart_price"
   end
 
   private
 
-  def calculate_cart_price
-    @items_price = current_cart.calculate_items_price
-    @reduced_items_price = current_cart.calculate_reduced_items_price
-    @shopping_point_amount = current_cart.shopping_point_amount
-    @ship_fee = current_cart.calculate_ship_fee
-    @total = current_cart.calculate_total
-  end
 
   def generate_url(url, params = {})
     uri = URI(url)

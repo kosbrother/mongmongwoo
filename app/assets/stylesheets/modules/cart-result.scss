@@ -33,6 +33,28 @@
         vertical-align: top;
       }
     }
+    > .itemname{
+      text-align: left;
+      > .item-campaign-info{
+        line-height: 14px;
+        font-size: 14px;
+        color: #f5a623;
+        position: relative;
+        top: -20px;
+      }
+    }
+    .unitprice{
+      > .-delete{
+        text-decoration: line-through;
+        color: #b5b5b5;
+      }
+      > .cheaper-price{
+        line-height: 16px;
+        color: #ff3d53;
+        position: relative;
+        top: -20px;
+      }
+    }
     .quantity-box{
       line-height: 0;
       .quantity, .quantity-minus, .quantity-plus{
@@ -73,24 +95,38 @@
     }
   }
   > .totalrow{
-    .text > div, .number > div{
+    .text > div, .number > div, #ship-type > div{
       height: 42px;
       line-height: 42px;
     }
-    #spend-shopping-point{
+    .text .campaign-info{
+      color: #f5a623;
+      text-align: left;
+      font-size: 14px;
+      > span{
+        color: #ff3d53;
+      }
+    }
+    #ship-type > div{
+      text-align: left;
+    }
+    .ship-fee-title{
+      word-spacing: 30px;
+    }
+    #shopping-point-check-box{
       height: 25px;
       color: #ff8080;
       cursor: pointer;
       text-align: center;
     }
-    #spend-shopping-point:before{
+    #shopping-point-check-box:before{
       content: image_url('input_element/uncheck.png');
       vertical-align: sub;
     }
-    #spend-shopping-point.checked:before{
+    #shopping-point-check-box.checked:before{
       content: image_url('input_element/check.png');
     }
-    #totalprice{
+    #total{
       color: $price-font-color;
     }
     #select-ship-type{
@@ -99,7 +135,6 @@
       background-color: transparent;
       color: $order-box-quantity-font-color;
       position: relative;
-      left: -15px;
     }
   }
   .modal{
@@ -165,7 +200,7 @@
         }
       }
       .icon{
-        height: 60px;
+        height: 90px;
         > img {
           width: 60px;
           height: 60px;
@@ -173,6 +208,25 @@
       }
       > .itemname, > .unitprice, > .select, .spec, .price, .quantity{
         text-align: left;
+      }
+      > .itemname {
+        height: auto;
+        line-height: 23px;
+        > .item-campaign-info {
+          top: 0;
+          line-height: 23px;
+        }
+      }
+      .unitprice{
+        line-height: 23px;
+        > .-delete{
+          display: inline-block;
+        }
+        > .cheaper-price{
+          position: static;
+          display: inline-block;
+          margin-left: 5px;
+        }
       }
       > .select{
         margin: 5px 0;
@@ -199,10 +253,16 @@
     }
     .totalrow {
       > .text{
-        text-align: center;
+        text-align: left;
       }
       > .number {
-        text-align: center;
+        text-align: right;
+      }
+      > #ship-type > div{
+        text-align: right;
+      }
+      #shopping-point-check-box{
+        text-align: left;
       }
     }
   }
@@ -213,6 +273,10 @@
     padding: 0 5px;
     font-size:12px;
     > .item-bar{
+      > .itemname > .item-campaign-info {
+        font-size: 10px;
+        line-height:15px;
+      }
       > .spec{
         margin: 3px 0px;
       }
@@ -239,14 +303,21 @@
         height: 18px;
         line-height: 18px;
       }
-      #spend-shopping-point{
+      .text .campaign-info{
+        font-size: 12px;
+      }
+      > #ship-type > div{
+        height: auto;
+        line-height: normal;
+      }
+      #shopping-point-check-box{
         height: 20px;
         line-height: 20px;
       }
-      #spend-shopping-point:before{
+      #shopping-point-check-box:before{
         content: image_url('input_element/uncheck_mobile.png');
       }
-      #spend-shopping-point.checked:before{
+      #shopping-point-check-box.checked:before{
         content: image_url('input_element/check_mobile.png');
       }
     }

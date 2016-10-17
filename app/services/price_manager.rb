@@ -2,7 +2,7 @@ class PriceManager
 
   def self.discount_amount(items_price)
     discountable_amount = 0
-    campaigns = Campaign.money_off
+    campaigns = Campaign.money_off.includes(:campaign_rule)
     campaigns.each do |campaign|
       discountable_amount += campaign_discountable_amount(campaign.campaign_rule, items_price)
     end
@@ -10,7 +10,7 @@ class PriceManager
   end
 
   def self.get_campaigns_for_order(items_price)
-    campaigns = Campaign.money_off
+    campaigns = Campaign.money_off.includes(:campaign_rule)
     campaigns.map do |campaign|
       campaign_info_and_result(campaign.campaign_rule, items_price)
     end
@@ -18,7 +18,7 @@ class PriceManager
 
   def self.obtain_shopping_point_amount(items_price)
     shopping_point_amount = 0
-    shopping_point_campaigns = ShoppingPointCampaign.with_campaign_rule
+    shopping_point_campaigns = ShoppingPointCampaign.with_campaign_rule.includes(:campaign_rule)
     shopping_point_campaigns.each do |shopping_point_campaign|
       shopping_point_amount += shopping_point_obtainable_amount(shopping_point_campaign, items_price)
     end
@@ -26,7 +26,7 @@ class PriceManager
   end
 
   def self.return_shopping_point_campaigns(items_price)
-    shopping_point_campaigns = ShoppingPointCampaign.with_campaign_rule
+    shopping_point_campaigns = ShoppingPointCampaign.with_campaign_rule.includes(:campaign_rule)
     shopping_point_campaigns.map do |shopping_point_campaign|
       campaign_info_and_result(shopping_point_campaign.campaign_rule, items_price)
     end
@@ -61,6 +61,7 @@ class PriceManager
 
   def self.campaign_info_and_result(campaign_rule, items_price)
     campaign_info = {}
+    campaign_info[:campaign_rule_id] = campaign_rule.id
     campaign_info[:is_applied] = is_applied?(campaign_rule, items_price)
     campaign_info[:title] = campaign_rule.title
     campaign_info[:left_to_apply] = campaign_rule.left_to_apply(amount: items_price)

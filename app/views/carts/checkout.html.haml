@@ -1,88 +1,106 @@
 = render 'partials/cart_steps', step: @step
 .cart-show
   .icon-header.-order 訂單明細
-  - if @cart.cart_items.any?
-    .cart-result
-      .header.row.visible-lg-block
-        .col-lg-1 刪除訂單
-        .col-lg-2 產品照片
-        .col-lg-3 產品名稱
-        .col-lg-2 產品樣式
-        .col-lg-1 產品單價
-        .col-lg-2 產品數量
-        .col-lg-1 小計
-      .divider.visible-lg-block
-      - @items.each do |item|
-        .item-bar.row{id: "cart-item-#{item.id}"}
-          .col-lg-1.col-xs-1.cancel-block
-            .cancel{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#modal-#{item.id}"}
-            .modal.fade{"aria-labelledby" => "mySmallModalLabel", :role => "dialog", :tabindex => "-1", id: "modal-#{item.id}"}
-              .modal-dialog
-                .modal-content
-                  .modal-body
-                    %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-                      %span{"aria-hidden" => "true"} &times;
-                    您確定要刪除此產品？
-                  .modal-footer
-                    %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 關閉視窗
-                    %button.btn.btn-confirm.cart-item-delete{ type: "button", data: { dismiss: "modal", id: item.id, cart_id: @cart.id, item_id: item.item_id, item_name: item.item.name,item_price: item.item.price } } 刪除
-          .col-lg-2.col-xs-3.icon= image_tag(item.item_spec.style_pic.url, id: "item-spec-pic-#{item.id}")
-          .col-lg-3.col-xs-8.itemname= item.item.name
-          .col-lg-2.col-xs-7.select= select_tag "item_spec_id",options_from_collection_for_select(item.item.specs, 'id', 'style', item.item_spec_id ),   class: 'spec-select', id: 'select-specs', 'data-cart-item': item.id, 'data-cart-id': @cart.id
-          .col-lg-1.col-xs-2.unitprice= item_current_price(item.item)
-          .col-lg-2.col-lg-offset-0.col-sm-2.col-sm-offset-4.col-xs-3.col-xs-offset-3.quantity-box
-            .quantity-minus{ 'data-id': item.id } -
-            = number_field_tag "cart-item-#{item.id}-quantity", item.item_quantity, class: 'quantity', min: 1, max: 99
-            .quantity-plus{ 'data-id': item.id } +
-          .col-lg-1.subtotal.visible-lg-block{id: "cart-item-#{item.id}-subtotal"}= price_with_unit(item.subtotal)
+  .cart-result
+    .header.row.visible-lg-block
+      .col-lg-1 刪除訂單
+      .col-lg-2 產品照片
+      .col-lg-3 產品名稱
+      .col-lg-2 產品樣式
+      .col-lg-1 產品單價
+      .col-lg-2 產品數量
+      .col-lg-1 小計
+    .divider.visible-lg-block
+    - @cart_items.each do |cart_item|
+      .item-bar.row{id: "cart-item-#{cart_item.id}"}
+        .col-lg-1.col-xs-1.cancel-block
+          = render "cancel_modal", cart_item: cart_item
+        .col-lg-2.col-xs-3.icon
+          = image_tag(cart_item.item_spec.style_pic.url, id: "item-spec-pic-#{cart_item.id}")
+        .col-lg-3.col-xs-8.itemname
+          = cart_item.item.name
+          - if cart_item.campaign_info.present?
+            .item-campaign-info
+              = cart_item.campaign_info[:title]
+        .col-lg-2.col-xs-7.select
+          = select_tag "item_spec_id",options_from_collection_for_select(cart_item.item.specs, "id", "style", cart_item.item_spec.id ), class: "spec-select", "data-cart-item": cart_item.id, "data-cart-id": current_cart.id
+        .col-lg-1.col-xs-5.unitprice
+          = cart_item_current_price(cart_item.origin_price, cart_item.discounted_price)
+        .col-lg-2.col-lg-offset-0.col-xs-3.quantity-box
+          .quantity-minus{ 'data-id': cart_item.id } -
+          = number_field_tag "cart-item-#{cart_item.id}-quantity", cart_item.item_quantity, class: 'quantity', min: 1, max: 99
+          .quantity-plus{ 'data-id': cart_item.id } +
+        .col-lg-1.subtotal.visible-lg-block{id: "cart-item-#{cart_item.id}-subtotal"}
+          = price_with_unit(cart_item.subtotal)
+    .divider
+    .totalrow.row
+      .col-lg-1.col-lg-offset-8.col-xs-3.text
+        %div 產品總額
+      .col-lg-1.col-lg-offset-2.col-xs-3.col-xs-offset-6.number
+        #items-price
+          = price_with_unit(@items_price)
+    - if @user_own_shopping_point && @user_own_shopping_point > 0
+      .totalrow.row
+        .col-lg-2.col-lg-offset-8.col-xs-8.text
+          #shopping-point-check-box{class: "#{ 'checked' if @shopping_point_amount > 0}"}
+            = "購物金折抵NT $#{@user_own_shopping_point}"
+        .col-lg-1.col-lg-offset-1.col-xs-4.number
+          #shopping-point-amount
+            =  '-' + price_with_unit(@shopping_point_amount)
       .divider
       .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-          %div 產品總額
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          #cart-sum= price_with_unit(@items_price)
-      - if  @user_own_shopping_point && @user_own_shopping_point > 0
-        .totalrow.row
-          .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-            #spend-shopping-point{class: "#{ 'checked' if @shopping_point_amount > 0}"}
-              = "購物金折抵NT $#{@user_own_shopping_point}"
-          .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-            #shopping-point-amount
-              =  '-' + price_with_unit(@shopping_point_amount)
-        .divider
-        .totalrow.row
-          .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-            %div 折抵後總額
-          .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-            #updated_cart_sum
-              = price_with_unit(@reduced_items_price)
-      .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-          %div 取貨方式
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          %div= select_tag :ship_type, options_for_select([["超商取貨付款", Cart.ship_types["store_delivery"]],["宅配到貨付款", Cart.ship_types["home_delivery"]], ["宅配刷卡付款", Cart.ship_types["home_delivery_by_credit_card"]]], [Cart.ship_types[current_cart.ship_type]]), id: "select-ship-type"
-      .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-          %div 運費（滿490免運費）
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          #ship-fee
-            = price_with_unit(@ship_fee)
-      .divider
-      .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-          %div 結帳金額
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          #totalprice= price_with_unit(@total)
-    .submit-session
-      - if current_user
-        = link_to '下一步', cart_info_path , class: 'btn'
-      -else
-        .group
-          .btn.login-btn{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#login-page"}
-            登入購買
-          .text*使用登入購買更方便您查詢及管理訂單
-        .group
-          = link_to '免註冊匿名購買', cart_info_path , class: 'btn'
-          .text*適合一次性購買，無法管理訂單資料
-= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "StartCheckout", cart_items: @items
+        .col-lg-1.col-lg-offset-8.col-xs-3.text
+          %div 折抵後總額
+        .col-lg-1.col-lg-offset-2.col-xs-3.col-xs-offset-6.number
+          #reduced-items-price
+            = price_with_unit(@reduced_items_price)
+    -  @campaigns_for_order.each do |campaign|
+      .totalrow.row{id: "campaign-rule-#{campaign[:campaign_rule_id]}"}
+        .col-lg-1.col-lg-offset-8.col-xs-3.text
+          %div 活動折扣
+        .col-lg-2.col-xs-6.text
+          = render_campaign_info(campaign[:title], campaign[:left_to_apply])
+        .col-lg-1.col-xs-3.number
+          .discount-amount
+            = "-#{price_with_unit(campaign[:discount_amount])}"
+    -  @shopping_point_campaigns.each do |campaign|
+      .totalrow.row{id: "shopping-point-campaign-#{campaign[:campaign_rule_id]}"}
+        .col-lg-1.col-lg-offset-8.col-xs-3.text
+          %div 購物金活動
+        .col-lg-2.col-xs-6.text
+          = render_campaign_info(campaign[:title], campaign[:left_to_apply])
+        .col-lg-1.col-xs-3.number
+          .is_applied
+            = campaign[:is_applied] ? "資格符合" : "未達資格"
+    .totalrow.row
+      .col-lg-1.col-lg-offset-8.col-xs-8.text
+        %div 取貨方式
+      .col-lg-3.col-xs-4#ship-type
+        %div= select_tag :ship_type, options_for_select([["超商取貨付款", Cart.ship_types["store_delivery"]],["宅配到貨付款", Cart.ship_types["home_delivery"]], ["宅配刷卡付款", Cart.ship_types["home_delivery_by_credit_card"]]], [Cart.ship_types[current_cart.ship_type]]), id: "select-ship-type"
+    .totalrow.row#ship-campaign
+      .col-lg-1.col-lg-offset-8.col-xs-3.text
+        .ship-fee-title 運  費
+      .col-lg-2.col-xs-6.text
+        = render_campaign_info(@ship_campaign[:title], @ship_campaign[:left_to_apply])
+      .col-lg-1.col-lg-offset-0.col-xs-3.number
+        #ship-fee
+          = price_with_unit(@ship_fee)
+    .divider
+    .totalrow.row
+      .col-lg-1.col-lg-offset-8.col-xs-8.text
+        %div 結帳金額
+      .col-lg-1.col-lg-offset-2.col-xs-4.number
+        #total= price_with_unit(@total)
+  .submit-session
+    - if current_user
+      = link_to '下一步', cart_info_path , class: 'btn'
+    -else
+      .group
+        .btn.login-btn{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#login-page"}
+          登入購買
+        .text*使用登入購買更方便您查詢及管理訂單
+      .group
+        = link_to '免註冊匿名購買', cart_info_path , class: 'btn'
+        .text*適合一次性購買，無法管理訂單資料
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "StartCheckout", cart_items: @cart_items
 = render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_1", action: "enter", label: "無"
