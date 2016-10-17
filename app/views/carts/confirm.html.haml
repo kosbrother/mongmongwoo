@@ -24,7 +24,7 @@
       .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
         %div 產品總額
       .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-        #cart-sum= price_with_unit(@items_price)
+        #items-price= price_with_unit(@items_price)
     - if @shopping_point_amount > 0
       .totalrow.row
         .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
@@ -48,7 +48,7 @@
       .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
         %div 結帳金額
       .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-        #totalprice= price_with_unit(@total)
+        #total= price_with_unit(@total)
 .row
   .col-lg-6
     - if current_cart.ship_type == "store_delivery"

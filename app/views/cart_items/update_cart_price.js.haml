@@ -1,0 +1,26 @@
+- if @cart_item.present?
+  :plain
+    $("#cart-item-#{@cart_item.id} .unitprice").html("#{j cart_item_current_price(@origin_price, @discounted_price)}");
+    $("#cart-item-#{@cart_item.id}-quantity").val("#{@cart_item.item_quantity}");
+    $("#cart-item-#{@cart_item.id}-subtotal").text("#{@subtotal}");
+-if @shopping_point_amount > 0
+  :plain
+    $('#shopping-point-check-box').addClass('checked');
+- else
+  :plain
+    $('#shopping-point-check-box').removeClass('checked');
+$('#shopping-point-amount').text('#{ '-' + price_with_unit(@shopping_point_amount)}');
+- @campaigns_for_order.each do |campaign|
+  :plain
+    $("#campaign-rule-#{campaign[:campaign_rule_id]} .campaign-info .left-to-apply").text("#{campaign[:left_to_apply]}");
+    $("#campaign-rule-#{campaign[:campaign_rule_id]} .discount-amount").text("-#{price_with_unit(campaign[:discount_amount])}");
+- @shopping_point_campaigns.each do |campaign|
+  :plain
+    $("#shopping-point-campaign-#{campaign[:campaign_rule_id]} .campaign-info .left-to-apply").text("#{campaign[:left_to_apply]}");
+    $("#shopping-point-campaign-#{campaign[:campaign_rule_id]} .is_applied").text("#{campaign[:is_applied] ? "資格符合" : "未達資格"}");
+:plain
+  $('#items-price').text("#{price_with_unit(@items_price)}");
+  $('#reduced-items-price').text("#{price_with_unit(@reduced_items_price)}");
+  $('#ship-fee').text("#{price_with_unit(@ship_fee)}");
+  $('#ship-campaign .left-to-apply').text("#{@ship_campaign[:left_to_apply]}");
+  $('#total').text("#{price_with_unit(@total)}");

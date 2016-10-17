@@ -1,0 +1,11 @@
+.cancel{"aria-label": "Close", 'data-toggle': "modal", 'data-target': "#modal-#{cart_item.id}"}
+.modal.fade{"aria-labelledby" => "mySmallModalLabel", :role => "dialog", :tabindex => "-1", id: "modal-#{cart_item.id}"}
+  .modal-dialog
+    .modal-content
+      .modal-body
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        您確定要刪除此產品？
+      .modal-footer
+        %button.btn.btn-close{"data-dismiss": "modal", type: "button"} 關閉視窗
+        %button.btn.btn-confirm.cart-item-delete{ type: "button", data: { dismiss: "modal", id: cart_item.id, cart_id: current_cart.id, item_id: cart_item.item.id, item_name: cart_item.item.name,item_price: cart_item.discounted_price } } 刪除

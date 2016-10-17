@@ -28,7 +28,7 @@
     - if fb_event == "StartCheckout" || fb_event == "ReviewCart"
       :javascript
         fbq('trackCustom', '#{fb_event}', {
-          content_ids:  ['#{cart_item.item_id}'],
+          content_ids:  ['#{cart_item.item.id}'],
           content_name: '#{cart_item.item.name}',
           content_type: 'product',
           value:        '#{cart_item.item.price}',
@@ -38,7 +38,7 @@
     - elsif fb_event == "AddShipInfo"
       :javascript
         fbq('trackCustom', '#{fb_event}', {
-          content_ids:  ['#{cart_item.item_id}'],
+          content_ids:  ['#{cart_item.item.id}'],
           content_type: 'product',
           value:        '#{cart_item.item.price}',
           currency:     'TWD'
@@ -46,7 +46,7 @@
 
     :javascript
       ga('ec:addProduct', {
-        'id':       '#{cart_item.item_id}',
+        'id':       '#{cart_item.item.id}',
         'name':     '#{cart_item.item.name}',
         'variant':  '#{cart_item.item_spec.style}',
         'price':    '#{cart_item.item.price}',
