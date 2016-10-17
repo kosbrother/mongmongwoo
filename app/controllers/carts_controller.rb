@@ -81,7 +81,6 @@ class CartsController < ApplicationController
       @info = @info.merge(store_id: @store.id)
     end
 
-    @items = current_cart.cart_items.includes(:item, :item_spec)
     set_meta_tags title: "確認訂單", noindex: true
   end
 

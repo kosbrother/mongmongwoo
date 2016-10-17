@@ -10,44 +10,76 @@
       .col-lg-2 產品數量
       .col-lg-1 小計
     .divider.visible-lg-block
-    - @items.each do |item|
-      .item-bar.row{id: "cart-item-#{item.id}"}
-        .col-lg-2.col-sm-2.col-xs-3.icon= image_tag(item.item_spec.style_pic.url)
-        .col-lg-4.col-xs-8.itemname= item.item.name
-        .col-lg-2.col-sm-10.col-xs-9.spec= item.item_spec.style
-        .col-lg-1.col-sm-4.col-xs-2.price= item_current_price(item.item)
-        .col-lg-2.col-sm-2.col-xs-3.quantity
-          %div= item.item_quantity
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-1.col-xs-4.subtotal= price_with_unit(item.subtotal)
+    - @cart_items.each do |cart_item|
+      .item-bar.row{id: "cart-item-#{cart_item.id}"}
+        .col-lg-2.col-xs-3.icon
+          = image_tag(cart_item.item_spec.style_pic.url)
+        .col-lg-4.col-xs-8.itemname
+          = cart_item.item.name
+          - if cart_item.campaign_info.present? && cart_item.campaign_info[:is_applied]
+            .item-campaign-info
+              = cart_item.campaign_info[:title]
+        .col-lg-2.col-xs-9.spec
+          = cart_item.item_spec.style
+        .col-lg-1.col-xs-4.unitprice
+          = cart_item_current_price(cart_item.origin_price, cart_item.discounted_price)
+        .col-lg-2.col-xs-2.quantity
+          %div= cart_item.item_quantity
+        .col-lg-1.col-xs-3.subtotal
+          = price_with_unit(cart_item.subtotal)
     .divider
     .totalrow.row
-      .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
+      .col-lg-1.col-lg-offset-8.col-xs-8.text
         %div 產品總額
-      .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+      .col-lg-1.col-lg-offset-2.col-xs-4.number
         #items-price= price_with_unit(@items_price)
-    - if @shopping_point_amount > 0
-      .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-          %div 購物金折抵
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          %div=  '-' + price_with_unit(@shopping_point_amount)
-      .divider
-      .totalrow.row
-        .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-          %div 折抵後總額
-        .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
-          %div= price_with_unit(@reduced_items_price)
     .totalrow.row
-      .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
-        %div 運費（滿490免運費）
-      .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+      .col-lg-1.col-lg-offset-8.col-xs-8.text
+        %div 購物金折抵
+      .col-lg-1.col-lg-offset-2.col-xs-4.number
+        %div=  '-' + price_with_unit(@shopping_point_amount)
+    .divider
+    .totalrow.row
+      .col-lg-1.col-lg-offset-8.col-xs-8.text
+        %div 折抵後總額
+      .col-lg-1.col-lg-offset-2.col-xs-4.number
+        %div= price_with_unit(@reduced_items_price)
+    -  @campaigns_for_order.each do |campaign|
+      - if campaign[:is_applied]
+        .totalrow.row
+          .col-lg-1.col-lg-offset-8.col-xs-3.text
+            %div 活動折扣
+          .col-lg-2.col-xs-6.text
+            .campaign-info
+              = "(#{campaign[:title]})"
+          .col-lg-1.col-xs-3.number
+            .discount-amount
+              = "-#{price_with_unit(campaign[:discount_amount])}"
+    -  @shopping_point_campaigns.each do |campaign|
+      - if campaign[:is_applied]
+        .totalrow.row
+          .col-lg-1.col-lg-offset-8.col-xs-3.text
+            %div 購物金活動
+          .col-lg-2.col-xs-6.text
+            .campaign-info
+              = "(#{campaign[:title]})"
+          .col-lg-1.col-xs-3.number
+            .is_applied
+              資格符合
+    .totalrow.row
+      .col-lg-1.col-lg-offset-8.col-xs-3.text
+        .ship-fee-title 運  費
+      .col-lg-2.col-xs-6.text
+        .campaign-info
+          = "(#{@ship_campaign[:title]})"
+      .col-lg-1.col-xs-3.number
         #ship-fee
           = price_with_unit(@ship_fee)
     .divider
     .totalrow.row
-      .col-lg-2.col-lg-offset-9.col-sm-5.col-xs-8.text
+      .col-lg-1.col-lg-offset-8.col-xs-8.text
         %div 結帳金額
-      .col-lg-1.col-lg-offset-0.col-sm-2.col-sm-offset-5.col-xs-4.number
+      .col-lg-1.col-lg-offset-2.col-xs-4.number
         #total= price_with_unit(@total)
 .row
   .col-lg-6
@@ -73,5 +105,5 @@
       =link_to '上一步', cart_info_path , class: 'btn btn-previous'
       =submit_tag '送出訂單', class: 'btn', id: "submit-order-btn", data: { disable_with: "處理中" }
 #errors-infos
-= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "ReviewCart", cart_items: @items
+= render 'partials/tracking_events/checkout_step', step: @step, fb_event: "ReviewCart", cart_items: @cart_items
 = render "partials/tracking_events/send_event_to_google_analytics", category: "checkout_step_3", action: "enter", label: "無"
