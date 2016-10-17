@@ -232,14 +232,14 @@
         margin: 5px 0;
       }
       > .quantity> div:before{
-        content: "數量：";
+        content: "數量";
       }
       > .subtotal{
         text-align: right;
         padding-right:5px;
       }
       > .subtotal:before{
-        content: '小計：'
+        content: '小計'
       }
       > .quantity-box {
         .quantity, .quantity-minus, .quantity-plus {
@@ -279,6 +279,11 @@
       }
       > .spec{
         margin: 3px 0px;
+      }
+      .unitprice{
+        > .-delete{
+          font-size: 10px;
+        }
       }
       > .quantity-box {
         padding-right: 15px;
