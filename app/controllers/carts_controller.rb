@@ -85,15 +85,14 @@ class CartsController < ApplicationController
   end
 
   def submit
-    items = current_cart.cart_items.includes(:item, :item_spec)
-    @order,errors = create_order(items, params[:info])
+    @order,errors = create_order(params[:info])
     if errors.present?
       @unable_to_buy_lists = errors.select{|error| error.key?(:unable_to_buy)}.map{|list| list[:unable_to_buy][0]}
       @updated_items = destroy_and_return_items(@unable_to_buy_lists)
       add_to_wish_lists(@unable_to_buy_lists) if current_user
+      calculate_cart_price
       render 'error_infos'
     else
-      ShoppingPointManager.new(@order.user).spend_shopping_points(@order, current_cart.shopping_point_amount)
       session[:cart_id] = nil
       OrderMailer.delay.notify_order_placed(@order) if (@order.store_delivery? || @order.home_delivery?)
     end
@@ -126,18 +125,23 @@ class CartsController < ApplicationController
     uri.to_s
   end
 
-  def create_order(cart_items, cart_info)
+  def create_order(cart_info)
     errors = []
     order = nil
+    user = current_cart.user
+    cart = PriceManagerForCart.new(current_cart)
     ActiveRecord::Base.transaction do
       order = Order.new
-      order.uid = current_cart.user.uid
-      order.user_id = current_cart.user_id
-      order.items_price = current_cart.calculate_items_price
-      order.ship_fee = current_cart.calculate_ship_fee
+      order.uid = user.uid
+      order.user_id = user.id
+      order.items_price = cart.items_price
+      order.ship_fee = cart.ship_fee
       order.ship_type = current_cart.ship_type
-      order.total = current_cart.calculate_total
-      order.save
+      order.total = cart.total
+      errors << order.errors.messages unless order.save
+      DiscountRecordCreator.create_by_type_if_applicable(order)
+      ShoppingPointManager.new(user).create_shopping_point_if_applicable(order, cart.shopping_point_amount)
+      ShoppingPointManager.new(user).spend_shopping_points(order, cart.shopping_point_amount)
 
       info = OrderInfo.new
       info.order_id = order.id
@@ -152,18 +156,19 @@ class CartsController < ApplicationController
         info.ship_store_id = store.id
         info.ship_store_name = store.name
       end
-      info.save
+      errors << info.errors.messages unless info.save
 
-      cart_items.each do |cart_item|
+      cart.cart_items.each do |cart_item|
         item = OrderItem.new
         item.order_id = order.id
         item.item_name = cart_item.item.name
-        item.source_item_id = cart_item.item_id
-        item.item_spec_id = cart_item.item_spec_id
+        item.source_item_id = cart_item.item.id
+        item.item_spec_id = cart_item.item_spec.id
         item.item_style = cart_item.item_spec.style
         item.item_quantity = cart_item.item_quantity
-        item.item_price = cart_item.item.special_price ||  cart_item.item.price
+        item.item_price = cart_item.discounted_price
         errors << item.errors.messages unless item.save
+        DiscountRecordCreator.create_by_type_if_applicable(item)
       end
       raise ActiveRecord::Rollback if errors.present?
     end
@@ -179,10 +184,10 @@ class CartsController < ApplicationController
       else
         cart_item.update(item_quantity: list[:spec].stock_amount)
       end
-      updated_items << {id: cart_item.id, item_quantity: cart_item.item_quantity}
+      p = PriceManagerForCartItem.new(cart_item)
+      updated_items << p
       cart_item.destroy if cart_item.item_quantity == 0
     end
-
     updated_items
   end
 
