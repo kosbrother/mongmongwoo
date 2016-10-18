@@ -105,8 +105,10 @@ class CartsController < ApplicationController
 
   def toggle_shopping_point
     if current_cart.shopping_point_amount == 0
-      cart = PriceManagerForCart.new(current_cart)
-      items_price = cart.items_price
+      items_subtotal = current_cart.cart_items.map do |cart_item|
+        PriceManagerForCartItem.new(cart_item).subtotal
+      end
+      items_price = items_subtotal.sum
       shopping_point_amount = ShoppingPointManager.new(current_user).calculate_available_shopping_point(items_price)
       current_cart.update(shopping_point_amount: shopping_point_amount)
     else
