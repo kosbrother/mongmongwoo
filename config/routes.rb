@@ -77,6 +77,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :campaign_rules, only: [:index, :show]
+
   namespace :admin do
     root "pages#home"
     get "/signin", to: "sessions#new"

@@ -47,6 +47,11 @@ crumb :shopping_point_campaigns do
   parent :my_shopping_point
 end
 
+crumb :campaign_rules do
+  link "優惠活動", campaign_rules_path
+  parent :root
+end
+
 crumb :my_shopping_point do
   link "我的購物金", shopping_points_path
   parent :root
