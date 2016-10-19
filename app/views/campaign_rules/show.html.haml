@@ -1,0 +1,15 @@
+-breadcrumb :campaign_rule, @campaign_rule
+.campaign-rule-show
+  = image_tag(@campaign_rule.banner_cover, class: "img-responsive banner")
+  .inner.row
+    - @items.each do |item|
+      .col-lg-4.col-sm-4.col-xs-6.product-block.xs-padding
+        .product-list{vocab: "http://schema.org/", typeof: "Product"}
+          = link_to category_item_path(@category, item), property: "url" do
+            .image
+              .discount-icon{style: "background-image: url(#{@discount_icon_url})"}
+              = image_tag(item.cover, class: 'img-responsive center-block', property: "image")
+            .price{property: "offers", typeof: "#{item.special_price ? 'AggregateOffer' : 'Offer'}"}
+              = list_item_current_price(item)
+            .text
+              %span{property: "name"}= truncate(item.name, length: 17)
