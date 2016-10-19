@@ -9,20 +9,6 @@
     margin: 0;
     > .product-block{
       margin-bottom: 20px;
-      > .product-list{
-        background-color: #ffffff;
-        .image{
-          position: relative;
-          .discount-icon{
-            position: absolute;
-            width: 100%;
-            height: 90px;
-            background-repeat: no-repeat;
-            background-position: right top;
-            background-size: contain;
-          }
-        }
-      }
     }
   }
 }
@@ -33,14 +19,6 @@
       padding: 10px 0;
       > .product-block{
         margin-bottom: 10px;
-        > .product-list{
-          padding: 0;
-          .image{
-            .discount-icon{
-              background-size: 50px;
-            }
-          }
-        }
       }
     }
   }
