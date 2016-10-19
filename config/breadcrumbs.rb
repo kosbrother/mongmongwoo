@@ -52,6 +52,11 @@ crumb :campaign_rules do
   parent :root
 end
 
+crumb :campaign_rule do |campaign_rule|
+  link campaign_rule.title, campaign_rule_path(campaign_rule)
+  parent :campaign_rules
+end
+
 crumb :my_shopping_point do
   link "我的購物金", shopping_points_path
   parent :root
