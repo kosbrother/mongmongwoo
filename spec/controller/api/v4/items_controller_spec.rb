@@ -19,6 +19,7 @@ RSpec.describe Api::V4::ItemsController, type: :controller do
         expect(data[0]['id']).to eq(on_shelf_item.id)
         expect(data[0]['name']).to eq(on_shelf_item.name)
         expect(data[0]['price']).to eq(on_shelf_item.price)
+        expect(data[0]['final_price']).to eq(on_shelf_item.final_price)
         expect(data[0]['slug']).to eq(on_shelf_item.slug)
         expect(data[0]['cover']['url']).to eq(on_shelf_item.cover_url)
         expect(data[0]['discount_icon_url']).to eq(on_shelf_item.discount_icon_url)
@@ -35,7 +36,9 @@ RSpec.describe Api::V4::ItemsController, type: :controller do
       let!(:item) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category]) }
       let!(:campaign_rule){ FactoryGirl.create(:exceed_quantity_percentage_off_campaign_rule, threshold: 3, discount_percentage: 0.9) }
       let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item) }
-      it "does return item discount_icon url" do
+
+      it "does return item discount_icon url and campaign_price" do
+        item.reload
         get :index, category_id: category.id
         data = JSON.parse(response.body)["data"]
         expect(data[0]['discount_icon_url']).to eq(item.discount_icon_url)

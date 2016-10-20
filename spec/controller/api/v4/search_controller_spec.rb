@@ -9,7 +9,9 @@ RSpec.describe Api::V4::SearchController, type: :controller do
       Item.import
       Item.all.each{|i| i.save}
       sleep 1
+      on_shelf_item.reload
     end
+
     context 'when  search term is included in item name' do
       it "does find the item", :elasticsearch do
         get :search_items, query: I18n.t('factory.term.name')
@@ -23,6 +25,7 @@ RSpec.describe Api::V4::SearchController, type: :controller do
         expect(result.first['price']).to eq(on_shelf_item.price)
         expect(result.first['slug']).to eq(on_shelf_item.slug)
         expect(result.first['discount_icon_url']).to eq(on_shelf_item.discount_icon_url)
+        expect(result.first['final_price']).to eq(on_shelf_item.final_price)
 
         data = on_shelf_item.as_json(include: { on_shelf_specs: { only: [:id, :style, :style_pic], methods: [:stock_amount] } })
         data["specs"] = data.delete "on_shelf_specs"
@@ -42,6 +45,7 @@ RSpec.describe Api::V4::SearchController, type: :controller do
         expect(result.first['price']).to eq(on_shelf_item.price)
         expect(result.first['slug']).to eq(on_shelf_item.slug)
         expect(result.first['discount_icon_url']).to eq(on_shelf_item.discount_icon_url)
+        expect(result.first['final_price']).to eq(on_shelf_item.final_price)
       end
     end
   end
