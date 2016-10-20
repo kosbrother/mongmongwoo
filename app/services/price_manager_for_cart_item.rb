@@ -39,13 +39,12 @@ class PriceManagerForCartItem
   def apply_campaign_discount(campaign_rule)
     if is_applied?(campaign_rule)
       if campaign_rule.discount_type == 'percentage_off'
-        @discounted_price = (@origin_price*campaign_rule.discount_percentage).round
-        @subtotal = @discounted_price*@quantity
+        @discounted_price = (@item.price*campaign_rule.discount_percentage).round
       elsif campaign_rule.discount_type == 'percentage_off_next'
-        subtotal = @origin_price*1 + (@origin_price*campaign_rule.discount_percentage)*(@quantity - 1)
+        subtotal = @item.price*1 + (@item.price*campaign_rule.discount_percentage)*(@quantity - 1)
         @discounted_price = (subtotal/@quantity).round
-        @subtotal = @discounted_price * @quantity
       end
+      @subtotal = @discounted_price * @quantity
     end
     @campaign_info = campaign_info_and_result(campaign_rule)
   end
