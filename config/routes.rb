@@ -401,6 +401,16 @@ Rails.application.routes.draw do
         resources :my_messages, only: [:index]
         resources :shopping_points, only: [:index]
         resources :shopping_point_campaigns, only: [:index]
+        resources :favorite_items, only: [:index, :create] do
+          collection do
+            delete 'items/:item_id' => 'favorite_items#destroy'
+          end
+        end
+        resources :wish_lists, only: [:index, :create] do
+          collection do
+            delete 'item_specs/:item_spec_id' => 'wish_lists#destroy'
+          end
+        end
       end
 
       resources :categories, only: [:index] do
