@@ -30,8 +30,6 @@ class Item < ActiveRecord::Base
   belongs_to :taobao_supplier
   has_many :favorite_items
   has_many :favorited_by, through: :favorite_items, source: :user
-  has_many :item_promotions
-  has_many :promotions, through: :item_promotions
   has_many :order_items, foreign_key: :source_item_id
   has_many :stock_specs
   has_many :price_records
@@ -47,6 +45,7 @@ class Item < ActiveRecord::Base
   scope :on_shelf, ->{ where(status: Item.statuses[:on_shelf]) }
   scope :off_shelf, ->{ where(status: Item.statuses[:off_shelf]) }
   scope :with_sold_items_sales_result, -> { joins(:order_items).select('items.*, SUM(order_items.item_quantity) as sales_amount, SUM(order_items.item_quantity * order_items.item_price) as subtotal').group("items.id").order('subtotal DESC') }
+  scope :has_campaign, -> {joins(:campaign_rule)}
 
   acts_as_paranoid
   acts_as_taggable
