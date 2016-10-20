@@ -47,7 +47,7 @@
                         %li.list 全部
                       - category.child_categories.each do |child_category|
                         - if child_category.items.exists?
-                          = link_to category_path(child_category) do
+                          = link_to subcategory_category_path(category, child_category) do
                             %li.list= child_category.name
         %li.nav-list.hidden-xs
           = link_to my_messages_path do
