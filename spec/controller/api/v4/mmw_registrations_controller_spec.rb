@@ -6,11 +6,6 @@ RSpec.describe Api::V4::MmwRegistrationsController, :type => :controller do
   let!(:device) { FactoryGirl.create(:device_registration) }
 
   describe 'post #create' do
-
-    it_behaves_like "when registration_id is empty" do
-      let(:action) { post :create }
-    end
-
     it 'should create new user' do
       post :create, email: email, password: password, registration_id: device.registration_id
       user = User.find_by(email: email)

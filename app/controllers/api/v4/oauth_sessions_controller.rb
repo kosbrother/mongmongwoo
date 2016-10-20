@@ -1,6 +1,4 @@
-class Api::V4::OauthSessionsController < Api::SessionsController
-  before_action  :reguire_registration_id
-  
+class Api::V4::OauthSessionsController < ApiController
   def create
     errors = []
     user = User.find_or_initialize_by(email: params[:email])
@@ -8,9 +6,7 @@ class Api::V4::OauthSessionsController < Api::SessionsController
       user.password = User::FAKE_PASSWORD if user.password_digest.nil?
       user.user_name = params[:user_name]
       errors << user.errors.messages.values.flatten unless user.save
-      device = DeviceRegistration.find_or_create_by(registration_id: params[:registration_id])
-      user.devices << device
-
+      user.devices << DeviceRegistration.find_or_create_by(registration_id: params[:registration_id]) if params[:registration_id].present?
       login = Login.find_or_initialize_by(provider: params[:provider], uid: params[:uid])
       login.user_id = user.id
       login.user_name = params[:user_name]
