@@ -1,0 +1,19 @@
+-breadcrumb :campaign_rules
+.orders
+  .icon-header.-campaign 優惠活動
+  .campaign-rules-list
+    - @campaign_rules.each do |campaign_rule|
+      =link_to campaign_rule_path(campaign_rule) do
+        .list
+          .icon
+            = image_tag(campaign_rule.list_icon)
+          .content
+            .title
+              = campaign_rule.title
+            - if campaign_rule.valid_until
+              .date
+                = "活動日期: #{display_date(campaign_rule.created_at)} ~ #{display_date(campaign_rule.valid_until)}"
+            .description
+              = campaign_rule.description
+          .pull-right
+            .status 進行中

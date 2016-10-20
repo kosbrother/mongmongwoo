@@ -18,3 +18,5 @@
     = link_to '補貨清單', wish_lists_path
   .selectList{ class: current_active_class(shopping_points_path) || current_active_class(shopping_point_campaigns_path) }
     = link_to '我的購物金', shopping_points_path
+  .selectList{ class: current_active_class(campaign_rules_path) }
+    = link_to '優惠活動', campaign_rules_path
