@@ -6,10 +6,11 @@
   = render "partials/schema_data/product", item: @item, category: @category
 
 - breadcrumb :item, @category, @item
-.product-block.row
+.row
   .col-lg-6.xs-padding
     .spec-photos
       .show
+        .discount-icon{style: "background-image: url(#{@item.discount_icon_url})"}
         = image_tag(@first_item_spec.style_pic.url, class: 'img-responsive')
       .icons
         - @item_specs.each do |item_spec|
@@ -21,18 +22,20 @@
       = form_for :cart_item, url: :cart_items, remote: true do |f|
         = f.hidden_field(:item_id, value: @item.id)
         .col-lg-3.col-xs-3.no-padding
-          .header 優惠價
+          .header 價格
         .col-lg-9.col-xs-9
           .dollar NT$
           = detail_item_current_price(@item)
         .col-lg-3.col-xs-3.no-padding
-          .header 樣式名稱
-        .col-lg-9.col-xs-9
-          = f.select :item_spec_id, @item_specs.collect { |item_spec| [item_spec.style, item_spec.id] }, {selected: @first_item_spec.id},  class: 'spec-select'
-        .col-lg-3.col-xs-3.no-padding
           .header 樣式庫存
         .col-lg-9.col-xs-9
           = content_tag(:div, render_stock_amount(@first_item_spec.stock_amount), class: 'stock-amount')
+          %span.sales_quantity
+            = "  /已售出#{@item.sales_quantity > 0 ? @item.sales_quantity : rand(2..5)}"
+        .col-lg-3.col-xs-3.no-padding
+          .header 樣式名稱
+        .col-lg-9.col-xs-9
+          = f.select :item_spec_id, @item_specs.collect { |item_spec| [item_spec.style, item_spec.id] }, {selected: @first_item_spec.id},  class: 'spec-select'
         .col-lg-3.col-xs-3.no-padding
           .header 選擇商品數量
         .col-lg-9.col-xs-9
@@ -44,6 +47,10 @@
           .header 購物須知
         .col-lg-9.col-xs-9
           .info
+            -if @campaign_rule.present?
+              = "#{@campaign_rule.title}, 瞭解更多"
+              = link_to '活動內容', @campaign_rule.able_path, class: "link"
+              %br/
             寄送方式：711超商取貨(滿490免運費)
             %br/
             付款方式：超商付款取貨
@@ -79,7 +86,7 @@
      js.src = "//connect.facebook.net/zh_TW/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-   
+
 .fb-like{"data-action" => "like", "data-href" => request.original_url, "data-layout" => "standard", "data-share" => "true", "data-show-faces" => "true", "data-size" => "small"}
 .fb-save{"data-size" => "large", "data-uri" => request.original_url}
 .fb-comment-embed{"data-href" => request.original_url, "data-include-parent" => "false", "data-width" => "560"}
