@@ -404,6 +404,7 @@ Rails.application.routes.draw do
       end
 
       resources :categories, only: [:index]
+      resources :additional_purchase_items, only: [:index]
     end
   end
 end
