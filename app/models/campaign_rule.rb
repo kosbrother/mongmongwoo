@@ -5,6 +5,7 @@ class CampaignRule< ActiveRecord::Base
   enum rule_type: {exceed_amount: 0, exceed_quantity: 1}
 
   PERCENTAGE_OFF_TYPE = ["percentage_off", "percentage_off_next"]
+  DISCOUNT_MONEY_TYPE = ["money_off", "shopping_point"]
 
   has_many :campaigns, dependent: :destroy
   has_many :items, through: :campaigns, source: :discountable, source_type: "Item"
