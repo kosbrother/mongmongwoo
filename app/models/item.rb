@@ -34,7 +34,7 @@ class Item < ActiveRecord::Base
   has_many :stock_specs
   has_many :price_records
   has_one :campaign, as: :discountable
-  has_one :campaign_rule, ->{where(is_valid: true)}, through: :campaign
+  has_one :campaign_rule, through: :campaign
 
   delegate :name, :url, to: :taobao_supplier, prefix: :supplier
 
@@ -90,7 +90,13 @@ class Item < ActiveRecord::Base
   end
 
   def final_price
-    (special_price) ? special_price : price
+    if campaign_rule.present? && campaign_rule.discount_type == "percentage_off"
+      (campaign_rule.discount_percentage * price).round
+    elsif campaign_rule.present? && campaign_rule.discount_type == "percentage_off_next"
+      ((campaign_rule.discount_percentage * price + price)/2).round
+    else
+      special_price || price
+    end
   end
 
   def as_json(options = { })

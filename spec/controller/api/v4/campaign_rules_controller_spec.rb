@@ -30,6 +30,7 @@ RSpec.describe Api::V4::CampaignRulesController, :type => :controller do
       expect(data['items'][0]['name']).to eq(item.name)
       expect(data['items'][0]['price']).to eq(item.price)
       expect(data['items'][0]['special_price']).to eq(item.special_price)
+      expect(data['items'][0]['final_price']).to eq(item.final_price)
       expect(data['items'][0]['discount_icon_url']).to eq(item.discount_icon_url)
       expect(data['items'][0]['slug']).to eq(item.slug)
       expect(data['items'][0]['cover']['url']).to eq(item.cover_url)
