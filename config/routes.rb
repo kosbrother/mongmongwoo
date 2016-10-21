@@ -270,7 +270,11 @@ Rails.application.routes.draw do
 
     resources :shop_infos, except: [:show]
     resources :shopping_point_campaigns
-    resources :campaign_rules
+    resources :campaign_rules do
+      collection do
+        get "/get_discount_types/:rule_type", to: "campaign_rules#get_discount_types", as: "get_discount_types"
+      end
+    end
     resources :campaigns, only: :destroy
   end
 
