@@ -27,16 +27,30 @@ campaign_rule = function(){
   });
   $('#campaign_rule_rule_type').on('change', function(){
     var type = $(this).val();
-    if (type === 'exceed_amount'){
-      $('.campaign-for-order').removeClass('hidden');
-      $('.campaign-for-items').addClass('hidden');
-      $('#campaign_rule_campaign_for_order').prop('value', true);
-      $('.campaign-for-items input').prop('checked', false);
-    }else if(type === 'exceed_quantity'){
-      $('.campaign-for-items').removeClass('hidden');
-      $('.campaign-for-order').addClass('hidden');
-      $('#campaign_rule_campaign_for_order').prop('value', false);
-    }
+    $.ajax({
+      url: '/admin/campaign_rules/get_discount_types/' + type ,
+      type: "GET",
+
+      success: function(){
+        if (type === 'exceed_amount'){
+          $('#campaign_rule_discount_type').trigger('change');
+          $('.campaign-for-order').removeClass('hidden');
+          $('.campaign-for-items').addClass('hidden');
+          $('#campaign_rule_campaign_for_order').prop('value', true);
+          $('.campaign-for-items input').prop('checked', false);
+        }else if(type === 'exceed_quantity'){
+          $('#campaign_rule_discount_type').trigger('change');
+          $('.campaign-for-items').removeClass('hidden');
+          $('.campaign-for-order').addClass('hidden');
+          $('#campaign_rule_campaign_for_order').prop('value', false);
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert('錯誤發生');
+      }
+    });
+
+
   });
 };
 $(document).ready(campaign_rule);
