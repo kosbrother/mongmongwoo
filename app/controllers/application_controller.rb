@@ -44,4 +44,17 @@ class ApplicationController < ActionController::Base
     current_cart.user = user
     current_cart.save
   end
+
+  def calculate_cart_price
+    cart = PriceManagerForCart.new(current_cart)
+    @cart_items = cart.cart_items
+    @items_price = cart.items_price
+    @shopping_point_amount = cart.shopping_point_amount
+    @reduced_items_price = cart.reduced_items_price
+    @campaigns_for_order = cart.campaigns
+    @shopping_point_campaigns = cart.shopping_point_campaigns
+    @ship_fee = cart.ship_fee
+    @ship_campaign = cart.ship_campaign
+    @total = cart.total
+  end
 end

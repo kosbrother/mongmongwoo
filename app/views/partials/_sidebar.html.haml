@@ -11,7 +11,7 @@
           = link_to category_path(category) do
             %li.list 全部
           - category.child_categories.each do |child_category|
-            - if child_category.items.exists?
+            - if child_category.parent_id != Category::NEW_ID || child_category.items.exists?
               = link_to category_path(child_category) do
                 %li.list= child_category.name
   .side-bar

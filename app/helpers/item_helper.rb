@@ -80,10 +80,6 @@ module ItemHelper
     end
   end
 
-  def item_current_price(item)
-    item.special_price ? price_with_unit(item.special_price) : price_with_unit(item.price)
-  end
-
   def render_stock_amount(stock_amount)
      if stock_amount == 0
        '暫無庫存'

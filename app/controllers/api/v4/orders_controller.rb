@@ -7,7 +7,6 @@ class Api::V4::OrdersController < ApiController
       products = params[:products].map do |product|
         cart_item = CartItem.new(item_id: product[:id], item_spec_id: product[:item_spec_id], item_quantity: product[:quantity])
         p = PriceManagerForCartItem.new(cart_item)
-        p.apply_item_campaign
         product[:price] = p.origin_price
         product[:final_price] = p.discounted_price
         product[:subtotal] = p.subtotal
