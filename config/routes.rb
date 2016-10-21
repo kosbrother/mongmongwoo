@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get "/confirm_cart", to: "carts#confirm"
   post "/submit_order", to: "carts#submit", as: "submit_order"
   get "/success", to: "carts#success", as: "success"
+  get "/fail", to: "carts#fail", as: "fail"
   get "/password_resets/edit", to: "password_resets#edit"
   put "/password_resets/update", to: "password_resets#update"
   get "/password_resets/success", to: "password_resets#success"
