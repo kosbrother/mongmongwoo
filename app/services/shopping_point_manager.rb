@@ -43,9 +43,8 @@ class ShoppingPointManager
         spent_records.each do |shopping_point_record|
           shopping_point_record.shopping_point.amount += shopping_point_record.amount.abs
           shopping_point_record.shopping_point.save
+          shopping_point_record.shopping_point.shopping_point_records.delete(shopping_point_record.id)
         end
-
-        spent_records.destroy_all
       end
     end
   end
