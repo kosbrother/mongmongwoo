@@ -2,7 +2,7 @@ class ShoppingPoint < ActiveRecord::Base
   enum point_type: { "退貨金" => 0, "活動購物金" => 1, "送購物金" => 2 }
 
   after_create :create_record
-  after_update :set_not_valid_if_amount_zero
+  after_update :set_not_valid_if_amount_zero, :set_valid_if_amount_greater_than_zero_and_not_valid
 
   belongs_to :user
   belongs_to :shopping_point_campaign
@@ -23,5 +23,9 @@ class ShoppingPoint < ActiveRecord::Base
 
   def set_not_valid_if_amount_zero
     update_column(:is_valid, false) if amount == 0
+  end
+
+  def set_valid_if_amount_greater_than_zero_and_not_valid
+    update_column(:is_valid, true) if amount > 0 && is_valid == false
   end
 end
