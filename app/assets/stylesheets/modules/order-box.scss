@@ -20,10 +20,15 @@
       margin-bottom: 25px;
     }
     .stock-amount{
-      color: $price-font-color;
-      font-size: 20px;
+      color: #ff8080;
+      font-size: 16px;
+      line-height: 30px;
       display: inline-block;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
+    }
+    .sales_quantity{
+      font-size: 12px;
+      color: #b5b5b5;
     }
     .price{
       border-top: transparent;
@@ -61,6 +66,10 @@
       position: relative;
       top: 8px;
       margin-bottom: 30px;
+      > .link{
+        color: #ff8080;
+        text-decoration: underline;
+      }
     }
     .add-cart{
       > .add{

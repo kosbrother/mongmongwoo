@@ -4,6 +4,7 @@ class ItemsController < ApplicationController
   def show
     @category = Category.find(params['category_id'])
     @item = Item.find(params['id'])
+    @campaign_rule = @item.campaign_rule
     @item.specs.on_shelf.size == 0 ? @item_specs = @item.specs : @item_specs = @item.specs.on_shelf
     @first_item_spec = @item_specs.detect{|spec| spec.stock_amount > 0}
     @first_item_spec = @item_specs.first if @first_item_spec.blank?

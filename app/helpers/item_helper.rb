@@ -70,13 +70,13 @@ module ItemHelper
   end
 
   def detail_item_current_price(item)
-    if item.special_price
+    if item.final_price < item.price
       content_tag(:div, class: 'price') do
-        content_tag(:span, @item.special_price) +
-        content_tag(:span, price_with_unit(@item.price), class: 'origin')
+        content_tag(:span, item.final_price) +
+        content_tag(:span, "原價#{price_with_unit(item.price)}", class: 'origin')
       end
     else
-      content_tag(:div, @item.price, class: 'price')
+      content_tag(:div, item.price, class: 'price')
     end
   end
 

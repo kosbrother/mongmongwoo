@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Api::V4::ItemsController, type: :controller do
+  let!(:category) { FactoryGirl.create(:category) }
+
   describe "GET index" do
     context "with on shelf items" do
-      let!(:category) { FactoryGirl.create(:category) }
-      let!(:on_shelf_item) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category]) }
-      let!(:off_shelf_item) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:off_shelf], categories: [category]) }
+      let!(:item) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category]) }
 
       it "should contain correct categoty's items quantity" do
         get :index, category_id: category.id
@@ -16,13 +16,13 @@ RSpec.describe Api::V4::ItemsController, type: :controller do
       it "should contain correct category's items data" do
         get :index, category_id: category.id
         data = JSON.parse(response.body)["data"]
-        expect(data[0]['id']).to eq(on_shelf_item.id)
-        expect(data[0]['name']).to eq(on_shelf_item.name)
-        expect(data[0]['price']).to eq(on_shelf_item.price)
-        expect(data[0]['final_price']).to eq(on_shelf_item.final_price)
-        expect(data[0]['slug']).to eq(on_shelf_item.slug)
-        expect(data[0]['cover']['url']).to eq(on_shelf_item.cover_url)
-        expect(data[0]['discount_icon_url']).to eq(on_shelf_item.discount_icon_url)
+        expect(data[0]['id']).to eq(item.id)
+        expect(data[0]['name']).to eq(item.name)
+        expect(data[0]['price']).to eq(item.price)
+        expect(data[0]['final_price']).to eq(item.final_price)
+        expect(data[0]['slug']).to eq(item.slug)
+        expect(data[0]['cover']['url']).to eq(item.cover_url)
+        expect(data[0]['discount_icon_url']).to eq(item.discount_icon_url)
 
         datas = Category.find(category.id).items.on_shelf.as_json(include: { on_shelf_specs: { only: [:id, :style, :style_pic], methods: [:stock_amount] } })
         datas.each{|data| data["specs"] = data.delete "on_shelf_specs"}
@@ -32,7 +32,6 @@ RSpec.describe Api::V4::ItemsController, type: :controller do
     end
 
     context "when item has campaign" do
-      let!(:category) { FactoryGirl.create(:category) }
       let!(:item) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category]) }
       let!(:campaign_rule){ FactoryGirl.create(:exceed_quantity_percentage_off_campaign_rule, threshold: 3, discount_percentage: 0.9) }
       let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item) }
@@ -46,7 +45,6 @@ RSpec.describe Api::V4::ItemsController, type: :controller do
     end
 
     context "with sort param" do
-      let!(:category) { FactoryGirl.create(:category) }
       let!(:on_shelf_item_1) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 50, created_at: Time.current) }
       let!(:on_shelf_item_2) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 100, created_at: Time.current + 1) }
       let!(:on_shelf_item_3) { FactoryGirl.create(:item_with_specs_and_photos, status: Item.statuses[:on_shelf], categories: [category], price: 70, created_at: Time.current + 2) }
@@ -86,6 +84,28 @@ RSpec.describe Api::V4::ItemsController, type: :controller do
         expect(data[1]['id']).to eq(on_shelf_item_2.id)
         expect(data[2]['id']).to eq(on_shelf_item_1.id)
       end
+    end
+  end
+
+  describe "get #show" do
+    let!(:item) { FactoryGirl.create(:item_with_specs_and_photos, categories: [category]) }
+    let!(:campaign_rule){ FactoryGirl.create(:exceed_quantity_percentage_off_campaign_rule, threshold: 3, discount_percentage: 0.9) }
+    let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item) }
+    it 'does contain correct data' do
+      get :show, category_id: category.id, id: item.id
+
+      data = JSON.parse(response.body)["data"]
+      expect(data['name']).to eq(item.name)
+      expect(data['price']).to eq(item.price)
+      expect(data['cover']['url']).to eq(item.cover.url)
+      expect(data['description']).to eq(item.description)
+      expect(data['status']).to eq(item.status)
+      expect(data['slug']).to eq(item.slug)
+      expect(data['photos']).to match_array(JSON.parse(item.photos.as_json(only: [:image]).to_json))
+      expect(data['specs']).to match_array(JSON.parse(item.specs.on_shelf.select(:id,:style,:style_pic).with_stock_amount.to_json))
+      expect(data['sales_quantity']).to eq(item.sales_quantity)
+      expect(data['discount_icon_url']).to eq(item.discount_icon_url)
+      expect(data['campaign_url']).to eq(campaign_rule.app_index_url)
     end
   end
 end

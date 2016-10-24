@@ -4,6 +4,15 @@
   padding-right: 20px;
 
   >.show{
+    > .discount-icon{
+      position: absolute;
+      width: 125px;
+      height: 90px;
+      left: 50%;
+      background-repeat: no-repeat;
+      background-position: right top;
+      background-size: contain;
+    }
     > img{
       margin: 15px auto;
       width: 250px;

@@ -8,4 +8,19 @@ class Api::V4::ItemsController < ApiController
 
     render status: 200, json: {data: datas}
   end
+
+  def show
+    category = Category.find(params[:category_id])
+    item = category.items.select(:id, :name, :price, :special_price, :cover, :description, :status, :slug).find(params[:id])
+    item_json = item.as_json(methods: [:discount_icon_url, :sales_quantity])
+    campaign_rule = item.campaign_rule
+    item_json[:campaign_url] = campaign_rule.present? ? campaign_rule.app_index_url : nil
+
+    specs = item.specs.on_shelf.select(:id,:style,:style_pic).with_stock_amount.as_json
+    photos = item.photos.select(:id, :image).as_json(only: [:image])
+    item_json[:specs] = specs
+    item_json[:photos] = photos
+
+    render status: 200, json: {data: item_json}
+  end
 end
