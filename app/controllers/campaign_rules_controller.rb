@@ -1,9 +1,8 @@
 class CampaignRulesController < ApplicationController
   layout 'user'
-  before_action  :load_categories
+  before_action  :load_categories_and_campaigns
 
   def index
-    @campaign_rules = CampaignRule.valid
   end
 
   def show

@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   layout 'user'
-  before_action  :load_categories, :require_user
+  before_action  :load_categories_and_campaigns, :require_user
 
   def index
     @orders = current_user.orders.exclude_unpaid_credit_card_orders.recent
