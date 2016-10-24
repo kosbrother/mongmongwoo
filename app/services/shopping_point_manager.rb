@@ -35,6 +35,21 @@ class ShoppingPointManager
     shopping_point.shopping_point_records.where('amount > :amount', amount: 0).first
   end
 
+  def self.refund_spent_shoppong_point(order)
+    spent_records = order.shopping_point_records.where('shopping_point_records.amount < 0')
+
+    if spent_records.exists?
+      ActiveRecord::Base.transaction do
+        spent_records.each do |shopping_point_record|
+          shopping_point_record.shopping_point.amount += shopping_point_record.amount.abs
+          shopping_point_record.shopping_point.save
+        end
+
+        spent_records.destroy_all
+      end
+    end
+  end
+
   def total_amount
     ShoppingPoint.valid.where(user_id: user.id).sum(:amount)
   end

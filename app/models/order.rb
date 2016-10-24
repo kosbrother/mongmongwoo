@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :user_id, :items_price, :ship_fee, :total
   validates_numericality_of :items_price, :total, greater_than: 0
 
-  after_update :reduce_stock_amount_if_status_shipping, :restock_if_status_changed_from_shipping
+  after_update :reduce_stock_amount_if_status_shipping, :restock_if_status_changed_from_shipping, :refund_spent_shopping_point_to_registered_user_if_status_cancel
   after_create :put_in_check_order_paid_schedule_if_by_credit_card
 
   belongs_to :user
@@ -196,6 +196,12 @@ class Order < ActiveRecord::Base
       schedule = Schedule.create(scheduleable: self, execute_time: (created_at + 30.minutes), schedule_type: "check_credit_card_paid")
       job_id = CheckCreditCardPaidWorker.perform_at(schedule.execute_time, id)
       schedule.update_attribute(:job_id, job_id)
+    end
+  end
+
+  def refund_spent_shopping_point_to_registered_user_if_status_cancel
+    if status_changed_to?("訂單取消") && (user.anonymous_user? == false)
+      ShoppingPointManager.refund_spent_shoppong_point(self)
     end
   end
 end
