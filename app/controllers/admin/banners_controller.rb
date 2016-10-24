@@ -13,9 +13,9 @@ class Admin::BannersController < AdminController
 
   def create
     @banner = Banner.new(banner_params)
-
+    
     if @banner.bannerable_type == "CampaignRule"
-      photo = File.open(@banner.bannerable.banner_cover.file.path)
+      photo = open(@banner.bannerable.banner_cover.url)
       @banner.image = photo
     end
 
