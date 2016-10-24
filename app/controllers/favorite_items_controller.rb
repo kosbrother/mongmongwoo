@@ -1,7 +1,7 @@
 class FavoriteItemsController < ApplicationController
   layout 'user'
 
-  before_action  :load_categories, :require_user
+  before_action  :load_categories_and_campaigns, :require_user
 
   def index
     @items = current_user.favorites

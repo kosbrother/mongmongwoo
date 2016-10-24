@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   resources :shopping_points, only: [:index]
   resources :wish_lists, only: [:index, :destroy]
   resources :my_messages, only: [:index]
-  resources :campaign_rules, only: [:show]
+  resources :campaign_rules, only: [:index, :show]
 
   resources :allpay, only:[] do
     collection do
@@ -76,8 +76,6 @@ Rails.application.routes.draw do
       post "return"
     end
   end
-
-  resources :campaign_rules, only: [:index, :show]
 
   namespace :admin do
     root "pages#home"
