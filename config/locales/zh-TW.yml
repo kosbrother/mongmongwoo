@@ -9,7 +9,7 @@ zh-TW:
   bannerable:
     Category: "分類"
     Item: "商品"
-    Campaign: "優惠活動"
+    CampaignRule: "優惠活動"
     NoLink: "無連結"
   controller:
     error:
