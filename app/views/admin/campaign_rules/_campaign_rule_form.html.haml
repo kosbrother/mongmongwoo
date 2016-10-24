@@ -29,7 +29,7 @@
 .form-group
   = f.label :discount_type, "優惠類型", class: "col-sm-2 control-label"
   .col-sm-10
-    = f.select :discount_type, options_for_campaign_discount_types(discount_types), {}, { class: "form-control", disabled: f.object.persisted? }
+    = f.select :discount_type, options_for_campaign_discount_types(discount_types, discount_type), {}, { class: "form-control", disabled: f.object.persisted? }
 .form-group.discount-type{"data-type": "money_off", class: "#{'hidden' if discount_type != "money_off"}"}
   = f.label :discount_money, "優惠金額", class: "col-sm-2 control-label"
   .col-sm-10

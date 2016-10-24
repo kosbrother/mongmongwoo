@@ -1,6 +1,6 @@
 module Admin::CampaignRulesHelper
-  def options_for_campaign_discount_types(discount_types)
-    options_for_select(discount_types.map { |key| [t("models.campaign_rules.discount_type.#{key}"), key] })
+  def options_for_campaign_discount_types(discount_types, discount_type=nil)
+    options_for_select(discount_types.map { |key| [t("models.campaign_rules.discount_type.#{key}"), key] }, selected: discount_type)
   end
 
   def options_for_campaign_rule_types

@@ -1,11 +1,12 @@
 class CampaignRule< ActiveRecord::Base
   include AndroidApp
 
-  enum discount_type: {money_off: 0, percentage_off: 1, percentage_off_next:2, shopping_point: 3}
+  enum discount_type: {money_off: 0, percentage_off: 1, percentage_off_next:2, shopping_point: 3, get_one_free: 4}
   enum rule_type: {exceed_amount: 0, exceed_quantity: 1}
 
   PERCENTAGE_OFF_TYPE = ["percentage_off", "percentage_off_next"]
-  DISCOUNT_MONEY_TYPE = ["money_off", "shopping_point"]
+  DISCOUNT_TYPES_FOR_EXCEED_QUANTITY = ["percentage_off", "percentage_off_next", "get_one_free"]
+  DISCOUNT_TYPES_FOR_EXCEED_MONEY = ["money_off", "shopping_point"]
 
   has_many :campaigns, dependent: :destroy
   has_many :items, through: :campaigns, source: :discountable, source_type: "Item"
