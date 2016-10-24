@@ -268,6 +268,7 @@ Rails.application.routes.draw do
 
     resources :shop_infos, except: [:show]
     resources :shopping_point_campaigns
+    resources :additional_purchase_items, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   # API for App
@@ -403,6 +404,7 @@ Rails.application.routes.draw do
       end
 
       resources :categories, only: [:index]
+      resources :additional_purchase_items, only: [:index]
     end
   end
 end

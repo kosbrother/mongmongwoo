@@ -1,0 +1,13 @@
+.content-box-large
+  .breadcrumb-topbar
+    %ol.breadcrumb
+      %li
+        = link_to "萌萌屋", admin_root_path
+      %li.active 加購優惠列表
+  .pull-right
+    = link_to "新增加購優惠", new_admin_additional_purchase_item_path, class: "btn btn-default"
+  %h2 加購優惠列表
+  .panel-body
+    = render_pagination(@additional_purchase_items)
+    = render "additional_purchase_item_table", additional_purchase_items: @additional_purchase_items
+    = render_pagination(@additional_purchase_items)
