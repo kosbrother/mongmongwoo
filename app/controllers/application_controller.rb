@@ -18,8 +18,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def load_categories
+  def load_categories_and_campaigns
     @categories = Category.parent_categories.except_the_all_category.includes(:child_categories)
+    @campaign_rules = CampaignRule.valid
   end
 
   def load_popular_items

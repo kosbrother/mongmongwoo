@@ -4,7 +4,7 @@ class CartsController < ApplicationController
   layout 'cart'
 
   skip_before_action :verify_authenticity_token, only: [:info]
-  before_action  :load_categories
+  before_action  :load_categories_and_campaigns
   before_action :calculate_cart_price, only: [:checkout, :confirm]
 
   include DeviceHelper

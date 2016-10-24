@@ -1,7 +1,7 @@
 class WishListsController < ApplicationController
   layout 'user'
 
-  before_action  :load_categories, :require_user
+  before_action  :load_categories_and_campaigns, :require_user
 
   def index
     @wish_lists = current_user.wish_lists.includes(:item, :item_spec)

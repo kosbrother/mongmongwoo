@@ -1,7 +1,7 @@
 class ShoppingPointsController < ApplicationController
   layout 'user'
 
-  before_action  :load_categories
+  before_action  :load_categories_and_campaigns
 
   def index
     user = current_user || User.find(User::ANONYMOUS)

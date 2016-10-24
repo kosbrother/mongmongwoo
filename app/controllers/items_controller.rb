@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :load_popular_items, :load_categories
+  before_action :load_popular_items, :load_categories_and_campaigns
 
   def show
     @category = Category.find(params['category_id'])

@@ -49,6 +49,17 @@
                         - if child_category.items.exists?
                           = link_to subcategory_category_path(category, child_category) do
                             %li.list= child_category.name
+              %li.list
+                .dropdown
+                  .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                    優惠活動
+                    %span.caret
+                  %ul.dropdown-menu.sub-categories
+                    = link_to campaign_rules_path do
+                      %li.list 全部
+                    - @campaign_rules.each do |campaign_rule|
+                      = link_to campaign_rule_path(campaign_rule) do
+                        %li.list= campaign_rule.title
         %li.nav-list.hidden-xs
           = link_to my_messages_path do
             .list.notify
