@@ -1,4 +1,6 @@
 class Campaign < ActiveRecord::Base
+  include Bannerable
+
   belongs_to :campaign_rule
   belongs_to :discountable, polymorphic: true
 

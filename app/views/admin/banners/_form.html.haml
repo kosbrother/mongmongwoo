@@ -4,13 +4,13 @@
     .col-sm-10
       = f.text_field :title, { class: "form-control", placeholder: "請輸入標題", required: true }
   .form-group
-    = f.label :image, "廣告圖片", class: "col-sm-2 control-label"
-    .col-sm-10
-      = f.file_field :image, { class: "form-control", required: true }
-  .form-group
     = f.label :bannerable_type, "廣告類型", class: "col-sm-2 control-label"
     .col-sm-10
       = f.select :bannerable_type, options_for_select(bannerable_select_options), {}, class: "form-control", id: "banner-type", include_blank: "請選擇廣告類型"
+  .form-group#banner_image
+    = f.label :image, "廣告圖片", class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.file_field :image, { class: "form-control" }
   .select-type-field
   .form-group
     .col-sm-offset-2.col-sm-10
