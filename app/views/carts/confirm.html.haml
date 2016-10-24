@@ -27,6 +27,8 @@
           %div= cart_item.item_quantity
         .col-lg-1.col-xs-3.subtotal
           = price_with_unit(cart_item.subtotal)
+        .col-lg-10.col-lg-offset-2.col-xs-offset-3.col-xs-9.gift-info
+          = cart_item_gift_info(cart_item.gift_info)
     .divider
     .totalrow.row
       .col-lg-1.col-lg-offset-8.col-xs-8.text

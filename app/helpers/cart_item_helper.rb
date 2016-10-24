@@ -7,4 +7,10 @@ module CartItemHelper
       price_with_unit(origin_price)
     end
   end
+
+  def cart_item_gift_info(gift_info)
+    if gift_info.present?
+      "贈品：#{gift_info[:item_name]} - 數量 X #{gift_info[:quantity]}"
+    end
+  end
 end

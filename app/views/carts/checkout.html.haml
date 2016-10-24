@@ -32,6 +32,8 @@
           .quantity-plus{ 'data-id': cart_item.id } +
         .col-lg-1.subtotal.visible-lg-block{id: "cart-item-#{cart_item.id}-subtotal"}
           = price_with_unit(cart_item.subtotal)
+        .col-lg-9.col-lg-offset-3.col-xs-offset-2.col-xs-10.gift-info
+          = cart_item_gift_info(cart_item.gift_info)
     .divider
     .totalrow.row
       .col-lg-1.col-lg-offset-8.col-xs-3.text

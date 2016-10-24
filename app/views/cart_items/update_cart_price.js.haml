@@ -3,6 +3,7 @@
     $("#cart-item-#{@cart_item.id} .unitprice").html("#{j cart_item_current_price(@origin_price, @discounted_price)}");
     $("#cart-item-#{@cart_item.id}-quantity").val("#{@cart_item.item_quantity}");
     $("#cart-item-#{@cart_item.id}-subtotal").text("#{price_with_unit(@subtotal)}");
+    $("#cart-item-#{@cart_item.id} .gift-info").text("#{cart_item_gift_info(@gift_info)}");
 -if @shopping_point_amount > 0
   :plain
     $('#shopping-point-check-box').addClass('checked');

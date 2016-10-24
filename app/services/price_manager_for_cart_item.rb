@@ -1,6 +1,6 @@
 class PriceManagerForCartItem
   attr_reader :id, :item, :item_spec, :origin_price, :item_quantity
-  attr_accessor :subtotal, :discounted_price, :campaign_info
+  attr_accessor :subtotal, :discounted_price, :campaign_info, :gift_info
 
   def initialize(cart_item)
     @id = cart_item.id
@@ -11,6 +11,7 @@ class PriceManagerForCartItem
     @discounted_price = @origin_price
     @subtotal = @origin_price * @item_quantity
     @campaign_info = nil
+    @gift_info = nil
 
     campaign_rule = @item.campaign_rule
     if campaign_rule.present?
@@ -43,6 +44,9 @@ class PriceManagerForCartItem
       elsif campaign_rule.discount_type == 'percentage_off_next'
         subtotal = @item.price*1 + (@item.price*campaign_rule.discount_percentage)*(@item_quantity - 1)
         @discounted_price = (subtotal/@item_quantity).round
+      elsif campaign_rule.discount_type == 'get_one_free'
+        gift_quantity = @item_quantity/campaign_rule.threshold
+        @gift_info = {item_name: @item.name, quantity: gift_quantity}
       end
       @subtotal = @discounted_price * @item_quantity
     end

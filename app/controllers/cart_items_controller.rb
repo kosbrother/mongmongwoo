@@ -17,6 +17,7 @@ class CartItemsController < ApplicationController
     @origin_price = p.origin_price
     @discounted_price = p.discounted_price
     @subtotal = p.subtotal
+    @gift_info = p.gift_info
     calculate_cart_price
     render "update_cart_price"
   end
