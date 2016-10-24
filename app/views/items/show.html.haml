@@ -62,10 +62,11 @@
 .photo-list
   - @item.photos.each do |photo|
     = image_tag(photo.image.url, class: 'img-responsive')
-
-.fb-like{"data-action" => "like", "data-href" => category_item_url(@the_all_category, @item), "data-layout" => "standard", "data-share" => "true", "data-show-faces" => "true", "data-size" => "small"}
-.fb-save{"data-size" => "large", "data-uri" => category_item_url(@the_all_category, @item)}
-.fb-comments{"data-href" => category_item_url(@the_all_category, @item), "data-include-parent" => "false", "data-width" => "560"}
+.star-header 商品留言
+.fb-social
+  .fb-like{"data-action" => "like", "data-href" => category_item_url(@the_all_category, @item), "data-layout" => "standard", "data-share" => "true", "data-show-faces" => "true", "data-size" => "small"}
+  .fb-save{"data-size" => "large", "data-uri" => category_item_url(@the_all_category, @item)}
+  .fb-comments{"data-href" => category_item_url(@the_all_category, @item), "data-include-parent" => "false", "data-width" => "560"}
 
 = render "partials/tracking_events/view_item_content", item: @item
 = render "partials/tracking_events/send_event_to_google_analytics", category: @pop_items.include?(@item) ? "popular_product" : "product", action: "view", label: @item.name
