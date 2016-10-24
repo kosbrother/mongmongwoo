@@ -1,0 +1,53 @@
+.fail{
+  > .text-align{
+    width: 570px;
+    margin: 0 auto;
+    font-size: 20px;
+    color: #000000;
+    > #message{
+      margin-top: 40px;
+      color: #ff3d53;
+      font-weight: bold;
+      font-size: 25px;
+      > .alert-dismissable, .alert-dismissible {
+        padding-right: 0;
+      }
+      > .alert {
+        margin-bottom: 0px;
+      }
+      button {
+        display: none;
+      }
+    }
+  }
+  > .image{
+    width: 570px;
+    height: 290px;
+    margin: 40px auto;
+    background-image: image_url('img_error.png');
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fail{
+    > .image{
+      width: 132px;
+      height: 110px;
+      margin: 20px auto;
+      background-size: contain;
+      background-image: image_url('img_error_s.png');
+
+    }
+    > .text-align{
+      width: 100%;
+      font-size: 12px;
+      > #message {
+        margin-top: 50px;
+        font-size: 14px;
+      }
+    }
+  }
+}

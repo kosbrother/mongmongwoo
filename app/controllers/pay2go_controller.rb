@@ -3,7 +3,12 @@ class Pay2goController < ActionController::Base
     result = JSON.parse(params["Result"])
     order_id = result["MerchantOrderNo"]
     order = Order.find(order_id)
-    redirect_to success_path(order_id: order.id)
+
+    if params[:Status] == "SUCCESS"
+      redirect_to success_path(order_id: order.id)
+    else
+      redirect_to fail_path, flash: {fail: params[:Message] + "！"}
+    end
   end
 
   def notify
