@@ -18,6 +18,9 @@ class Banner < ActiveRecord::Base
       item = bannerable
       category = item.categories.last
       category_item_path(category, item)
+    when CampaignRule.name
+      campaign_rule = bannerable
+      campaign_rule_path(campaign_rule)
     end
   end
 end
