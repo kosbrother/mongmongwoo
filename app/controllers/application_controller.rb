@@ -18,12 +18,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def load_categories
+  def load_categories_and_campaigns
     @categories = Category.parent_categories.except_the_all_category.includes(:child_categories)
+    @campaign_rules = CampaignRule.valid
   end
 
   def load_popular_items
-    @pop_items = Item.joins(:item_categories).on_shelf.where('item_categories.category_id = 10').priority.limit(6)
+    @pop_items = Item.joins(:item_categories).on_shelf.includes(:campaign_rule).where('item_categories.category_id = 10').priority.limit(6)
     @category_all = Category.find(10)
   end
 
@@ -43,5 +44,18 @@ class ApplicationController < ActionController::Base
     session[:user_id] = user.id
     current_cart.user = user
     current_cart.save
+  end
+
+  def calculate_cart_price
+    cart = PriceManagerForCart.new(current_cart)
+    @cart_items = cart.cart_items
+    @items_price = cart.items_price
+    @shopping_point_amount = cart.shopping_point_amount
+    @reduced_items_price = cart.reduced_items_price
+    @campaigns_for_order = cart.campaigns
+    @shopping_point_campaigns = cart.shopping_point_campaigns
+    @ship_fee = cart.ship_fee
+    @ship_campaign = cart.ship_campaign
+    @total = cart.total
   end
 end

@@ -27,6 +27,9 @@
 .icon-header.-location {
   background-image: image_url('icons/icon-header/location.png');
 }
+.icon-header.-campaign{
+  background-image: image_url('icons/icon-header/campaign.png');
+}
 
 @media screen and (max-width: 768px) {
   .icon-header{
@@ -47,5 +50,8 @@
   }
   .icon-header.-location {
     background-image: image_url('icons/icon-header/location_mobile.png');
+  }
+  .icon-header.-campaign{
+    background-image: image_url('icons/icon-header/campaign_mobile.png');
   }
 }

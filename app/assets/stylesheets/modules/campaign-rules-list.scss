@@ -1,0 +1,67 @@
+.campaign-rules-list{
+  border: solid 1px #dcdcdc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  .list{
+    min-height: 120px;
+    height: auto;
+    border-bottom: solid 1px #dcdcdc;
+    padding: 15px;
+    cursor: pointer;
+    > .icon{
+      border-radius: 0.8px;
+      border: solid 1.2px #dcdcdc;
+      display: inline-block;
+      margin-top: 15px;
+      > img{
+        width: 53px;
+        height: 53px;
+      }
+    }
+    > .content{
+      position: relative;
+      left: 20px;
+      display: inline-block;
+      width: 70%;
+      vertical-align: top;
+      font-size: 16px;
+      color: #4a4a4a;
+      > .title{
+        font-size: 20px;
+      }
+      > .date{
+        color: #ff3d53;
+      }
+    }
+    .status{
+      font-size: 20px;
+      margin-top: 30px;
+      color: #47b286;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .campaign-rules-list{
+    .list{
+      min-height: 80px;
+      padding: 12px;
+      > .icon{
+        > img{
+          width: 35px;
+          height: 35px;
+        }
+      }
+      > .content{
+        font-size: 12px;
+        > .title{
+          font-size: 14px;
+        }
+      }
+      .status{
+        font-size: 14px;
+        margin-top: 15px;
+      }
+    }
+  }
+}

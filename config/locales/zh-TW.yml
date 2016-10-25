@@ -9,6 +9,7 @@ zh-TW:
   bannerable:
     Category: "分類"
     Item: "商品"
+    CampaignRule: "優惠活動"
     NoLink: "無連結"
   controller:
     error:
@@ -37,6 +38,15 @@ zh-TW:
       collect: '已領取'
       un-collect: '未領取'
       processing: '進行中'
+    campaign_rules:
+      rule_type:
+        exceed_amount: '購買超過指定金額'
+        exceed_quantity: '購買超過指定商品數'
+      discount_type:
+        money_off: '現金'
+        percentage_off: '打折'
+        percentage_off_next: '第二件打折'
+        shopping_point: '購物金'
   activerecord:
     errors:
       models:

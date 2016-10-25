@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   resources :shopping_points, only: [:index]
   resources :wish_lists, only: [:index, :destroy]
   resources :my_messages, only: [:index]
+  resources :campaign_rules, only: [:index, :show]
 
   resources :allpay, only:[] do
     collection do
@@ -259,7 +260,6 @@ Rails.application.routes.draw do
     end
 
     resources :messages, only: [:index, :new, :create, :show, :destroy]
-    resources :promotions, only: [:index, :new, :create, :destroy]
     resources :banners, only: [:index, :new, :create, :destroy] do
       collection do
         get "render_select_form"
@@ -268,6 +268,12 @@ Rails.application.routes.draw do
 
     resources :shop_infos, except: [:show]
     resources :shopping_point_campaigns
+    resources :campaign_rules do
+      collection do
+        get "/get_discount_types/:rule_type", to: "campaign_rules#get_discount_types", as: "get_discount_types"
+      end
+    end
+    resources :campaigns, only: :destroy
   end
 
   # API for App
@@ -380,6 +386,8 @@ Rails.application.routes.draw do
     end
 
     namespace :v4 do
+      get '/search_items', to: "search#search_items"
+
       resources :orders, only: [:create, :show] do
         collection do
           post "checkout"
@@ -400,9 +408,22 @@ Rails.application.routes.draw do
         resources :my_messages, only: [:index]
         resources :shopping_points, only: [:index]
         resources :shopping_point_campaigns, only: [:index]
+        resources :favorite_items, only: [:index, :create] do
+          collection do
+            delete 'items/:item_id' => 'favorite_items#destroy'
+          end
+        end
+        resources :wish_lists, only: [:index, :create] do
+          collection do
+            delete 'item_specs/:item_spec_id' => 'wish_lists#destroy'
+          end
+        end
       end
 
-      resources :categories, only: [:index]
+      resources :categories, only: [:index] do
+        resources :items, only: [:index, :show]
+      end
+      resources :campaign_rules, only: [:index, :show]
     end
   end
 end

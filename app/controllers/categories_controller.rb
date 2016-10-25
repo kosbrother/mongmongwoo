@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :load_popular_items, :load_categories
+  before_action :load_popular_items, :load_categories_and_campaigns
 
   def show
     category_id = params[:subcategory_id] || params[:id]
@@ -9,7 +9,7 @@ class CategoriesController < ApplicationController
     @child_categories = Category.where(parent_id: parent_id)
     @sort_options = Item.sort_params.keys.map {|key| [t("models.item.sort_params.#{key}"), key]}
     @items_sort = params[:items_sort] || @sort_options.first[1]
-    @items = @category.items.on_shelf.order(Item.sort_params[@items_sort]).paginate(page: params['page'], per_page: 18)
+    @items = @category.items.on_shelf.includes(:campaign_rule).order(Item.sort_params[@items_sort]).paginate(page: params['page'], per_page: 18)
     if @category.parent_id
       siblings_name = @child_categories.reject{|c| c.id == @category.id}.map(&:name).join(",")
       meta_description = "「#{@category.name}」類別商品, 周周上新品, 校園生活萌物，APP購物現貨不必等, 萌萌屋是學生的網購天堂。另有相關類別：#{siblings_name}。"

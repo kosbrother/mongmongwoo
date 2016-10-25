@@ -1,6 +1,6 @@
 class PasswordResetsController < ApplicationController
   layout 'password_reset'
-  before_action  :load_categories
+  before_action  :load_categories_and_campaigns
 
   def edit
     @password_reset_token = params[:token]

@@ -1,0 +1,15 @@
+.col-md-10
+  .content-box-large
+    .breadcrumb-topbar
+      %ol.breadcrumb
+        %li
+          = link_to "萌萌屋", admin_root_path
+        %li
+          = link_to "優惠活動列表", admin_campaign_rules_path
+        %li.active 編輯優惠活動
+    .panel-heading
+      .panel-title
+        %h3 編輯優惠活動
+    .panel-body
+      = form_for @campaign_rule, url: admin_campaign_rule_path(@campaign_rule), method: 'patch', html: { class: "form-horizontal"} do |f|
+        = render "campaign_rule_form", f: f, discount_types: CampaignRule.discount_types,discount_type: @campaign_rule.discount_type, rule_type: @campaign_rule.rule_type

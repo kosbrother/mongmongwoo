@@ -21,18 +21,12 @@
   .cart-result{
     margin-bottom: 20px;
     > .header{
-      font-size: 14px;
+      font-size: 16px;
       .order-status{
         font-size: 17px;
       }
     }
     > .item-bar{
-       > .itemname, .spec, .price, .quantity, .subtotal{
-         line-height: 15px;
-         position: relative;
-         top: 25px;
-         height: 40px;
-       }
        .price, .subtotal{
          padding:0px;
        }
@@ -52,10 +46,8 @@
     .cart-result {
       > .item-bar {
         > .itemname, .spec, .price, .quantity, .subtotal {
-          line-height: 15px;
-          position: relative;
-          top: 0px;
-          height: 20px;
+          line-height: 20px;
+          height: auto;
         }
       }
     }
@@ -102,9 +94,6 @@
       > .item-bar{
         > .itemname, .spec, .price, .quantity, .subtotal{
           line-height: 15px;
-          position: relative;
-          top: 0px;
-          height: 20px;
         }
         > .subtotal{
           padding-right: 10px;

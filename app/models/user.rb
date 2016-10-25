@@ -95,6 +95,10 @@ class User < ActiveRecord::Base
     id == ANONYMOUS
   end
 
+  def is_login?
+    id != ANONYMOUS
+  end
+
   private
 
   def create_register_shopping_point_and_message

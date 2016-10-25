@@ -1,0 +1,4 @@
+.form-group
+  = label_tag "banner[bannerable_id]", "優惠活動", class: "col-sm-2 control-label"
+  .col-sm-10
+    = select_tag "banner[bannerable_id]", options_for_select(CampaignRule.all.collect { |campaign| ["#{campaign.id}：#{campaign.title}", campaign.id] }), class: "form-control", include_blank: "請選擇優惠活動" 

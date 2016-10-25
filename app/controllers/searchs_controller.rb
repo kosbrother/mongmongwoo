@@ -1,5 +1,5 @@
 class  SearchsController < ApplicationController
-  before_action :load_popular_items, :load_categories
+  before_action :load_popular_items, :load_categories_and_campaigns
 
   def search_items
     @category = Category.find(Category::ALL_ID)

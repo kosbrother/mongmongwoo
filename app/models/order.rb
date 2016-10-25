@@ -31,6 +31,7 @@ class Order < ActiveRecord::Base
   has_many :mail_records, as: :recordable
   has_many :shopping_point_records
   has_many :messages, as: :messageable, dependent: :destroy
+  has_many :discount_records, as: :discountable, dependent: :destroy
 
   accepts_nested_attributes_for :info
 
@@ -83,6 +84,9 @@ class Order < ActiveRecord::Base
     result_order[:note] = note
     result_order[:ship_type] = ship_type
     result_order[:is_paid] = is_paid
+    result_order[:campaigns] = discount_records.map{|dr| {title: dr.title, discount_amount: dr.discount_money, is_applied: true}}
+    result_order[:shopping_point_campaigns] = shopping_point_records.where("amount > 0").map{|sr| {title: sr.title, is_applied: true}}
+    result_order[:ship_campaign] = PriceManager.get_free_ship_campaign(items_price - shopping_point_spend_amount)
 
     include_info = {}
     include_info[:id] = info.id
@@ -107,7 +111,9 @@ class Order < ActiveRecord::Base
       item_hash[:style] = item.item_style
       item_hash[:quantity] = item.item_quantity
       item_hash[:price] = item.item_price
+      item_hash[:subtotal] = item.subtotal
       item_hash[:style_pic] = item.item_spec ? item.item_spec.style_pic_url : nil
+      item_hash[:campaign] = item.discount_record.present? ? {title: item.discount_record.title, is_applied: true} : nil
       include_items << item_hash
     end
     result_order[:items] = include_items

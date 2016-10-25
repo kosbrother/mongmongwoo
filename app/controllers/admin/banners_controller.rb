@@ -13,6 +13,11 @@ class Admin::BannersController < AdminController
 
   def create
     @banner = Banner.new(banner_params)
+    
+    if @banner.bannerable_type == "CampaignRule"
+      photo = open(@banner.bannerable.banner_cover.url)
+      @banner.image = photo
+    end
 
     if @banner.save
       flash[:notice] = "成功新增廣告"

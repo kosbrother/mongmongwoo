@@ -6,14 +6,19 @@ class CartItemsController < ApplicationController
   end
 
   def update_quantity
-    item = current_cart.cart_items.find(params[:id])
+    @cart_item = current_cart.cart_items.find(params[:id])
     case params['type']
     when 'quantity-minus'
-      item.decrement_quantity
+      @cart_item.decrement_quantity
     when 'quantity-plus'
-      item.increment_quantity
+      @cart_item.increment_quantity
     end
-    render json: subtotal_and_total_with_shipping(item)
+    p = PriceManagerForCartItem.new(@cart_item)
+    @origin_price = p.origin_price
+    @discounted_price = p.discounted_price
+    @subtotal = p.subtotal
+    calculate_cart_price
+    render "update_cart_price"
   end
 
   def update_spec
@@ -28,7 +33,8 @@ class CartItemsController < ApplicationController
       flash[:notice] = " 您的購物車目前是空的，快點加入您喜愛的商品吧！"
       render :js => "window.location = '/'"
     else
-      render json: total_with_shipping
+      calculate_cart_price
+      render "update_cart_price"
     end
   end
 
@@ -36,13 +42,5 @@ class CartItemsController < ApplicationController
 
   def cart_item_params
     params.require(:cart_item).permit(:item_id, :item_spec_id)
-  end
-
-  def subtotal_and_total_with_shipping(item)
-    { subtotal: "NT$ #{item.subtotal}", items_price: "NT$ #{current_cart.calculate_items_price}", reduced_items_price: "NT$ #{current_cart.calculate_reduced_items_price}", ship_fee:"NT$ #{current_cart.calculate_ship_fee}", total: "NT$ #{current_cart.calculate_total}" }
-  end
-
-  def total_with_shipping
-    { items_price: "NT$ #{current_cart.calculate_items_price}", reduced_items_price: "NT$ #{current_cart.calculate_reduced_items_price}", ship_fee:"NT$ #{current_cart.calculate_ship_fee}", total: "NT$ #{current_cart.calculate_total}" }
   end
 end

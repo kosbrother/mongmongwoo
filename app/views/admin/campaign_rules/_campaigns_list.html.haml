@@ -1,0 +1,46 @@
+%button.btn.btn-default{"data-target" => "#campaign-rule-#{campaign_rule.id}", "data-toggle" => "modal", :type => "button"}
+  = campaign_rule.title
+.modal.fade{"aria-labelledby" => "myModalLabel", :id => "campaign-rule-#{campaign_rule.id}", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#myModalLabel.modal-title #{campaign_rule.description} 優惠活動項目列表
+      .modal-body
+        %table.table.table-bordered
+          %thead
+            %tr.active
+              %th 廣告圖片
+              %th 標籤圖示
+              %th 優惠列表圖示
+          %tbody
+            %tr
+              %td
+                - if campaign_rule.banner_cover
+                  = show_image(campaign_rule.banner_cover, "120x80")
+              %td
+                - if campaign_rule.card_icon
+                  = show_image(campaign_rule.card_icon, "50x50")
+              %td
+                - if campaign_rule.list_icon
+                  = show_image(campaign_rule.list_icon, "50x50")
+        %table.table.table-bordered
+          %thead
+            %tr.active
+              %th 商品編號
+              %th 商品名稱
+              %th 操作
+          %tbody
+            - campaign_rule.campaigns.each do |campaign|
+              %tr
+                - if campaign.discountable_type == 'Item'
+                  %td= campaign.discountable_id
+                  %td= link_to  campaign.discountable.name, admin_item_path(campaign.discountable), target: "_blank"
+                - elsif campaign.discountable_type.nil?
+                  %td
+                  %td 全館不分商品
+                %td
+                  = link_to '刪除', admin_campaign_path(campaign),class: 'btn btn-warning', method: :delete
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

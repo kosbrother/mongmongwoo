@@ -49,6 +49,17 @@
                         - if child_category.items.exists?
                           = link_to subcategory_category_path(category, child_category) do
                             %li.list= child_category.name
+              %li.list
+                .dropdown
+                  .list.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                    優惠活動
+                    %span.caret
+                  %ul.dropdown-menu.sub-categories
+                    = link_to campaign_rules_path do
+                      %li.list 全部
+                    - @campaign_rules.each do |campaign_rule|
+                      = link_to campaign_rule_path(campaign_rule) do
+                        %li.list= campaign_rule.title
         %li.nav-list.hidden-xs
           = link_to my_messages_path do
             .list.notify
@@ -75,6 +86,8 @@
                 = link_to "補貨清單", wish_lists_path, class: 'link'
               %li.list
                 = link_to "我的購物金", shopping_points_path, class: 'link'
+              %li.list
+                = link_to "優惠活動", campaign_rules_path, class: 'link'
               - if current_user
                 %li.list
                   = link_to "登出", signout_path, class: 'link'
