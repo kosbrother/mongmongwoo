@@ -63,9 +63,9 @@ class Admin::CampaignRulesController <AdminController
 
   def get_discount_types
     if params[:rule_type] == "exceed_amount"
-      @discount_types = CampaignRule::DISCOUNT_MONEY_TYPE
+      @discount_types = CampaignRule::DISCOUNT_TYPES_FOR_EXCEED_MONEY
     elsif params[:rule_type] == "exceed_quantity"
-      @discount_types = CampaignRule::PERCENTAGE_OFF_TYPE
+      @discount_types = CampaignRule::DISCOUNT_TYPES_FOR_EXCEED_QUANTITY
     end
   end
 

@@ -93,6 +93,12 @@
         outline: none;
       }
     }
+    > .gift-info{
+      height: auto;
+      text-align: left;
+      line-height: 30px;
+      color: red;
+    }
   }
   > .totalrow{
     .text > div, .number > div, #ship-type > div{

@@ -11,6 +11,7 @@ class Api::V4::OrdersController < ApiController
         product[:final_price] = p.discounted_price
         product[:subtotal] = p.subtotal
         product[:campaign] = p.campaign_info
+        product[:gift_info] = p.gift_info
         product
       end
 
@@ -112,6 +113,7 @@ class Api::V4::OrdersController < ApiController
           item.item_price = product[:price]
           errors << item.errors.messages unless item.save
           DiscountRecordCreator.create_by_type_if_applicable(item)
+          GiftManager.create_by_type_if_applicable(item)
         end
       end
 

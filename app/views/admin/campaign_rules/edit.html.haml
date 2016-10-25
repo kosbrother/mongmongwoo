@@ -12,4 +12,4 @@
         %h3 編輯優惠活動
     .panel-body
       = form_for @campaign_rule, url: admin_campaign_rule_path(@campaign_rule), method: 'patch', html: { class: "form-horizontal"} do |f|
-        = render "campaign_rule_form", f: f, discount_types: CampaignRule.discount_types,discount_type: @campaign_rule.discount_type, rule_type: @campaign_rule.rule_type
+        = render "campaign_rule_form", f: f, discount_types: CampaignRule.discount_types.keys,discount_type: @campaign_rule.discount_type, rule_type: @campaign_rule.rule_type

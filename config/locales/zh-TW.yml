@@ -47,6 +47,7 @@ zh-TW:
         percentage_off: '打折'
         percentage_off_next: '第二件打折'
         shopping_point: '購物金'
+        get_one_free: '買X送一'
   activerecord:
     errors:
       models:
