@@ -47,6 +47,7 @@ describe Api::V4::OrdersController, type: :controller do
         expect(data['products'][0]['final_price']).to eq(item.price)
         expect(data['products'][0]['subtotal']).to eq(items_price)
         expect(data['products'][0]).to have_key('campaign')
+        expect(data['products'][0]).to have_key('gift_info')
 
         expect(data).to have_key('order_price')
         expect(data['order_price']['origin_items_price']).to eq(items_price)
@@ -75,6 +76,30 @@ describe Api::V4::OrdersController, type: :controller do
         expect(data['products'][0]['campaign']['is_applied']).to be_truthy
         expect(data['products'][0]['campaign']['title']).to eq(campaign_rule.title)
         expect(data['products'][0]['campaign']['left_to_apply']).to eq(0)
+      end
+    end
+
+    context "when product have asigned buy x give one campaign" do
+      let!(:campaign_rule){ FactoryGirl.create(:exceed_quantity_buy_x_give_one_campaign_rule, threshold: 3) }
+      let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item) }
+      context "when exceed threshold" do
+        it "does apply campaign_rule and return gift info" do
+          post :checkout, user_id: user.id, products: products, is_spend_shopping_point: false
+          data = JSON.parse(response.body)["data"]
+
+          expect(data['products'][0]['gift_info']['item_name']).to be_present
+          expect(data['products'][0]['gift_info']['quantity']).to eq(1)
+        end
+      end
+
+      context "when not exceed threshold" do
+        let!(:quantity){1}
+        it "does apply campaign_rule and return gift info" do
+          post :checkout, user_id: user.id, products: products, is_spend_shopping_point: false
+          data = JSON.parse(response.body)["data"]
+
+          expect(data['products'][0]['gift_info']).to be_nil
+        end
       end
     end
 
@@ -144,7 +169,7 @@ describe Api::V4::OrdersController, type: :controller do
     let!(:products) { [product] }
 
     context 'when item spec is on shelf and stock spec is sufficient' do
-      let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 5) }
+      let!(:stock_spec) { FactoryGirl.create(:stock_spec, item: item, item_spec: spec, amount: 6) }
       context 'when  uid is provided' do
         it "does create correct order" do
           post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
@@ -256,6 +281,21 @@ describe Api::V4::OrdersController, type: :controller do
           order_id = JSON.parse(response.body)["data"]['id']
           order = Order.find(order_id)
           expect(order.items[0].discount_record.campaign_rule_id).to eq(campaign_rule.id)
+        end
+      end
+
+      context "when product has applied gift campaign" do
+        let!(:campaign_rule){ FactoryGirl.create(:exceed_quantity_buy_x_give_one_campaign_rule, threshold: 3) }
+        let!(:campaign) { FactoryGirl.create(:campaign, campaign_rule: campaign_rule, discountable: item) }
+        it "does create gift order item" do
+          post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
+               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
+               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
+               ship_email: ship_email, products: products
+          order_id = JSON.parse(response.body)["data"]['id']
+          order = Order.find(order_id)
+          expect(order.items.last.item_quantity).to eq(1)
+          expect(order.items.last.item_price).to eq(0)
         end
       end
 
