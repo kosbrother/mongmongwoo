@@ -169,6 +169,7 @@ class CartsController < ApplicationController
         item.item_price = cart_item.discounted_price
         errors << item.errors.messages unless item.save
         DiscountRecordCreator.create_by_type_if_applicable(item)
+        GiftManager.create_by_type_if_applicable(item)
       end
       raise ActiveRecord::Rollback if errors.present?
     end
