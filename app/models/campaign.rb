@@ -11,7 +11,7 @@ class Campaign < ActiveRecord::Base
   private
 
   def track_price_if_type_item
-    if discountable_type == 'Item'
+    if discountable_type == 'Item' && CampaignRule::PERCENTAGE_OFF_TYPE.include?(campaign_rule.discount_type)
       pr = PriceRecord.new
       pr.item = discountable
       pr.changed_at = Time.current

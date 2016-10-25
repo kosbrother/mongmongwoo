@@ -45,8 +45,9 @@ class PriceManagerForCartItem
         subtotal = @item.price*1 + (@item.price*campaign_rule.discount_percentage)*(@item_quantity - 1)
         @discounted_price = (subtotal/@item_quantity).round
       elsif campaign_rule.discount_type == 'get_one_free'
+        stock_amount = @item_spec.stock_amount - @item_quantity
         gift_quantity = @item_quantity/campaign_rule.threshold
-        @gift_info = {item_name: @item.name, quantity: gift_quantity}
+        @gift_info = {item_name: @item.name, quantity: gift_quantity, is_stock_enough: stock_amount >= gift_quantity}
       end
       @subtotal = @discounted_price * @item_quantity
     end
