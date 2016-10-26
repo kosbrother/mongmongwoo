@@ -112,16 +112,16 @@ ready = function() {
     });
 
     //Sort items
-    $('#items_sort').on('change', function(){
+    $('#sort').on('change', function(){
         var path = '';
         var category = $(this).data('category');
         var subcategory = $(this).data('subcategory');
         var sort = $(this).val();
 
         if (subcategory !== null) {
-            path = '/categories/' + category + '/' + subcategory + '?' + 'items_sort=' + sort;
+            path = '/categories/' + category + '/' + subcategory + '?' + 'sort=' + sort;
         } else {
-            path = '/categories/' + category + '?' + 'items_sort=' + sort;
+            path = '/categories/' + category + '?' + 'sort=' + sort;
         }
         window.location = path;
     });

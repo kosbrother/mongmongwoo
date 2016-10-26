@@ -31,7 +31,7 @@
       %span.sr-only Next
   .sort
     .header 商品排序：
-    = select_tag :items_sort, options_for_select(@sort_options, @items_sort), data: {category: @parent_category.name ,subcategory: @category.parent_id ? @category.name : nil}
+    = select_tag :sort, options_for_select(@sort_options, @sort), data: {category: @parent_category.name ,subcategory: @category.parent_id ? @category.name : nil}
   = render "partials/product_list", category: @category, items: @items
   .text-align
     = pagination_links(@items)
