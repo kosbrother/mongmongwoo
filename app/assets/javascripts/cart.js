@@ -110,11 +110,11 @@ cart = function() {
     });
 //    Select store
     $('.select-store').on('click', function() {
-        var name = $('#ship_name').val(),
-            email = $('#ship_email').val(),
-            phone = $('#ship_phone').val();
+        var ship_name = $('#ship_name').val(),
+            ship_email = $('#ship_email').val(),
+            ship_phone = $('#ship_phone').val();
 
-        $.get( "/select_store", { name: name, email: email, phone: phone }, function(data){
+        $.get( "/select_store", { ship_name: ship_name, ship_email: ship_email, ship_phone: ship_phone }, function(data){
             window.location = data['url']
         });
     });
@@ -156,9 +156,9 @@ cart = function() {
     //validate ship name format
     $('#submit-info').on('click', function () {
         var format = /^[一-\u9fa5]*$/;
-        var name = $('#ship-name').val();
+        var name = $('#ship_name').val();
         if (format.test(name) === false) {
-            $('#ship-name').val('');
+            $('#ship_name').val('');
             $('#errors-modal').modal('show');
         }
     });

@@ -1,13 +1,14 @@
 require "uri"
 
 class CartsController < ApplicationController
+  include DeviceHelper
+
   layout 'cart'
 
   skip_before_action :verify_authenticity_token, only: [:info]
   before_action  :load_categories_and_campaigns
   before_action :calculate_cart_price, only: [:checkout, :confirm]
-
-  include DeviceHelper
+  before_action :save_info_to_cookies, only: [:select_store, :confirm]
 
   def checkout
     @step = Cart::STEP[:checkout]
@@ -45,10 +46,6 @@ class CartsController < ApplicationController
   end
 
   def select_store
-    cookies[:name] = params[:name]
-    cookies[:email] = params[:email]
-    cookies[:phone] = params[:phone]
-
     url_query = {MerchantID: ENV['MERCHANT_ID'],
                  MerchantTradeNo: '1111',
                  LogisticsType: 'CVS',
@@ -64,12 +61,9 @@ class CartsController < ApplicationController
   def confirm
     @step = Cart::STEP[:confirm]
 
-    cookies[:name] = params[:ship_name]
-    cookies[:email] = params[:ship_email]
-    cookies[:phone] = params[:ship_phone]
-    @info = {ship_name: cookies[:name],
-             ship_phone: cookies[:phone],
-             ship_email: cookies[:email]}
+    @info = {ship_name: cookies[:ship_name],
+             ship_phone: cookies[:ship_phone],
+             ship_email: cookies[:ship_email]}
     if Cart::HOME_DELIVERY_TYPES.include?(current_cart.ship_type)
       cookies[:county_id] = params[:county_id]
       cookies[:town_id] = params[:town_id]
@@ -201,5 +195,11 @@ class CartsController < ApplicationController
     county = County.find(county_id)
     town = Town.find(town_id)
     county.name + town.name + road
+  end
+
+  def save_info_to_cookies
+    cookies[:ship_name] = params[:ship_name]
+    cookies[:ship_email] = params[:ship_email]
+    cookies[:ship_phone] = params[:ship_phone]
   end
 end

@@ -8,13 +8,13 @@
     .input-block
       .group
         = label :ship_name, '姓名'
-        = text_field_tag :ship_name, '', placeholder: "請輸入中文姓名", required: true, value: cookies[:name], id: "ship-name"
+        = text_field_tag :ship_name, '', placeholder: "請輸入中文姓名", required: true, value: cookies[:ship_name]
       .group
         = label :ship_phone, '電話'
-        = text_field_tag :ship_phone, '', placeholder: "請輸入聯絡電話", required: true, value: cookies[:phone]
+        = text_field_tag :ship_phone, '', placeholder: "請輸入聯絡電話", required: true, value: cookies[:ship_phone]
       .group
         = label :ship_email, '電子信箱'
-        = text_field_tag :ship_email, '', placeholder: "請輸入Email信箱",required: true, value: cookies[:email]
+        = text_field_tag :ship_email, '', placeholder: "請輸入Email信箱",required: true, value: cookies[:ship_email]
         .text *名稱和電話必需正確才能取貨
     - if current_cart.ship_type == "store_delivery"
       = render "store_delivery_form", store: @store
