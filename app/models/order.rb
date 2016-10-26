@@ -44,7 +44,7 @@ class Order < ActiveRecord::Base
   scope :cancelled_at_within, -> (time_param) { where(created_at: time_param, status: Order.statuses["訂單取消"]) }
   scope :status_count, -> { group(:status).size }
   scope :status, -> (status_param) { where(status: status_param) }
-  scope :nil_logistics_code, -> {where('logistics_status_code is NULL')}
+  scope :need_post_to_allpay, -> {where(logistics_status_code: nil, status: Order.statuses["處理中"], ship_type: Order.ship_types["store_delivery"])}
   scope :allpay_transfer_id_present, -> { where('orders.allpay_transfer_id IS NOT NULL') }
   scope :count_and_income_fields, -> { select("COUNT(*) AS quantity, COALESCE(SUM(orders.items_price), 0) AS income") }
   scope :home_delivery, -> { where(ship_type: Order::HOME_DELIVERY_CODE) }

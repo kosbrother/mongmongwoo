@@ -1,7 +1,7 @@
 class AllpayController < ActionController::Base
   def create_from_processing
     error_messages = []
-    Order.status(Order.statuses["處理中"]).nil_logistics_code.each do |order|
+    Order.need_post_to_allpay.each do |order|
       error_message = post_order_to_allpay_result(order)
       error_messages << error_message if error_message.present?
     end
