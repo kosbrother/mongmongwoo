@@ -19,7 +19,7 @@ class ShoppingPointManager
   end
 
   def self.refund_spent_shoppong_point(order)
-    spent_records = order.shopping_point_records.where('shopping_point_records.amount < 0')
+    spent_records = order.shopping_point_records.spent
 
     if spent_records.exists?
       ActiveRecord::Base.transaction do
@@ -48,9 +48,11 @@ class ShoppingPointManager
     user.orders.status(Order.statuses["退貨"]).select{|order| ShoppingPointManager.has_refund_shopping_point?(order) == false}
   end
 
-  def create_shopping_point_if_applicable(order, spend_shopping_point_amount=0)
+  def create_shopping_point_if_applicable(order)
     if user.is_login?
       ShoppingPointCampaign.with_campaign_rule.each do |shopping_point_campaign|
+        spent_records = order.shopping_point_records.spent
+        spend_shopping_point_amount = (spent_records.exists? ? spent_records.map(&:amount).sum.abs : 0)
         reduced_items_price = order.items_price - spend_shopping_point_amount
         if shopping_point_campaign.campaign_rule.exceed_threshold?(amount: reduced_items_price)
           shopping_point = user.shopping_points.create(point_type: ShoppingPoint.point_types["活動購物金"], amount: shopping_point_campaign.amount, shopping_point_campaign_id: shopping_point_campaign.id)

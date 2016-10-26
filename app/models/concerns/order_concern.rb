@@ -25,6 +25,7 @@ module OrderConcern
       UserNotifyService.new(user).notify_to_pick_up(self)
     elsif logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("消費者成功取件")
       update_columns(status: Order.statuses["完成取貨"])
+      ShoppingPointManager.new(user).create_shopping_point_if_applicable(self)
     elsif logistics_status_code_changed? && logistics_status_code == Logistics_Status.key("廠商未至門市取退貨，商品已退回至大智通")
       update_columns(status: Order.statuses["未取訂貨"])
     end
