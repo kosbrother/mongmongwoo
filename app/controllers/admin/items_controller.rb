@@ -79,8 +79,8 @@ class Admin::ItemsController < AdminController
     else
       @item.update_attribute(:status, Item.statuses["on_shelf"])
       @item.remove_existed_new_on_shelf_categories
+      @item.reload.set_new_on_shelf_categories
     end
-    @item.reload.set_new_on_shelf_categories
   end
 
   def off_shelf
