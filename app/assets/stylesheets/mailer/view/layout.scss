@@ -23,6 +23,28 @@
       }
     }
   }
+  .newsletter_nav-bar {
+    background-color: #fca3a3;
+    height: 83px;
+    width: 100%;
+    .logo-block {
+      padding: 15px 0 0 0;
+      width: auto;
+      text-align: center;
+      > .logo {
+        display: inline-block;
+        margin-right: 10px;
+      }
+      > .name {
+        width: auto;
+        font-size: 30px;
+        display: inline-block;
+        color: #fff;
+        vertical-align: 8px;
+        font-weight: 600;
+      }
+    }
+  }
   .footer{
     margin-top: 80px;
     .up-footer{

@@ -1,0 +1,46 @@
+.edm_newsletter
+  .mail-img
+    = email_image_tag('mailer/edm_banner.png')
+  .category-area
+    .category-list
+      %ul
+        - @categories.each do |category|
+          %li= link_to category.name, category_url(category), target: "_blank"
+  .item-intro
+    .intro-cover
+      = email_image_tag('mailer/pop_intro_img.jpg')
+    .intro-text
+      .text-header
+        %p.all-category-text 熱門商品
+      .text-paragraph
+        %p 萌萌屋提供各種萌趣可愛商品，不斷推出最流行的熱銷商品，滿足您的需求
+      .link-button.all-category-button
+        = link_to "查看更多", category_url(@the_all_category), target: "_blank"
+  .item-area
+    .item-list
+      - @popular_items.each do |item|
+        .item-unit
+          = link_to category_item_url(@the_all_category, item), target: "_blank" do
+            .item-cover
+              = email_item_image_tag(item, class: "item-image")
+            .item-name
+              %span= item.name
+  .item-intro
+    .intro-text
+      .text-header
+        %p.new-category-text 最新商品
+      .text-paragraph
+        %p 萌萌屋定期探索最流行新穎的商品，提供給您最前線的選擇，快來看看
+      .link-button.new-category-button
+        = link_to "查看更多", category_url(@the_new_category), target: "_blank"
+    .intro-cover
+      = email_image_tag('mailer/new_intro_img.jpg')
+  .item-area
+    .item-list
+      - @newest_items.each do |item|
+        .item-unit
+          = link_to category_item_url(@the_new_category, item), target: "_blank" do
+            .item-cover
+              = email_item_image_tag(item, class: "item-image")
+            .item-name
+              %span= item.name

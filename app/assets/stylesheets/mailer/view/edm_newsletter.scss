@@ -1,0 +1,49 @@
+.edm_newsletter {
+  margin-bottom: -70px;
+  .mail-img {
+    max-height: 329px;
+    overflow: hidden;
+    img {
+      margin: 0;
+      max-width: 100%;
+      max-height: 100%
+    }
+  }
+  .category-area {
+    width: 100%;
+    height: 50px;
+    background-color: silver;
+    .category-list {
+      > ul {
+        padding-left: 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        text-align: center;
+        line-height: 240%;
+        > li {
+          display: inline-block;
+          text-decoration: none;
+          padding-right: 20px;
+          > a {
+            color: darkslategrey;
+          }
+        }
+        > li:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  .all-category-button {
+    background-color: #ed3d7b;
+  }
+  .all-category-text {
+    color: #ed3d7b;
+  }
+  .new-category-button {
+    background-color: #3399FF;
+  }
+  .new-category-text {
+    color: #3399FF;
+  }
+}
