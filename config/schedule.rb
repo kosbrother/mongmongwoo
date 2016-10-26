@@ -27,7 +27,7 @@ when 'production'
     runner "AdminMailer.delay.notify_recommend_stock", :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
   end
 
-  every 2.week, :at => Time.zone.parse('8:00 am').utc do
+  every 2.week do
     runner "NewsletterMailer.delay.edm_newsletter", :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
   end
 end
