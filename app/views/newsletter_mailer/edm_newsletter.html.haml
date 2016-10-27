@@ -1,46 +1,71 @@
-.edm_newsletter
-  .mail-img
-    = email_image_tag('mailer/edm_banner.png')
-  .category-area
-    .category-list
-      %ul
-        - @categories.each do |category|
-          %li= link_to category.name, category_url(category), target: "_blank"
-  .item-intro
-    .intro-cover
-      = email_image_tag('mailer/pop_intro_img.jpg')
-    .intro-text
-      .text-header
-        %p.all-category-text 熱門商品
-      .text-paragraph
-        %p 萌萌屋提供各種萌趣可愛商品，不斷推出最流行的熱銷商品，滿足您的需求
-      .link-button.all-category-button
-        = link_to "查看更多", category_url(@the_all_category), target: "_blank"
-  .item-area
-    .item-list
-      - @popular_items.each do |item|
-        .item-unit
-          = link_to category_item_url(@the_all_category, item), target: "_blank" do
-            .item-cover
-              = email_item_image_tag(item, class: "item-image")
-            .item-name
-              %span= item.name
-  .item-intro
-    .intro-text
-      .text-header
-        %p.new-category-text 最新商品
-      .text-paragraph
-        %p 萌萌屋定期探索最流行新穎的商品，提供給您最前線的選擇，快來看看
-      .link-button.new-category-button
-        = link_to "查看更多", category_url(@the_new_category), target: "_blank"
-    .intro-cover
-      = email_image_tag('mailer/new_intro_img.jpg')
-  .item-area
-    .item-list
-      - @newest_items.each do |item|
-        .item-unit
-          = link_to category_item_url(@the_new_category, item), target: "_blank" do
-            .item-cover
-              = email_item_image_tag(item, class: "item-image")
-            .item-name
-              %span= item.name
+%table.edm_newsletter{style: "width:940px!important;display: block!important;table-layout: fixed;"}
+  %tr
+    %td.mail-img{style: "overflow: hidden;max-height: 329px;"}
+      = email_image_tag('mailer/edm_banner.png', style: "margin:0;max-width:100%;max-height:100%;")
+  %tr
+    %td  
+      .category-area{style: "width: 100%;height: 100%;;background-color: silver;display: table;"}
+        %ul{style: "padding-left: 0px;margin-top: 0px;margin-bottom: 0px;text-align: center;line-height: 240%;"}
+          - @categories.each do |category|
+            %li{style: "display: inline-block;text-decoration: none;padding-right: 20px;"}
+              = link_to category.name, category_url(category), target: "_blank", style: "text-decoration: none;color: darkslategrey;"
+  %tr
+    %td
+      %table.item-intro{style: "background-color: #fff;clear: both!important;"}
+        %tr
+          %td
+            .intro-cover{style: "width: 69%;height: auto;overflow: hidden;display: inline-table;"}
+              = email_image_tag('mailer/pop_intro_img.jpg', style: "max-width: 600px;max-height: 400px;")
+            %table.intro-text{style: "width: 30%;text-align: center;vertical-align: top;display: inline-block;"}
+              %tr
+                %td{style: "padding-left: 70px;padding-right: 70px;"}
+                  .text-header{style: "width: 143px;"}
+                    %p{style: "font-size: 1.5em;border-bottom: 1px solid;padding-bottom: 2px;border-bottom-width: 3px;color: #ed3d7b;"} 熱門商品
+                  .text-paragraph
+                    %p{style: "color: slategrey;"} 萌萌屋提供各種萌趣可愛商品，不斷推出最流行的熱銷商品，滿足您的需求
+                  .link-button{style: "width: 110px;height: 30px;padding-top: 10px;;margin-top: 90px;margin-bottom: 50px;background-color: #ed3d7b;margin-left: 18px;"}
+                    = link_to "查看更多", category_url(@the_all_category), target: "_blank", style: "text-decoration: none;color: #fff;padding-top: 0px;margin-top: 0px;"
+            .clear{style: "clear: both!important;"}
+  %tr  
+    %td{style: "padding-left: 50px;padding-top: 20px;padding-bottom: 30px;"}
+      .item-area{style: "display: table-row;"}
+        - @popular_items.each do |item|
+          %table.item-unit{style: "width: 30%;display: inline-block;margin-right: 10px;vertical-align: top;"}
+            %tr
+              %td
+                = link_to category_item_url(@the_all_category, item), target: "_blank", style: "width: 100%;height: 100%;display: block;text-decoration: none;" do
+                  .item-cover{style: "height: 100%;overflow: hidden;"}
+                    = email_item_image_tag(item, style: "max-width: 100%;height: auto;overflow: hidden;")
+                  .item-name{style: "text-align: center;margin-top: 20px;margin-bottom: 20px;"}
+                    %span{style: "width: 100%;height: 100%;color: slategrey;"}= item.name
+      .clear{style: "clear: both!important;"}
+  %tr
+    %td
+      %table.item-intro{style: "background-color: #fff;"}
+        %tr
+          %td
+            %table.intro-text{style: "width: 30%;text-align: center;vertical-align: top;display: inline-block;"}
+              %tr
+                %td{style: "padding-left: 70px;padding-right: 70px;"}
+                  .text-header{style: "width: 143px;"}
+                    %p{style: "font-size: 1.5em;border-bottom: 1px solid;padding-bottom: 2px;border-bottom-width: 3px;color: #3399FF;"} 最新商品
+                  .text-paragraph
+                    %p{style: "color: slategrey;"} 萌萌屋定期探索最流行新穎的商品，提供給您最前線的選擇，快來看看
+                  .link-button{style: "width: 110px;height: 30px;padding-top: 10px;;margin-top: 90px;margin-bottom: 50px;background-color: #3399FF;margin-left: 18px;"}
+                    = link_to "查看更多", category_url(@the_new_category), target: "_blank", style: "text-decoration: none;color: #fff;padding-top: 0px;margin-top: 0px;"
+            .intro-cover{style: "width: 69%;height: auto;overflow: hidden;display: inline-table;"}
+              = email_image_tag('mailer/new_intro_img.jpg', style: "max-width: 600px;max-height: 400px;")
+          .clear{style: "clear: both!important;"}
+  %tr
+    %td{style: "padding-left: 50px;padding-top: 20px;padding-bottom: 30px;"}
+      .item-area{style: "display: table-row;"}
+        - @newest_items.each do |item|
+          %table.item-unit{style: "width: 30%;display: inline-block;margin-right: 10px;vertical-align: top;"}
+            %tr
+              %td
+                = link_to category_item_url(@the_new_category, item), target: "_blank", style: "width: 100%;height: 100%;display: block;text-decoration: none;" do
+                  .item-cover{style: "height: 100%;overflow: hidden;"}
+                    = email_item_image_tag(item, style: "max-width: 100%;height: auto;overflow: hidden;")
+                  .item-name{style: "text-align: center;margin-top: 20px;margin-bottom: 20px;"}
+                    %span{style: "color: slategrey;"}= item.name
+      .clear{style: "clear: both!important;"}

@@ -8,8 +8,10 @@ class NewsletterMailer < ApplicationMailer
     @popular_items = @the_all_category.items.on_shelf.priority.limit(6)
     @the_new_category = Category.find(Category::NEW_ID)
     @newest_items = @the_new_category.items.on_shelf.order(created_at: :desc).limit(6)
-    User.where.not(email: nil).find_in_batches do |user|
-      mail(to: user.email, subject: "[萌萌屋] 萌萌屋#{@title}")
-    end
+    # User.where.not(email: nil).find_in_batches do |user|
+    #   mail(to: user.email, subject: "[萌萌屋] 萌萌屋#{@title}")
+    # end
+
+    mail(to: ["zetaentrance@yahoo.com.tw", "zetaentrance@hotmail.com", "gvszg@kosbrother.com"], :subject => "[萌萌屋] 萌萌屋#{@title}")
   end
 end

@@ -1,5 +1,7 @@
-.newsletter_nav-bar
-  = link_to "https://www.mmwooo.com/" do
-    .logo-block
-      = email_image_tag('icons/logo.png', class: 'logo')
-      .name 萌萌屋#{@title}
+%table.newsletter_nav-bar{style: "background-color: #fca3a3;height: 100%;width: 100%;"}
+  %tr
+    %td
+      = link_to "https://www.mmwooo.com/", style: "text-decoration: none;" do
+        .logo-block{style: "padding: 15px 0 0 0;width: auto;text-align: center;"}
+          = email_image_tag('icons/logo.png', style: "display: inline-block;margin-right: 10px;")
+          .name{style: "width: auto;font-size: 30px;display: inline-block;color: #fff;vertical-align: 8px;font-weight: 600;"} 萌萌屋#{@title}
