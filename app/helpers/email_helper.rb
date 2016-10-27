@@ -16,10 +16,4 @@ module EmailHelper
     attachments.inline[file_name] = spec.style_pic.read
     image_tag attachments[file_name].url, **options
   end
-
-  def email_item_image_tag(item, **options)
-    host = "https://mongmongwoo-uploads.storage.googleapis.com"
-    image_url = host + item.cover.url
-    image_tag(image_url, **options)
-  end
 end
