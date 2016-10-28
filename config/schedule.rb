@@ -28,6 +28,6 @@ when 'production'
   end
 
   every 2.week do
-    runner "NewsletterMailer.delay.edm_newsletter", :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
+    rake "newsletter_mailer:send_edm_newsletter", :output => {:error => 'log/error.log', :standard => 'log/cron.log'}
   end
 end
