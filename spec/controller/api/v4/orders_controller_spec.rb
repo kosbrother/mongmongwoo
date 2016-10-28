@@ -273,21 +273,6 @@ describe Api::V4::OrdersController, type: :controller do
         end
       end
 
-      context "when order has applied shopping point campaign" do
-        let!(:campaign_rule){ FactoryGirl.create(:exceed_amount_money_off_shopping_point_campaign_rule, threshold: 500) }
-        let!(:shopping_point_campaign) { FactoryGirl.create(:shopping_point_campaign, campaign_rule: campaign_rule, amount: 100) }
-        it "does create order discount_record" do
-          post :create, uid: uid, items_price: items_price, ship_fee: ship_fee, total: total,
-               registration_id: registration_id, ship_type: store_delivery_type, ship_name: ship_name, ship_phone: ship_phone,
-               ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,
-               ship_email: ship_email, products: products
-
-          order_id = JSON.parse(response.body)["data"]['id']
-          order = Order.find(order_id)
-          expect(user.shopping_points.last.shopping_point_campaign_id).to eq(shopping_point_campaign.id)
-        end
-      end
-
       it "return errors if missing order params" do
         post :create, registration_id: registration_id, ship_name: ship_name, ship_phone: ship_phone,
              ship_store_code: ship_store_code, ship_store_id: ship_store_id, ship_store_name: ship_store_name,

@@ -134,7 +134,6 @@ class CartsController < ApplicationController
       order.total = cart.total
       errors << order.errors.messages unless order.save
       DiscountRecordCreator.create_by_type_if_applicable(order)
-      ShoppingPointManager.new(user).create_shopping_point_if_applicable(order, cart.shopping_point_amount)
       ShoppingPointManager.new(user).spend_shopping_points(order, cart.shopping_point_amount)
 
       info = OrderInfo.new
