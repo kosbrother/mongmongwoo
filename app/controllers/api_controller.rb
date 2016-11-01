@@ -7,6 +7,12 @@ class ApiController < ActionController::Base
     render json: AndroidVersion.last
   end
 
+  def get_new_app
+    url = "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW"
+    coupon = "12345"
+    render status: 200, json: { is_ready: false, url: url , coupon: coupon}
+  end
+
   private
 
   def find_county
