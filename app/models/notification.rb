@@ -1,9 +1,8 @@
 class Notification < ActiveRecord::Base
   include Scheduleable
 
-  enum schedule_type: { notify_item: "notify_item" }
+  enum schedule_type: { notify_item: "notify_item", notify_new_app: "notify_new_app" }
 
-  validates_presence_of :item_id, on: :create
   validates_presence_of :content_title, on: :create
   validates_presence_of :content_text, on: :create
 
@@ -21,6 +20,12 @@ class Notification < ActiveRecord::Base
   def put_in_schedule
     schedule = Schedule.find_by(scheduleable_id: id)
     job_id = PushNotificationWorker.perform_at(schedule.execute_time, id)
+    schedule.update_attribute(:job_id, job_id)
+  end
+
+  def put_in_new_app_schedule
+    schedule = Schedule.find_by(scheduleable_id: id)
+    job_id = NotifyNewAppWorker.perform_at(schedule.execute_time, id)
     schedule.update_attribute(:job_id, job_id)
   end
 

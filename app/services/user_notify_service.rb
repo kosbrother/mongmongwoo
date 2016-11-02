@@ -14,6 +14,14 @@ class UserNotifyService
     end
   end
 
+  def self.new_app_notification(notification)
+    options = GcmOptionsGenerator.generate_new_app_url_and_coupon(notification.content_title, notification.content_text)
+    DeviceRegistration.select(:id, :registration_id).find_in_batches do |ids|
+      registration_ids = ids.map(&:registration_id)
+      GcmNotifyService.new.send_notification(registration_ids, options)
+    end
+  end
+
   def self.wish_list_on_shelf(item_spec)
     item_spec.wish_lists.each do |wish_list|
       user = wish_list.user

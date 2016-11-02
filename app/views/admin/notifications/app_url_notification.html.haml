@@ -1,0 +1,20 @@
+.panel-title
+  新增推播新app訊息
+  .panel-body
+    = form_for Notification.new, url: push_app_url_admin_notifications_path, html: { class: "form-horizontal" } do |f|
+      .form-group
+        = f.label :content_title, "訊息標題", class: "col-sm-2 control-label"
+        .col-sm-10
+          = f.text_field :content_title, class: "form-control", placeholder: "請輸入標題", required: true
+      .form-group
+        = f.label :content_text, "訊息內容", class: "col-sm-2 control-label"
+        .col-sm-10
+          = f.text_field :content_text, class: "form-control", placeholder: "請輸入內容", required: true
+      .form-group
+        = label_tag "推播執行日期", nil, class: "col-sm-2 control-label"
+        .col-sm-10
+          = datetime_field_tag "execute_time", nil, class: "form-control datetimepicker", placeholder: "請選擇執行日期", required: true
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = f.submit "確認送出", class: "btn btn-primary"
+          = link_to "取消離開", admin_root_path, class: "btn btn-warning"

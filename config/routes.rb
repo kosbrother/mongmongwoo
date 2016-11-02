@@ -232,6 +232,8 @@ Rails.application.routes.draw do
     resources :notifications, only: [:index, :show, :new, :create, :destroy] do
       collection do
         get :get_items
+        get :app_url_notification
+        post :push_app_url
       end
     end
 
