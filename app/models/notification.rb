@@ -23,8 +23,8 @@ class Notification < ActiveRecord::Base
     schedule.update_attribute(:job_id, job_id)
   end
 
-  def put_in_new_app_schedule
-    schedule = Schedule.find_by(scheduleable_id: id)
+  def put_in_new_app_schedule(execute_time)
+    schedule = Schedule.create(scheduleable: self, execute_time: execute_time, schedule_type: "notify_new_app")
     job_id = NotifyNewAppWorker.perform_at(schedule.execute_time, id)
     schedule.update_attribute(:job_id, job_id)
   end

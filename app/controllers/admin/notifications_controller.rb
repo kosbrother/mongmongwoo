@@ -50,9 +50,8 @@ class Admin::NotificationsController < AdminController
   end
 
   def push_app_url
-    @notification = Notification.new(notification_params).save
-    Schedule.create(scheduleable: @notification, execute_time: params[:execute_time], schedule_type: "notify_new_app")
-    @notification.put_in_new_app_schedule
+    @notification = Notification.create(notification_params)
+    @notification.put_in_new_app_schedule(params[:execute_time])
     flash[:notice] = "成功加入推播排程"
     redirect_to admin_root_path
   end
