@@ -36,4 +36,16 @@ class GcmOptionsGenerator
       collapse_key: "updated_score"
     }
   end
+
+  def self.generate_new_app_url_and_coupon(title, content)
+    result_options = {
+        data: {
+            content_title: title,
+            content_text: content,
+            url: "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW",
+            coupon: "12345"
+        },
+        collapse_key: "updated_score"
+    }
+  end
 end
