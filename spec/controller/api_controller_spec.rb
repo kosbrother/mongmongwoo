@@ -11,4 +11,15 @@ describe ApiController, :type => :controller  do
       expect(info["update_message"]).not_to be_nil
     end
   end
+
+  describe 'redirect to new app url' do
+    it 'does return boolean value and app url' do
+      get :get_new_app
+      data = JSON.parse(response.body)
+
+      expect(data["is_ready"]).to be_falsy
+      expect(data["url"]).to be_present
+      expect(data["coupon"]).to be_present
+    end
+  end
 end

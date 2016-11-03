@@ -279,6 +279,7 @@ Rails.application.routes.draw do
   # API for App
   get 'api/android_version' => 'api#android_version'
   namespace :api do
+    get "get_new_app"
     namespace :v1 do
       # 分類API
       resources :categories, only: [:index, :show]
