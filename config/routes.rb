@@ -1,87 +1,4 @@
 Rails.application.routes.draw do
-  mount Ckeditor::Engine => '/ckeditor'
-  root 'pages#index'
-  get  "/auth/:provider/callback" => "sessions#login_by_auth", as: "login_by_auth"
-  get '/auth/:provider', to: lambda{|env| [404, {}, ["Not Found"]]}, as: 'auth'
-  get  "/signout" => "sessions#destroy", as: "signout"
-  post "/login" => "sessions#login_by_mmw", as: "login_by_mmw"
-  post "/register" => "users#create", as: "register"
-  post "/forget" => "users#sent_reset_email"
-  get '/shop_infos' => "pages#shop_infos"
-  get '/search_items', to: "searchs#search_items"
-  get '/catalog', to: "items#catalog"
-
-  resources :categories, only: [:show] do
-    resources :items, only: [:show]
-
-    member do
-      get "/:subcategory_id", to: "categories#show", as: "subcategory"
-    end
-  end
-
-  patch "/toggle_shopping_point", to: "carts#toggle_shopping_point"
-  get "/checkout", to: "carts#checkout", as: "checkout"
-  get "/cart_info", to: "carts#info", as: "cart_info"
-  get "/select_store", to: "carts#select_store", as: "select_store"
-  patch "/update_ship_type", to: "carts#update_ship_type", as: "update_ship_type"
-  get "/get_towns", to: "carts#get_towns", as: "get_towns"
-  post "/store_reply", to: "carts#info", as: "store_reply"
-  post "/confirm_cart", to: "carts#confirm", as: "confirm_cart"
-  get "/confirm_cart", to: "carts#confirm"
-  post "/submit_order", to: "carts#submit", as: "submit_order"
-  get "/success", to: "carts#success", as: "success"
-  get "/fail", to: "carts#fail", as: "fail"
-  get "/password_resets/edit", to: "password_resets#edit"
-  put "/password_resets/update", to: "password_resets#update"
-  get "/password_resets/success", to: "password_resets#success"
-
-  resources :cart_items, only: [:create, :destroy] do
-    member do
-      patch "update_quantity"
-      patch "update_spec"
-    end
-  end
-
-  resources :orders, only: [:index, :show] do
-    member do
-      patch "cancel"
-    end
-  end
-  resources :favorite_items, only: [:index, :destroy] do
-    member do
-      get :toggle_favorite
-    end
-  end
-
-  resources :wish_lists, only: [] do
-    member do
-      get :toggle_wish
-    end
-  end
-
-  resources :shopping_point_campaigns, only: [:index]
-  resources :shopping_points, only: [:index]
-  resources :wish_lists, only: [:index, :destroy]
-  resources :my_messages, only: [:index]
-  resources :campaign_rules, only: [:index, :show]
-
-  resources :allpay, only:[] do
-    collection do
-      post "create_from_processing", as: "create"
-      post "/post_order_to_allpay/:order_id", to: "allpay#post_order_to_allpay", as: "post_order_to_allpay"
-      post "status_update"
-      post "create_reply"
-      get "/barcode/:order_id", to: "allpay#barcode", as: "barcode"
-    end
-  end
-
-  resources :pay2go, only:[] do
-    collection do
-      post "notify"
-      post "return"
-    end
-  end
-
   namespace :admin do
     root "pages#home"
     get "/signin", to: "sessions#new"
@@ -427,6 +344,91 @@ Rails.application.routes.draw do
         resources :items, only: [:index, :show]
       end
       resources :campaign_rules, only: [:index, :show]
+    end
+  end
+  get "*path", to: redirect("/")
+  root to: redirect("http://shop.mmwooo.com")
+
+  mount Ckeditor::Engine => '/ckeditor'
+  # root 'pages#index'
+  get  "/auth/:provider/callback" => "sessions#login_by_auth", as: "login_by_auth"
+  get '/auth/:provider', to: lambda{|env| [404, {}, ["Not Found"]]}, as: 'auth'
+  get  "/signout" => "sessions#destroy", as: "signout"
+  post "/login" => "sessions#login_by_mmw", as: "login_by_mmw"
+  post "/register" => "users#create", as: "register"
+  post "/forget" => "users#sent_reset_email"
+  get '/shop_infos' => "pages#shop_infos"
+  get '/search_items', to: "searchs#search_items"
+  get '/catalog', to: "items#catalog"
+
+  resources :categories, only: [:show] do
+    resources :items, only: [:show]
+
+    member do
+      get "/:subcategory_id", to: "categories#show", as: "subcategory"
+    end
+  end
+
+  patch "/toggle_shopping_point", to: "carts#toggle_shopping_point"
+  get "/checkout", to: "carts#checkout", as: "checkout"
+  get "/cart_info", to: "carts#info", as: "cart_info"
+  get "/select_store", to: "carts#select_store", as: "select_store"
+  patch "/update_ship_type", to: "carts#update_ship_type", as: "update_ship_type"
+  get "/get_towns", to: "carts#get_towns", as: "get_towns"
+  post "/store_reply", to: "carts#info", as: "store_reply"
+  post "/confirm_cart", to: "carts#confirm", as: "confirm_cart"
+  get "/confirm_cart", to: "carts#confirm"
+  post "/submit_order", to: "carts#submit", as: "submit_order"
+  get "/success", to: "carts#success", as: "success"
+  get "/fail", to: "carts#fail", as: "fail"
+  get "/password_resets/edit", to: "password_resets#edit"
+  put "/password_resets/update", to: "password_resets#update"
+  get "/password_resets/success", to: "password_resets#success"
+
+  resources :cart_items, only: [:create, :destroy] do
+    member do
+      patch "update_quantity"
+      patch "update_spec"
+    end
+  end
+
+  resources :orders, only: [:index, :show] do
+    member do
+      patch "cancel"
+    end
+  end
+  resources :favorite_items, only: [:index, :destroy] do
+    member do
+      get :toggle_favorite
+    end
+  end
+
+  resources :wish_lists, only: [] do
+    member do
+      get :toggle_wish
+    end
+  end
+
+  resources :shopping_point_campaigns, only: [:index]
+  resources :shopping_points, only: [:index]
+  resources :wish_lists, only: [:index, :destroy]
+  resources :my_messages, only: [:index]
+  resources :campaign_rules, only: [:index, :show]
+
+  resources :allpay, only:[] do
+    collection do
+      post "create_from_processing", as: "create"
+      post "/post_order_to_allpay/:order_id", to: "allpay#post_order_to_allpay", as: "post_order_to_allpay"
+      post "status_update"
+      post "create_reply"
+      get "/barcode/:order_id", to: "allpay#barcode", as: "barcode"
+    end
+  end
+
+  resources :pay2go, only:[] do
+    collection do
+      post "notify"
+      post "return"
     end
   end
 end
