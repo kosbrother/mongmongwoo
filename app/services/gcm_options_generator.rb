@@ -42,8 +42,8 @@ class GcmOptionsGenerator
         data: {
             content_title: title,
             content_text: content,
-            url: "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW",
-            coupon: "12345"
+            url: "https://play.google.com/store/apps/details?id=com.nineyi.shop.s008909",
+            coupon: "首下載即可享優惠"
         },
         collapse_key: "updated_score"
     }
