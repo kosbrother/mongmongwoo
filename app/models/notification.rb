@@ -14,7 +14,7 @@ class Notification < ActiveRecord::Base
   scope :by_execute, -> (execute_status_param) { where(schedules: { is_execute: execute_status_param }) }
 
   def send_content_pic
-    self.item.cover.url
+    self.item.cover.url if self.item.present?
   end
 
   def put_in_schedule
