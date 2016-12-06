@@ -8,7 +8,7 @@ class ApiController < ActionController::Base
   end
 
   def get_new_app
-    url = "http://shop.mmwooo.com/v2/official"
+    url = "https://play.google.com/store/apps/details?id=com.nineyi.shop.s008909"
     coupon = "首下載即可享優惠"
     render status: 200, json: { is_ready: true, url: url , coupon: coupon}
   end
