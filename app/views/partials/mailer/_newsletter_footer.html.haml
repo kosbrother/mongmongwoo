@@ -1,0 +1,33 @@
+%table.newsletter_footer{style: "width: 100%;height: 100%;"}
+  %tr
+    %td
+      %table.up-footer{style: "background-color: #f5f4f2;text-align: center;padding: 15px 0;width: 100%;height: 100%;"}
+        %tr
+          %td
+            .head{style: "background-image: url(#{email_scss_image_tag('icons/star.png')});font-size: 20px;line-height: 2;color: #4a4a4a;width: 100px;margin: 0 auto;padding-left: 20px;background-repeat: no-repeat;background-position: 5px 12px;"} 聯繫客服
+            %p{style: "font-size: 16px;"}
+              購物遇到問題嗎？歡迎透過
+              %span.strong{style: "color: #3bad7c;"}「LINE線上客服」
+              或是
+              %span.strong{style: "color: #3bad7c;"}「萌萌屋FB粉絲專頁」
+              與我們聯繫！
+            %p{style: "font-size: 16px;"} 客服服務時間：星期一～星期五 10:00~21:00
+            %p{style: "font-size: 16px;"}
+              = link_to "http://line.me/ti/p/%40kya5456n", target: '_blank', style: "margin: 0 10px;text-decoration: none;" do
+                = email_image_tag('icons/line.png', style: "width: 25px;height: 25px;")
+              = link_to  "https://www.facebook.com/mmwooo/", target: '_blank', style: "margin: 0 10px;text-decoration: none;" do
+                = email_image_tag('icons/fb.png', style: "width: 25px;height: 25px;")
+  %tr
+    %td
+      %table.down-footer{style: "background-color: #757575;width: 100%;height: 100%;"}
+        %tr
+          %td
+            .logo-block{style: "padding: 15px 0 0 85px;width: 120px;display: inline-block;"}
+              = link_to "https://www.mmwooo.com/", style: "text-decoration: none;" do
+                = email_image_tag('icons/logo_s.png', style: "display: inline-block;margin-right: 10px;")
+                .name{style: "font-size: 20px;display: inline-block;color: #fff;vertical-align: 11px;"} 萌萌屋
+            .about{style: "width: 480px;display: inline-block;color: #fff;font-size: 14px;vertical-align: 9px;margin: 0 30px;"}
+              %p萌萌屋走在青年流行的前線, 為年輕人們提供一個快樂購物的管道, 想知道最近流行些什麼, 有什麼可愛的東東, 來萌萌屋就對了!
+            .app-icon{style: "display: inline-block;margin-left: 30px;"}
+              = link_to "https://play.google.com/store/apps/details?id=com.kosbrother.mongmongwoo&hl=zh_TW", style: "text-decoration: none;" do
+                = email_image_tag('icons/google_play.png', style: "display: inline-block;margin-right: 10px;")

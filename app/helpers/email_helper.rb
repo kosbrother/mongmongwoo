@@ -16,4 +16,8 @@ module EmailHelper
     attachments.inline[file_name] = spec.style_pic.read
     image_tag attachments[file_name].url, **options
   end
+
+  def bannerable_url(banner)
+    banner.able_path ? ("https://www.mmwooo.com" + banner.able_path) : "#"
+  end
 end

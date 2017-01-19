@@ -1,0 +1,12 @@
+!!!
+%html{:lang => "zh-Hant-TW"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
+  %body
+    %table.container{style: "width: 940px;margin: 0 auto;background-color: #fffef0;"}
+      %tr
+        %td= render 'partials/mailer/newsletter_nav'
+      %tr
+        %td= yield
+      %tr
+        %td= render 'partials/mailer/newsletter_footer'
